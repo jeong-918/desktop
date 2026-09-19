@@ -1,0 +1,84 @@
+{
+  "apps": [
+    {
+      "id": "app-1",
+      "name": "Google 검색",
+      "url": "https://www.google.com",
+      "icon": "🌐",
+      "target": "newtab"
+    },
+    {
+      "id": "app-2",
+      "name": "계산기",
+      "url": "https://www.desmos.com/scientific?lang=ko",
+      "icon": "🧮",
+      "target": "window"
+    },
+    {
+      "id": "app-4",
+      "name": "NEIS 글자수체크",
+      "url": "https://hjh010501.github.io/neis-counter/",
+      "icon": "📝",
+      "target": "window"
+    },
+    {
+      "id": "app-1789710087650",
+      "name": "스케쥴",
+      "url": "https://jeong-918.github.io/desktop/app/to-do.html",
+      "target": "newtab",
+      "icon": "📝"
+    },
+    {
+      "id": "app-1789710282082",
+      "name": "5등급제환산",
+      "url": "https://jeong-918.github.io/desktop/app/5to9.html",
+      "target": "newtab",
+      "icon": "📊"
+    },
+    {
+      "id": "app-1789710318170",
+      "name": "학생관리센터",
+      "url": "https://docs.google.com/spreadsheets/d/1VfebRB5vLlV-Ni7RT9cp8xWSwVL543DQOuJlzn-uZD4/edit?gid=15478959#gid=15478959",
+      "target": "newtab",
+      "icon": "📁"
+    },
+    {
+      "id": "app-1789710337914",
+      "name": "파인만컨설팅[26-2]",
+      "url": "https://docs.google.com/spreadsheets/d/1EX73Oq9iVTGMll7SY2ZJbQaoG7ATY5ifB7GdyLBER_0/edit?usp=drive_web&ouid=103047718856130833554",
+      "target": "newtab",
+      "icon": "📁"
+    },
+    {
+      "id": "app-1789711180543",
+      "name": "ERP",
+      "url": "https://system.daol105.co.kr",
+      "target": "newtab",
+      "icon": "📂"
+    },
+    {
+      "id": "app-1789725098714",
+      "name": "모교_학교정보",
+      "url": "https://mogyo.kr/",
+      "target": "newtab",
+      "icon": "📂"
+    },
+    {
+      "id": "app-1789727698188",
+      "name": "업무기록-이행",
+      "url": "https://jeong-918.github.io/desktop/app/sotong.html",
+      "target": "newtab",
+      "icon": "📝"
+    }
+  ],
+  "settings": {
+    "bgColor": "#1e293b",
+    "overlayColor": "#0f172a",
+    "bgOpacity": 0.15,
+    "bgBlur": 16,
+    "bgImage": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80",
+    "themePreset": "midnight"
+  },
+  "version": "1.0",
+  "exportedAt": "2026-09-19T08:18:14.893Z"
+}
