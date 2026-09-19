@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-09-19T08:36:27.567Z",
+  "exportedAt": "2026-09-19T09:58:21.048Z",
   "apps": [
     {
       "id": "app-1",
@@ -71,6 +71,13 @@
       "url": "https://jeong-918.github.io/desktop/app/comm.html",
       "target": "newtab",
       "icon": "📝"
+    },
+    {
+      "id": "app-1789811895408",
+      "name": "화원고_대입면접종합시스템",
+      "url": "https://hanmin-seven.vercel.app/#/home",
+      "target": "newtab",
+      "icon": "📁"
     }
   ],
   "settings": {
