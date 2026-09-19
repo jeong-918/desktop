@@ -1,6 +1,6 @@
 {
   "appName": "소통 이행 관리",
-  "exportedAt": "2026-09-19T11:31:34.470Z",
+  "exportedAt": "2026-09-19T11:35:49.584Z",
   "version": 1,
   "data": {
     "categories": [
@@ -21,6 +21,20 @@
       }
     ],
     "tasks": [
+      {
+        "id": "task-1789817744260-se3d0ui",
+        "categoryId": "category-1789727741661-shxtnf5",
+        "person": "김민서",
+        "title": "면접 일정 최종 픽스 및 학원 통보 건",
+        "firstDate": "2026-09-19",
+        "dueDate": "2026-09-20",
+        "followupDate": "2026-09-27",
+        "priority": "normal",
+        "status": "before",
+        "note": "면접일 : 추석마치고 9/30수 또는 10/1목 중 택1 \n시간 : 9/30 수는 7시 이후 | 10/1 목은 2~3시 가능여부 체크",
+        "createdAt": "2026-09-19T11:35:44.260Z",
+        "completedAt": null
+      },
       {
         "id": "task-1789727877829-cqn4h7p",
         "categoryId": "category-1789727741661-shxtnf5",
