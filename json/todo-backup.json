@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-09-19T08:08:59.989Z",
+  "exportedAt": "2026-09-19T08:11:23.372Z",
   "categories": [
     {
       "id": "cat_1789710672289",
@@ -338,6 +338,16 @@
       "memo": "",
       "time": "",
       "createdAt": 1789804224009
+    },
+    {
+      "id": "todo_1789805366608_w9cy",
+      "title": "테스트 일정",
+      "categoryId": "cat_1789710714008",
+      "date": "2026-09-21",
+      "status": "TODO",
+      "memo": "",
+      "time": "",
+      "createdAt": 1789805366608
     }
   ]
 }
