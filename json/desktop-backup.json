@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-09-19T08:31:01.052Z",
+  "exportedAt": "2026-09-19T08:36:27.567Z",
   "apps": [
     {
       "id": "app-1",
@@ -68,7 +68,7 @@
     {
       "id": "app-1789727698188",
       "name": "업무기록-이행",
-      "url": "https://jeong-918.github.io/desktop/app/sotong.html",
+      "url": "https://jeong-918.github.io/desktop/app/comm.html",
       "target": "newtab",
       "icon": "📝"
     }
