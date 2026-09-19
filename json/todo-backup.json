@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-09-19T07:33:07.468Z",
+  "exportedAt": "2026-09-19T08:08:59.989Z",
   "categories": [
     {
       "id": "cat_1789710672289",
@@ -328,6 +328,16 @@
       "memo": "",
       "time": "",
       "createdAt": 1789725045578
+    },
+    {
+      "id": "todo_1789804224009_k3pn",
+      "title": "김민서 면접지 후보군 작업 완료할 것.",
+      "categoryId": "cat_1789710672289",
+      "date": "2026-09-22",
+      "status": "TODO",
+      "memo": "",
+      "time": "",
+      "createdAt": 1789804224009
     }
   ]
 }
