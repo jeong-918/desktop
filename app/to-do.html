@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>스마트 일정 & 투두 플래너 (Calendar To-Do)</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Pretendard Font -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Pretendard', sans-serif;
+      background-color: #f8fafc;
+    }
+    /* 커스텀 스크롤바 */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .calendar-day-cell {
+      min-height: 44px;
+      transition: all 0.15s ease;
+    }
+  </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- 상단 네비게이션 헤더 -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white shadow-md">
+          <i class="fa-solid fa-calendar-check text-lg"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-slate-900 leading-tight">스마트 데일리 투두</h1>
+          <p class="text-xs text-slate-500">캘린더 기반 범주형 일정 관리</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- 백업 및 복원 -->
+        <button onclick="exportData()" title="데이터 JSON 백업" class="p-2 text-slate-500 hover:text-indigo-600 hover:bg-slate-100 rounded-lg transition text-sm flex items-center gap-1.5">
+          <i class="fa-solid fa-download"></i>
+          <span class="hidden sm:inline text-xs font-medium">백업</span>
+        </button>
+        <label for="import-file-input" title="데이터 복원" class="p-2 text-slate-500 hover:text-indigo-600 hover:bg-slate-100 rounded-lg transition text-sm cursor-pointer flex items-center gap-1.5">
+          <i class="fa-solid fa-upload"></i>
+          <span class="hidden sm:inline text-xs font-medium">복원</span>
+        </label>
+        <input type="file" id="import-file-input" class="hidden" accept=".json" onchange="importData(event)">
+
+        <div class="h-4 w-px bg-slate-200"></div>
+
+        <!-- 오늘 날짜 바로가기 버튼 -->
+        <button onclick="goToToday()" class="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 border border-indigo-200 shadow-xs">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span>오늘로 이동</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 미완료 할일 이월(복사) 알림 배너 (과거에 미완료 할일이 있을 시 상단 표시) -->
+  <div id="rollover-alert-bar" class="bg-amber-50 border-b border-amber-200 px-4 py-2.5 hidden">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs sm:text-sm text-amber-800">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-circle-exclamation text-amber-500 text-base"></i>
+        <span>이전 날짜에 완료하지 못한 <strong id="rollover-count">0</strong>개의 할 일이 있습니다. 오늘 일정으로 복사해올까요?</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="carryOverPastTasks()" class="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-medium shadow-xs transition">오늘로 가져오기</button>
+        <button onclick="dismissRolloverAlert()" class="p-1 text-amber-600 hover:text-amber-900 rounded"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 메인 레이아웃: 좌측 캘린더 & 범주 관리 / 우측 일정 리스트 -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex-1">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      
+      <!-- ================= 좌측 사이드바 (캘린더 + 범주 필터) ================= -->
+      <div class="lg:col-span-4 space-y-6">
+        
+        <!-- 미니 캘린더 카드 -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm">
+          <!-- 캘린더 헤더: 년월 & 이동 -->
+          <div class="flex items-center justify-between mb-4">
+            <h2 id="calendar-month-year" class="text-base font-bold text-slate-800">2026년 9월</h2>
+            <div class="flex items-center space-x-1">
+              <button onclick="prevMonth()" class="p-2 hover:bg-slate-100 rounded-lg text-slate-500 hover:text-slate-800 transition" title="이전달">
+                <i class="fa-solid fa-chevron-left text-xs"></i>
+              </button>
+              <button onclick="nextMonth()" class="p-2 hover:bg-slate-100 rounded-lg text-slate-500 hover:text-slate-800 transition" title="다음달">
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- 요일 헤더 -->
+          <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-slate-400 mb-2">
+            <div class="text-rose-500">일</div>
+            <div>월</div>
+            <div>화</div>
+            <div>수</div>
+            <div>목</div>
+            <div>금</div>
+            <div class="text-blue-500">토</div>
+          </div>
+
+          <!-- 달력 날짜 그리드 -->
+          <div id="calendar-days" class="grid grid-cols-7 gap-1 text-sm">
+            <!-- 자바스크립트로 날짜 렌더링 -->
+          </div>
+
+          <!-- 캘린더 범례 -->
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-around text-[11px] text-slate-500">
+            <div class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span>100% 완료</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+              <span>진행중</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-slate-300"></span>
+              <span>미완료</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 범주(카테고리) 관리 카드 -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+              <i class="fa-solid fa-tags text-indigo-500"></i>
+              <span>범주 (카테고리)</span>
+            </h3>
+            <button onclick="openCategoryModal()" class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold flex items-center gap-1">
+              <i class="fa-solid fa-gear text-[11px]"></i> 범주 설정
+            </button>
+          </div>
+          <p class="text-xs text-slate-400 mb-3">범주를 선택하여 특정 영역의 할일만 필터링할 수 있습니다.</p>
+
+          <!-- 범주 필터 버튼 리스트 -->
+          <div id="category-filter-list" class="flex flex-wrap gap-1.5">
+            <!-- 자바스크립트로 렌더링 -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= 우측 메인 컨텐츠 (선택 일자 일정) ================= -->
+      <div class="lg:col-span-8 space-y-6">
+
+        <!-- 일자 네비게이션 & 당일 진행률 대시보드 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm">
+          <!-- 상단 날짜 컨트롤 -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100">
+            <div class="flex items-center gap-3">
+              <button onclick="changeSelectedDay(-1)" class="w-9 h-9 flex items-center justify-center rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-600 transition border border-slate-200 shadow-xs" title="전날">
+                <i class="fa-solid fa-chevron-left text-sm"></i>
+              </button>
+              
+              <div>
+                <div class="flex items-center gap-2">
+                  <h2 id="current-selected-date-str" class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                    2026년 9월 18일 (금)
+                  </h2>
+                  <span id="today-badge" class="hidden px-2.5 py-0.5 text-[11px] font-bold bg-indigo-100 text-indigo-700 rounded-full">오늘</span>
+                </div>
+                <p id="current-selected-relative" class="text-xs text-slate-400 mt-0.5">오늘의 계획을 확인하고 실행하세요</p>
+              </div>
+
+              <button onclick="changeSelectedDay(1)" class="w-9 h-9 flex items-center justify-center rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-600 transition border border-slate-200 shadow-xs" title="다음날">
+                <i class="fa-solid fa-chevron-right text-sm"></i>
+              </button>
+            </div>
+
+            <!-- 미완료 일괄 익일 복사 버튼 -->
+            <button onclick="copyIncompleteToNextDay()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 self-start sm:self-auto border border-slate-200 shadow-xs" title="미완료(시작전/진행중) 항목을 내일로 복사">
+              <i class="fa-solid fa-share-from-square text-indigo-500"></i>
+              <span>미완료 항목 내일로 복사</span>
+            </button>
+          </div>
+
+          <!-- 진행 상황 및 완료율 (%) 시각화 -->
+          <div class="mt-5 space-y-2">
+            <div class="flex items-center justify-between text-sm">
+              <div class="flex items-center gap-2 font-bold text-slate-700">
+                <i class="fa-solid fa-chart-pie text-indigo-500"></i>
+                <span>오늘의 달성률</span>
+                <span id="progress-percentage-text" class="text-indigo-600 text-base font-black">0%</span>
+              </div>
+              <div class="text-xs text-slate-500 flex items-center gap-3">
+                <span>전체 <strong id="stat-total" class="text-slate-800">0</strong></span>
+                <span>시작전 <strong id="stat-todo" class="text-slate-500">0</strong></span>
+                <span>진행중 <strong id="stat-progress" class="text-amber-600">0</strong></span>
+                <span>완료 <strong id="stat-done" class="text-emerald-600">0</strong></span>
+              </div>
+            </div>
+
+            <!-- 프로그레스 바 -->
+            <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-200 flex">
+              <div id="progress-bar-fill" class="h-full bg-gradient-to-r from-indigo-500 to-emerald-400 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+            </div>
+
+            <div id="completion-cheer-msg" class="hidden text-xs text-center font-bold text-emerald-600 bg-emerald-50 py-1.5 rounded-lg transition-all animate-pulse">
+              🎉 오늘 계획한 모든 할 일을 완벽하게 달성했습니다! 멋진 하루예요!
+            </div>
+          </div>
+        </div>
+
+        <!-- 새로운 할일 등록 카드 -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm">
+          <form id="add-todo-form" onsubmit="handleCreateTodo(event)" class="space-y-3">
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+              <!-- 범주 선택 드롭다운 -->
+              <div class="w-full sm:w-44 flex-shrink-0">
+                <select id="todo-category-select" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-medium text-slate-700 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:bg-white transition">
+                  <!-- 동적 로드 -->
+                </select>
+              </div>
+
+              <!-- 할일 입력 인풋 -->
+              <div class="flex-1 relative">
+                <input type="text" id="todo-title-input" placeholder="새로운 할일을 입력하세요 (예: 단어 외우기, 모의고사 풀기)" required
+                       class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:bg-white transition">
+              </div>
+
+              <!-- 추가 버튼 -->
+              <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition flex items-center justify-center gap-2 flex-shrink-0">
+                <i class="fa-solid fa-plus"></i>
+                <span>등록</span>
+              </button>
+            </div>
+
+            <!-- 부가 상세 메모 (토글 형태) -->
+            <div class="flex items-center justify-between text-xs text-slate-400 px-1">
+              <button type="button" onclick="toggleDetailMemoInput()" class="hover:text-indigo-600 flex items-center gap-1 transition">
+                <i class="fa-solid fa-align-left text-[11px]"></i>
+                <span id="memo-toggle-text">+ 세부 메모 및 소요시간 적기</span>
+              </button>
+              <span class="text-slate-400">Enter를 누르면 빠르게 등록됩니다</span>
+            </div>
+
+            <div id="memo-input-container" class="hidden grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
+              <input type="text" id="todo-memo-input" placeholder="세부 메모 (예: Chapter 14~15 표제어 중심)" 
+                     class="sm:col-span-2 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 focus:outline-hidden focus:ring-1 focus:ring-indigo-500">
+              <input type="text" id="todo-time-input" placeholder="시간 (예: 14:00 또는 1시간)" 
+                     class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 focus:outline-hidden focus:ring-1 focus:ring-indigo-500">
+            </div>
+          </form>
+        </div>
+
+        <!-- 할일 목록 필터 탭 & 정렬 -->
+        <div class="flex items-center justify-between flex-wrap gap-2 px-1">
+          <!-- 상태 필터 탭 -->
+          <div class="flex items-center bg-slate-200/70 p-1 rounded-xl text-xs font-semibold text-slate-600">
+            <button onclick="setStatusFilter('ALL')" id="filter-status-ALL" class="filter-tab-btn px-3 py-1.5 rounded-lg bg-white text-slate-900 shadow-xs">
+              전체
+            </button>
+            <button onclick="setStatusFilter('TODO')" id="filter-status-TODO" class="filter-tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">
+              시작전
+            </button>
+            <button onclick="setStatusFilter('IN_PROGRESS')" id="filter-status-IN_PROGRESS" class="filter-tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">
+              진행중
+            </button>
+            <button onclick="setStatusFilter('DONE')" id="filter-status-DONE" class="filter-tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">
+              완료
+            </button>
+          </div>
+
+          <div class="text-xs text-slate-400 flex items-center gap-1">
+            <i class="fa-solid fa-circle-info text-slate-400"></i>
+            <span>상태 뱃지를 클릭하면 <strong>시작전 ➔ 진행중 ➔ 완료</strong> 순으로 바뀝니다.</span>
+          </div>
+        </div>
+
+        <!-- 할일 카드 목록 -->
+        <div id="todo-list-container" class="space-y-2.5">
+          <!-- 자바스크립트로 렌더링 -->
+        </div>
+
+        <!-- 빈 상태 표시 (할일 없을 때) -->
+        <div id="empty-state" class="hidden bg-white rounded-2xl p-12 text-center border border-dashed border-slate-300">
+          <div class="w-14 h-14 mx-auto bg-slate-100 rounded-full flex items-center justify-center text-slate-400 text-2xl mb-3">
+            <i class="fa-regular fa-calendar-plus"></i>
+          </div>
+          <h3 class="text-sm font-bold text-slate-700">등록된 할 일이 없습니다</h3>
+          <p class="text-xs text-slate-400 mt-1">상단 입력창에서 오늘 해야 할 새로운 일정을 추가해보세요.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ================= 범주 관리 모달 ================= -->
+  <div id="category-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-slate-200 transform transition-all">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+          <i class="fa-solid fa-tags text-indigo-600"></i>
+          <span>범주 (카테고리) 설정</span>
+        </h3>
+        <button onclick="closeCategoryModal()" class="text-slate-400 hover:text-slate-600">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- 새 범주 추가 -->
+      <div class="mt-4">
+        <label class="block text-xs font-bold text-slate-700 mb-1.5">새로운 범주 추가</label>
+        <div class="flex items-center gap-2">
+          <input type="text" id="new-category-name" placeholder="예: A학원, 코딩스터디, 독서" class="flex-1 px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500">
+          <!-- 색상 선택 -->
+          <input type="color" id="new-category-color" value="#6366f1" class="w-10 h-10 p-0.5 border border-slate-300 rounded-xl cursor-pointer">
+          <button onclick="addCategory()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition">
+            추가
+          </button>
+        </div>
+      </div>
+
+      <!-- 기존 범주 목록 -->
+      <div class="mt-5">
+        <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">등록된 범주 목록</h4>
+        <div id="modal-category-list" class="max-h-56 overflow-y-auto space-y-2 pr-1">
+          <!-- 동적 렌더링 -->
+        </div>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-slate-100 flex justify-end">
+        <button onclick="closeCategoryModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-semibold transition">
+          닫기
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 할일 편집 모달 ================= -->
+  <div id="edit-todo-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-slate-200">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+          <i class="fa-solid fa-pen-to-square text-indigo-600"></i>
+          <span>할일 수정하기</span>
+        </h3>
+        <button onclick="closeEditModal()" class="text-slate-400 hover:text-slate-600">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <form id="edit-todo-form" onsubmit="handleSaveEditTodo(event)" class="mt-4 space-y-3">
+        <input type="hidden" id="edit-todo-id">
+        
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">날짜</label>
+          <input type="date" id="edit-todo-date" required class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">소속 범주</label>
+          <select id="edit-todo-category" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm font-medium">
+            <!-- 동적 삽입 -->
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">할일 제목</label>
+          <input type="text" id="edit-todo-title" required class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm">
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">진행 상태</label>
+            <select id="edit-todo-status" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm">
+              <option value="TODO">할일 (시작전)</option>
+              <option value="IN_PROGRESS">진행중</option>
+              <option value="DONE">완료</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">예정 시간</label>
+            <input type="text" id="edit-todo-time" placeholder="예: 15:00" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">세부 메모</label>
+          <textarea id="edit-todo-memo" rows="2" placeholder="상세 내용 메모..." class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm"></textarea>
+        </div>
+
+        <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+          <button type="button" onclick="closeEditModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-semibold transition">
+            취소
+          </button>
+          <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold shadow transition">
+            저장
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 토스트 알림 컨테이너 -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ================= 핵심 자바스크립트 로직 ================= -->
+  <script>
+    // ---------- 전역 상태 변수 ----------
+    const STORAGE_KEY_TODOS = 'gemini_smart_todos_v1';
+    const STORAGE_KEY_CATEGORIES = 'gemini_smart_categories_v1';
+
+    // 기본 카테고리 프리셋
+    const DEFAULT_CATEGORIES = [
+      { id: 'cat_academy', name: 'A학원', color: '#8b5cf6' },  // 보라
+      { id: 'cat_work', name: '업무/과제', color: '#3b82f6' },   // 파랑
+      { id: 'cat_study', name: '자기계발', color: '#06b6d4' },  // 시안
+      { id: 'cat_workout', name: '운동/건강', color: '#10b981' },// 초록
+      { id: 'cat_personal', name: '개인/생활', color: '#f59e0b' } // 주황
+    ];
+
+    // 상태 정의
+    const STATUS = {
+      TODO: 'TODO',             // 시작전
+      IN_PROGRESS: 'IN_PROGRESS', // 진행중
+      DONE: 'DONE'              // 완료
+    };
+
+    let categories = [];
+    let todos = [];
+
+    // 현재 캘린더 표시 월 (기준일)
+    let currentCalendarDate = new Date();
+    // 현재 선택된 작업 날짜 (YYYY-MM-DD 형식)
+    let selectedDateStr = getFormattedDate(new Date());
+
+    // 활성 필터
+    let activeCategoryFilter = 'ALL'; // 'ALL' or categoryId
+    let activeStatusFilter = 'ALL';   // 'ALL', 'TODO', 'IN_PROGRESS', 'DONE'
+
+    // ---------- 날짜 헬퍼 함수 ----------
+    function getFormattedDate(dateObj) {
+      const y = dateObj.getFullYear();
+      const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const d = String(dateObj.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function parseDate(dateStr) {
+      const [y, m, d] = dateStr.split('-').map(Number);
+      return new Date(y, m - 1, d);
+    }
+
+    function getDayOfWeekKorean(dateObj) {
+      const days = ['일', '월', '화', '수', '목', '금', '토'];
+      return days[dateObj.getDay()];
+    }
+
+    // ---------- 초기화 ----------
+    window.addEventListener('DOMContentLoaded', () => {
+      loadData();
+      renderCategorySelects();
+      renderCategoryFilters();
+      renderCalendar();
+      updateSelectedDateView();
+      renderTodoList();
+      checkPastIncompleteTasks();
+    });
+
+    // ---------- 데이터 저장 및 불러오기 (LocalStorage) ----------
+    function loadData() {
+      try {
+        const savedCategories = localStorage.getItem(STORAGE_KEY_CATEGORIES);
+        if (savedCategories) {
+          categories = JSON.parse(savedCategories);
+        } else {
+          categories = [...DEFAULT_CATEGORIES];
+          saveCategories();
+        }
+
+        const savedTodos = localStorage.getItem(STORAGE_KEY_TODOS);
+        if (savedTodos) {
+          todos = JSON.parse(savedTodos);
+        } else {
+          // 초기 예시 데이터 생성
+          const today = getFormattedDate(new Date());
+          todos = [
+            {
+              id: 'todo_demo_1',
+              title: '영어 단어 50개 암기 및 단어장 복습',
+              categoryId: 'cat_academy',
+              date: today,
+              status: STATUS.DONE,
+              memo: 'Chapter 14~15 표제어 중심',
+              time: '14:00',
+              createdAt: Date.now() - 3600000
+            },
+            {
+              id: 'todo_demo_2',
+              title: '수학 모의고사 오답노트 정리',
+              categoryId: 'cat_academy',
+              date: today,
+              status: STATUS.IN_PROGRESS,
+              memo: '킬러 문항 21, 29, 30번 풀이 과정 재작성',
+              time: '16:00',
+              createdAt: Date.now() - 1800000
+            },
+            {
+              id: 'todo_demo_3',
+              title: '저녁 조깅 5km 러닝머신',
+              categoryId: 'cat_workout',
+              date: today,
+              status: STATUS.TODO,
+              memo: '스트레칭 10분 필수',
+              time: '20:00',
+              createdAt: Date.now()
+            }
+          ];
+          saveTodos();
+        }
+      } catch (err) {
+        console.error('데이터 로드 오류:', err);
+        categories = [...DEFAULT_CATEGORIES];
+        todos = [];
+      }
+    }
+
+    function saveTodos() {
+      localStorage.setItem(STORAGE_KEY_TODOS, JSON.stringify(todos));
+      renderCalendar(); // 달력 점 갱신
+      updateDailyProgress(); // 진행률 갱신
+    }
+
+    function saveCategories() {
+      localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(categories));
+      renderCategorySelects();
+      renderCategoryFilters();
+      renderTodoList();
+    }
+
+    // ---------- 캘린더 렌더링 ----------
+    function renderCalendar() {
+      const year = currentCalendarDate.getFullYear();
+      const month = currentCalendarDate.getMonth();
+
+      document.getElementById('calendar-month-year').textContent = `${year}년 ${month + 1}월`;
+
+      const firstDayOfMonth = new Date(year, month, 1).getDay();
+      const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
+      const lastDateOfPrevMonth = new Date(year, month, 0).getDate();
+
+      const daysContainer = document.getElementById('calendar-days');
+      daysContainer.innerHTML = '';
+
+      const todayStr = getFormattedDate(new Date());
+
+      // 지난달 날짜 채우기 (연한 색)
+      for (let i = firstDayOfMonth - 1; i >= 0; i--) {
+        const d = lastDateOfPrevMonth - i;
+        const cell = document.createElement('div');
+        cell.className = 'calendar-day-cell flex flex-col items-center justify-center p-1 rounded-xl text-slate-300 opacity-40 cursor-pointer hover:bg-slate-50 text-xs';
+        cell.textContent = d;
+        const prevMonthDate = new Date(year, month - 1, d);
+        const dateStr = getFormattedDate(prevMonthDate);
+        cell.onclick = () => selectDate(dateStr, prevMonthDate);
+        daysContainer.appendChild(cell);
+      }
+
+      // 이번달 날짜 채우기
+      for (let d = 1; d <= lastDateOfMonth; d++) {
+        const thisDate = new Date(year, month, d);
+        const dateStr = getFormattedDate(thisDate);
+        const dayOfWeek = thisDate.getDay();
+
+        const cell = document.createElement('div');
+        const isSelected = (dateStr === selectedDateStr);
+        const isToday = (dateStr === todayStr);
+
+        let cellClasses = 'calendar-day-cell relative flex flex-col items-center justify-center p-1 rounded-xl cursor-pointer transition text-xs font-medium ';
+        
+        if (isSelected) {
+          cellClasses += 'bg-indigo-600 text-white font-bold shadow-sm shadow-indigo-300 ring-2 ring-indigo-400 ring-offset-1 ';
+        } else if (isToday) {
+          cellClasses += 'bg-indigo-50 text-indigo-700 font-bold border border-indigo-200 ';
+        } else {
+          cellClasses += 'hover:bg-slate-100 text-slate-700 ';
+        }
+
+        // 주말 색상
+        if (!isSelected) {
+          if (dayOfWeek === 0) cellClasses += 'text-rose-500 ';
+          if (dayOfWeek === 6) cellClasses += 'text-blue-500 ';
+        }
+
+        cell.className = cellClasses;
+        cell.onclick = () => selectDate(dateStr, thisDate);
+
+        // 일자 텍스트
+        const numSpan = document.createElement('span');
+        numSpan.textContent = d;
+        cell.appendChild(numSpan);
+
+        // 해당 날짜의 할일 통계 및 상태 도트 인디케이터
+        const dayTodos = todos.filter(t => t.date === dateStr);
+        if (dayTodos.length > 0) {
+          const total = dayTodos.length;
+          const done = dayTodos.filter(t => t.status === STATUS.DONE).length;
+          const inProgress = dayTodos.filter(t => t.status === STATUS.IN_PROGRESS).length;
+
+          const dot = document.createElement('span');
+          dot.className = 'w-1.5 h-1.5 rounded-full mt-0.5 ';
+
+          if (done === total) {
+            // 전부 완료
+            dot.className += isSelected ? 'bg-emerald-300' : 'bg-emerald-500';
+          } else if (inProgress > 0 || done > 0) {
+            // 일부 진행중 또는 일부 완료
+            dot.className += isSelected ? 'bg-amber-300' : 'bg-amber-500';
+          } else {
+            // 전부 미완료/시작전
+            dot.className += isSelected ? 'bg-slate-300' : 'bg-slate-300';
+          }
+          cell.appendChild(dot);
+        } else {
+          // 비어있는 줄 맞춤용 스페이서
+          const spacer = document.createElement('span');
+          spacer.className = 'w-1.5 h-1.5 mt-0.5 opacity-0';
+          cell.appendChild(spacer);
+        }
+
+        daysContainer.appendChild(cell);
+      }
+
+      // 다음달 날짜 채우기 (남은 칸)
+      const totalCellsRendered = firstDayOfMonth + lastDateOfMonth;
+      const nextMonthDays = (7 - (totalCellsRendered % 7)) % 7;
+      for (let d = 1; d <= nextMonthDays; d++) {
+        const cell = document.createElement('div');
+        cell.className = 'calendar-day-cell flex flex-col items-center justify-center p-1 rounded-xl text-slate-300 opacity-40 cursor-pointer hover:bg-slate-50 text-xs';
+        cell.textContent = d;
+        const nextMonthDate = new Date(year, month + 1, d);
+        const dateStr = getFormattedDate(nextMonthDate);
+        cell.onclick = () => selectDate(dateStr, nextMonthDate);
+        daysContainer.appendChild(cell);
+      }
+    }
+
+    function prevMonth() {
+      currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
+      renderCalendar();
+    }
+
+    function nextMonth() {
+      currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
+      renderCalendar();
+    }
+
+    function selectDate(dateStr, dateObj) {
+      selectedDateStr = dateStr;
+      if (dateObj) {
+        currentCalendarDate = new Date(dateObj.getFullYear(), dateObj.getMonth(), 1);
+      }
+      renderCalendar();
+      updateSelectedDateView();
+      renderTodoList();
+    }
+
+    function goToToday() {
+      const now = new Date();
+      currentCalendarDate = new Date(now.getFullYear(), now.getMonth(), 1);
+      selectDate(getFormattedDate(now), now);
+      showToast('오늘 날짜로 이동했습니다.', 'info');
+    }
+
+    function changeSelectedDay(deltaDays) {
+      const current = parseDate(selectedDateStr);
+      current.setDate(current.getDate() + deltaDays);
+      const newDateStr = getFormattedDate(current);
+      selectDate(newDateStr, current);
+    }
+
+    // ---------- 상단 선택 날짜 뷰 업데이트 ----------
+    function updateSelectedDateView() {
+      const curDate = parseDate(selectedDateStr);
+      const y = curDate.getFullYear();
+      const m = curDate.getMonth() + 1;
+      const d = curDate.getDate();
+      const dow = getDayOfWeekKorean(curDate);
+
+      document.getElementById('current-selected-date-str').textContent = `${y}년 ${m}월 ${d}일 (${dow})`;
+
+      const todayStr = getFormattedDate(new Date());
+      const isToday = (selectedDateStr === todayStr);
+
+      const todayBadge = document.getElementById('today-badge');
+      const relativeDesc = document.getElementById('current-selected-relative');
+
+      if (isToday) {
+        todayBadge.classList.remove('hidden');
+        relativeDesc.textContent = '오늘의 계획을 확인하고 실행하세요';
+      } else {
+        todayBadge.classList.add('hidden');
+        // 상대 일자 계산
+        const diffTime = curDate.getTime() - parseDate(todayStr).getTime();
+        const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+        if (diffDays === -1) relativeDesc.textContent = '어제 일정 기록';
+        else if (diffDays === 1) relativeDesc.textContent = '내일 예정된 일정';
+        else if (diffDays < -1) relativeDesc.textContent = `${Math.abs(diffDays)}일 전 과거 일정`;
+        else relativeDesc.textContent = `${diffDays}일 후 예정 일정`;
+      }
+
+      updateDailyProgress();
+    }
+
+    // ---------- 당일 완료율 (%) 계산 및 시각화 ----------
+    function updateDailyProgress() {
+      const dayTodos = todos.filter(t => t.date === selectedDateStr);
+      const total = dayTodos.length;
+      const todoCount = dayTodos.filter(t => t.status === STATUS.TODO).length;
+      const inProgressCount = dayTodos.filter(t => t.status === STATUS.IN_PROGRESS).length;
+      const doneCount = dayTodos.filter(t => t.status === STATUS.DONE).length;
+
+      document.getElementById('stat-total').textContent = total;
+      document.getElementById('stat-todo').textContent = todoCount;
+      document.getElementById('stat-progress').textContent = inProgressCount;
+      document.getElementById('stat-done').textContent = doneCount;
+
+      const percent = total > 0 ? Math.round((doneCount / total) * 100) : 0;
+      document.getElementById('progress-percentage-text').textContent = `${percent}%`;
+      
+      const barFill = document.getElementById('progress-bar-fill');
+      barFill.style.width = `${percent}%`;
+
+      const cheerMsg = document.getElementById('completion-cheer-msg');
+      if (total > 0 && percent === 100) {
+        cheerMsg.classList.remove('hidden');
+      } else {
+        cheerMsg.classList.add('hidden');
+      }
+    }
+
+    // ---------- 범주(카테고리) 렌더링 & 관리 ----------
+    function renderCategorySelects() {
+      const addSelect = document.getElementById('todo-category-select');
+      const editSelect = document.getElementById('edit-todo-category');
+
+      let optionsHtml = '';
+      categories.forEach(cat => {
+        optionsHtml += `<option value="${cat.id}">● ${cat.name}</option>`;
+      });
+
+      addSelect.innerHTML = optionsHtml;
+      editSelect.innerHTML = optionsHtml;
+    }
+
+    function renderCategoryFilters() {
+      const container = document.getElementById('category-filter-list');
+      container.innerHTML = '';
+
+      // 전체 보기 버튼
+      const allBtn = document.createElement('button');
+      allBtn.className = `px-2.5 py-1 rounded-lg text-xs font-medium transition ${
+        activeCategoryFilter === 'ALL'
+          ? 'bg-slate-800 text-white font-bold shadow-xs'
+          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+      }`;
+      allBtn.textContent = '전체 보기';
+      allBtn.onclick = () => setCategoryFilter('ALL');
+      container.appendChild(allBtn);
+
+      // 각 카테고리 버튼
+      categories.forEach(cat => {
+        const btn = document.createElement('button');
+        const isActive = (activeCategoryFilter === cat.id);
+        btn.className = `px-2.5 py-1 rounded-lg text-xs font-medium transition flex items-center gap-1.5 ${
+          isActive 
+            ? 'ring-2 ring-offset-1 font-bold text-white shadow-xs' 
+            : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+        }`;
+        if (isActive) {
+          btn.style.backgroundColor = cat.color;
+          btn.style.borderColor = cat.color;
+        }
+
+        const dot = document.createElement('span');
+        dot.className = 'w-2 h-2 rounded-full';
+        dot.style.backgroundColor = isActive ? '#ffffff' : cat.color;
+        btn.appendChild(dot);
+
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = cat.name;
+        btn.appendChild(nameSpan);
+
+        btn.onclick = () => setCategoryFilter(cat.id);
+        container.appendChild(btn);
+      });
+    }
+
+    function setCategoryFilter(catId) {
+      activeCategoryFilter = catId;
+      renderCategoryFilters();
+      renderTodoList();
+    }
+
+    function setStatusFilter(status) {
+      activeStatusFilter = status;
+      document.querySelectorAll('.filter-tab-btn').forEach(btn => {
+        btn.className = 'filter-tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900';
+      });
+      const activeBtn = document.getElementById(`filter-status-${status}`);
+      if (activeBtn) {
+        activeBtn.className = 'filter-tab-btn px-3 py-1.5 rounded-lg bg-white text-slate-900 shadow-xs font-bold';
+      }
+      renderTodoList();
+    }
+
+    function openCategoryModal() {
+      renderModalCategoryList();
+      document.getElementById('category-modal').classList.remove('hidden');
+    }
+
+    function closeCategoryModal() {
+      document.getElementById('category-modal').classList.add('hidden');
+    }
+
+    function renderModalCategoryList() {
+      const list = document.getElementById('modal-category-list');
+      list.innerHTML = '';
+
+      categories.forEach(cat => {
+        const item = document.createElement('div');
+        item.className = 'flex items-center justify-between p-2.5 bg-slate-50 rounded-xl border border-slate-200';
+
+        const left = document.createElement('div');
+        left.className = 'flex items-center gap-2.5';
+
+        const colorCircle = document.createElement('span');
+        colorCircle.className = 'w-4 h-4 rounded-full border border-black/10';
+        colorCircle.style.backgroundColor = cat.color;
+        left.appendChild(colorCircle);
+
+        const name = document.createElement('span');
+        name.className = 'text-sm font-semibold text-slate-800';
+        name.textContent = cat.name;
+        left.appendChild(name);
+
+        item.appendChild(left);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'text-xs text-rose-500 hover:text-rose-700 p-1.5 hover:bg-rose-50 rounded-lg transition';
+        deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+        deleteBtn.title = '범주 삭제';
+        deleteBtn.onclick = () => deleteCategory(cat.id);
+        item.appendChild(deleteBtn);
+
+        list.appendChild(item);
+      });
+    }
+
+    function addCategory() {
+      const nameInput = document.getElementById('new-category-name');
+      const colorInput = document.getElementById('new-category-color');
+      const name = nameInput.value.trim();
+      const color = colorInput.value;
+
+      if (!name) {
+        showToast('범주 이름을 입력해주세요.', 'warning');
+        return;
+      }
+
+      const newCat = {
+        id: 'cat_' + Date.now(),
+        name: name,
+        color: color
+      };
+
+      categories.push(newCat);
+      saveCategories();
+      nameInput.value = '';
+      renderModalCategoryList();
+      showToast(`'${name}' 범주가 추가되었습니다.`, 'success');
+    }
+
+    function deleteCategory(catId) {
+      if (categories.length <= 1) {
+        showToast('최소 한 개의 범주는 유지되어야 합니다.', 'warning');
+        return;
+      }
+      const cat = categories.find(c => c.id === catId);
+      if (!confirm(`'${cat.name}' 범주를 삭제하시겠습니까?\n(해당 범주의 할일들은 기본 범주로 변경됩니다)`)) return;
+
+      categories = categories.filter(c => c.id !== catId);
+      const fallbackCatId = categories[0].id;
+      todos.forEach(t => {
+        if (t.categoryId === catId) t.categoryId = fallbackCatId;
+      });
+
+      if (activeCategoryFilter === catId) activeCategoryFilter = 'ALL';
+
+      saveCategories();
+      saveTodos();
+      renderModalCategoryList();
+      showToast('범주가 삭제되었습니다.', 'info');
+    }
+
+    // ---------- 할일(To-Do) 생성 및 입력 폼 제어 ----------
+    function toggleDetailMemoInput() {
+      const container = document.getElementById('memo-input-container');
+      const text = document.getElementById('memo-toggle-text');
+      if (container.classList.contains('hidden')) {
+        container.classList.remove('hidden');
+        container.classList.add('grid');
+        text.textContent = '- 세부 메모 입력창 접기';
+      } else {
+        container.classList.add('hidden');
+        container.classList.remove('grid');
+        text.textContent = '+ 세부 메모 및 소요시간 적기';
+      }
+    }
+
+    function handleCreateTodo(e) {
+      e.preventDefault();
+      const titleInput = document.getElementById('todo-title-input');
+      const categorySelect = document.getElementById('todo-category-select');
+      const memoInput = document.getElementById('todo-memo-input');
+      const timeInput = document.getElementById('todo-time-input');
+
+      const title = titleInput.value.trim();
+      if (!title) return;
+
+      const newTodo = {
+        id: 'todo_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+        title: title,
+        categoryId: categorySelect.value,
+        date: selectedDateStr,
+        status: STATUS.TODO,
+        memo: memoInput.value.trim(),
+        time: timeInput.value.trim(),
+        createdAt: Date.now()
+      };
+
+      todos.push(newTodo);
+      saveTodos();
+
+      // 인풋 초기화
+      titleInput.value = '';
+      memoInput.value = '';
+      timeInput.value = '';
+      titleInput.focus();
+
+      renderTodoList();
+      showToast('할 일이 등록되었습니다.', 'success');
+    }
+
+    // ---------- 할일 목록 렌더링 ----------
+    function renderTodoList() {
+      const listContainer = document.getElementById('todo-list-container');
+      const emptyState = document.getElementById('empty-state');
+
+      listContainer.innerHTML = '';
+
+      // 날짜 필터링
+      let filtered = todos.filter(t => t.date === selectedDateStr);
+
+      // 범주 필터링
+      if (activeCategoryFilter !== 'ALL') {
+        filtered = filtered.filter(t => t.categoryId === activeCategoryFilter);
+      }
+
+      // 상태 필터링
+      if (activeStatusFilter !== 'ALL') {
+        filtered = filtered.filter(t => t.status === activeStatusFilter);
+      }
+
+      if (filtered.length === 0) {
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+
+        filtered.forEach(todo => {
+          const category = categories.find(c => c.id === todo.categoryId) || { name: '일반', color: '#64748b' };
+          const card = createTodoCardElement(todo, category);
+          listContainer.appendChild(card);
+        });
+      }
+
+      updateDailyProgress();
+    }
+
+    // ---------- 개별 할일 카드 컴포넌트 생성 ----------
+    function createTodoCardElement(todo, category) {
+      const card = document.createElement('div');
+      
+      const isDone = (todo.status === STATUS.DONE);
+      const isInProgress = (todo.status === STATUS.IN_PROGRESS);
+      const isTodo = (todo.status === STATUS.TODO);
+
+      // 미완료(시작전/진행중) 항목 스타일: 요구사항 8번 (당일 미완료는 회색 처리)
+      // 완료 시 줄긋기: 요구사항 6번
+      let cardBgStyle = 'bg-white border-slate-200 hover:border-slate-300';
+      if (isDone) {
+        cardBgStyle = 'bg-slate-50/80 border-slate-200 text-slate-400';
+      } else if (isTodo) {
+        cardBgStyle = 'bg-slate-50/50 border-slate-200 text-slate-700';
+      } else if (isInProgress) {
+        cardBgStyle = 'bg-amber-50/40 border-amber-200/80 text-slate-800 shadow-xs';
+      }
+
+      card.className = `group rounded-2xl p-4 border transition-all duration-200 flex items-start gap-3.5 ${cardBgStyle}`;
+
+      // 1. 상태 전환 체크 버튼 (클릭 시 상태 순환 토글)
+      const statusBtn = document.createElement('button');
+      statusBtn.className = 'mt-0.5 flex-shrink-0 transition transform active:scale-95 focus:outline-hidden';
+      statusBtn.title = '클릭하여 상태 변경 (시작전 ➔ 진행중 ➔ 완료)';
+      statusBtn.onclick = () => cycleTodoStatus(todo.id);
+
+      if (isDone) {
+        statusBtn.innerHTML = `
+          <span class="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-xs">
+            <i class="fa-solid fa-check text-xs"></i>
+          </span>
+        `;
+      } else if (isInProgress) {
+        statusBtn.innerHTML = `
+          <span class="w-6 h-6 rounded-full border-2 border-amber-500 bg-amber-100 text-amber-600 flex items-center justify-center animate-pulse">
+            <i class="fa-solid fa-spinner fa-spin text-xs"></i>
+          </span>
+        `;
+      } else {
+        // 시작전 (회색 원)
+        statusBtn.innerHTML = `
+          <span class="w-6 h-6 rounded-full border-2 border-slate-300 hover:border-indigo-500 flex items-center justify-center text-transparent hover:text-indigo-400 transition">
+            <i class="fa-solid fa-check text-xs"></i>
+          </span>
+        `;
+      }
+      card.appendChild(statusBtn);
+
+      // 2. 내용 영역 (범주 배지 + 할일 명칭 + 세부 메모 + 시간)
+      const contentDiv = document.createElement('div');
+      contentDiv.className = 'flex-1 min-w-0';
+
+      // 상단 배지 라인
+      const topBadgeLine = document.createElement('div');
+      topBadgeLine.className = 'flex items-center gap-2 mb-1 flex-wrap';
+
+      // 범주 태그
+      const catBadge = document.createElement('span');
+      catBadge.className = 'px-2 py-0.5 rounded-md text-[11px] font-bold tracking-tight shadow-2xs';
+      catBadge.style.backgroundColor = `${category.color}15`;
+      catBadge.style.color = category.color;
+      catBadge.style.border = `1px solid ${category.color}35`;
+      catBadge.innerHTML = `<i class="fa-solid fa-tag text-[9px] mr-1"></i>${category.name}`;
+      topBadgeLine.appendChild(catBadge);
+
+      // 상태 배지 (시작전, 진행중, 완료)
+      const statusBadge = document.createElement('button');
+      statusBadge.onclick = () => cycleTodoStatus(todo.id);
+      statusBadge.title = '클릭하여 상태 변경';
+      statusBadge.className = 'px-2 py-0.5 rounded-md text-[11px] font-bold flex items-center gap-1 transition cursor-pointer ';
+
+      if (isDone) {
+        statusBadge.className += 'bg-emerald-100 text-emerald-700 border border-emerald-300';
+        statusBadge.innerHTML = '<i class="fa-solid fa-check text-[10px]"></i> 완료';
+      } else if (isInProgress) {
+        statusBadge.className += 'bg-amber-100 text-amber-700 border border-amber-300';
+        statusBadge.innerHTML = '<i class="fa-solid fa-play text-[9px]"></i> 진행중';
+      } else {
+        statusBadge.className += 'bg-slate-200/80 text-slate-600 border border-slate-300';
+        statusBadge.innerHTML = '<i class="fa-regular fa-circle text-[9px]"></i> 시작전';
+      }
+      topBadgeLine.appendChild(statusBadge);
+
+      // 시간 정보가 있을 때
+      if (todo.time) {
+        const timeBadge = document.createElement('span');
+        timeBadge.className = 'text-[11px] text-slate-400 flex items-center gap-1 ml-1';
+        timeBadge.innerHTML = `<i class="fa-regular fa-clock text-[10px]"></i> ${todo.time}`;
+        topBadgeLine.appendChild(timeBadge);
+      }
+
+      contentDiv.appendChild(topBadgeLine);
+
+      // 할일 제목 (완료 시 줄긋기 line-through 적용)
+      const titleP = document.createElement('p');
+      let titleClass = 'text-sm font-semibold break-words leading-snug ';
+      if (isDone) {
+        titleClass += 'line-through text-slate-400 font-normal';
+      } else if (isTodo) {
+        titleClass += 'text-slate-700'; // 회색톤
+      } else {
+        titleClass += 'text-slate-900 font-bold';
+      }
+      titleP.className = titleClass;
+      titleP.textContent = todo.title;
+      contentDiv.appendChild(titleP);
+
+      // 세부 메모
+      if (todo.memo) {
+        const memoP = document.createElement('p');
+        memoP.className = `text-xs mt-1 break-words ${isDone ? 'text-slate-400 line-through' : 'text-slate-500'}`;
+        memoP.innerHTML = `<i class="fa-regular fa-note-sticky mr-1 text-[10px] opacity-70"></i>${todo.memo}`;
+        contentDiv.appendChild(memoP);
+      }
+
+      card.appendChild(contentDiv);
+
+      // 3. 우측 액션 버튼들 (다음날 복사, 편집, 삭제)
+      const actionDiv = document.createElement('div');
+      actionDiv.className = 'flex items-center gap-1 flex-shrink-0 opacity-80 sm:opacity-0 group-hover:opacity-100 transition-opacity';
+
+      // '다음날로 복사' 버튼 (요구사항 8번 보완 단축 버튼)
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition text-xs';
+      copyBtn.title = '이 할일을 다음날로 복사하기';
+      copyBtn.innerHTML = '<i class="fa-solid fa-calendar-arrow-down"></i>';
+      copyBtn.onclick = () => copySingleTodoToNextDay(todo.id);
+      actionDiv.appendChild(copyBtn);
+
+      // 편집 버튼
+      const editBtn = document.createElement('button');
+      editBtn.className = 'p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition text-xs';
+      editBtn.title = '할일 수정';
+      editBtn.innerHTML = '<i class="fa-solid fa-pencil"></i>';
+      editBtn.onclick = () => openEditModal(todo.id);
+      actionDiv.appendChild(editBtn);
+
+      // 삭제 버튼
+      const delBtn = document.createElement('button');
+      delBtn.className = 'p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition text-xs';
+      delBtn.title = '할일 삭제';
+      delBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+      delBtn.onclick = () => deleteTodo(todo.id);
+      actionDiv.appendChild(delBtn);
+
+      card.appendChild(actionDiv);
+
+      return card;
+    }
+
+    // ---------- 상태 토글 (시작전 ➔ 진행중 ➔ 완료 순환) ----------
+    function cycleTodoStatus(todoId) {
+      const todo = todos.find(t => t.id === todoId);
+      if (!todo) return;
+
+      if (todo.status === STATUS.TODO) {
+        todo.status = STATUS.IN_PROGRESS;
+        showToast(`'${todo.title}' 진행중으로 변경`, 'info');
+      } else if (todo.status === STATUS.IN_PROGRESS) {
+        todo.status = STATUS.DONE;
+        showToast(`'${todo.title}' 완료! 수고하셨습니다.`, 'success');
+      } else {
+        todo.status = STATUS.TODO;
+        showToast(`'${todo.title}' 시작전(할일)으로 재설정`, 'info');
+      }
+
+      saveTodos();
+      renderTodoList();
+    }
+
+    // ---------- 단일 할일 삭제 ----------
+    function deleteTodo(todoId) {
+      if (!confirm('이 할일을 삭제하시겠습니까?')) return;
+      todos = todos.filter(t => t.id !== todoId);
+      saveTodos();
+      renderTodoList();
+      showToast('할 일이 삭제되었습니다.', 'info');
+    }
+
+    // ---------- 할일 편집 모달 제어 ----------
+    function openEditModal(todoId) {
+      const todo = todos.find(t => t.id === todoId);
+      if (!todo) return;
+
+      document.getElementById('edit-todo-id').value = todo.id;
+      document.getElementById('edit-todo-date').value = todo.date;
+      document.getElementById('edit-todo-category').value = todo.categoryId;
+      document.getElementById('edit-todo-title').value = todo.title;
+      document.getElementById('edit-todo-status').value = todo.status;
+      document.getElementById('edit-todo-time').value = todo.time || '';
+      document.getElementById('edit-todo-memo').value = todo.memo || '';
+
+      document.getElementById('edit-todo-modal').classList.remove('hidden');
+    }
+
+    function closeEditModal() {
+      document.getElementById('edit-todo-modal').classList.add('hidden');
+    }
+
+    function handleSaveEditTodo(e) {
+      e.preventDefault();
+      const id = document.getElementById('edit-todo-id').value;
+      const todo = todos.find(t => t.id === id);
+      if (!todo) return;
+
+      todo.date = document.getElementById('edit-todo-date').value;
+      todo.categoryId = document.getElementById('edit-todo-category').value;
+      todo.title = document.getElementById('edit-todo-title').value.trim();
+      todo.status = document.getElementById('edit-todo-status').value;
+      todo.time = document.getElementById('edit-todo-time').value.trim();
+      todo.memo = document.getElementById('edit-todo-memo').value.trim();
+
+      saveTodos();
+      closeEditModal();
+      renderTodoList();
+      showToast('할일이 수정되었습니다.', 'success');
+    }
+
+    // ---------- 요구사항 8번: 미완료 항목의 익일 복사(이월) 로직 ----------
+    
+    // 1. 단일 항목 다음날로 복사
+    function copySingleTodoToNextDay(todoId) {
+      const original = todos.find(t => t.id === todoId);
+      if (!original) return;
+
+      const curr = parseDate(original.date);
+      curr.setDate(curr.getDate() + 1);
+      const nextDateStr = getFormattedDate(curr);
+
+      const copyTodo = {
+        ...original,
+        id: 'todo_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+        date: nextDateStr,
+        status: STATUS.TODO, // 새 날짜에서는 시작전 상태로 복사
+        createdAt: Date.now()
+      };
+
+      todos.push(copyTodo);
+      saveTodos();
+      showToast(`'${original.title}' 일정이 다음날(${nextDateStr})로 복사되었습니다.`, 'success');
+    }
+
+    // 2. 현재 선택된 날의 모든 미완료(TODO, IN_PROGRESS) 항목을 내일로 복사
+    function copyIncompleteToNextDay() {
+      const dayTodos = todos.filter(t => t.date === selectedDateStr);
+      const incomplete = dayTodos.filter(t => t.status !== STATUS.DONE);
+
+      if (incomplete.length === 0) {
+        showToast('내일로 복사할 미완료 항목이 없습니다.', 'info');
+        return;
+      }
+
+      const curr = parseDate(selectedDateStr);
+      curr.setDate(curr.getDate() + 1);
+      const nextDateStr = getFormattedDate(curr);
+
+      if (!confirm(`현재 날짜(${selectedDateStr})의 미완료 항목 ${incomplete.length}개를 다음날(${nextDateStr})로 복사하시겠습니까?\n(기존 날짜의 항목은 그대로 회색 미완료 상태로 보존됩니다)`)) {
+        return;
+      }
+
+      let copiedCount = 0;
+      incomplete.forEach(item => {
+        const copyItem = {
+          ...item,
+          id: 'todo_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+          date: nextDateStr,
+          status: STATUS.TODO,
+          createdAt: Date.now()
+        };
+        todos.push(copyItem);
+        copiedCount++;
+      });
+
+      saveTodos();
+      renderTodoList();
+      showToast(`미완료 항목 ${copiedCount}개가 ${nextDateStr}로 복사되었습니다!`, 'success');
+    }
+
+    // 3. 과거 미완료 할일 탐지 및 배너 팝업
+    function checkPastIncompleteTasks() {
+      const todayStr = getFormattedDate(new Date());
+      // 오늘 이전의 날짜 중 미완료(TODO 또는 IN_PROGRESS) 상태인 항목 찾기
+      const pastIncomplete = todos.filter(t => t.date < todayStr && t.status !== STATUS.DONE);
+
+      if (pastIncomplete.length > 0) {
+        document.getElementById('rollover-count').textContent = pastIncomplete.length;
+        document.getElementById('rollover-alert-bar').classList.remove('hidden');
+      } else {
+        document.getElementById('rollover-alert-bar').classList.add('hidden');
+      }
+    }
+
+    function dismissRolloverAlert() {
+      document.getElementById('rollover-alert-bar').classList.add('hidden');
+    }
+
+    function carryOverPastTasks() {
+      const todayStr = getFormattedDate(new Date());
+      const pastIncomplete = todos.filter(t => t.date < todayStr && t.status !== STATUS.DONE);
+
+      if (pastIncomplete.length === 0) return;
+
+      pastIncomplete.forEach(pastTask => {
+        // 이미 오늘 똑같은 제목의 할일이 등록되어 있지 않은 경우에만 복사
+        const alreadyCopied = todos.some(t => t.date === todayStr && t.title === pastTask.title);
+        if (!alreadyCopied) {
+          const newCopy = {
+            ...pastTask,
+            id: 'todo_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+            date: todayStr,
+            status: STATUS.TODO,
+            createdAt: Date.now()
+          };
+          todos.push(newCopy);
+        }
+      });
+
+      saveTodos();
+      dismissRolloverAlert();
+      goToToday();
+      showToast(`과거 미완료 할일들이 오늘의 할일로 이월 복사되었습니다.`, 'success');
+    }
+
+    // ---------- 데이터 백업 및 복원 ----------
+    function exportData() {
+      const backupData = {
+        version: '1.0',
+        exportedAt: new Date().toISOString(),
+        categories: categories,
+        todos: todos
+      };
+
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `todo_backup_${getFormattedDate(new Date())}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+
+      showToast('일정 데이터가 다운로드되었습니다.', 'success');
+    }
+
+    function importData(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const parsed = JSON.parse(evt.target.result);
+          if (parsed && parsed.categories && parsed.todos) {
+            categories = parsed.categories;
+            todos = parsed.todos;
+            saveCategories();
+            saveTodos();
+            renderTodoList();
+            showToast('데이터가 성공적으로 복원되었습니다.', 'success');
+          } else {
+            showToast('유효하지 않은 백업 파일 형식입니다.', 'warning');
+          }
+        } catch (err) {
+          showToast('파일을 읽는 도중 오류가 발생했습니다.', 'warning');
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = ''; // 재선택 가능하게 리셋
+    }
+
+    // ---------- 토스트 알림 ----------
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      
+      let bg = 'bg-slate-800 text-white';
+      let icon = 'fa-circle-info';
+      if (type === 'success') {
+        bg = 'bg-emerald-600 text-white';
+        icon = 'fa-circle-check';
+      } else if (type === 'warning') {
+        bg = 'bg-amber-600 text-white';
+        icon = 'fa-triangle-exclamation';
+      }
+
+      toast.className = `${bg} px-4 py-3 rounded-xl shadow-lg text-xs sm:text-sm font-medium flex items-center gap-2.5 transition-all duration-300 transform translate-y-3 opacity-0`;
+      toast.innerHTML = `<i class="fa-solid ${icon}"></i><span>${message}</span>`;
+      
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-3', 'opacity-0');
+      }, 10);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
