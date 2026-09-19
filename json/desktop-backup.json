@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-09-19T09:58:21.048Z",
+  "exportedAt": "2026-09-19T09:59:35.920Z",
   "apps": [
     {
       "id": "app-1",
@@ -76,6 +76,13 @@
       "id": "app-1789811895408",
       "name": "화원고_대입면접종합시스템",
       "url": "https://hanmin-seven.vercel.app/#/home",
+      "target": "newtab",
+      "icon": "📁"
+    },
+    {
+      "id": "app-1789811920576",
+      "name": "화원고_대입면접 활동지",
+      "url": "https://ppakangna-svg.github.io/interview-record/",
       "target": "newtab",
       "icon": "📁"
     }
