@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-09-19T15:16:46.660Z",
+  "exportedAt": "2026-09-19T17:53:24.324Z",
   "apps": [
     {
       "id": "app-1",
@@ -26,14 +26,14 @@
     {
       "id": "app-1789710087650",
       "name": "스케쥴",
-      "url": "https://jeong-918.github.io/desktop/to-do.html",
+      "url": "https://jeong-918.github.io/desktop/app/to-do.html",
       "target": "newtab",
       "icon": "📝"
     },
     {
       "id": "app-1789710282082",
       "name": "5등급제환산",
-      "url": "https://jeong-918.github.io/desktop/5to9.html",
+      "url": "https://jeong-918.github.io/desktop/app/5to9.html",
       "target": "newtab",
       "icon": "📊"
     },
@@ -68,9 +68,23 @@
     {
       "id": "app-1789727698188",
       "name": "업무기록-이행",
-      "url": "https://jeong-918.github.io/desktop/sotong.html",
+      "url": "https://jeong-918.github.io/desktop/app/comm.html",
       "target": "newtab",
       "icon": "📝"
+    },
+    {
+      "id": "app-1789811895408",
+      "name": "화원고_대입면접종합시스템",
+      "url": "https://hanmin-seven.vercel.app/#/home",
+      "target": "newtab",
+      "icon": "📁"
+    },
+    {
+      "id": "app-1789811920576",
+      "name": "화원고_대입면접 활동지",
+      "url": "https://ppakangna-svg.github.io/interview-record/",
+      "target": "newtab",
+      "icon": "📁"
     }
   ],
   "settings": {
