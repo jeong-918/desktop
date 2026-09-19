@@ -1,0 +1,40 @@
+{
+  "appName": "소통 이행 관리",
+  "exportedAt": "2026-09-19T08:29:38.660Z",
+  "version": 1,
+  "data": {
+    "categories": [
+      {
+        "id": "category-1789727741661-shxtnf5",
+        "name": "파인만컨설팅",
+        "color": "#5b6ee1"
+      },
+      {
+        "id": "category-1789727750094-2406egk",
+        "name": "입시자습관",
+        "color": "#f15079"
+      },
+      {
+        "id": "category-1789727777204-akof5p9",
+        "name": "제휴협업",
+        "color": "#00faa7"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "task-1789727877829-cqn4h7p",
+        "categoryId": "category-1789727741661-shxtnf5",
+        "person": "박우진",
+        "title": "고전기반현대사회연구 : 선정됨. 그래서 시험 후 진행할 듯",
+        "firstDate": "2026-09-18",
+        "dueDate": "2026-10-05",
+        "followupDate": "2026-10-07",
+        "priority": "normal",
+        "status": "before",
+        "note": "고전기반현대사회연구 관련 주제, 역할, 이행과정. 선생님 서포트 등 체크 필요",
+        "createdAt": "2026-09-18T10:37:57.829Z",
+        "completedAt": null
+      }
+    ]
+  }
+}
