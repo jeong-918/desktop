@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -595,6 +596,14 @@
     </div>
 
     <div class="taskbar-right">
+      <button class="taskbar-btn" id="btn-sync-pull" title="GitHub 서버 백업으로 이 기기 데이터 교체">
+        <span>☁️</span>
+        <span class="btn-label">동기화</span>
+      </button>
+      <button class="taskbar-btn" id="btn-sync-settings" title="GitHub 자동 동기화 설정 (토큰)">
+        <span>🔑</span>
+        <span class="btn-label">자동동기화</span>
+      </button>
       <button class="taskbar-btn" id="btn-settings" title="바탕화면 설정">
         <span>🎨</span>
         <span class="btn-label">바탕화면 설정</span>
@@ -755,6 +764,32 @@
     </div>
   </div>
 
+  <!-- GitHub 자동 동기화 설정 모달 -->
+  <div class="modal-backdrop" id="sync-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">GitHub 자동 동기화 설정</div>
+        <button class="modal-close-btn" id="sync-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Access Token (fine-grained)</label>
+          <input type="password" class="form-input" id="sync-token-input" placeholder="github_pat_..." />
+          <div class="form-hint">투두(to-do)에서 이미 발급받은 토큰을 그대로 붙여넣으면 됩니다. 새로 발급받을 필요 없습니다.<br>대상 저장소(desktop) / 권한: Contents Read and write.</div>
+        </div>
+        <label class="form-group" style="cursor: pointer; flex-direction: row; align-items: center; gap: 10px;">
+          <input type="checkbox" id="sync-auto-input" style="width: 18px; height: 18px; accent-color: #3b82f6;" />
+          <span style="font-size: 13px; font-weight: 500;">자동 백업 켜기 (수정하면 5초 후 자동 업로드)</span>
+        </label>
+        <div class="form-hint" id="sync-status-text">마지막 업로드: 기록 없음</div>
+      </div>
+      <div class="modal-footer">
+        <button class="taskbar-btn" id="sync-cancel-btn">닫기</button>
+        <button class="taskbar-btn primary" id="sync-save-btn">저장</button>
+      </div>
+    </div>
+  </div>
+
   <!-- 우클릭 컨텍스트 메뉴 -->
   <div id="context-menu">
     <div class="context-menu-item" id="ctx-run">▶️ 실행</div>
@@ -833,10 +868,12 @@
 
     function saveApps() {
       localStorage.setItem("web_desktop_apps", JSON.stringify(apps));
+      scheduleAutoPush(); // 앱 목록 변경 시 자동 업로드 예약
     }
 
     function saveSettings() {
       localStorage.setItem("web_desktop_settings", JSON.stringify(settings));
+      scheduleAutoPush(); // 바탕화면 설정 변경 시 자동 업로드 예약
     }
 
     // --- 스타일 적용 ---
@@ -1226,9 +1263,217 @@
       return div.innerHTML;
     }
 
+    // --- GitHub 자동 동기화 (Contents API) ---
+    // 대상 저장소: jeong-918.github.io/desktop (이 파일은 저장소 루트의 index.html)
+    const GITHUB_SYNC = {
+      owner: "jeong-918",
+      repo: "desktop",
+      branch: "main",
+      path: "json/desktop-backup.json"
+    };
+    const SERVER_JSON_URL = "./json/desktop-backup.json"; // 저장소 json 폴더의 백업 파일
+    const SYNC_KEY_TOKEN = "sync_github_token";       // 토큰 (기기별 브라우저에만 저장)
+    const SYNC_KEY_AUTO  = "sync_github_auto_upload";  // 자동 백업 사용 여부
+    const SYNC_KEY_LAST  = "sync_last_upload_time";    // 마지막 업로드 시각
+    const SYNC_KEY_LOCAL = "sync_local_updated_at";    // 로컬 데이터 마지막 수정 시각
+
+    function getSyncToken() { return localStorage.getItem(SYNC_KEY_TOKEN) || ""; }
+    function isAutoUpload() { return localStorage.getItem(SYNC_KEY_AUTO) === "true"; }
+
+    // UTF-8 안전 Base64 인코딩 (대용량 대비 청크 처리)
+    function utf8ToBase64(str) {
+      const bytes = new TextEncoder().encode(str);
+      let binary = "";
+      for (let i = 0; i < bytes.length; i += 0x8000) {
+        binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+      }
+      return btoa(binary);
+    }
+
+    // 백업 데이터 객체 생성 (exportedAt에 저장 시각 기록 -> 기기 간 신선도 비교에 사용)
+    function buildBackupData() {
+      return {
+        version: "1.0",
+        exportedAt: new Date().toISOString(),
+        apps: apps,
+        settings: settings
+      };
+    }
+
+    // 간단 토스트 알림 (동기화 피드백용)
+    function showToast(msg) {
+      let t = document.getElementById("sync-toast");
+      if (!t) {
+        t = document.createElement("div");
+        t.id = "sync-toast";
+        t.style.cssText = "position:fixed;bottom:76px;left:50%;transform:translateX(-50%);background:#1e293b;color:#fff;padding:10px 18px;border-radius:10px;border:1px solid rgba(255,255,255,.2);font-size:13px;z-index:3000;box-shadow:0 8px 24px rgba(0,0,0,.4);opacity:0;transition:opacity .3s;pointer-events:none;";
+        document.body.appendChild(t);
+      }
+      t.textContent = msg;
+      t.style.opacity = "1";
+      clearTimeout(t._timer);
+      t._timer = setTimeout(() => { t.style.opacity = "0"; }, 2600);
+    }
+
+    // [업로드] 현재 앱/설정을 GitHub 저장소 json/desktop-backup.json으로 커밋
+    async function pushToGitHub(silent) {
+      const token = getSyncToken();
+      if (!token) {
+        if (!silent) showToast("자동동기화 설정에서 토큰을 먼저 입력하세요.");
+        return false;
+      }
+      const apiUrl = `https://api.github.com/repos/${GITHUB_SYNC.owner}/${GITHUB_SYNC.repo}/contents/${GITHUB_SYNC.path}`;
+      const headers = {
+        "Authorization": `Bearer ${token}`,
+        "Accept": "application/vnd.github+json"
+      };
+      try {
+        if (!silent) showToast("GitHub에 업로드 중...");
+        // 기존 파일의 sha 조회 (파일 수정 커밋에는 필수)
+        let sha = null;
+        const getRes = await fetch(`${apiUrl}?ref=${GITHUB_SYNC.branch}`, { headers });
+        if (getRes.ok) sha = (await getRes.json()).sha;
+
+        const putRes = await fetch(apiUrl, {
+          method: "PUT",
+          headers,
+          body: JSON.stringify({
+            message: `데스크탑 자동 동기화 - ${new Date().toLocaleString("ko-KR")}`,
+            content: utf8ToBase64(JSON.stringify(buildBackupData(), null, 2)),
+            branch: GITHUB_SYNC.branch,
+            ...(sha && { sha })
+          })
+        });
+
+        if (putRes.ok) {
+          localStorage.setItem(SYNC_KEY_LAST, String(Date.now()));
+          updateSyncStatusText();
+          if (!silent) showToast("GitHub 업로드 완료!");
+          return true;
+        } else if (putRes.status === 409) {
+          if (!silent) showToast("충돌: 서버 파일이 변경되었습니다. 동기화(내려받기) 후 다시 시도하세요.");
+        } else if (putRes.status === 401 || putRes.status === 403) {
+          if (!silent) showToast("토큰 오류: 권한이 없거나 만료되었습니다.");
+        } else {
+          if (!silent) showToast(`업로드 실패 (${putRes.status})`);
+        }
+      } catch (err) {
+        console.error("업로드 오류:", err);
+        if (!silent) showToast("업로드 실패: 인터넷 연결을 확인하세요.");
+      }
+      return false;
+    }
+
+    // [자동 업로드 예약] 데이터가 바뀐 뒤 5초간 추가 변경이 없을 때 업로드 실행
+    let autoPushTimer = null;
+    let suppressAutoPush = false; // 서버 데이터 적용 시 재업로드 방지
+    function scheduleAutoPush() {
+      if (suppressAutoPush) return;
+      localStorage.setItem(SYNC_KEY_LOCAL, String(Date.now())); // 로컬 수정 시각 기록
+      if (!isAutoUpload()) return;
+      if (autoPushTimer) clearTimeout(autoPushTimer);
+      autoPushTimer = setTimeout(() => pushToGitHub(true), 5000);
+    }
+
+    // 서버 백업 데이터를 이 기기에 적용 (재업로드 유발 없이)
+    function applyServerData(parsed, serverTime) {
+      suppressAutoPush = true;
+      try {
+        if (Array.isArray(parsed.apps)) {
+          apps = parsed.apps;
+          localStorage.setItem("web_desktop_apps", JSON.stringify(apps));
+        }
+        if (parsed.settings) {
+          settings = { ...DEFAULT_SETTINGS, ...parsed.settings };
+          localStorage.setItem("web_desktop_settings", JSON.stringify(settings));
+        }
+        localStorage.setItem(SYNC_KEY_LOCAL, String(serverTime || Date.now()));
+        applySettings();
+        renderApps(document.getElementById("search-input").value);
+      } finally {
+        suppressAutoPush = false;
+      }
+    }
+
+    // [시작 시 자동 동기화] 페이지를 열 때 서버/로컬 중 더 최신 데이터를 자동 반영
+    async function autoSyncOnStart() {
+      if (!getSyncToken()) return; // 토큰이 없으면 수동 모드 유지
+      try {
+        const res = await fetch(`${SERVER_JSON_URL}?t=${Date.now()}`); // 캐시 우회
+        if (!res.ok) return;
+        const parsed = await res.json();
+        if (!parsed || !Array.isArray(parsed.apps)) return;
+
+        const serverTime = parsed.exportedAt ? new Date(parsed.exportedAt).getTime() : 0;
+        const localTime = Number(localStorage.getItem(SYNC_KEY_LOCAL) || 0);
+
+        if (serverTime > localTime) {
+          // 서버가 더 최신이면 이 기기로 자동 가져오기
+          if (!confirm("서버에 더 최신 데스크탑 설정이 있습니다. 이 기기로 가져올까요?")) return;
+          applyServerData(parsed, serverTime);
+          showToast("서버의 최신 설정을 가져왔습니다.");
+        } else if (localTime > serverTime && isAutoUpload()) {
+          // 로컬이 더 최신이면 자동으로 서버에 업로드
+          pushToGitHub(true);
+        }
+      } catch (err) {
+        console.error("시작 동기화 오류:", err);
+      }
+    }
+
+    // [수동 동기화] 서버 백업으로 이 기기 데이터 교체 (토큰 불필요)
+    async function loadFromServer() {
+      try {
+        showToast("서버에서 백업 데이터를 확인하는 중...");
+        const res = await fetch(`${SERVER_JSON_URL}?t=${Date.now()}`);
+        if (!res.ok) {
+          showToast("백업 파일을 찾을 수 없습니다. json 폴더의 desktop-backup.json을 확인하세요.");
+          return;
+        }
+        const parsed = await res.json();
+        if (!parsed || !Array.isArray(parsed.apps)) {
+          showToast("백업 파일 형식이 올바르지 않습니다.");
+          return;
+        }
+        const when = parsed.exportedAt ? new Date(parsed.exportedAt).toLocaleString("ko-KR") : "시점 미상";
+        if (!confirm(`서버 백업(${when})으로 이 기기의 데스크탑 설정을 교체할까요?`)) return;
+        applyServerData(parsed, parsed.exportedAt ? new Date(parsed.exportedAt).getTime() : 0);
+        showToast("서버 데이터 동기화 완료!");
+      } catch (err) {
+        console.error("서버 동기화 오류:", err);
+        showToast("동기화 실패: 인터넷 연결을 확인하세요.");
+      }
+    }
+
+    // --- 동기화 설정 모달 제어 ---
+    function openSyncModal() {
+      document.getElementById("sync-token-input").value = getSyncToken();
+      document.getElementById("sync-auto-input").checked = isAutoUpload();
+      updateSyncStatusText();
+      document.getElementById("sync-modal").classList.add("active");
+    }
+
+    function saveSyncSettings() {
+      localStorage.setItem(SYNC_KEY_TOKEN, document.getElementById("sync-token-input").value.trim());
+      localStorage.setItem(SYNC_KEY_AUTO, String(document.getElementById("sync-auto-input").checked));
+      closeModals();
+      showToast("동기화 설정이 저장되었습니다.");
+      // 토큰과 자동 백업이 모두 켜져 있으면 즉시 한 번 업로드 시도
+      if (getSyncToken() && isAutoUpload()) pushToGitHub(false);
+    }
+
+    function updateSyncStatusText() {
+      const el = document.getElementById("sync-status-text");
+      if (!el) return;
+      const last = Number(localStorage.getItem(SYNC_KEY_LAST) || 0);
+      el.textContent = last ? `마지막 업로드: ${new Date(last).toLocaleString("ko-KR")}` : "마지막 업로드: 기록 없음";
+    }
+
     // --- 초기화 및 이벤트 리스너 바인딩 ---
     window.addEventListener("DOMContentLoaded", () => {
       loadData();
+      autoSyncOnStart(); // 페이지 열 때 서버/로컬 데이터 비교 후 자동 동기화
+      updateSyncStatusText();
       applySettings();
       renderApps();
       updateClock();
@@ -1318,6 +1563,13 @@
           closeModals();
         }
       });
+
+      // GitHub 동기화 버튼
+      document.getElementById("btn-sync-pull").addEventListener("click", loadFromServer);
+      document.getElementById("btn-sync-settings").addEventListener("click", openSyncModal);
+      document.getElementById("sync-close").addEventListener("click", closeModals);
+      document.getElementById("sync-cancel-btn").addEventListener("click", closeModals);
+      document.getElementById("sync-save-btn").addEventListener("click", saveSyncSettings);
 
       // 컨텍스트 메뉴 리스너
       window.addEventListener("click", () => hideContextMenu());
