@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>소통 이행 관리</title>
+  <title>예정 업무 이행 기록</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -374,8 +375,8 @@
           <i class="fa-solid fa-comments"></i>
         </div>
         <div class="min-w-0">
-          <h1 class="truncate text-lg font-extrabold tracking-tight text-slate-900 md:text-xl">소통 이행 관리</h1>
-          <p class="hidden text-xs text-slate-500 sm:block">소통에서 발생한 업무를 기록하고 마감까지 관리합니다</p>
+          <h1 class="truncate text-lg font-extrabold tracking-tight text-slate-900 md:text-xl">예정 업무 이행 관리</h1>
+          <p class="hidden text-xs text-slate-500 sm:block">소통을 통해 발생한 업무를 기록하고 마감까지 관리합니다</p>
         </div>
       </div>
 
@@ -387,6 +388,15 @@
           <i class="fa-solid fa-upload mr-1.5"></i><span class="desktop-label">복원</span>
         </label>
         <input id="restoreInput" type="file" accept=".json,application/json" class="hidden" />
+        <button id="syncPullBtn" class="nav-btn rounded-xl px-3 py-2 text-sm font-semibold" title="GitHub 서버 백업으로 이 기기 데이터 교체">
+          <i class="fa-solid fa-cloud-arrow-down mr-1.5"></i><span class="desktop-label">동기화</span>
+        </button>
+        <button id="syncPushBtn" class="nav-btn rounded-xl px-3 py-2 text-sm font-semibold" title="지금 GitHub(json/comm-backup.json)에 업로드">
+          <i class="fa-solid fa-cloud-arrow-up mr-1.5"></i><span class="desktop-label">업로드</span>
+        </button>
+        <button id="syncSettingsBtn" class="nav-btn rounded-xl px-3 py-2 text-sm font-semibold" title="GitHub 자동 동기화 설정 (토큰)">
+          <i class="fa-solid fa-gear mr-1.5"></i><span class="desktop-label">동기화 설정</span>
+        </button>
         <span class="mx-1 hidden h-5 w-px bg-slate-200 sm:block"></span>
         <button id="todayBtn" class="rounded-xl border border-violet-200 bg-violet-50 px-3 py-2 text-sm font-bold text-violet-700 transition hover:bg-violet-100">
           <i class="fa-solid fa-crosshairs mr-1.5"></i><span class="desktop-label">오늘 확인</span>
@@ -737,6 +747,41 @@
     </div>
   </div>
 
+  <!-- GitHub 자동 동기화 설정 모달 -->
+  <div id="syncModal" class="modal-backdrop">
+    <div class="modal-panel" style="width:min(470px, 100%)">
+      <div class="flex items-center justify-between border-b border-slate-100 px-6 py-5">
+        <div>
+          <h2 class="text-lg font-extrabold text-slate-900">GitHub 자동 동기화 설정</h2>
+          <p class="mt-1 text-xs text-slate-500">토큰 입력 후 자동 백업을 켜면 수정 내역이 자동 저장됩니다.</p>
+        </div>
+        <button class="close-modal flex h-9 w-9 items-center justify-center rounded-xl text-slate-400 transition hover:bg-slate-100 hover:text-slate-700" data-close="syncModal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="space-y-5 p-6">
+        <label class="block">
+          <span class="mb-1.5 block text-xs font-bold text-slate-600">Access Token (fine-grained)</span>
+          <input id="syncTokenInput" type="password" class="input-base h-11 px-3 text-sm" placeholder="github_pat_..." />
+          <span class="mt-1.5 block text-[11px] leading-5 text-slate-400">기존에 발급받은 desktop 저장소용 토큰을 그대로 사용할 수 있습니다. 새로 발급받을 필요 없습니다.</span>
+        </label>
+
+        <label class="flex cursor-pointer items-center gap-2.5 rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm">
+          <input id="syncAutoInput" type="checkbox" class="h-4 w-4 accent-violet-600" />
+          <span class="font-semibold text-slate-700">자동 백업 켜기 (수정 후 5초 뒤 자동 업로드)</span>
+        </label>
+
+        <p id="syncStatusText" class="rounded-xl bg-slate-50 px-3 py-2.5 text-xs text-slate-500">마지막 업로드: 기록 없음</p>
+      </div>
+
+      <div class="flex justify-end gap-2 border-t border-slate-100 px-6 py-5">
+        <button class="close-modal rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-600 transition hover:bg-slate-50" data-close="syncModal">닫기</button>
+        <button id="syncSaveBtn" class="rounded-xl bg-violet-600 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-violet-700">저장</button>
+      </div>
+    </div>
+  </div>
+
   <div id="toast" class="toast">
     <i class="fa-solid fa-circle-check text-emerald-400"></i>
     <span id="toastMessage" class="text-sm font-medium"></span>
@@ -824,6 +869,7 @@
 
       function saveState() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        scheduleAutoPush(); // 데이터 변경 시 자동 업로드 예약
       }
 
       function getCategory(categoryId) {
@@ -1520,6 +1566,187 @@
         }
       });
 
+      // ---------- GitHub 자동 동기화 (Contents API) ----------
+      // 대상: jeong-918.github.io/desktop 저장소의 json/comm-backup.json
+      const GITHUB_SYNC = { owner: "jeong-918", repo: "desktop", branch: "main", path: "json/comm-backup.json" };
+      // 절대 URL 사용: 이 HTML이 저장소의 어느 폴더에 있어도 동일하게 동작
+      const SERVER_JSON_URL = "https://jeong-918.github.io/desktop/json/comm-backup.json";
+      const SYNC_KEY_TOKEN = "sync_github_token";       // 토큰 (기기별 브라우저에만 저장)
+      const SYNC_KEY_AUTO = "sync_github_auto_upload";  // 자동 백업 사용 여부
+      const SYNC_KEY_LAST = "sync_last_upload_time";   // 마지막 업로드 시각
+      const SYNC_KEY_LOCAL = "sync_local_updated_at";   // 로컬 데이터 마지막 수정 시각
+
+      const getSyncToken = () => localStorage.getItem(SYNC_KEY_TOKEN) || "";
+      const isAutoUpload = () => localStorage.getItem(SYNC_KEY_AUTO) === "true";
+
+      // UTF-8 안전 Base64 인코딩 (대용량 대비 청크 처리)
+      function utf8ToBase64(str) {
+        const bytes = new TextEncoder().encode(str);
+        let binary = "";
+        for (let i = 0; i < bytes.length; i += 0x8000) {
+          binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+        }
+        return btoa(binary);
+      }
+
+      // 백업 데이터 생성 (기존 백업 파일 형식과 동일 -> 복원 메뉴와도 호환)
+      function buildSyncData() {
+        return { appName: "소통 이행 관리", exportedAt: new Date().toISOString(), version: 1, data: state };
+      }
+
+      // [업로드] 현재 데이터를 GitHub 저장소 json/comm-backup.json으로 커밋
+      async function pushToGitHub(silent) {
+        const token = getSyncToken();
+        if (!token) {
+          if (!silent) showToast("동기화 설정에서 토큰을 먼저 입력하세요.", "fa-circle-exclamation", "text-amber-300");
+          return;
+        }
+        const apiUrl = `https://api.github.com/repos/${GITHUB_SYNC.owner}/${GITHUB_SYNC.repo}/contents/${GITHUB_SYNC.path}`;
+        const headers = { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github+json" };
+        try {
+          if (!silent) showToast("GitHub에 업로드 중...", "fa-cloud-arrow-up", "text-violet-300");
+          // 기존 파일의 sha 조회 (파일 수정 커밋에는 필수)
+          let sha = null;
+          const getRes = await fetch(`${apiUrl}?ref=${GITHUB_SYNC.branch}`, { headers });
+          if (getRes.ok) sha = (await getRes.json()).sha;
+
+          const putRes = await fetch(apiUrl, {
+            method: "PUT",
+            headers,
+            body: JSON.stringify({
+              message: `소통이행 자동 동기화 - ${new Date().toLocaleString("ko-KR")}`,
+              content: utf8ToBase64(JSON.stringify(buildSyncData(), null, 2)),
+              branch: GITHUB_SYNC.branch,
+              ...(sha && { sha })
+            })
+          });
+
+          if (putRes.ok) {
+            localStorage.setItem(SYNC_KEY_LAST, String(Date.now()));
+            updateSyncStatusText();
+            if (!silent) showToast("GitHub 업로드를 완료했습니다.", "fa-cloud-arrow-up");
+          } else if (putRes.status === 409) {
+            if (!silent) showToast("충돌: 서버 파일이 변경되었습니다. 동기화 후 다시 시도하세요.", "fa-circle-exclamation", "text-amber-300");
+          } else if (putRes.status === 401 || putRes.status === 403) {
+            if (!silent) showToast("토큰 오류: 권한이 없거나 만료되었습니다.", "fa-circle-exclamation", "text-rose-300");
+          } else {
+            if (!silent) showToast(`업로드 실패 (${putRes.status})`, "fa-circle-exclamation", "text-rose-300");
+          }
+        } catch (error) {
+          console.error("업로드 오류:", error);
+          if (!silent) showToast("업로드 실패: 인터넷 연결을 확인하세요.", "fa-circle-exclamation", "text-rose-300");
+        }
+      }
+
+      // [자동 업로드 예약] 데이터가 바뀐 뒤 5초간 추가 변경이 없을 때 업로드 실행
+      let autoPushTimer = null;
+      let suppressAutoPush = false; // 서버 데이터 적용 시 재업로드 방지
+      function scheduleAutoPush() {
+        if (suppressAutoPush) return;
+        localStorage.setItem(SYNC_KEY_LOCAL, String(Date.now())); // 로컬 수정 시각 기록
+        if (!isAutoUpload()) return;
+        if (autoPushTimer) clearTimeout(autoPushTimer);
+        autoPushTimer = setTimeout(() => pushToGitHub(true), 5000);
+      }
+
+      // 서버 백업 데이터를 이 기기에 적용 (재업로드 루프 방지)
+      function applyServerData(data, serverTime) {
+        suppressAutoPush = true;
+        try {
+          state = { categories: data.categories, tasks: data.tasks };
+          resetAllFilters();
+          saveState();
+          renderAll();
+          localStorage.setItem(SYNC_KEY_LOCAL, String(serverTime || Date.now()));
+        } finally {
+          suppressAutoPush = false;
+        }
+      }
+
+      // [시작 시 자동 동기화] 페이지를 열 때 서버/로컬 중 더 최신 데이터를 자동 반영
+      async function autoSyncOnStart() {
+        if (!getSyncToken()) return; // 토큰이 없으면 수동 모드 유지
+        try {
+          const res = await fetch(`${SERVER_JSON_URL}?t=${Date.now()}`); // 캐시 우회
+          if (!res.ok) return;
+          const parsed = await res.json();
+          const data = parsed?.data || parsed;
+          if (!Array.isArray(data.tasks) || !Array.isArray(data.categories)) return;
+
+          const serverTime = parsed.exportedAt ? new Date(parsed.exportedAt).getTime() : 0;
+          const localTime = Number(localStorage.getItem(SYNC_KEY_LOCAL) || 0);
+
+          if (serverTime > localTime) {
+            // 서버가 더 최신이면 확인 창을 띄워 자동 가져오기
+            showConfirm("최신 데이터 가져오기", "서버에 더 최신 백업 데이터가 있습니다. 이 기기로 가져올까요?", () => {
+              applyServerData(data, serverTime);
+              showToast("서버의 최신 데이터를 가져왔습니다.", "fa-cloud-arrow-down", "text-violet-300");
+            });
+          } else if (localTime > serverTime && isAutoUpload()) {
+            // 로컬이 더 최신이면 자동으로 서버에 업로드
+            pushToGitHub(true);
+          }
+        } catch (error) {
+          console.error("시작 동기화 오류:", error);
+        }
+      }
+
+      // [수동 동기화] 서버 백업으로 이 기기 데이터 교체 (토큰 불필요)
+      async function loadFromServer() {
+        try {
+          showToast("서버에서 백업 데이터를 확인하는 중...", "fa-cloud-arrow-down", "text-violet-300");
+          const res = await fetch(`${SERVER_JSON_URL}?t=${Date.now()}`);
+          if (!res.ok) {
+            showToast("백업 파일을 찾을 수 없습니다. json 폴더의 comm-backup.json을 확인하세요.", "fa-circle-exclamation", "text-amber-300");
+            return;
+          }
+          const parsed = await res.json();
+          const data = parsed?.data || parsed;
+          if (!Array.isArray(data.tasks) || !Array.isArray(data.categories)) {
+            showToast("백업 파일 형식이 올바르지 않습니다.", "fa-circle-exclamation", "text-amber-300");
+            return;
+          }
+          const when = parsed.exportedAt ? new Date(parsed.exportedAt).toLocaleString("ko-KR") : "시점 미상";
+          showConfirm("서버 데이터로 교체", `서버 백업(${when})으로 이 기기의 데이터를 교체할까요?`, () => {
+            applyServerData(data, parsed.exportedAt ? new Date(parsed.exportedAt).getTime() : 0);
+            showToast("서버 데이터 동기화를 완료했습니다.", "fa-cloud-arrow-down");
+          });
+        } catch (error) {
+          console.error("서버 동기화 오류:", error);
+          showToast("동기화 실패: 인터넷 연결을 확인하세요.", "fa-circle-exclamation", "text-rose-300");
+        }
+      }
+
+      // ---------- 동기화 설정 모달 제어 ----------
+      function openSyncModal() {
+        $("#syncTokenInput").value = getSyncToken();
+        $("#syncAutoInput").checked = isAutoUpload();
+        updateSyncStatusText();
+        openModal("syncModal");
+      }
+
+      function saveSyncSettings() {
+        localStorage.setItem(SYNC_KEY_TOKEN, $("#syncTokenInput").value.trim());
+        localStorage.setItem(SYNC_KEY_AUTO, String($("#syncAutoInput").checked));
+        closeModal("syncModal");
+        showToast("동기화 설정을 저장했습니다.", "fa-gear", "text-violet-300");
+        // 토큰과 자동 백업이 모두 켜져 있으면 즉시 한 번 업로드 시도
+        if (getSyncToken() && isAutoUpload()) pushToGitHub(false);
+      }
+
+      function updateSyncStatusText() {
+        const el = $("#syncStatusText");
+        if (!el) return;
+        const last = Number(localStorage.getItem(SYNC_KEY_LAST) || 0);
+        el.textContent = last ? `마지막 업로드: ${new Date(last).toLocaleString("ko-KR")}` : "마지막 업로드: 기록 없음";
+      }
+
+      // 동기화 버튼 이벤트 연결
+      $("#syncPullBtn").addEventListener("click", loadFromServer);
+      $("#syncPushBtn").addEventListener("click", () => pushToGitHub(false));
+      $("#syncSettingsBtn").addEventListener("click", openSyncModal);
+      $("#syncSaveBtn").addEventListener("click", saveSyncSettings);
+
       // 데이터 백업 파일을 생성합니다.
       $("#backupBtn").addEventListener("click", () => {
         const backup = {
@@ -1612,6 +1839,8 @@
       $("#newFirstDate").value = getTodayString();
       setTodayText();
       renderAll();
+      autoSyncOnStart(); // 페이지 열 때 서버/로컬 데이터 비교 후 자동 동기화
+      updateSyncStatusText();
     });
   </script>
 </body>
