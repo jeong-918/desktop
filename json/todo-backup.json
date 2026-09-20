@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-09-20T13:13:19.849Z",
+  "exportedAt": "2026-09-20T13:27:46.847Z",
   "categories": [
     {
       "id": "cat_1789710672289",
@@ -24,7 +24,7 @@
       "title": "김민서 수업일정 픽스본 학원에 통보",
       "categoryId": "cat_1789710672289",
       "date": "2026-09-20",
-      "status": "TODO",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1789710750801
@@ -34,8 +34,8 @@
       "title": "민서 9/30 수업 시작관련 최종 픽스",
       "categoryId": "cat_1789710672289",
       "date": "2026-09-20",
-      "status": "TODO",
-      "memo": "",
+      "status": "DONE",
+      "memo": "10/1목요일 오후 5시로 최종 픽스",
       "time": "",
       "createdAt": 1789710774537
     },
@@ -338,16 +338,6 @@
       "memo": "",
       "time": "",
       "createdAt": 1789804224009
-    },
-    {
-      "id": "todo_1789805366608_w9cy",
-      "title": "테스트 일정",
-      "categoryId": "cat_1789710714008",
-      "date": "2026-09-21",
-      "status": "TODO",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789805366608
     }
   ]
 }
