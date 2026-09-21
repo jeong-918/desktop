@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-09-21T08:44:29.922Z",
+  "exportedAt": "2026-09-21T08:45:48.972Z",
   "version": 3,
   "data": {
     "students": [
@@ -55,38 +55,38 @@
       {
         "id": "stu_9",
         "name": "서준호",
-        "school": "",
-        "grade": ""
+        "school": "미강고등학교",
+        "grade": "2"
       },
       {
         "id": "stu_10",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "이선호",
+        "school": "미강고등학교",
+        "grade": "1"
       },
       {
         "id": "stu_11",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "김보민",
+        "school": "미강고등학교",
+        "grade": "1"
       },
       {
         "id": "stu_12",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "김수연",
+        "school": "미사고등학교",
+        "grade": "2"
       },
       {
         "id": "stu_13",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "양민경",
+        "school": "미사고등학교",
+        "grade": "2"
       },
       {
         "id": "stu_14",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "임예린",
+        "school": "미사고등학교",
+        "grade": "2"
       },
       {
         "id": "stu_15",
@@ -114,18 +114,22 @@
       },
       {
         "id": "stu_19",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "이윤서",
+        "school": "미사고등학교",
+        "grade": "2"
       },
       {
         "id": "stu_20",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "최정우",
+        "school": "미강고등학교",
+        "grade": "2"
       }
     ],
-    "schedules": {},
+    "schedules": {
+      "stu_1": {
+        "2026-09-21": {}
+      }
+    },
     "attendance": {},
     "studyLogs": [],
     "counseling": [],
