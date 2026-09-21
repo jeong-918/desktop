@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-09-21T09:22:29.579Z",
+  "exportedAt": "2026-09-21T09:24:02.593Z",
   "version": 3,
   "data": {
     "students": [
@@ -66,27 +66,27 @@
       },
       {
         "id": "stu_11",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "김보민",
+        "school": "미강고",
+        "grade": "1"
       },
       {
         "id": "stu_12",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "김수연",
+        "school": "미사고",
+        "grade": "2"
       },
       {
         "id": "stu_13",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "양민경",
+        "school": "미사고",
+        "grade": "2"
       },
       {
         "id": "stu_14",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "임예린",
+        "school": "미사고",
+        "grade": "2"
       },
       {
         "id": "stu_15",
@@ -114,15 +114,15 @@
       },
       {
         "id": "stu_19",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "이윤서",
+        "school": "미사고",
+        "grade": "2"
       },
       {
         "id": "stu_20",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "최정우",
+        "school": "미강고",
+        "grade": "2"
       }
     ],
     "schedules": {
@@ -130,7 +130,38 @@
         "2026-09-21": {}
       }
     },
-    "attendance": {},
+    "attendance": {
+      "stu_1": {
+        "2026-09-21": {
+          "status": "미입실(학원)",
+          "time": ""
+        }
+      },
+      "stu_2": {
+        "2026-09-21": {
+          "status": "미입실(학원)",
+          "time": ""
+        }
+      },
+      "stu_3": {
+        "2026-09-21": {
+          "status": "미입실(학원)",
+          "time": ""
+        }
+      },
+      "stu_4": {
+        "2026-09-21": {
+          "status": "미입실(학원)",
+          "time": ""
+        }
+      },
+      "stu_5": {
+        "2026-09-21": {
+          "status": "미입실(학원)",
+          "time": ""
+        }
+      }
+    },
     "studyLogs": [],
     "counseling": [],
     "requests": [],
