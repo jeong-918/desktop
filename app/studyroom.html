@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>학습관리 통합 시스템</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ["Pretendard", "sans-serif"] },
+          colors: {
+            navy: { 900: "#14213d", 800: "#1c2e54", 700: "#243b6b" },
+            gold: "#c9a227"
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    html, body { font-family: Pretendard, sans-serif; background: #eef1f6; }
+    .view { display: none; }
+    .view.active { display: block; }
+    .nav-btn.active { background: #c9a227; color: #14213d; }
+    .sch-input { width: 4.6rem; text-align: center; font-size: 12px; }
+    .sticky-col { position: sticky; left: 0; background: #fff; z-index: 2; }
+    .chart-box { position: relative; height: 240px; }
+    .chart-box.sm { height: 180px; }
+    .chart-box.lg { height: 280px; }
+    @page { size: A4; margin: 10mm; }
+    @media print {
+      body { background: #fff !important; }
+      .no-print { display: none !important; }
+      main, aside { display: none !important; }
+      #print-root { display: block !important; box-shadow: none !important; }
+    }
+    .a4-sheet {
+      width: 210mm;
+      min-height: 297mm;
+      background: #fff;
+      color: #111;
+      padding: 12mm;
+      box-sizing: border-box;
+    }
+    .heat { height: 18px; border-radius: 3px; }
+  </style>
+</head>
+<body class="min-h-screen text-slate-800">
+  <div class="flex min-h-screen">
+    <aside class="no-print w-64 shrink-0 bg-navy-900 text-white flex flex-col">
+      <div class="px-5 py-6 border-b border-white/10">
+        <p class="text-gold text-xs tracking-widest font-semibold">ACADEMY SUITE</p>
+        <h1 class="text-lg font-bold mt-1 leading-snug">학습관리 통합 시스템</h1>
+        <p class="text-white/60 text-xs mt-2" id="today-label"></p>
+      </div>
+      <nav class="flex-1 p-3 space-y-1 text-sm" id="side-nav"></nav>
+      <div class="p-4 border-t border-white/10 space-y-2 text-xs">
+        <button id="btn-export" class="w-full bg-white/10 hover:bg-white/20 rounded-lg py-2 transition"><i class="fa-solid fa-download mr-1"></i>데이터 백업</button>
+        <label class="w-full bg-white/10 hover:bg-white/20 rounded-lg py-2 transition block text-center cursor-pointer">
+          <i class="fa-solid fa-upload mr-1"></i>데이터 복원
+          <input id="btn-import" type="file" accept="application/json" class="hidden" />
+        </label>
+        <button id="btn-sync-pull" class="w-full bg-white/10 hover:bg-white/20 rounded-lg py-2 transition" title="GitHub 서버 백업으로 이 기기 데이터 교체"><i class="fa-solid fa-cloud-arrow-down mr-1"></i>서버 동기화</button>
+        <button id="btn-sync-push" class="w-full bg-white/10 hover:bg-white/20 rounded-lg py-2 transition" title="지금 GitHub(json/studyroom-backup.json)에 업로드"><i class="fa-solid fa-cloud-arrow-up mr-1"></i>서버 업로드</button>
+        <button id="btn-sync-settings" class="w-full bg-white/10 hover:bg-white/20 rounded-lg py-2 transition" title="GitHub 자동 동기화 설정"><i class="fa-solid fa-gear mr-1"></i>자동동기화 설정</button>
+      </div>
+    </aside>
+
+    <main class="flex-1 min-w-0">
+      <header class="no-print bg-white border-b px-6 py-4 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 id="view-title" class="text-xl font-bold text-navy-900">대시보드</h2>
+          <p id="view-sub" class="text-sm text-slate-500">선택 날짜의 업무와 전날 미확인 건을 확인합니다.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="btn-prev" class="h-9 w-9 rounded-lg border hover:bg-slate-50"><i class="fa-solid fa-chevron-left"></i></button>
+          <input id="anchor-date" type="date" class="border rounded-lg px-3 py-1.5 text-sm" />
+          <button id="btn-next" class="h-9 w-9 rounded-lg border hover:bg-slate-50"><i class="fa-solid fa-chevron-right"></i></button>
+          <button id="btn-today" class="px-3 h-9 rounded-lg bg-navy-900 text-white text-sm">오늘</button>
+        </div>
+      </header>
+      <div class="p-6">
+        <section class="view active" id="view-dashboard"></section>
+        <section class="view" id="view-students"></section>
+        <section class="view" id="view-schedule"></section>
+        <section class="view" id="view-attend"></section>
+        <section class="view" id="view-study"></section>
+        <section class="view" id="view-week-report"></section>
+        <section class="view" id="view-month-report"></section>
+        <section class="view" id="view-counsel"></section>
+        <section class="view" id="view-requests"></section>
+        <section class="view" id="view-work"></section>
+        <section class="view" id="view-stats"></section>
+      </div>
+    </main>
+  </div>
+  <!-- GitHub 자동 동기화 설정 모달 -->
+  <div id="sync-modal" class="hidden fixed inset-0 z-[100] items-center justify-center p-4 no-print" style="background:rgba(15,23,42,.55);">
+    <div class="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-slate-900">GitHub 자동 동기화 설정</h3>
+        <button id="sync-modal-close" class="text-slate-400 hover:text-slate-700 text-xl leading-none">&times;</button>
+      </div>
+      <label class="block text-xs font-bold text-slate-600 mb-1.5">Access Token (fine-grained)</label>
+      <input id="sync-token-input" type="password" placeholder="github_pat_..." class="w-full border rounded-lg px-3 py-2.5 text-sm mb-1.5" />
+      <p class="text-[11px] text-slate-400 leading-5 mb-4">기존에 발급받은 desktop 저장소용 토큰을 그대로 사용하세요. 새로 발급받을 필요 없으며, 토큰은 이 기기 브라우저에만 저장됩니다.</p>
+      <label class="flex items-center gap-2.5 bg-slate-50 border rounded-xl p-3 text-sm cursor-pointer mb-3">
+        <input id="sync-auto-input" type="checkbox" class="w-4 h-4" />
+        <span class="font-semibold text-slate-700">자동 백업 켜기 (수정 후 5초 뒤 자동 업로드)</span>
+      </label>
+      <p id="sync-status-text" class="text-xs text-slate-500 bg-slate-50 rounded-lg px-3 py-2 mb-5">마지막 업로드: 기록 없음</p>
+      <div class="flex justify-end gap-2">
+        <button id="sync-cancel-btn" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold">닫기</button>
+        <button id="sync-save-btn" class="px-5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold">저장</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="print-root" class="hidden"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const STORAGE_KEY = "academy_suite_v3";
+      const MAX_STUDENTS = 20;
+      const DAYS = ["월", "화", "수", "목", "금", "토", "일"];
+      const HOURS = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+      const SUBJECTS = ["국어", "수학", "영어", "과학", "사회", "기타"];
+      const STUDY_TYPES = ["복습", "예습", "과제", "문제풀이", "수행평가", "기타학습", "영단어", "오답정리"];
+      const EVALS = ["학습완료", "보완필요", "미완료"];
+      const EVAL_MIGRATE = { "O": "학습완료", "△": "보완필요", "X": "미완료", "x": "미완료" };
+      const ATTEND = ["입실", "지각", "중도입실", "병결", "미입실(학원)", "미입실(기타)", "미입실(무단)"];
+      const PRESENT = ["입실", "지각", "중도입실"];
+      const SUBJECT_COLOR = { "국어": "#3b82f6", "수학": "#ef4444", "영어": "#10b981", "과학": "#8b5cf6", "사회": "#f59e0b", "기타": "#64748b" };
+      const TYPE_COLOR = {
+        "복습": "#2563eb", "예습": "#059669", "과제": "#d97706", "문제풀이": "#dc2626",
+        "수행평가": "#7c3aed", "기타학습": "#475569", "영단어": "#0ea5e9", "오답정리": "#be123c"
+      };
+      const EVAL_COLOR = { "학습완료": "#059669", "보완필요": "#d97706", "미완료": "#dc2626" };
+      const ATTEND_COLOR = {
+        "입실": "bg-emerald-100 text-emerald-800",
+        "지각": "bg-amber-100 text-amber-800",
+        "중도입실": "bg-sky-100 text-sky-800",
+        "병결": "bg-orange-100 text-orange-800",
+        "미입실(학원)": "bg-indigo-100 text-indigo-800",
+        "미입실(기타)": "bg-slate-100 text-slate-700",
+        "미입실(무단)": "bg-rose-100 text-rose-800"
+      };
+      const NAV = [
+        { id: "dashboard", icon: "fa-table-columns", title: "대시보드", sub: "선택 날짜의 업무와 전날 미확인 건을 확인합니다." },
+        { id: "students", icon: "fa-user-graduate", title: "학생 명단", sub: "최대 20명의 이름, 학교, 학년을 관리합니다." },
+        { id: "schedule", icon: "fa-calendar-week", title: "주간 스케줄", sub: "월~일, 10시~22시, 칸당 5글자, 방향키로 이동." },
+        { id: "attend", icon: "fa-clipboard-check", title: "출석 체크", sub: "당일 기준 일괄 적용과 개별 출석 상태를 기록합니다." },
+        { id: "study", icon: "fa-book-open", title: "학습 기록", sub: "과목·유형·완료평가·시간대로 순수 공부시간을 집계합니다." },
+        { id: "week-report", icon: "fa-chart-column", title: "주간 리포트", sub: "한 주 데이터를 A4 시각화 리포트로 출력합니다." },
+        { id: "month-report", icon: "fa-calendar", title: "월간 리포트", sub: "한 달치를 모아 학습 리포트를 만듭니다." },
+        { id: "counsel", icon: "fa-comments", title: "담임선생님 의견", sub: "학생별 담임선생님 의견을 기록하고 복사합니다." },
+        { id: "requests", icon: "fa-bell", title: "사전 요청", sub: "날짜별 사전 요청사항을 기록하고 확인합니다." },
+        { id: "work", icon: "fa-handshake", title: "업무 협조", sub: "업무 협조 및 참고 공유를 날짜별로 입력합니다." },
+        { id: "stats", icon: "fa-chart-pie", title: "기간 학습 통계", sub: "주간·월별 개별/전체 통계로 학습을 분석합니다." }
+      ];
+
+      let db = load();
+      let currentView = "dashboard";
+      let anchor = new Date();
+      let selectedStudentId = db.students[0].id;
+      let reportStudentId = selectedStudentId;
+      let statsPeriod = "week";
+      let statsScope = "one";
+      let charts = {};
+
+      const $ = (sel) => document.querySelector(sel);
+
+      function uid(prefix) {
+        return prefix + "_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+      }
+      function pad(n) { return String(n).padStart(2, "0"); }
+      function toISO(d) {
+        const x = new Date(d);
+        return x.getFullYear() + "-" + pad(x.getMonth() + 1) + "-" + pad(x.getDate());
+      }
+      function parseISO(s) {
+        const [y, m, dd] = String(s).split("-").map(Number);
+        return new Date(y, m - 1, dd);
+      }
+      function addDays(d, n) {
+        const x = new Date(d);
+        x.setDate(x.getDate() + n);
+        return x;
+      }
+      function mondayOf(d) {
+        const x = new Date(d);
+        const day = x.getDay();
+        const diff = day === 0 ? -6 : 1 - day;
+        x.setDate(x.getDate() + diff);
+        x.setHours(0, 0, 0, 0);
+        return x;
+      }
+      function weekDates(d) { return DAYS.map((_, i) => addDays(mondayOf(d), i)); }
+      function weekLabel(d) {
+        const dates = weekDates(d);
+        return toISO(dates[0]) + " ~ " + toISO(dates[6]);
+      }
+      function monthKey(d) {
+        const x = new Date(d);
+        return x.getFullYear() + "-" + pad(x.getMonth() + 1);
+      }
+      function fmtMin(min) {
+        const h = Math.floor((min || 0) / 60);
+        const m = (min || 0) % 60;
+        return h + "시간 " + m + "분";
+      }
+      function studentName(id) {
+        const s = db.students.find((x) => x.id === id);
+        if (!s) return "미지정";
+        return s.name || ("학생 " + String(db.students.indexOf(s) + 1).padStart(2, "0"));
+      }
+      function studentMeta(id) {
+        const s = db.students.find((x) => x.id === id);
+        if (!s) return "";
+        return [s.school, s.grade].filter(Boolean).join(" · ");
+      }
+      function minutesBetween(start, end) {
+        if (!start || !end) return 0;
+        const [sh, sm] = start.split(":").map(Number);
+        const [eh, em] = end.split(":").map(Number);
+        const a = sh * 60 + (sm || 0);
+        const b = eh * 60 + (em || 0);
+        return b > a ? b - a : 0;
+      }
+      function escapeHtml(str) {
+        return String(str || "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;");
+      }
+      function nowTime() {
+        const n = new Date();
+        return pad(n.getHours()) + ":" + pad(n.getMinutes());
+      }
+      function normEval(v) {
+        return EVAL_MIGRATE[v] || (EVALS.includes(v) ? v : "");
+      }
+      // 해당 월에 걸친 월~일 주를 1주차부터 부여 (날짜/7 분할 금지)
+      function monthWeeks(yy, mm) {
+        const last = new Date(yy, mm, 0).getDate();
+        const order = [];
+        const map = {};
+        for (let d = 1; d <= last; d++) {
+          const dt = new Date(yy, mm - 1, d);
+          const key = toISO(mondayOf(dt));
+          if (!map[key]) {
+            map[key] = { mondayISO: key, dates: [] };
+            order.push(map[key]);
+          }
+          map[key].dates.push(toISO(dt));
+        }
+        return order.map((w, i) => ({
+          ...w,
+          label: (i + 1) + "주차",
+          range: w.dates[0].slice(5) + " ~ " + w.dates[w.dates.length - 1].slice(5)
+        }));
+      }
+
+      function defaultStudents() {
+        return Array.from({ length: MAX_STUDENTS }, (_, i) => ({
+          id: "stu_" + (i + 1), name: "", school: "", grade: ""
+        }));
+      }
+      function load() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            parsed.students = parsed.students || defaultStudents();
+            parsed.schedules = parsed.schedules || {};
+            parsed.attendance = parsed.attendance || {};
+            parsed.studyLogs = (parsed.studyLogs || []).map((l) => ({ ...l, eval: EVAL_MIGRATE[l.eval] || l.eval }));
+            parsed.counseling = parsed.counseling || [];
+            parsed.requests = parsed.requests || [];
+            parsed.workNotes = parsed.workNotes || [];
+            return parsed;
+          }
+        } catch (e) {}
+        return {
+          students: defaultStudents(),
+          schedules: {},
+          attendance: {},
+          studyLogs: [],
+          counseling: [],
+          requests: [],
+          workNotes: []
+        };
+      }
+      function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(db)); scheduleAutoPush(); } // 데이터 변경 시 자동 업로드 예약
+
+      function studentSelect(id, selected) {
+        const cur = selected || reportStudentId;
+        return `<select id="${id}" class="border rounded-lg px-3 py-2 text-sm bg-white">
+          ${db.students.map((s) => `<option value="${s.id}" ${s.id === cur ? "selected" : ""}>${escapeHtml(studentName(s.id))}</option>`).join("")}
+        </select>`;
+      }
+
+      function buildNav() {
+        const nav = $("#side-nav");
+        nav.innerHTML = NAV.map((item) => `
+          <button data-view="${item.id}" class="nav-btn w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/10 transition flex items-center gap-3 ${item.id === currentView ? "active" : ""}">
+            <i class="fa-solid ${item.icon} w-5 text-center"></i><span>${item.title}</span>
+          </button>`).join("");
+        nav.querySelectorAll(".nav-btn").forEach((btn) => {
+          btn.addEventListener("click", () => switchView(btn.dataset.view));
+        });
+      }
+      function switchView(id) {
+        currentView = id;
+        const meta = NAV.find((n) => n.id === id);
+        $("#view-title").textContent = meta.title;
+        $("#view-sub").textContent = meta.sub;
+        document.querySelectorAll(".nav-btn").forEach((b) => b.classList.toggle("active", b.dataset.view === id));
+        document.querySelectorAll(".view").forEach((v) => v.classList.remove("active"));
+        $("#view-" + id).classList.add("active");
+        render();
+      }
+
+      function render() {
+        $("#today-label").textContent = toISO(new Date()) + " · " + ["일","월","화","수","목","금","토"][new Date().getDay()] + "요일";
+        $("#anchor-date").value = toISO(anchor);
+        const map = {
+          dashboard: renderDashboard, students: renderStudents, schedule: renderSchedule,
+          attend: renderAttend, study: renderStudy, "week-report": renderWeekReport,
+          "month-report": renderMonthReport, counsel: renderCounsel, requests: renderRequests,
+          work: renderWork, stats: renderStats
+        };
+        map[currentView]();
+      }
+
+      function kpi(label, value, icon, cls) {
+        return `<div class="bg-white rounded-2xl border p-4 flex items-center gap-3">
+          <div class="h-11 w-11 rounded-xl ${cls} flex items-center justify-center"><i class="fa-solid ${icon}"></i></div>
+          <div><p class="text-xs text-slate-500">${label}</p><p class="text-lg font-bold text-navy-900">${value}</p></div>
+        </div>`;
+      }
+      function subjectBars(logs) {
+        const tot = logs.reduce((a, b) => a + (b.minutes || 0), 0) || 1;
+        return SUBJECTS.map((sub) => {
+          const m = logs.filter((l) => l.subject === sub).reduce((a, b) => a + (b.minutes || 0), 0);
+          return `<div>
+            <div class="flex justify-between text-xs mb-1"><span>${sub}</span><span>${fmtMin(m)}</span></div>
+            <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full" style="width:${Math.round((m / tot) * 100)}%;background:${SUBJECT_COLOR[sub]}"></div></div>
+          </div>`;
+        }).join("");
+      }
+      function typeBars(logs) {
+        const tot = logs.reduce((a, b) => a + (b.minutes || 0), 0) || 1;
+        return STUDY_TYPES.map((t) => {
+          const m = logs.filter((l) => l.type === t).reduce((a, b) => a + (b.minutes || 0), 0);
+          return `<div>
+            <div class="flex justify-between text-xs mb-1"><span>${t}</span><span>${fmtMin(m)}</span></div>
+            <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full" style="width:${Math.round((m / tot) * 100)}%;background:${TYPE_COLOR[t]}"></div></div>
+          </div>`;
+        }).join("");
+      }
+
+      function dashItems(list, dateISO) {
+        const prevISO = toISO(addDays(parseISO(dateISO), -1));
+        const todayItems = list.filter((x) => x.date === dateISO);
+        const carry = list.filter((x) => x.date === prevISO && !x.checked);
+        return { todayItems, carry, prevISO };
+      }
+      function checkBtn(kind, id, checked) {
+        if (checked) return `<span class="text-[11px] text-emerald-600 font-semibold"><i class="fa-solid fa-check mr-1"></i>확인됨</span>`;
+        return `<button data-kind="${kind}" data-check="${id}" class="text-xs bg-navy-900 text-white rounded px-2 py-1">근무자 확인</button>`;
+      }
+      function bindCheck(root, onDone) {
+        root.querySelectorAll("[data-check]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const kind = btn.dataset.kind;
+            const id = btn.dataset.check;
+            const arr = kind === "rq" ? db.requests : db.workNotes;
+            const item = arr.find((x) => x.id === id);
+            if (item) {
+              item.checked = true;
+              item.checkedAt = toISO(new Date()) + " " + nowTime();
+              save();
+              onDone();
+            }
+          });
+        });
+      }
+
+      function renderDashboard() {
+        const day = toISO(anchor);
+        const week = weekDates(anchor);
+        const weekISO = week.map(toISO);
+        const reqPack = dashItems(db.requests, day);
+        const workPack = dashItems(db.workNotes, day);
+        const dayAttend = db.students.map((s) => ({ s, rec: (db.attendance[s.id] || {})[day] }));
+        const checked = dayAttend.filter((x) => x.rec && x.rec.status).length;
+        const weekStudy = db.studyLogs.filter((l) => weekISO.includes(l.date));
+        const weekMin = weekStudy.reduce((a, b) => a + (b.minutes || 0), 0);
+        const unconf = reqPack.carry.length + workPack.carry.length;
+        const opinions = db.counseling.filter((x) => weekISO.includes(x.date));
+
+        $("#view-dashboard").innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            ${kpi("선택일 출석 기록", checked + " / " + db.students.length + "명", "fa-user-check", "bg-emerald-50 text-emerald-700")}
+            ${kpi("이번 주 순수공부", fmtMin(weekMin), "fa-clock", "bg-indigo-50 text-indigo-700")}
+            ${kpi("선택일 미확인", (reqPack.todayItems.filter((x) => !x.checked).length + workPack.todayItems.filter((x) => !x.checked).length) + "건", "fa-bell", "bg-amber-50 text-amber-700")}
+            ${kpi("전날 미확인", unconf + "건", "fa-circle-exclamation", "bg-rose-50 text-rose-700")}
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            ${dashList("사전 요청사항", "fa-bell", "text-amber-500", reqPack, "rq")}
+            ${dashList("업무 협조 / 참고 공유", "fa-handshake", "text-sky-500", workPack, "wk")}
+            <div class="bg-white rounded-2xl border p-5 lg:col-span-2">
+              <h3 class="font-bold text-navy-900 mb-3"><i class="fa-solid fa-clipboard-check text-emerald-600 mr-2"></i>${day} 출석 현황</h3>
+              <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2">
+                ${dayAttend.map(({ s, rec }) => `
+                  <div class="border rounded-xl p-3">
+                    <p class="text-sm font-semibold truncate">${escapeHtml(studentName(s.id))}</p>
+                    <p class="text-[11px] text-slate-400 truncate">${escapeHtml(s.school || "-")}</p>
+                    <p class="mt-2 text-xs"><span class="px-2 py-0.5 rounded-full ${ATTEND_COLOR[rec?.status] || "bg-slate-100 text-slate-500"}">${rec?.status || "미기록"}</span></p>
+                    <p class="text-[11px] text-slate-500 mt-1">${rec?.time || ""}</p>
+                  </div>`).join("")}
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl border p-5">
+              <h3 class="font-bold text-navy-900 mb-3">선택 주 담임선생님 의견</h3>
+              ${opinions.length ? opinions.slice(0, 6).map((x) => `<div class="text-sm border-b py-2"><span class="font-semibold">${escapeHtml(studentName(x.studentId))}</span> <span class="text-slate-400 text-xs">${x.date}</span><p class="text-slate-600">${escapeHtml(x.content)}</p></div>`).join("") : `<p class="text-sm text-slate-400">담임선생님 의견이 없습니다.</p>`}
+            </div>
+            <div class="bg-white rounded-2xl border p-5">
+              <h3 class="font-bold text-navy-900 mb-3">선택 주 과목별 순수공부</h3>
+              <div class="space-y-2">${subjectBars(weekStudy)}</div>
+            </div>
+          </div>
+        `;
+        bindCheck($("#view-dashboard"), renderDashboard);
+      }
+      function dashList(title, icon, color, pack, kind) {
+        const row = (item, badge) => `
+          <div class="border rounded-xl p-3 mb-2 ${!item.checked && badge ? "bg-rose-50/50" : ""}">
+            <div class="flex justify-between items-center gap-2">
+              <div class="flex items-center gap-2">
+                ${item.kind ? `<span class="text-[11px] px-2 py-0.5 rounded-full ${item.kind === "협조" ? "bg-indigo-100 text-indigo-700" : "bg-slate-100"}">${item.kind}</span>` : ""}
+                <span class="text-xs text-slate-400">${item.studentId ? studentName(item.studentId) : (item.kind ? item.date : "전체")}</span>
+                ${badge ? `<span class="text-[10px] bg-rose-100 text-rose-700 px-1.5 py-0.5 rounded">${badge}</span>` : ""}
+              </div>
+              ${checkBtn(kind, item.id, item.checked)}
+            </div>
+            <p class="text-sm whitespace-pre-wrap mt-2">${escapeHtml(item.content)}</p>
+            ${item.checkedAt ? `<p class="text-[10px] text-slate-400 mt-1">확인 ${item.checkedAt}</p>` : ""}
+          </div>`;
+        const body = [
+          pack.todayItems.length ? pack.todayItems.map((x) => row(x, "")).join("") : `<p class="text-sm text-slate-400 mb-3">해당 날짜 항목이 없습니다.</p>`,
+          pack.carry.length ? `<p class="text-xs font-semibold text-rose-600 mt-3 mb-2">전날(${pack.prevISO}) 미확인</p>` + pack.carry.map((x) => row(x, "전날 미확인")).join("") : ""
+        ].join("");
+        return `<div class="bg-white rounded-2xl border p-5">
+          <h3 class="font-bold text-navy-900 mb-3"><i class="fa-solid ${icon} ${color} mr-2"></i>${title}</h3>
+          ${body}
+        </div>`;
+      }
+
+      function renderStudents() {
+        $("#view-students").innerHTML = `
+          <div class="bg-white rounded-2xl border overflow-hidden">
+            <div class="px-5 py-3 border-b flex justify-between items-center">
+              <p class="text-sm text-slate-500">최대 ${MAX_STUDENTS}명 · 빈 칸은 ‘학생 01’ 형식으로 표시됩니다.</p>
+              <span class="text-xs bg-navy-900 text-white px-2 py-1 rounded">${db.students.filter((s) => s.name).length}명 등록</span>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="min-w-full text-sm">
+                <thead class="bg-slate-50 text-slate-500">
+                  <tr><th class="px-4 py-2 text-left w-16">번호</th><th class="px-4 py-2 text-left">이름</th><th class="px-4 py-2 text-left">학교</th><th class="px-4 py-2 text-left">학년</th></tr>
+                </thead>
+                <tbody>
+                  ${db.students.map((s, i) => `
+                    <tr class="border-t">
+                      <td class="px-4 py-2 text-slate-400">${String(i + 1).padStart(2, "0")}</td>
+                      <td class="px-4 py-2"><input data-stu="${s.id}" data-f="name" maxlength="20" value="${escapeHtml(s.name)}" class="border rounded-lg px-2 py-1.5 w-full" placeholder="이름" /></td>
+                      <td class="px-4 py-2"><input data-stu="${s.id}" data-f="school" maxlength="30" value="${escapeHtml(s.school)}" class="border rounded-lg px-2 py-1.5 w-full" placeholder="학교" /></td>
+                      <td class="px-4 py-2"><input data-stu="${s.id}" data-f="grade" maxlength="12" value="${escapeHtml(s.grade)}" class="border rounded-lg px-2 py-1.5 w-full" placeholder="예: 고2" /></td>
+                    </tr>`).join("")}
+                </tbody>
+              </table>
+            </div>
+          </div>`;
+        $("#view-students").querySelectorAll("input").forEach((inp) => {
+          inp.addEventListener("change", () => {
+            const s = db.students.find((x) => x.id === inp.dataset.stu);
+            if (s) { s[inp.dataset.f] = inp.value.trim(); save(); }
+          });
+        });
+      }
+
+      function focusSchCell(day, hour) {
+        const el = document.querySelector(`.sch-input[data-day="${day}"][data-hour="${hour}"]`);
+        if (el) { el.focus(); el.select(); }
+      }
+      function moveSch(day, hour, key, shift) {
+        const hi = HOURS.indexOf(hour);
+        let nd = day, nh = hi;
+        if (key === "ArrowRight" || (key === "Tab" && !shift)) {
+          if (nd < 6) nd += 1;
+          else if (nh < HOURS.length - 1) { nd = 0; nh += 1; }
+        } else if (key === "ArrowLeft" || (key === "Tab" && shift)) {
+          if (nd > 0) nd -= 1;
+          else if (nh > 0) { nd = 6; nh -= 1; }
+        } else if (key === "ArrowDown" || (key === "Enter" && !shift)) {
+          if (nh < HOURS.length - 1) nh += 1;
+        } else if (key === "ArrowUp" || (key === "Enter" && shift)) {
+          if (nh > 0) nh -= 1;
+        } else return false;
+        focusSchCell(nd, HOURS[nh]);
+        return true;
+      }
+      function renderSchedule() {
+        const dates = weekDates(anchor);
+        if (!selectedStudentId) selectedStudentId = db.students[0].id;
+        const key = toISO(dates[0]);
+        if (!db.schedules[selectedStudentId]) db.schedules[selectedStudentId] = {};
+        if (!db.schedules[selectedStudentId][key]) db.schedules[selectedStudentId][key] = {};
+        const grid = db.schedules[selectedStudentId][key];
+
+        $("#view-schedule").innerHTML = `
+          <div class="bg-white rounded-2xl border p-4 mb-4 flex flex-wrap gap-3 items-center">
+            <label class="text-sm">학생</label>
+            ${studentSelect("sch-student", selectedStudentId)}
+            <span class="text-sm text-slate-500">${weekLabel(anchor)}</span>
+            <span class="text-xs text-slate-400">방향키·Tab·Enter로 칸 이동 (엑셀형)</span>
+            <button id="copy-last-week" class="ml-auto text-sm border rounded-lg px-3 py-2 hover:bg-slate-50"><i class="fa-regular fa-copy mr-1"></i>지난주 복사</button>
+            <button id="clear-week" class="text-sm border rounded-lg px-3 py-2 hover:bg-rose-50 text-rose-600">이번주 비우기</button>
+          </div>
+          <div class="bg-white rounded-2xl border overflow-auto">
+            <table class="min-w-full text-xs">
+              <thead class="bg-navy-900 text-white">
+                <tr>
+                  <th class="px-2 py-2 text-center">시간</th>
+                  ${dates.map((d, i) => `<th class="px-2 py-2 text-center">${DAYS[i]}<br><span class="font-normal text-white/70">${toISO(d).slice(5)}</span></th>`).join("")}
+                </tr>
+              </thead>
+              <tbody>
+                ${HOURS.map((h) => `
+                  <tr class="border-t">
+                    <td class="px-2 py-1 font-semibold bg-slate-50 whitespace-nowrap text-center">${pad(h)}:00–${pad(h + 1)}:00</td>
+                    ${DAYS.map((_, di) => {
+                      const val = (grid[di] && grid[di][h]) || "";
+                      return `<td class="px-1 py-1 text-center"><input maxlength="5" data-day="${di}" data-hour="${h}" value="${escapeHtml(val)}" class="sch-input border rounded px-1 py-1" /></td>`;
+                    }).join("")}
+                  </tr>`).join("")}
+              </tbody>
+            </table>
+          </div>
+          <p class="text-xs text-slate-400 mt-2">각 칸은 5글자까지 입력됩니다. ←→↑↓, Tab, Enter로 이동합니다.</p>`;
+        $("#sch-student").value = selectedStudentId;
+        $("#sch-student").addEventListener("change", (e) => {
+          selectedStudentId = e.target.value;
+          reportStudentId = selectedStudentId;
+          renderSchedule();
+        });
+        $("#view-schedule").querySelectorAll(".sch-input").forEach((inp) => {
+          inp.addEventListener("input", () => {
+            inp.value = Array.from(inp.value).slice(0, 5).join("");
+            const day = inp.dataset.day;
+            const hour = inp.dataset.hour;
+            if (!grid[day]) grid[day] = {};
+            grid[day][hour] = inp.value;
+            save();
+          });
+          inp.addEventListener("keydown", (e) => {
+            if (e.isComposing || e.keyCode === 229) return;
+            const keys = ["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown", "Tab", "Enter"];
+            if (!keys.includes(e.key)) return;
+            if (moveSch(Number(inp.dataset.day), Number(inp.dataset.hour), e.key, e.shiftKey)) e.preventDefault();
+          });
+          inp.addEventListener("focus", () => inp.select());
+        });
+        $("#copy-last-week").addEventListener("click", () => {
+          const prevKey = toISO(addDays(dates[0], -7));
+          const src = (db.schedules[selectedStudentId] || {})[prevKey];
+          if (!src) { alert("지난주 스케줄이 없습니다."); return; }
+          db.schedules[selectedStudentId][key] = JSON.parse(JSON.stringify(src));
+          save();
+          renderSchedule();
+        });
+        $("#clear-week").addEventListener("click", () => {
+          if (!confirm("이번 주 스케줄을 모두 지울까요?")) return;
+          db.schedules[selectedStudentId][key] = {};
+          save();
+          renderSchedule();
+        });
+      }
+
+      function ensureAttend(sid, date) {
+        if (!db.attendance[sid]) db.attendance[sid] = {};
+        if (!db.attendance[sid][date]) db.attendance[sid][date] = { status: "", time: "" };
+        return db.attendance[sid][date];
+      }
+
+      function renderAttend() {
+        const dates = weekDates(anchor);
+        const today = toISO(new Date());
+        $("#view-attend").innerHTML = `
+          <div class="bg-white rounded-2xl border p-4 mb-4 space-y-3">
+            <div class="flex flex-wrap gap-3 items-center">
+              <span class="text-sm text-slate-500">${weekLabel(anchor)}</span>
+              <span class="text-xs bg-navy-900 text-white px-2 py-1 rounded">당일 일괄: ${today}</span>
+            </div>
+            <div class="flex flex-wrap gap-2 items-center">
+              <label class="text-sm flex items-center gap-2"><input id="chk-all" type="checkbox" /> 전체 선택</label>
+              <select id="bulk-status" class="border rounded-lg px-2 py-2 text-sm">
+                ${ATTEND.map((a) => `<option>${a}</option>`).join("")}
+              </select>
+              <button id="bulk-apply" class="text-sm bg-indigo-600 text-white rounded-lg px-3 py-2">선택 학생 동일 적용</button>
+              <button id="fill-attend" class="text-sm bg-emerald-600 text-white rounded-lg px-3 py-2">전원 출석(입실)</button>
+              <button id="clear-attend" class="text-sm bg-slate-200 text-slate-800 rounded-lg px-3 py-2">전원 출석 해제</button>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl border overflow-auto">
+            <table class="min-w-max text-xs">
+              <thead class="bg-slate-50">
+                <tr>
+                  <th class="px-2 py-2 sticky-col">선택</th>
+                  <th class="px-3 py-2 sticky-col">학생</th>
+                  ${dates.map((d, i) => `<th class="px-3 py-2">${DAYS[i]} ${toISO(d).slice(5)}${toISO(d) === today ? " · 당일" : ""}</th>`).join("")}
+                </tr>
+              </thead>
+              <tbody>
+                ${db.students.map((s) => `
+                  <tr class="border-t">
+                    <td class="px-2 py-2 sticky-col text-center"><input type="checkbox" class="stu-chk" data-sid="${s.id}" /></td>
+                    <td class="px-3 py-2 sticky-col font-semibold whitespace-nowrap">${escapeHtml(studentName(s.id))}<div class="text-[10px] text-slate-400 font-normal">${escapeHtml(s.grade || "")}</div></td>
+                    ${dates.map((d) => {
+                      const iso = toISO(d);
+                      const rec = (db.attendance[s.id] || {})[iso] || { status: "", time: "" };
+                      return `<td class="px-2 py-2">
+                        <select data-sid="${s.id}" data-date="${iso}" data-f="status" class="border rounded px-1 py-1 w-32">
+                          <option value="">미기록</option>
+                          ${ATTEND.map((a) => `<option value="${a}" ${rec.status === a ? "selected" : ""}>${a}</option>`).join("")}
+                        </select>
+                        <input type="time" data-sid="${s.id}" data-date="${iso}" data-f="time" value="${rec.time || ""}" class="border rounded px-1 py-1 w-32 mt-1 block" />
+                      </td>`;
+                    }).join("")}
+                  </tr>`).join("")}
+              </tbody>
+            </table>
+          </div>`;
+        $("#view-attend").querySelectorAll("select[data-f], input[type=time]").forEach((el) => {
+          el.addEventListener("change", () => {
+            const rec = ensureAttend(el.dataset.sid, el.dataset.date);
+            rec[el.dataset.f] = el.value;
+            save();
+          });
+        });
+        $("#chk-all").addEventListener("change", (e) => {
+          $("#view-attend").querySelectorAll(".stu-chk").forEach((c) => { c.checked = e.target.checked; });
+        });
+        $("#bulk-apply").addEventListener("click", () => {
+          const ids = Array.from($("#view-attend").querySelectorAll(".stu-chk:checked")).map((c) => c.dataset.sid);
+          if (!ids.length) { alert("적용할 학생을 체크하세요."); return; }
+          const status = $("#bulk-status").value;
+          ids.forEach((sid) => {
+            const rec = ensureAttend(sid, today);
+            rec.status = status;
+            rec.time = rec.time || nowTime();
+          });
+          save();
+          renderAttend();
+        });
+        $("#fill-attend").addEventListener("click", () => {
+          db.students.forEach((s) => {
+            const rec = ensureAttend(s.id, today);
+            rec.status = "입실";
+            rec.time = rec.time || nowTime();
+          });
+          save();
+          renderAttend();
+        });
+        $("#clear-attend").addEventListener("click", () => {
+          if (!confirm("당일(" + today + ") 전원 출석 기록을 해제할까요?")) return;
+          db.students.forEach((s) => {
+            if (db.attendance[s.id]) db.attendance[s.id][today] = { status: "", time: "" };
+          });
+          save();
+          renderAttend();
+        });
+      }
+
+      function renderStudy() {
+        const dates = weekDates(anchor);
+        const weekISO = dates.map(toISO);
+        if (!selectedStudentId) selectedStudentId = db.students[0].id;
+        const logs = db.studyLogs
+          .filter((l) => l.studentId === selectedStudentId && weekISO.includes(l.date))
+          .sort((a, b) => (a.date + a.start).localeCompare(b.date + b.start));
+        const total = logs.reduce((a, b) => a + (b.minutes || 0), 0);
+        const doneRate = logs.length ? Math.round(logs.filter((l) => normEval(l.eval) === "학습완료").length / logs.length * 100) : 0;
+
+        $("#view-study").innerHTML = `
+          <div class="bg-white rounded-2xl border p-4 mb-4">
+            <div class="flex flex-wrap gap-3 items-end">
+              <label class="text-sm">학생<div>${studentSelect("st-student", selectedStudentId)}</div></label>
+              <label class="text-sm">날짜<input id="st-date" type="date" class="border rounded-lg px-2 py-2 block" value="${toISO(anchor)}" /></label>
+              <label class="text-sm">과목<select id="st-sub" class="border rounded-lg px-2 py-2 block">${SUBJECTS.map((s) => `<option>${s}</option>`).join("")}</select></label>
+              <label class="text-sm">학습유형<select id="st-type" class="border rounded-lg px-2 py-2 block">${STUDY_TYPES.map((s) => `<option>${s}</option>`).join("")}</select></label>
+              <label class="text-sm">완료평가<select id="st-eval" class="border rounded-lg px-2 py-2 block">${EVALS.map((s) => `<option>${s}</option>`).join("")}</select></label>
+              <label class="text-sm">시작<input id="st-start" type="time" value="10:00" class="border rounded-lg px-2 py-2 block" /></label>
+              <label class="text-sm">종료<input id="st-end" type="time" value="11:00" class="border rounded-lg px-2 py-2 block" /></label>
+              <label class="text-sm flex-1 min-w-[160px]">메모<input id="st-note" maxlength="40" class="border rounded-lg px-2 py-2 w-full block" placeholder="선택" /></label>
+              <button id="st-add" class="bg-navy-900 text-white rounded-lg px-4 py-2 h-10"><i class="fa-solid fa-plus mr-1"></i>추가</button>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+            ${kpi("이번 주 순수공부", fmtMin(total), "fa-clock", "bg-indigo-50 text-indigo-700")}
+            ${kpi("기록 건수", logs.length + "건", "fa-list", "bg-slate-50 text-slate-700")}
+            ${kpi("주간 평균(7일)", fmtMin(Math.round(total / 7)), "fa-chart-line", "bg-amber-50 text-amber-700")}
+            ${kpi("학습완료 비율", doneRate + "%", "fa-circle-check", "bg-emerald-50 text-emerald-700")}
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+            <div class="bg-white rounded-2xl border p-4"><h3 class="font-bold mb-3">과목별</h3>${subjectBars(logs)}</div>
+            <div class="bg-white rounded-2xl border p-4"><h3 class="font-bold mb-3">학습유형별</h3>${typeBars(logs)}</div>
+          </div>
+          <div class="bg-white rounded-2xl border overflow-auto">
+            <table class="min-w-full text-sm">
+              <thead class="bg-slate-50"><tr>
+                <th class="px-3 py-2 text-left">날짜</th><th class="px-3 py-2 text-left">시간대</th><th class="px-3 py-2 text-left">과목</th>
+                <th class="px-3 py-2 text-left">유형</th><th class="px-3 py-2 text-left">완료평가</th><th class="px-3 py-2 text-left">시간</th><th class="px-3 py-2 text-left">메모</th><th></th>
+              </tr></thead>
+              <tbody>
+                ${logs.length ? logs.map((l) => {
+                  const ev = normEval(l.eval);
+                  return `<tr class="border-t">
+                    <td class="px-3 py-2">${l.date}</td>
+                    <td class="px-3 py-2">${l.start}–${l.end}</td>
+                    <td class="px-3 py-2">${l.subject}</td>
+                    <td class="px-3 py-2">${l.type}</td>
+                    <td class="px-3 py-2 font-semibold" style="color:${EVAL_COLOR[ev] || "#64748b"}">${ev || "-"}</td>
+                    <td class="px-3 py-2">${fmtMin(l.minutes)}</td>
+                    <td class="px-3 py-2">${escapeHtml(l.note)}</td>
+                    <td class="px-3 py-2"><button data-del="${l.id}" class="text-rose-500 text-xs">삭제</button></td>
+                  </tr>`;
+                }).join("") : `<tr><td colspan="8" class="px-3 py-8 text-center text-slate-400">이번 주 학습 기록이 없습니다.</td></tr>`}
+              </tbody>
+            </table>
+          </div>`;
+        $("#st-student").value = selectedStudentId;
+        $("#st-student").addEventListener("change", (e) => {
+          selectedStudentId = e.target.value;
+          reportStudentId = selectedStudentId;
+          renderStudy();
+        });
+        $("#st-add").addEventListener("click", () => {
+          const start = $("#st-start").value;
+          const end = $("#st-end").value;
+          const minutes = minutesBetween(start, end);
+          if (!minutes) { alert("종료 시간이 시작 시간보다 뒤여야 합니다."); return; }
+          db.studyLogs.push({
+            id: uid("log"),
+            studentId: $("#st-student").value,
+            date: $("#st-date").value,
+            subject: $("#st-sub").value,
+            type: $("#st-type").value,
+            eval: $("#st-eval").value,
+            start, end, minutes,
+            note: $("#st-note").value.trim()
+          });
+          save();
+          selectedStudentId = $("#st-student").value;
+          renderStudy();
+        });
+        $("#view-study").querySelectorAll("[data-del]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            db.studyLogs = db.studyLogs.filter((l) => l.id !== btn.dataset.del);
+            save();
+            renderStudy();
+          });
+        });
+      }
+
+      function destroyCharts() {
+        Object.values(charts).forEach((c) => { try { c.destroy(); } catch (e) {} });
+        charts = {};
+      }
+      function yPlain() {
+        return { beginAtZero: true, title: { display: false }, ticks: { maxRotation: 0, minRotation: 0, font: { size: 10 } } };
+      }
+      function makeChart(id, cfg) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        charts[id] = new Chart(el, {
+          ...cfg,
+          options: { animation: false, responsive: true, maintainAspectRatio: false, ...(cfg.options || {}) }
+        });
+      }
+      function attendSummary(studentId, isoList) {
+        const tally = Object.fromEntries(ATTEND.map((a) => [a, 0]));
+        let recorded = 0;
+        isoList.forEach((iso) => {
+          const st = (db.attendance[studentId] || {})[iso]?.status;
+          if (st && tally[st] !== undefined) { tally[st] += 1; recorded += 1; }
+          else if (st) recorded += 1;
+        });
+        const present = PRESENT.reduce((a, k) => a + (tally[k] || 0), 0);
+        return { tally, recorded, present };
+      }
+      function dailyMinutes(logs, isoList) {
+        return isoList.map((iso) => logs.filter((l) => l.date === iso).reduce((a, b) => a + (b.minutes || 0), 0));
+      }
+      function evalBySubject(logs) {
+        return SUBJECTS.map((s) => {
+          const arr = logs.filter((l) => l.subject === s);
+          const n = arr.length;
+          const done = arr.filter((l) => normEval(l.eval) === "학습완료").length;
+          const mid = arr.filter((l) => normEval(l.eval) === "보완필요").length;
+          const no = arr.filter((l) => normEval(l.eval) === "미완료").length;
+          return { s, n, done, mid, no, rate: n ? Math.round((done / n) * 100) : 0 };
+        });
+      }
+      function opinionText(list, sid) {
+        const name = studentName(sid);
+        if (!list.length) return name + " 담임선생님 의견 없음";
+        return list.map((c) => "[" + name + "] " + c.date + "\n" + (c.content || "")).join("\n\n");
+      }
+      async function copyToClipboard(text) {
+        try {
+          await navigator.clipboard.writeText(text);
+          alert("복사했습니다.");
+        } catch (e) {
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          ta.remove();
+          alert("복사했습니다.");
+        }
+      }
+
+      function reportHeader(title, period, sid) {
+        return `<div class="flex justify-between items-end border-b-2 border-navy-900 pb-2 mb-3">
+          <div>
+            <p class="text-[10px] tracking-widest text-slate-500">LEARNING REPORT</p>
+            <h3 class="text-xl font-black text-navy-900">${title}</h3>
+            <p class="text-xs text-slate-500">${period}</p>
+          </div>
+          <div class="text-right text-sm">
+            <p class="font-bold">${escapeHtml(studentName(sid))}</p>
+            <p class="text-xs text-slate-500">${escapeHtml(studentMeta(sid) || "학교/학년 미입력")}</p>
+          </div>
+        </div>`;
+      }
+      function miniStat(k, v) {
+        return `<div class="border rounded p-2 text-center"><p class="text-[10px] text-slate-500">${k}</p><p class="font-bold text-sm">${v}</p></div>`;
+      }
+
+      function renderWeekReport() {
+        if (!reportStudentId) reportStudentId = db.students[0].id;
+        const dates = weekDates(anchor);
+        const isoList = dates.map(toISO);
+        const logs = db.studyLogs.filter((l) => l.studentId === reportStudentId && isoList.includes(l.date));
+        const total = logs.reduce((a, b) => a + (b.minutes || 0), 0);
+        const att = attendSummary(reportStudentId, isoList);
+        const daily = dailyMinutes(logs, isoList);
+        const schKey = isoList[0];
+        const grid = ((db.schedules[reportStudentId] || {})[schKey]) || {};
+        const opinions = db.counseling.filter((c) => c.studentId === reportStudentId && isoList.includes(c.date));
+        const ev = evalBySubject(logs);
+        const doneAll = logs.filter((l) => normEval(l.eval) === "학습완료").length;
+        const doneRate = logs.length ? Math.round(doneAll / logs.length * 100) : 0;
+
+        $("#view-week-report").innerHTML = `
+          <div class="no-print bg-white rounded-2xl border p-4 mb-4 flex flex-wrap gap-3 items-center">
+            <label class="text-sm">학생</label>
+            ${studentSelect("wr-student", reportStudentId)}
+            <span class="text-sm text-slate-500">${weekLabel(anchor)}</span>
+            <button id="wr-copy-op" class="text-sm border rounded-lg px-3 py-2">의견 복사</button>
+            <button id="wr-print" class="ml-auto bg-navy-900 text-white rounded-lg px-4 py-2 text-sm"><i class="fa-solid fa-print mr-1"></i>A4 인쇄</button>
+            <button id="wr-pdf" class="bg-gold text-navy-900 font-semibold rounded-lg px-4 py-2 text-sm"><i class="fa-solid fa-file-pdf mr-1"></i>PDF 저장</button>
+          </div>
+          <div id="week-sheet" class="a4-sheet mx-auto shadow-xl rounded-sm">
+            ${reportHeader("주간 학습 리포트", weekLabel(anchor), reportStudentId)}
+            <div class="grid grid-cols-4 gap-2 mb-4">
+              ${miniStat("순수 공부시간", fmtMin(total))}
+              ${miniStat("입실일", att.present + "일")}
+              ${miniStat("학습완료 비율", doneRate + "%")}
+              ${miniStat("학습 기록", logs.length + "건")}
+            </div>
+            <p class="text-[10px] text-slate-400 -mt-3 mb-3">입실일 = 입실 + 지각 + 중도입실</p>
+            <div class="grid grid-cols-2 gap-3 mb-4">
+              <div class="border rounded p-2"><p class="text-xs font-bold mb-1">과목별 공부시간 (분)</p><div class="chart-box"><canvas id="c-sub"></canvas></div></div>
+              <div class="border rounded p-2"><p class="text-xs font-bold mb-1">학습유형별 공부시간 (분)</p><div class="chart-box"><canvas id="c-type"></canvas></div></div>
+            </div>
+            <div class="border rounded p-2 mb-4"><p class="text-xs font-bold mb-1">요일별 순수공부시간 (분)</p><div class="chart-box sm"><canvas id="c-day"></canvas></div></div>
+            <div class="border rounded p-2 mb-4">
+              <div class="flex justify-between items-end mb-1">
+                <p class="text-xs font-bold">과목별 완료평가 (횟수 · 학습완료 비율)</p>
+                <p class="text-[10px] text-slate-500">전체 ${doneAll}/${logs.length || 0}건 학습완료 (${doneRate}%)</p>
+              </div>
+              <div class="chart-box sm"><canvas id="c-eval"></canvas></div>
+              <div class="grid grid-cols-6 gap-1 mt-2 text-[9px] text-center">
+                ${ev.map((r) => `<div class="border rounded py-1"><div class="font-semibold">${r.s}</div><div>${r.n}회</div><div style="color:${EVAL_COLOR["학습완료"]}">${r.n ? r.rate + "%" : "-"}</div></div>`).join("")}
+              </div>
+            </div>
+            <p class="text-xs font-bold mb-1">출석 타임라인</p>
+            <div class="grid grid-cols-7 gap-1 mb-4">
+              ${isoList.map((iso, i) => {
+                const rec = (db.attendance[reportStudentId] || {})[iso] || {};
+                return `<div class="border rounded p-1 text-center text-[11px]">
+                  <div class="font-semibold">${DAYS[i]}</div>
+                  <div>${iso.slice(5)}</div>
+                  <div class="mt-1 px-1 rounded ${ATTEND_COLOR[rec.status] || "bg-slate-100"}">${rec.status || "-"}</div>
+                  <div class="text-slate-500">${rec.time || ""}</div>
+                </div>`;
+              }).join("")}
+            </div>
+            <p class="text-xs font-bold mb-1">주간 스케줄 (10–22시)</p>
+            <table class="w-full text-[9px] border mb-4">
+              <thead><tr class="bg-slate-100"><th class="border p-0.5 text-center">시간</th>${DAYS.map((d) => `<th class="border p-0.5 text-center">${d}</th>`).join("")}</tr></thead>
+              <tbody>
+                ${HOURS.map((h) => `<tr><td class="border p-0.5 text-center">${pad(h)}</td>${DAYS.map((_, di) => `<td class="border p-0.5 text-center">${escapeHtml((grid[di] && grid[di][h]) || "")}</td>`).join("")}</tr>`).join("")}
+              </tbody>
+            </table>
+            <p class="text-xs font-bold mb-1">담임선생님 의견</p>
+            <div class="text-[11px] border rounded p-2 min-h-[48px] whitespace-pre-wrap">${opinions.length ? opinions.map((c) => "· " + c.date + " " + escapeHtml(c.content)).join("\n") : "없음"}</div>
+            <p class="text-[10px] text-slate-400 mt-3 text-right">출력일 ${toISO(new Date())}</p>
+          </div>`;
+        $("#wr-student").value = reportStudentId;
+        $("#wr-student").addEventListener("change", (e) => { reportStudentId = e.target.value; renderWeekReport(); });
+        $("#wr-copy-op").addEventListener("click", () => copyToClipboard(opinionText(opinions, reportStudentId)));
+        destroyCharts();
+        makeChart("c-sub", {
+          type: "bar",
+          data: { labels: SUBJECTS, datasets: [{ data: SUBJECTS.map((s) => logs.filter((l) => l.subject === s).reduce((a, b) => a + b.minutes, 0)), backgroundColor: SUBJECTS.map((s) => SUBJECT_COLOR[s]) }] },
+          options: { plugins: { legend: { display: false } }, scales: { y: yPlain(), x: { ticks: { maxRotation: 0, minRotation: 0 } } } }
+        });
+        makeChart("c-type", {
+          type: "doughnut",
+          data: { labels: STUDY_TYPES, datasets: [{ data: STUDY_TYPES.map((s) => logs.filter((l) => l.type === s).reduce((a, b) => a + b.minutes, 0)), backgroundColor: STUDY_TYPES.map((s) => TYPE_COLOR[s]) }] },
+          options: { plugins: { legend: { position: "right", labels: { boxWidth: 10, font: { size: 9 } } } } }
+        });
+        makeChart("c-day", {
+          type: "bar",
+          data: { labels: DAYS.map((d, i) => d + " " + isoList[i].slice(5)), datasets: [{ data: daily, backgroundColor: "#1c2e54" }] },
+          options: { plugins: { legend: { display: false } }, scales: { y: yPlain(), x: { ticks: { maxRotation: 0, minRotation: 0, font: { size: 10 } } } } }
+        });
+        makeChart("c-eval", {
+          type: "bar",
+          data: {
+            labels: SUBJECTS,
+            datasets: [
+              { label: "학습완료", data: ev.map((r) => r.done), backgroundColor: EVAL_COLOR["학습완료"] },
+              { label: "보완필요", data: ev.map((r) => r.mid), backgroundColor: EVAL_COLOR["보완필요"] },
+              { label: "미완료", data: ev.map((r) => r.no), backgroundColor: EVAL_COLOR["미완료"] }
+            ]
+          },
+          options: {
+            plugins: {
+              legend: { position: "top", labels: { boxWidth: 10, font: { size: 10 } } },
+              tooltip: {
+                callbacks: {
+                  footer: (items) => {
+                    const r = ev[items[0].dataIndex];
+                    return r.n ? ("학습완료 비율 " + r.rate + "%  /  총 " + r.n + "회") : "기록 없음";
+                  }
+                }
+              }
+            },
+            scales: { x: { stacked: true, ticks: { maxRotation: 0, minRotation: 0 } }, y: { stacked: true, ...yPlain() } }
+          }
+        });
+        $("#wr-print").addEventListener("click", () => printSheet("week-sheet"));
+        $("#wr-pdf").addEventListener("click", () => pdfSheet("week-sheet", "주간리포트_" + studentName(reportStudentId) + "_" + isoList[0]));
+      }
+
+      function renderMonthReport() {
+        if (!reportStudentId) reportStudentId = db.students[0].id;
+        const mk = monthKey(anchor);
+        const [yy, mm] = mk.split("-").map(Number);
+        const last = new Date(yy, mm, 0).getDate();
+        const isoList = Array.from({ length: last }, (_, i) => mk + "-" + pad(i + 1));
+        const logs = db.studyLogs.filter((l) => l.studentId === reportStudentId && l.date.startsWith(mk));
+        const total = logs.reduce((a, b) => a + (b.minutes || 0), 0);
+        const att = attendSummary(reportStudentId, isoList);
+        const daily = dailyMinutes(logs, isoList);
+        const weeks = monthWeeks(yy, mm);
+        const weekBuckets = weeks.map((w) => logs.filter((l) => w.dates.includes(l.date)).reduce((a, b) => a + (b.minutes || 0), 0));
+        const opinions = db.counseling.filter((c) => c.studentId === reportStudentId && c.date.startsWith(mk));
+        const maxDay = Math.max(1, ...daily);
+        const doneAll = logs.filter((l) => normEval(l.eval) === "학습완료").length;
+        const doneRate = logs.length ? Math.round(doneAll / logs.length * 100) : 0;
+        const ev = evalBySubject(logs);
+
+        $("#view-month-report").innerHTML = `
+          <div class="no-print bg-white rounded-2xl border p-4 mb-4 flex flex-wrap gap-3 items-center">
+            <label class="text-sm">학생</label>
+            ${studentSelect("mr-student", reportStudentId)}
+            <span class="text-sm text-slate-500">${yy}년 ${mm}월</span>
+            <button id="mr-copy-op" class="text-sm border rounded-lg px-3 py-2">의견 복사</button>
+            <button id="mr-print" class="ml-auto bg-navy-900 text-white rounded-lg px-4 py-2 text-sm"><i class="fa-solid fa-print mr-1"></i>A4 인쇄</button>
+            <button id="mr-pdf" class="bg-gold text-navy-900 font-semibold rounded-lg px-4 py-2 text-sm"><i class="fa-solid fa-file-pdf mr-1"></i>PDF 저장</button>
+          </div>
+          <div id="month-sheet" class="a4-sheet mx-auto shadow-xl rounded-sm">
+            ${reportHeader("월간 학습 리포트", yy + "년 " + mm + "월", reportStudentId)}
+            <div class="grid grid-cols-4 gap-2 mb-4">
+              ${miniStat("월 순수공부", fmtMin(total))}
+              ${miniStat("일평균", fmtMin(Math.round(total / last)))}
+              ${miniStat("입실일", att.present + "일")}
+              ${miniStat("학습완료 비율", doneRate + "%")}
+            </div>
+            <p class="text-[10px] text-slate-400 -mt-3 mb-3">입실일 = 입실 + 지각 + 중도입실 · 주차 = 월~일 (해당 월에 포함된 날만 합산)</p>
+            <div class="grid grid-cols-2 gap-3 mb-4">
+              <div class="border rounded p-2"><p class="text-xs font-bold mb-1">과목별 순수공부시간 (분)</p><div class="chart-box"><canvas id="m-sub"></canvas></div></div>
+              <div class="border rounded p-2"><p class="text-xs font-bold mb-1">학습유형별 공부시간 (분)</p><div class="chart-box"><canvas id="m-type"></canvas></div></div>
+            </div>
+            <div class="border rounded p-2 mb-4"><p class="text-xs font-bold mb-1">주차별 순수공부시간 (분) · 월~일 기준</p><div class="chart-box sm"><canvas id="m-week"></canvas></div></div>
+            <p class="text-xs font-bold mb-1">일별 공부 히트맵</p>
+            <p class="text-[10px] text-slate-500 mb-1">색이 진할수록 그날 순수공부시간이 많습니다. 연한 회색은 기록 없음(0분)입니다. 가장 진한 칸은 이번 달 최다 공부일입니다.</p>
+            <div class="flex items-center gap-2 text-[10px] text-slate-500 mb-2">
+              <span>적음</span>
+              <span class="heat w-5" style="background:rgba(20,33,61,0.08)"></span>
+              <span class="heat w-5" style="background:rgba(20,33,61,0.35)"></span>
+              <span class="heat w-5" style="background:rgba(20,33,61,0.65)"></span>
+              <span class="heat w-5" style="background:rgba(20,33,61,1)"></span>
+              <span>많음</span>
+            </div>
+            <div class="grid grid-cols-7 gap-1 mb-4">
+              ${["월","화","수","목","금","토","일"].map((d) => `<div class="text-[9px] text-center text-slate-400">${d}</div>`).join("")}
+              ${(() => {
+                const first = new Date(yy, mm - 1, 1);
+                const padLeft = (first.getDay() + 6) % 7;
+                let html = Array.from({ length: padLeft }, () => "<div></div>").join("");
+                isoList.forEach((iso, i) => {
+                  const m = daily[i];
+                  const alpha = m ? (0.18 + 0.82 * (m / maxDay)) : 0.07;
+                  html += `<div class="heat text-[9px] text-center leading-[18px] text-white" style="background:rgba(20,33,61,${alpha})" title="${iso} · ${m}분">${i + 1}</div>`;
+                });
+                return html;
+              })()}
+            </div>
+            <div class="grid grid-cols-2 gap-3 mb-3">
+              <div>
+                <p class="text-xs font-bold mb-1">출석 구성</p>
+                ${ATTEND.map((a) => `<div class="flex justify-between text-[11px] border-b py-0.5"><span>${a}</span><span>${att.tally[a]}일</span></div>`).join("")}
+              </div>
+              <div>
+                <p class="text-xs font-bold mb-1">과목별 학습완료 비율</p>
+                ${ev.map((r) => `<div class="flex justify-between text-[11px] border-b py-0.5"><span>${r.s}</span><span>${r.n}회 · ${r.n ? r.rate + "%" : "-"}</span></div>`).join("")}
+              </div>
+            </div>
+            <p class="text-xs font-bold mb-1">담임선생님 의견</p>
+            <div class="text-[11px] border rounded p-2 min-h-[56px] whitespace-pre-wrap">${opinions.length ? opinions.map((c) => "· " + c.date + " " + escapeHtml(c.content)).join("\n") : "없음"}</div>
+            <p class="text-[10px] text-slate-400 mt-3 text-right">출력일 ${toISO(new Date())}</p>
+          </div>`;
+        $("#mr-student").value = reportStudentId;
+        $("#mr-student").addEventListener("change", (e) => { reportStudentId = e.target.value; renderMonthReport(); });
+        $("#mr-copy-op").addEventListener("click", () => copyToClipboard(opinionText(opinions, reportStudentId)));
+        destroyCharts();
+        makeChart("m-sub", {
+          type: "bar",
+          data: { labels: SUBJECTS, datasets: [{ data: SUBJECTS.map((s) => logs.filter((l) => l.subject === s).reduce((a, b) => a + b.minutes, 0)), backgroundColor: SUBJECTS.map((s) => SUBJECT_COLOR[s]) }] },
+          options: { plugins: { legend: { display: false } }, scales: { y: yPlain(), x: { ticks: { maxRotation: 0, minRotation: 0 } } } }
+        });
+        makeChart("m-type", {
+          type: "doughnut",
+          data: { labels: STUDY_TYPES, datasets: [{ data: STUDY_TYPES.map((s) => logs.filter((l) => l.type === s).reduce((a, b) => a + b.minutes, 0)), backgroundColor: STUDY_TYPES.map((s) => TYPE_COLOR[s]) }] },
+          options: { plugins: { legend: { position: "right", labels: { boxWidth: 10, font: { size: 9 } } } } }
+        });
+        makeChart("m-week", {
+          type: "bar",
+          data: { labels: weeks.map((w) => w.label + " " + w.range), datasets: [{ data: weekBuckets, backgroundColor: "#c9a227" }] },
+          options: { plugins: { legend: { display: false } }, scales: { y: yPlain(), x: { ticks: { maxRotation: 0, minRotation: 0, font: { size: 9 } } } } }
+        });
+        $("#mr-print").addEventListener("click", () => printSheet("month-sheet"));
+        $("#mr-pdf").addEventListener("click", () => pdfSheet("month-sheet", "월간리포트_" + studentName(reportStudentId) + "_" + mk));
+      }
+
+      function printSheet(id) {
+        const src = document.getElementById(id);
+        const root = $("#print-root");
+        root.innerHTML = src.outerHTML;
+        root.classList.remove("hidden");
+        window.print();
+        setTimeout(() => { root.classList.add("hidden"); root.innerHTML = ""; }, 400);
+      }
+      function pdfSheet(id, filename) {
+        const el = document.getElementById(id);
+        html2pdf().set({
+          margin: 0,
+          filename: filename + ".pdf",
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true, backgroundColor: "#ffffff" },
+          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+        }).from(el).save();
+      }
+
+      function renderCounsel() {
+        if (!selectedStudentId) selectedStudentId = db.students[0].id;
+        const list = db.counseling.filter((c) => c.studentId === selectedStudentId).sort((a, b) => b.date.localeCompare(a.date));
+        $("#view-counsel").innerHTML = `
+          <div class="bg-white rounded-2xl border p-4 mb-4 flex flex-wrap gap-3 items-end">
+            <label class="text-sm">학생<div>${studentSelect("cn-student", selectedStudentId)}</div></label>
+            <label class="text-sm">날짜<input id="cn-date" type="date" value="${toISO(anchor)}" class="border rounded-lg px-2 py-2 block" /></label>
+            <label class="text-sm flex-1 min-w-[240px]">담임선생님 의견<textarea id="cn-content" rows="2" class="border rounded-lg px-2 py-2 w-full block" placeholder="담임선생님 의견을 입력하세요"></textarea></label>
+            <button id="cn-add" class="bg-navy-900 text-white rounded-lg px-4 py-2">저장</button>
+          </div>
+          <div class="bg-white rounded-2xl border p-4 mb-4 flex flex-wrap gap-2 items-center">
+            <button id="cn-copy-all" class="text-sm border rounded-lg px-3 py-2"><i class="fa-regular fa-copy mr-1"></i>이 학생 의견 전체 복사</button>
+            <span class="text-sm text-slate-500">다른 학생에게 복사</span>
+            <select id="cn-target" class="border rounded-lg px-2 py-2 text-sm">
+              ${db.students.filter((s) => s.id !== selectedStudentId).map((s) => `<option value="${s.id}">${escapeHtml(studentName(s.id))}</option>`).join("")}
+            </select>
+            <button id="cn-copy-to" class="text-sm bg-indigo-600 text-white rounded-lg px-3 py-2">선택 학생에게 복사</button>
+          </div>
+          <div class="space-y-3">
+            ${list.length ? list.map((c) => `
+              <div class="bg-white rounded-2xl border p-4">
+                <div class="flex justify-between items-start gap-3">
+                  <div>
+                    <p class="text-xs text-slate-400">${c.date} · ${escapeHtml(studentName(c.studentId))}</p>
+                    <p class="text-sm whitespace-pre-wrap mt-2">${escapeHtml(c.content)}</p>
+                  </div>
+                  <div class="flex gap-2 shrink-0">
+                    <button data-copy="${c.id}" class="text-indigo-600 text-xs">복사</button>
+                    <button data-del="${c.id}" class="text-rose-500 text-xs">삭제</button>
+                  </div>
+                </div>
+              </div>`).join("") : `<div class="bg-white rounded-2xl border p-8 text-center text-slate-400">담임선생님 의견이 없습니다.</div>`}
+          </div>`;
+        $("#cn-student").value = selectedStudentId;
+        $("#cn-student").addEventListener("change", (e) => { selectedStudentId = e.target.value; renderCounsel(); });
+        $("#cn-add").addEventListener("click", () => {
+          const content = $("#cn-content").value.trim();
+          if (!content) { alert("담임선생님 의견을 입력하세요."); return; }
+          db.counseling.push({ id: uid("cn"), studentId: $("#cn-student").value, date: $("#cn-date").value, content });
+          save();
+          selectedStudentId = $("#cn-student").value;
+          renderCounsel();
+        });
+        $("#cn-copy-all").addEventListener("click", () => copyToClipboard(opinionText(list, selectedStudentId)));
+        $("#cn-copy-to").addEventListener("click", () => {
+          const target = $("#cn-target").value;
+          if (!target) { alert("대상 학생을 선택하세요."); return; }
+          if (!list.length) { alert("복사할 의견이 없습니다."); return; }
+          list.forEach((c) => {
+            db.counseling.push({ id: uid("cn"), studentId: target, date: c.date, content: c.content });
+          });
+          save();
+          alert(studentName(target) + "에게 " + list.length + "건을 복사했습니다.");
+        });
+        $("#view-counsel").querySelectorAll("[data-copy]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const c = db.counseling.find((x) => x.id === btn.dataset.copy);
+            if (c) copyToClipboard(opinionText([c], c.studentId));
+          });
+        });
+        $("#view-counsel").querySelectorAll("[data-del]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            db.counseling = db.counseling.filter((c) => c.id !== btn.dataset.del);
+            save();
+            renderCounsel();
+          });
+        });
+      }
+
+      function itemCard(item, who, kind) {
+        return `<div class="border rounded-xl p-3 mb-2">
+          <div class="flex justify-between text-xs text-slate-400 items-center">
+            <span>${item.date} · ${escapeHtml(who)}${item.kind ? " · " + item.kind : ""}</span>
+            <div class="flex items-center gap-2">
+              ${checkBtn(kind, item.id, item.checked)}
+              <button data-del="${item.id}" class="text-rose-500">삭제</button>
+            </div>
+          </div>
+          <p class="text-sm whitespace-pre-wrap mt-1">${escapeHtml(item.content)}</p>
+          ${item.checkedAt ? `<p class="text-[10px] text-slate-400 mt-1">확인 ${item.checkedAt}</p>` : ""}
+        </div>`;
+      }
+
+      function renderRequests() {
+        const day = toISO(anchor);
+        const list = db.requests.filter((r) => r.date === day);
+        const recent = db.requests.slice().sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id)).slice(0, 30);
+        $("#view-requests").innerHTML = `
+          <div class="bg-white rounded-2xl border p-4 mb-4">
+            <p class="text-sm font-semibold mb-3">${day} 사전 요청 등록 · 대시보드에는 해당 날짜 + 전날 미확인만 표시</p>
+            <div class="flex flex-wrap gap-3 items-end">
+              <label class="text-sm">대상 학생<select id="rq-student" class="border rounded-lg px-2 py-2 block">
+                <option value="">전체</option>
+                ${db.students.map((s) => `<option value="${s.id}">${escapeHtml(studentName(s.id))}</option>`).join("")}
+              </select></label>
+              <label class="text-sm flex-1 min-w-[240px]">요청 내용<textarea id="rq-content" rows="2" class="border rounded-lg px-2 py-2 w-full" placeholder="예: 학부모 면담 자료 준비"></textarea></label>
+              <button id="rq-add" class="bg-navy-900 text-white rounded-lg px-4 py-2">저장</button>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div class="bg-white rounded-2xl border p-4">
+              <h3 class="font-bold mb-3">선택일 요청</h3>
+              ${list.length ? list.map((r) => itemCard(r, r.studentId ? studentName(r.studentId) : "전체", "rq")).join("") : `<p class="text-sm text-slate-400">해당 날짜 요청이 없습니다.</p>`}
+            </div>
+            <div class="bg-white rounded-2xl border p-4">
+              <h3 class="font-bold mb-3">최근 기록</h3>
+              ${recent.length ? recent.map((r) => `<div class="text-sm border-b py-2"><span class="text-xs text-slate-400">${r.date} ${r.checked ? "· 확인됨" : "· 미확인"}</span> · ${escapeHtml(r.studentId ? studentName(r.studentId) : "전체")}<p>${escapeHtml(r.content)}</p></div>`).join("") : `<p class="text-sm text-slate-400">기록이 없습니다.</p>`}
+            </div>
+          </div>`;
+        $("#rq-add").addEventListener("click", () => {
+          const content = $("#rq-content").value.trim();
+          if (!content) { alert("요청 내용을 입력하세요."); return; }
+          db.requests.push({ id: uid("rq"), date: day, studentId: $("#rq-student").value, content, checked: false });
+          save();
+          renderRequests();
+        });
+        bindCheck($("#view-requests"), renderRequests);
+        $("#view-requests").querySelectorAll("[data-del]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            db.requests = db.requests.filter((x) => x.id !== btn.dataset.del);
+            save();
+            renderRequests();
+          });
+        });
+      }
+
+      function renderWork() {
+        const day = toISO(anchor);
+        const list = db.workNotes.filter((w) => w.date === day);
+        const recent = db.workNotes.slice().sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id)).slice(0, 40);
+        $("#view-work").innerHTML = `
+          <div class="bg-white rounded-2xl border p-4 mb-4">
+            <p class="text-sm font-semibold mb-3">${day} 업무 협조 / 참고 공유 · 대시보드에는 해당 날짜 + 전날 미확인만 표시</p>
+            <div class="flex flex-wrap gap-3 items-end">
+              <label class="text-sm">구분<select id="wk-kind" class="border rounded-lg px-2 py-2 block"><option>협조</option><option>참고</option></select></label>
+              <label class="text-sm flex-1 min-w-[240px]">내용<textarea id="wk-content" rows="2" class="border rounded-lg px-2 py-2 w-full" placeholder="당일 대시보드에 표시됩니다."></textarea></label>
+              <button id="wk-add" class="bg-navy-900 text-white rounded-lg px-4 py-2">저장</button>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div class="bg-white rounded-2xl border p-4">
+              <h3 class="font-bold mb-3">선택일 공유 사항</h3>
+              ${list.length ? list.map((w) => itemCard(w, w.kind, "wk")).join("") : `<p class="text-sm text-slate-400">해당 날짜 공유 사항이 없습니다.</p>`}
+            </div>
+            <div class="bg-white rounded-2xl border p-4">
+              <h3 class="font-bold mb-3">최근 기록</h3>
+              ${recent.length ? recent.map((w) => `<div class="text-sm border-b py-2"><span class="text-xs text-slate-400">${w.date} · ${w.kind} ${w.checked ? "· 확인됨" : "· 미확인"}</span><p>${escapeHtml(w.content)}</p></div>`).join("") : `<p class="text-sm text-slate-400">기록이 없습니다.</p>`}
+            </div>
+          </div>`;
+        $("#wk-add").addEventListener("click", () => {
+          const content = $("#wk-content").value.trim();
+          if (!content) { alert("내용을 입력하세요."); return; }
+          db.workNotes.push({ id: uid("wk"), date: day, kind: $("#wk-kind").value, content, checked: false });
+          save();
+          renderWork();
+        });
+        bindCheck($("#view-work"), renderWork);
+        $("#view-work").querySelectorAll("[data-del]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            db.workNotes = db.workNotes.filter((w) => w.id !== btn.dataset.del);
+            save();
+            renderWork();
+          });
+        });
+      }
+
+      function periodRange() {
+        if (statsPeriod === "month") {
+          const mk = monthKey(anchor);
+          const [yy, mm] = mk.split("-").map(Number);
+          const last = new Date(yy, mm, 0).getDate();
+          const isoList = Array.from({ length: last }, (_, i) => mk + "-" + pad(i + 1));
+          return { isoList, label: yy + "년 " + mm + "월", weeks: monthWeeks(yy, mm) };
+        }
+        const dates = weekDates(anchor);
+        const isoList = dates.map(toISO);
+        return { isoList, label: weekLabel(anchor) + " (월~일)", weeks: null };
+      }
+      function studentPeriodRow(sid, isoList) {
+        const logs = db.studyLogs.filter((l) => l.studentId === sid && isoList.includes(l.date));
+        const min = logs.reduce((a, b) => a + (b.minutes || 0), 0);
+        const att = attendSummary(sid, isoList);
+        const done = logs.filter((l) => normEval(l.eval) === "학습완료").length;
+        const rate = logs.length ? Math.round(done / logs.length * 100) : 0;
+        const unauth = att.tally["미입실(무단)"] || 0;
+        const comments = db.counseling.filter((c) => c.studentId === sid && isoList.includes(c.date)).length;
+        const topSub = SUBJECTS.map((s) => ({ s, m: logs.filter((l) => l.subject === s).reduce((a, b) => a + b.minutes, 0) })).sort((a, b) => b.m - a.m)[0];
+        return { sid, logs, min, att, done, rate, unauth, comments, topSub, n: logs.length };
+      }
+      function analyzeOne(row, isoList, label) {
+        const lines = [];
+        const days = isoList.length;
+        const perPresent = row.att.present ? Math.round(row.min / row.att.present) : 0;
+        lines.push("선택 기간(" + label + ") 순수공부시간은 " + fmtMin(row.min) + ", 학습 기록은 " + row.n + "건입니다.");
+        lines.push("입실일(입실·지각·중도입실)은 " + row.att.present + "일/" + days + "일이며, 입실일 하루 평균 공부는 " + (row.att.present ? fmtMin(perPresent) : "산출 불가") + "입니다.");
+        if (row.n) {
+          lines.push("학습완료 비율은 " + row.rate + "% (" + row.done + "/" + row.n + "건)입니다." + (row.rate < 60 ? " 완료율이 낮아 보완 학습 점검이 필요합니다." : row.rate >= 80 ? " 완료 성취가 양호합니다." : " 보통 수준입니다."));
+          if (row.topSub && row.topSub.m) lines.push("가장 많이 공부한 과목은 " + row.topSub.s + "(" + fmtMin(row.topSub.m) + ")입니다.");
+        } else lines.push("해당 기간 학습 기록이 없어 과목·완료평가 분석이 제한됩니다.");
+        if (row.unauth) lines.push("미입실(무단)이 " + row.unauth + "일 있어 출결 관리가 필요합니다.");
+        if (row.att.tally["병결"]) lines.push("병결 " + row.att.tally["병결"] + "일이 있어 보강 여부를 확인하세요.");
+        if (row.comments) lines.push("담임선생님 의견이 " + row.comments + "건 있습니다.");
+        else lines.push("해당 기간 담임선생님 의견이 없습니다.");
+        return lines;
+      }
+      function analyzeAll(rows, isoList, label) {
+        const named = rows.filter((r) => db.students.find((s) => s.id === r.sid && s.name) || true);
+        const withData = named.filter((r) => r.n || r.att.recorded);
+        const lines = [];
+        const avgMin = named.length ? Math.round(named.reduce((a, b) => a + b.min, 0) / named.length) : 0;
+        const avgRate = (() => {
+          const xs = named.filter((r) => r.n);
+          return xs.length ? Math.round(xs.reduce((a, b) => a + b.rate, 0) / xs.length) : 0;
+        })();
+        lines.push("선택 기간(" + label + ") 등록 학생 " + named.length + "명의 1인 평균 순수공부는 " + fmtMin(avgMin) + "입니다.");
+        lines.push("학습 기록이 있는 학생의 평균 학습완료 비율은 " + avgRate + "%입니다.");
+        const ranked = named.slice().sort((a, b) => b.min - a.min);
+        if (ranked[0] && ranked[0].min) lines.push("순수공부 최다 학생은 " + studentName(ranked[0].sid) + "(" + fmtMin(ranked[0].min) + ")입니다.");
+        const lowStudy = named.filter((r) => r.min === 0);
+        if (lowStudy.length) lines.push("학습 시간 0분 학생: " + lowStudy.map((r) => studentName(r.sid)).join(", ") + ".");
+        const lowRate = named.filter((r) => r.n && r.rate < 50);
+        if (lowRate.length) lines.push("학습완료 비율 50% 미만: " + lowRate.map((r) => studentName(r.sid) + "(" + r.rate + "%)").join(", ") + ".");
+        const unauth = named.filter((r) => r.unauth);
+        if (unauth.length) lines.push("미입실(무단) 발생: " + unauth.map((r) => studentName(r.sid) + " " + r.unauth + "일").join(", ") + ".");
+        const lowPresent = named.filter((r) => r.att.present < Math.max(1, Math.floor(isoList.length * 0.5)));
+        if (lowPresent.length) lines.push("입실일이 기간의 절반 미만인 학생: " + lowPresent.map((r) => studentName(r.sid)).join(", ") + ".");
+        if (!withData.length) lines.push("이 기간에 출석·학습 데이터가 거의 없습니다. 기록을 먼저 입력하세요.");
+        return lines;
+      }
+
+      function renderStats() {
+        const { isoList, label, weeks } = periodRange();
+        const sid = selectedStudentId || db.students[0].id;
+        const rows = db.students.map((s) => studentPeriodRow(s.id, isoList));
+        const one = rows.find((r) => r.sid === sid) || rows[0];
+
+        $("#view-stats").innerHTML = `
+          <div class="bg-white rounded-2xl border p-4 mb-4 flex flex-wrap gap-3 items-center">
+            <div class="flex rounded-lg overflow-hidden border">
+              <button data-period="week" class="px-3 py-2 text-sm ${statsPeriod === "week" ? "bg-navy-900 text-white" : "bg-white"}">주간 검색</button>
+              <button data-period="month" class="px-3 py-2 text-sm ${statsPeriod === "month" ? "bg-navy-900 text-white" : "bg-white"}">월별 검색</button>
+            </div>
+            <div class="flex rounded-lg overflow-hidden border">
+              <button data-scope="one" class="px-3 py-2 text-sm ${statsScope === "one" ? "bg-indigo-600 text-white" : "bg-white"}">개별 통계</button>
+              <button data-scope="all" class="px-3 py-2 text-sm ${statsScope === "all" ? "bg-indigo-600 text-white" : "bg-white"}">전체 통계</button>
+            </div>
+            ${statsScope === "one" ? studentSelect("stt-student", sid) : ""}
+            <span class="text-sm text-slate-500">${label}</span>
+          </div>
+          <div id="stats-body"></div>
+        `;
+        $("#view-stats").querySelectorAll("[data-period]").forEach((b) => b.addEventListener("click", () => { statsPeriod = b.dataset.period; renderStats(); }));
+        $("#view-stats").querySelectorAll("[data-scope]").forEach((b) => b.addEventListener("click", () => { statsScope = b.dataset.scope; renderStats(); }));
+        const stuSel = $("#stt-student");
+        if (stuSel) stuSel.addEventListener("change", (e) => { selectedStudentId = e.target.value; reportStudentId = selectedStudentId; renderStats(); });
+
+        const body = $("#stats-body");
+        destroyCharts();
+        if (statsScope === "one") renderStatsOne(body, one, isoList, label, weeks);
+        else renderStatsAll(body, rows, isoList, label);
+      }
+
+      function renderStatsOne(body, row, isoList, label, weeks) {
+        const logs = row.logs;
+        const ev = evalBySubject(logs);
+        const insights = analyzeOne(row, isoList, label);
+        const daily = dailyMinutes(logs, isoList);
+        body.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+            ${kpi("순수공부", fmtMin(row.min), "fa-clock", "bg-indigo-50 text-indigo-700")}
+            ${kpi("입실일", row.att.present + "일", "fa-door-open", "bg-emerald-50 text-emerald-700")}
+            ${kpi("학습완료 비율", row.rate + "%", "fa-circle-check", "bg-amber-50 text-amber-700")}
+            ${kpi("담임의견", row.comments + "건", "fa-comment", "bg-sky-50 text-sky-700")}
+          </div>
+          <div class="bg-white rounded-2xl border p-5 mb-4">
+            <h3 class="font-bold mb-2">기간 분석 · ${escapeHtml(studentName(row.sid))}</h3>
+            <ul class="text-sm space-y-1 list-disc pl-5">${insights.map((t) => `<li>${escapeHtml(t)}</li>`).join("")}</ul>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+            <div class="bg-white rounded-2xl border p-4"><p class="text-xs font-bold mb-1">과목별 공부시간 (분)</p><div class="chart-box"><canvas id="s-sub"></canvas></div></div>
+            <div class="bg-white rounded-2xl border p-4"><p class="text-xs font-bold mb-1">학습유형별 (분)</p><div class="chart-box"><canvas id="s-type"></canvas></div></div>
+            <div class="bg-white rounded-2xl border p-4"><p class="text-xs font-bold mb-1">완료평가 횟수</p><div class="chart-box"><canvas id="s-eval"></canvas></div></div>
+            <div class="bg-white rounded-2xl border p-4">
+              <p class="text-xs font-bold mb-2">출석 구성</p>
+              ${ATTEND.map((a) => `<div class="flex justify-between text-sm border-b py-1"><span>${a}</span><span>${row.att.tally[a]}일</span></div>`).join("")}
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl border p-4 mb-4">
+            <p class="text-xs font-bold mb-1">${weeks ? "주차별 순수공부시간 (분)" : "요일별 순수공부시간 (분)"}</p>
+            <div class="chart-box sm"><canvas id="s-trend"></canvas></div>
+          </div>
+        `;
+        makeChart("s-sub", {
+          type: "bar",
+          data: { labels: SUBJECTS, datasets: [{ data: SUBJECTS.map((s) => logs.filter((l) => l.subject === s).reduce((a, b) => a + b.minutes, 0)), backgroundColor: SUBJECTS.map((s) => SUBJECT_COLOR[s]) }] },
+          options: { plugins: { legend: { display: false } }, scales: { y: yPlain(), x: { ticks: { maxRotation: 0, minRotation: 0 } } } }
+        });
+        makeChart("s-type", {
+          type: "doughnut",
+          data: { labels: STUDY_TYPES, datasets: [{ data: STUDY_TYPES.map((s) => logs.filter((l) => l.type === s).reduce((a, b) => a + b.minutes, 0)), backgroundColor: STUDY_TYPES.map((s) => TYPE_COLOR[s]) }] },
+          options: { plugins: { legend: { position: "right", labels: { boxWidth: 10, font: { size: 9 } } } } }
+        });
+        makeChart("s-eval", {
+          type: "bar",
+          data: { labels: SUBJECTS, datasets: [
+            { label: "학습완료", data: ev.map((r) => r.done), backgroundColor: EVAL_COLOR["학습완료"] },
+            { label: "보완필요", data: ev.map((r) => r.mid), backgroundColor: EVAL_COLOR["보완필요"] },
+            { label: "미완료", data: ev.map((r) => r.no), backgroundColor: EVAL_COLOR["미완료"] }
+          ] },
+          options: { plugins: { legend: { position: "top", labels: { boxWidth: 10, font: { size: 10 } } } }, scales: { x: { stacked: true, ticks: { maxRotation: 0, minRotation: 0 } }, y: { stacked: true, ...yPlain() } } }
+        });
+        if (weeks) {
+          makeChart("s-trend", {
+            type: "bar",
+            data: { labels: weeks.map((w) => w.label + " " + w.range), datasets: [{ data: weeks.map((w) => logs.filter((l) => w.dates.includes(l.date)).reduce((a, b) => a + b.minutes, 0)), backgroundColor: "#c9a227" }] },
+            options: { plugins: { legend: { display: false } }, scales: { y: yPlain(), x: { ticks: { maxRotation: 0, minRotation: 0, font: { size: 9 } } } } }
+          });
+        } else {
+          makeChart("s-trend", {
+            type: "bar",
+            data: { labels: DAYS, datasets: [{ data: daily, backgroundColor: "#1c2e54" }] },
+            options: { plugins: { legend: { display: false } }, scales: { y: yPlain(), x: { ticks: { maxRotation: 0, minRotation: 0 } } } }
+          });
+        }
+      }
+
+      function renderStatsAll(body, rows, isoList, label) {
+        const insights = analyzeAll(rows, isoList, label);
+        const names = rows.map((r) => studentName(r.sid));
+        const totMin = rows.reduce((a, b) => a + b.min, 0);
+        const avgMin = rows.length ? Math.round(totMin / rows.length) : 0;
+        const avgRate = (() => {
+          const xs = rows.filter((r) => r.n);
+          return xs.length ? Math.round(xs.reduce((a, b) => a + b.rate, 0) / xs.length) : 0;
+        })();
+        const avgPresent = rows.length ? Math.round(rows.reduce((a, b) => a + b.att.present, 0) / rows.length * 10) / 10 : 0;
+        const allLogs = db.studyLogs.filter((l) => isoList.includes(l.date));
+        body.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+            ${kpi("1인 평균 공부", fmtMin(avgMin), "fa-clock", "bg-indigo-50 text-indigo-700")}
+            ${kpi("전체 합계", fmtMin(totMin), "fa-layer-group", "bg-slate-50 text-slate-700")}
+            ${kpi("평균 학습완료", avgRate + "%", "fa-circle-check", "bg-emerald-50 text-emerald-700")}
+            ${kpi("평균 입실일", avgPresent + "일", "fa-door-open", "bg-amber-50 text-amber-700")}
+          </div>
+          <div class="bg-white rounded-2xl border p-5 mb-4">
+            <h3 class="font-bold mb-2">기간 분석 · 등록 학생 전체</h3>
+            <ul class="text-sm space-y-1 list-disc pl-5">${insights.map((t) => `<li>${escapeHtml(t)}</li>`).join("")}</ul>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+            <div class="bg-white rounded-2xl border p-4"><p class="text-xs font-bold mb-1">학생별 순수공부시간 (분)</p><div class="chart-box lg"><canvas id="a-min"></canvas></div></div>
+            <div class="bg-white rounded-2xl border p-4"><p class="text-xs font-bold mb-1">학생별 학습완료 비율 (%)</p><div class="chart-box lg"><canvas id="a-rate"></canvas></div></div>
+            <div class="bg-white rounded-2xl border p-4"><p class="text-xs font-bold mb-1">학생별 입실일</p><div class="chart-box lg"><canvas id="a-att"></canvas></div></div>
+            <div class="bg-white rounded-2xl border p-4"><p class="text-xs font-bold mb-1">전체 과목별 공부시간 (분)</p><div class="chart-box"><canvas id="a-sub"></canvas></div></div>
+          </div>
+          <div class="bg-white rounded-2xl border overflow-auto">
+            <table class="min-w-full text-sm">
+              <thead class="bg-slate-50"><tr>
+                <th class="px-3 py-2 text-left">학생</th><th class="px-3 py-2">순수공부</th><th class="px-3 py-2">기록</th>
+                <th class="px-3 py-2">학습완료%</th><th class="px-3 py-2">입실일</th><th class="px-3 py-2">무단</th><th class="px-3 py-2">주력과목</th>
+              </tr></thead>
+              <tbody>
+                ${rows.slice().sort((a, b) => b.min - a.min).map((r) => `
+                  <tr class="border-t">
+                    <td class="px-3 py-2 font-semibold">${escapeHtml(studentName(r.sid))}</td>
+                    <td class="px-3 py-2 text-center">${fmtMin(r.min)}</td>
+                    <td class="px-3 py-2 text-center">${r.n}</td>
+                    <td class="px-3 py-2 text-center">${r.n ? r.rate + "%" : "-"}</td>
+                    <td class="px-3 py-2 text-center">${r.att.present}</td>
+                    <td class="px-3 py-2 text-center">${r.unauth}</td>
+                    <td class="px-3 py-2 text-center">${r.topSub && r.topSub.m ? r.topSub.s : "-"}</td>
+                  </tr>`).join("")}
+              </tbody>
+            </table>
+          </div>
+        `;
+        makeChart("a-min", {
+          type: "bar",
+          data: { labels: names, datasets: [{ data: rows.map((r) => r.min), backgroundColor: "#1c2e54" }] },
+          options: { indexAxis: "y", plugins: { legend: { display: false } }, scales: { x: yPlain(), y: { ticks: { font: { size: 10 } } } } }
+        });
+        makeChart("a-rate", {
+          type: "bar",
+          data: { labels: names, datasets: [{ data: rows.map((r) => r.rate), backgroundColor: "#059669" }] },
+          options: { indexAxis: "y", plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, max: 100, title: { display: false } }, y: { ticks: { font: { size: 10 } } } } }
+        });
+        makeChart("a-att", {
+          type: "bar",
+          data: { labels: names, datasets: [{ data: rows.map((r) => r.att.present), backgroundColor: "#c9a227" }] },
+          options: { indexAxis: "y", plugins: { legend: { display: false } }, scales: { x: yPlain(), y: { ticks: { font: { size: 10 } } } } }
+        });
+        makeChart("a-sub", {
+          type: "bar",
+          data: { labels: SUBJECTS, datasets: [{ data: SUBJECTS.map((s) => allLogs.filter((l) => l.subject === s).reduce((a, b) => a + b.minutes, 0)), backgroundColor: SUBJECTS.map((s) => SUBJECT_COLOR[s]) }] },
+          options: { plugins: { legend: { display: false } }, scales: { y: yPlain(), x: { ticks: { maxRotation: 0, minRotation: 0 } } } }
+        });
+      }
+
+      $("#anchor-date").addEventListener("change", (e) => { anchor = parseISO(e.target.value); render(); });
+      $("#btn-prev").addEventListener("click", () => {
+        if (currentView === "month-report" || (currentView === "stats" && statsPeriod === "month")) anchor = new Date(anchor.getFullYear(), anchor.getMonth() - 1, 1);
+        else if (["dashboard", "requests", "work", "counsel"].includes(currentView)) anchor = addDays(anchor, -1);
+        else anchor = addDays(anchor, -7);
+        render();
+      });
+      $("#btn-next").addEventListener("click", () => {
+        if (currentView === "month-report" || (currentView === "stats" && statsPeriod === "month")) anchor = new Date(anchor.getFullYear(), anchor.getMonth() + 1, 1);
+        else if (["dashboard", "requests", "work", "counsel"].includes(currentView)) anchor = addDays(anchor, 1);
+        else anchor = addDays(anchor, 7);
+        render();
+      });
+      $("#btn-today").addEventListener("click", () => { anchor = new Date(); render(); });
+
+      // ---------- GitHub 자동 동기화 (Contents API) ----------
+      // 대상: jeong-918.github.io/desktop 저장소의 json/studyroom-backup.json
+      // 주의: 같은 사이트의 다른 앱들과 상태가 섞이지 않도록 상태 키는 studyroom 전용 사용
+      // (토큰 키는 공용: 기기당 한 번만 입력하면 다른 앱에서도 재사용됨)
+      const GITHUB_SYNC = { owner: "jeong-918", repo: "desktop", branch: "main", path: "json/studyroom-backup.json" };
+      // 절대 URL 사용: 이 HTML이 저장소의 어느 폴더에 있어도 동일하게 동작
+      const SERVER_JSON_URL = "https://jeong-918.github.io/desktop/json/studyroom-backup.json";
+      const SYNC_KEY_TOKEN = "sync_github_token";        // 토큰 (공용, 기기별 브라우저에 저장)
+      const SYNC_KEY_AUTO = "sync_studyroom_auto";        // 자동 백업 사용 여부 (studyroom 전용)
+      const SYNC_KEY_LAST = "sync_studyroom_last_upload"; // 마지막 업로드 시각 (studyroom 전용)
+      const SYNC_KEY_LOCAL = "sync_studyroom_local_updated"; // 로컬 마지막 수정 시각 (studyroom 전용)
+
+      const getSyncToken = () => localStorage.getItem(SYNC_KEY_TOKEN) || "";
+      const isAutoUpload = () => localStorage.getItem(SYNC_KEY_AUTO) === "true";
+
+      // UTF-8 안전 Base64 인코딩 (대용량 대비 청크 처리)
+      function utf8ToBase64(str) {
+        const bytes = new TextEncoder().encode(str);
+        let binary = "";
+        for (let i = 0; i < bytes.length; i += 0x8000) binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+        return btoa(binary);
+      }
+
+      // 백업 데이터 생성 (기존 '데이터 복원' 메뉴와도 호환되는 래핑 형식)
+      function buildSyncData() {
+        return { app: "studyroom", exportedAt: new Date().toISOString(), version: 3, data: db };
+      }
+
+      // [업로드] 현재 데이터를 GitHub 저장소 json/studyroom-backup.json으로 커밋
+      async function pushToGitHub(silent) {
+        const token = getSyncToken();
+        if (!token) { if (!silent) alert("자동동기화 설정에서 토큰을 먼저 입력하세요."); return; }
+        const apiUrl = `https://api.github.com/repos/${GITHUB_SYNC.owner}/${GITHUB_SYNC.repo}/contents/${GITHUB_SYNC.path}`;
+        const headers = { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github+json" };
+        try {
+          // 기존 파일의 sha 조회 (파일 수정 커밋에는 필수)
+          let sha = null;
+          const getRes = await fetch(`${apiUrl}?ref=${GITHUB_SYNC.branch}`, { headers });
+          if (getRes.ok) sha = (await getRes.json()).sha;
+
+          const putRes = await fetch(apiUrl, {
+            method: "PUT",
+            headers,
+            body: JSON.stringify({
+              message: `학습관리 자동 동기화 - ${new Date().toLocaleString("ko-KR")}`,
+              content: utf8ToBase64(JSON.stringify(buildSyncData(), null, 2)),
+              branch: GITHUB_SYNC.branch,
+              ...(sha && { sha })
+            })
+          });
+
+          if (putRes.ok) {
+            localStorage.setItem(SYNC_KEY_LAST, String(Date.now()));
+            updateSyncStatusText();
+            if (!silent) alert("GitHub 업로드를 완료했습니다.");
+          } else if (putRes.status === 409) {
+            if (!silent) alert("충돌: 서버 파일이 변경되었습니다. 서버 동기화 후 다시 시도하세요.");
+          } else if (putRes.status === 401 || putRes.status === 403) {
+            if (!silent) alert("토큰 오류: 권한이 없거나 만료되었습니다.");
+          } else {
+            if (!silent) alert("업로드 실패 (" + putRes.status + ")");
+          }
+        } catch (err) {
+          console.error("업로드 오류:", err);
+          if (!silent) alert("업로드 실패: 인터넷 연결을 확인하세요.");
+        }
+      }
+
+      // [자동 업로드 예약] 데이터가 바뀐 뒤 5초간 추가 변경이 없을 때 업로드 실행
+      let autoPushTimer = null;
+      let suppressAutoPush = false; // 서버 데이터 적용 시 재업로드 방지
+      function scheduleAutoPush() {
+        if (suppressAutoPush) return;
+        localStorage.setItem(SYNC_KEY_LOCAL, String(Date.now())); // 로컬 수정 시각 기록
+        if (!isAutoUpload()) return;
+        if (autoPushTimer) clearTimeout(autoPushTimer);
+        autoPushTimer = setTimeout(() => pushToGitHub(true), 5000);
+      }
+
+      // 서버 백업 데이터를 이 기기에 적용 (기존 '데이터 복원'과 동일한 마이그레이션 수행)
+      function applyServerData(data, serverTime) {
+        suppressAutoPush = true;
+        try {
+          db = data;
+          db.schedules = db.schedules || {};
+          db.attendance = db.attendance || {};
+          db.studyLogs = (db.studyLogs || []).map((l) => ({ ...l, eval: EVAL_MIGRATE[l.eval] || l.eval }));
+          db.counseling = db.counseling || [];
+          db.requests = db.requests || [];
+          db.workNotes = db.workNotes || [];
+          while (db.students.length < MAX_STUDENTS) db.students.push({ id: uid("stu"), name: "", school: "", grade: "" });
+          db.students = db.students.slice(0, MAX_STUDENTS);
+          save();
+          selectedStudentId = db.students[0].id;
+          reportStudentId = selectedStudentId;
+          render();
+          localStorage.setItem(SYNC_KEY_LOCAL, String(serverTime || Date.now()));
+        } finally {
+          suppressAutoPush = false;
+        }
+      }
+
+      // [시작 시 자동 동기화] 페이지를 열 때 서버/로컬 중 더 최신 데이터를 자동 반영
+      async function autoSyncOnStart() {
+        if (!getSyncToken()) return; // 토큰이 없으면 수동 모드 유지
+        try {
+          const res = await fetch(`${SERVER_JSON_URL}?t=${Date.now()}`); // 캐시 우회
+          if (!res.ok) return;
+          const parsed = await res.json();
+          const data = parsed && parsed.data ? parsed.data : parsed;
+          if (!data || !data.students) return;
+
+          const serverTime = parsed.exportedAt ? new Date(parsed.exportedAt).getTime() : 0;
+          const localTime = Number(localStorage.getItem(SYNC_KEY_LOCAL) || 0);
+
+          if (serverTime > localTime) {
+            // 서버가 더 최신이면 이 기기로 자동 가져오기
+            if (confirm("서버에 더 최신 학습관리 데이터가 있습니다. 이 기기로 가져올까요?")) {
+              applyServerData(data, serverTime);
+              alert("서버의 최신 데이터를 가져왔습니다.");
+            }
+          } else if (localTime > serverTime && isAutoUpload()) {
+            // 로컬이 더 최신이면 자동으로 서버에 업로드
+            pushToGitHub(true);
+          }
+        } catch (err) {
+          console.error("시작 동기화 오류:", err);
+        }
+      }
+
+      // [수동 동기화] 서버 백업으로 이 기기 데이터 교체 (토큰 불필요)
+      async function loadFromServer() {
+        try {
+          const res = await fetch(`${SERVER_JSON_URL}?t=${Date.now()}`);
+          if (!res.ok) { alert("백업 파일을 찾을 수 없습니다. json 폴더의 studyroom-backup.json을 확인하세요."); return; }
+          const parsed = await res.json();
+          const data = parsed && parsed.data ? parsed.data : parsed;
+          if (!data || !data.students) { alert("백업 파일 형식이 올바르지 않습니다."); return; }
+          const when = parsed.exportedAt ? new Date(parsed.exportedAt).toLocaleString("ko-KR") : "시점 미상";
+          if (confirm(`서버 백업(${when})으로 이 기기의 데이터를 교체할까요?`)) {
+            applyServerData(data, parsed.exportedAt ? new Date(parsed.exportedAt).getTime() : 0);
+            alert("서버 데이터 동기화를 완료했습니다.");
+          }
+        } catch (err) {
+          console.error("서버 동기화 오류:", err);
+          alert("동기화 실패: 인터넷 연결을 확인하세요.");
+        }
+      }
+
+      // ---------- 동기화 설정 모달 제어 ----------
+      function openSyncModal() {
+        document.getElementById("sync-token-input").value = getSyncToken();
+        document.getElementById("sync-auto-input").checked = isAutoUpload();
+        updateSyncStatusText();
+        document.getElementById("sync-modal").classList.remove("hidden");
+        document.getElementById("sync-modal").classList.add("flex");
+      }
+      function closeSyncModal() {
+        document.getElementById("sync-modal").classList.add("hidden");
+        document.getElementById("sync-modal").classList.remove("flex");
+      }
+      function saveSyncSettings() {
+        localStorage.setItem(SYNC_KEY_TOKEN, document.getElementById("sync-token-input").value.trim());
+        localStorage.setItem(SYNC_KEY_AUTO, String(document.getElementById("sync-auto-input").checked));
+        closeSyncModal();
+        // 토큰과 자동 백업이 모두 켜져 있으면 즉시 한 번 업로드 시도
+        if (getSyncToken() && isAutoUpload()) pushToGitHub(false);
+      }
+      function updateSyncStatusText() {
+        const el = document.getElementById("sync-status-text");
+        if (!el) return;
+        const last = Number(localStorage.getItem(SYNC_KEY_LAST) || 0);
+        el.textContent = last ? `마지막 업로드: ${new Date(last).toLocaleString("ko-KR")}` : "마지막 업로드: 기록 없음";
+      }
+
+      // 동기화 버튼 이벤트 연결
+      document.getElementById("btn-sync-pull").addEventListener("click", loadFromServer);
+      document.getElementById("btn-sync-push").addEventListener("click", () => pushToGitHub(false));
+      document.getElementById("btn-sync-settings").addEventListener("click", openSyncModal);
+      document.getElementById("sync-modal-close").addEventListener("click", closeSyncModal);
+      document.getElementById("sync-cancel-btn").addEventListener("click", closeSyncModal);
+      document.getElementById("sync-save-btn").addEventListener("click", saveSyncSettings);
+
+      $("#btn-export").addEventListener("click", () => {
+        const blob = new Blob([JSON.stringify(db, null, 2)], { type: "application/json" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "학습관리백업_" + toISO(new Date()) + ".json";
+        a.click();
+      });
+      $("#btn-import").addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const parsed0 = JSON.parse(reader.result);
+            const parsed = parsed0 && parsed0.data ? parsed0.data : parsed0; // 동기화 래핑 형식도 지원
+            if (!parsed.students) throw new Error("형식 오류");
+            db = parsed;
+            db.schedules = db.schedules || {};
+            db.attendance = db.attendance || {};
+            db.studyLogs = (db.studyLogs || []).map((l) => ({ ...l, eval: EVAL_MIGRATE[l.eval] || l.eval }));
+            db.counseling = db.counseling || [];
+            db.requests = db.requests || [];
+            db.workNotes = db.workNotes || [];
+            while (db.students.length < MAX_STUDENTS) db.students.push({ id: uid("stu"), name: "", school: "", grade: "" });
+            db.students = db.students.slice(0, MAX_STUDENTS);
+            save();
+            selectedStudentId = db.students[0].id;
+            reportStudentId = selectedStudentId;
+            render();
+            alert("데이터를 불러왔습니다.");
+          } catch (err) {
+            alert("올바른 백업 파일이 아닙니다.");
+          }
+        };
+        reader.readAsText(file);
+        e.target.value = "";
+      });
+
+      buildNav();
+      render();
+      autoSyncOnStart(); // 페이지 열 때 서버/로컬 데이터 비교 후 자동 동기화
+      updateSyncStatusText();
+    });
+  </script>
+</body>
+</html>
