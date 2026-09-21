@@ -1,0 +1,135 @@
+{
+  "app": "studyroom",
+  "exportedAt": "2026-09-21T08:35:36.692Z",
+  "version": 3,
+  "data": {
+    "students": [
+      {
+        "id": "stu_1",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_2",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_3",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_4",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_5",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_6",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_7",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_8",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_9",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_10",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_11",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_12",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_13",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_14",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_15",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_16",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_17",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_18",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_19",
+        "name": "",
+        "school": "",
+        "grade": ""
+      },
+      {
+        "id": "stu_20",
+        "name": "",
+        "school": "",
+        "grade": ""
+      }
+    ],
+    "schedules": {},
+    "attendance": {},
+    "studyLogs": [],
+    "counseling": [],
+    "requests": [],
+    "workNotes": []
+  }
+}
