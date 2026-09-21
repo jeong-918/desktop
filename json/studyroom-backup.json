@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-09-21T10:26:42.141Z",
+  "exportedAt": "2026-09-21T12:36:34.580Z",
   "version": 3,
   "data": {
     "students": [
@@ -1140,7 +1140,7 @@
       },
       "stu_4": {
         "2026-09-21": {
-          "status": "미입실(학원)",
+          "status": "중도입실",
           "time": ""
         }
       },
