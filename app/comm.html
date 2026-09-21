@@ -1572,9 +1572,9 @@
       // 절대 URL 사용: 이 HTML이 저장소의 어느 폴더에 있어도 동일하게 동작
       const SERVER_JSON_URL = "https://jeong-918.github.io/desktop/json/comm-backup.json";
       const SYNC_KEY_TOKEN = "sync_github_token";       // 토큰 (기기별 브라우저에만 저장)
-      const SYNC_KEY_AUTO = "sync_github_auto_upload";  // 자동 백업 사용 여부
-      const SYNC_KEY_LAST = "sync_last_upload_time";   // 마지막 업로드 시각
-      const SYNC_KEY_LOCAL = "sync_local_updated_at";   // 로컬 데이터 마지막 수정 시각
+      const SYNC_KEY_AUTO = "sync_comm_auto";  // 자동 백업 사용 여부
+      const SYNC_KEY_LAST = "sync_comm_last_upload";   // 마지막 업로드 시각
+      const SYNC_KEY_LOCAL = "sync_comm_local_updated";   // 로컬 데이터 마지막 수정 시각
 
       const getSyncToken = () => localStorage.getItem(SYNC_KEY_TOKEN) || "";
       const isAutoUpload = () => localStorage.getItem(SYNC_KEY_AUTO) === "true";
