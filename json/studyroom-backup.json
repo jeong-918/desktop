@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-09-21T12:36:34.580Z",
+  "exportedAt": "2026-09-21T12:37:59.579Z",
   "version": 3,
   "data": {
     "students": [
@@ -1217,7 +1217,20 @@
         }
       }
     },
-    "studyLogs": [],
+    "studyLogs": [
+      {
+        "id": "log_mub8dh8hk9f1",
+        "studentId": "stu_8",
+        "date": "2026-09-21",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "19:30",
+        "minutes": 90,
+        "note": ""
+      }
+    ],
     "counseling": [],
     "requests": [],
     "workNotes": []
