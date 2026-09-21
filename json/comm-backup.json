@@ -1,6 +1,6 @@
 {
   "appName": "소통 이행 관리",
-  "exportedAt": "2026-09-21T05:05:11.704Z",
+  "exportedAt": "2026-09-21T05:06:59.984Z",
   "version": 1,
   "data": {
     "categories": [
@@ -30,10 +30,10 @@
         "dueDate": "2026-09-20",
         "followupDate": "2026-09-27",
         "priority": "normal",
-        "status": "before",
+        "status": "complete",
         "note": "면접일 : 추석마치고 9/30수 또는 10/1목 중 택1 \n시간 : 9/30 수는 7시 이후 | 10/1 목은 2~3시 가능여부 체크",
         "createdAt": "2026-09-19T11:35:44.260Z",
-        "completedAt": null
+        "completedAt": "2026-09-21T05:06:54.699Z"
       },
       {
         "id": "task-1789727877829-cqn4h7p",
