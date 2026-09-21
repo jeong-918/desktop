@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-09-21T12:37:59.579Z",
+  "exportedAt": "2026-09-21T12:39:20.331Z",
   "version": 3,
   "data": {
     "students": [
@@ -1228,6 +1228,42 @@
         "start": "18:00",
         "end": "19:30",
         "minutes": 90,
+        "note": ""
+      },
+      {
+        "id": "log_mub8e1hs90ky",
+        "studentId": "stu_8",
+        "date": "2026-09-21",
+        "subject": "영어",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "19:30",
+        "end": "20:30",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mub8eougkoru",
+        "studentId": "stu_14",
+        "date": "2026-09-21",
+        "subject": "사회",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "06:00",
+        "end": "18:30",
+        "minutes": 750,
+        "note": ""
+      },
+      {
+        "id": "log_mub8f7u0pate",
+        "studentId": "stu_14",
+        "date": "2026-09-21",
+        "subject": "영어",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "18:30",
+        "end": "19:00",
+        "minutes": 30,
         "note": ""
       }
     ],
