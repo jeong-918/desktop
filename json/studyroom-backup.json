@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-09-21T12:49:12.110Z",
+  "exportedAt": "2026-09-21T13:01:00.667Z",
   "version": 3,
   "data": {
     "students": [
@@ -1275,6 +1275,18 @@
         "eval": "학습완료",
         "start": "19:00",
         "end": "19:40",
+        "minutes": 40,
+        "note": ""
+      },
+      {
+        "id": "log_mub9733qjoz6",
+        "studentId": "stu_9",
+        "date": "2026-09-21",
+        "subject": "영어",
+        "type": "영단어",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "18:40",
         "minutes": 40,
         "note": ""
       }
