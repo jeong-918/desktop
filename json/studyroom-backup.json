@@ -1,68 +1,68 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-09-21T09:21:02.102Z",
+  "exportedAt": "2026-09-21T09:22:29.579Z",
   "version": 3,
   "data": {
     "students": [
       {
         "id": "stu_1",
         "name": "이재현",
-        "school": "",
-        "grade": ""
+        "school": "미강고",
+        "grade": "2"
       },
       {
         "id": "stu_2",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "이지은",
+        "school": "미강고",
+        "grade": "1"
       },
       {
         "id": "stu_3",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "서도훈",
+        "school": "미강고",
+        "grade": "2"
       },
       {
         "id": "stu_4",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "장지후",
+        "school": "미강고",
+        "grade": "2"
       },
       {
         "id": "stu_5",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "박찬율",
+        "school": "미강고",
+        "grade": "1"
       },
       {
         "id": "stu_6",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "이현준",
+        "school": "미강고",
+        "grade": "2"
       },
       {
         "id": "stu_7",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "이효준",
+        "school": "미강고",
+        "grade": "2"
       },
       {
         "id": "stu_8",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "장우정",
+        "school": "미사고",
+        "grade": "2"
       },
       {
         "id": "stu_9",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "서준호",
+        "school": "미강고",
+        "grade": "2"
       },
       {
         "id": "stu_10",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "name": "이선호",
+        "school": "미강고",
+        "grade": "1"
       },
       {
         "id": "stu_11",
