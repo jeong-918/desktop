@@ -1,6 +1,6 @@
 {
   "appName": "소통 이행 관리",
-  "exportedAt": "2026-09-22T05:50:34.592Z",
+  "exportedAt": "2026-09-22T05:52:49.391Z",
   "version": 1,
   "data": {
     "categories": [
@@ -22,6 +22,20 @@
     ],
     "tasks": [
       {
+        "id": "task-1790056364042-eot8aat",
+        "categoryId": "category-1789727741661-shxtnf5",
+        "person": "박우진",
+        "title": "중간고사 이후 체크포인트",
+        "firstDate": "2026-09-22",
+        "dueDate": "2026-10-04",
+        "followupDate": "",
+        "priority": "normal",
+        "status": "before",
+        "note": "※ 1차 완료 : 심영독(화씨451에세이) → 이행준비 :고전기반현대사회연구 + 독서와 작문, 미적1, 중국문학입문, 세계시민과 지리, 과학창의연구(수능문풀), 세계시민과 미래사회(국제관련)",
+        "createdAt": "2026-09-22T05:52:44.042Z",
+        "completedAt": null
+      },
+      {
         "id": "task-1790056229307-cyv3zg5",
         "categoryId": "category-1789727741661-shxtnf5",
         "person": "정인아",
@@ -41,7 +55,7 @@
         "person": "윤지원",
         "title": "중간고사 이후 체크 포인트",
         "firstDate": "2026-09-22",
-        "dueDate": "",
+        "dueDate": "2026-10-11",
         "followupDate": "",
         "priority": "normal",
         "status": "before",
@@ -70,7 +84,7 @@
         "title": "고전기반현대사회연구 : 선정됨. 그래서 시험 후 진행할 듯",
         "firstDate": "2026-09-18",
         "dueDate": "2026-10-05",
-        "followupDate": "2026-10-07",
+        "followupDate": "2026-10-09",
         "priority": "normal",
         "status": "before",
         "note": "고전기반현대사회연구 관련 주제, 역할, 이행과정. 선생님 서포트 등 체크 필요",
