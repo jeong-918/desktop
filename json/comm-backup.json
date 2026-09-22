@@ -1,6 +1,6 @@
 {
   "appName": "소통 이행 관리",
-  "exportedAt": "2026-09-21T10:27:28.480Z",
+  "exportedAt": "2026-09-22T05:48:00.620Z",
   "version": 1,
   "data": {
     "categories": [
@@ -21,6 +21,20 @@
       }
     ],
     "tasks": [
+      {
+        "id": "task-1790056075123-0n69lta",
+        "categoryId": "category-1789727741661-shxtnf5",
+        "person": "윤지원",
+        "title": "중간고사 이후 체크 포인트",
+        "firstDate": "2026-09-22",
+        "dueDate": "",
+        "followupDate": "",
+        "priority": "normal",
+        "status": "before",
+        "note": "※ 1차 완료 : 사문, 인공지능, 현사윤 → 이행준비 : 미적1, 세포물질대사, 화법과언어, 영어2, 미디어영어 + 독서부(독후감예상) + 융합탐구",
+        "createdAt": "2026-09-22T05:47:55.123Z",
+        "completedAt": null
+      },
       {
         "id": "task-1789817744260-se3d0ui",
         "categoryId": "category-1789727741661-shxtnf5",
