@@ -1,6 +1,6 @@
 {
   "appName": "소통 이행 관리",
-  "exportedAt": "2026-09-22T05:48:00.620Z",
+  "exportedAt": "2026-09-22T05:50:34.592Z",
   "version": 1,
   "data": {
     "categories": [
@@ -21,6 +21,20 @@
       }
     ],
     "tasks": [
+      {
+        "id": "task-1790056229307-cyv3zg5",
+        "categoryId": "category-1789727741661-shxtnf5",
+        "person": "정인아",
+        "title": "중간고사 이후 체크포인트",
+        "firstDate": "2026-09-22",
+        "dueDate": "2026-10-11",
+        "followupDate": "",
+        "priority": "normal",
+        "status": "before",
+        "note": "※ 1차 완료 : 경제동아리+독서토론,  역사탐구현대사회A/B, 영어A/B, 화법과언어 → 이행준비 : 미적1, 세계문화와 영어, 법과 사회",
+        "createdAt": "2026-09-22T05:50:29.307Z",
+        "completedAt": null
+      },
       {
         "id": "task-1790056075123-0n69lta",
         "categoryId": "category-1789727741661-shxtnf5",
