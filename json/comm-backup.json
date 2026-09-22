@@ -1,6 +1,6 @@
 {
   "appName": "소통 이행 관리",
-  "exportedAt": "2026-09-22T05:52:49.391Z",
+  "exportedAt": "2026-09-22T10:01:59.173Z",
   "version": 1,
   "data": {
     "categories": [
@@ -83,7 +83,7 @@
         "person": "박우진",
         "title": "고전기반현대사회연구 : 선정됨. 그래서 시험 후 진행할 듯",
         "firstDate": "2026-09-18",
-        "dueDate": "2026-10-05",
+        "dueDate": "2026-10-04",
         "followupDate": "2026-10-09",
         "priority": "normal",
         "status": "before",
