@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-09-22T05:42:08.235Z",
+  "exportedAt": "2026-09-22T05:44:11.113Z",
   "categories": [
     {
       "id": "cat_1789710672289",
@@ -104,7 +104,7 @@
       "title": "오전 근무자 : 인원 체크 특징  / 오후근무자 : 중간 확인 요청",
       "categoryId": "cat_1789710695553",
       "date": "2026-09-26",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "memo": "",
       "time": "",
       "createdAt": 1789717975417
@@ -368,6 +368,36 @@
       "memo": "시험일정 : 9/28~10/2 → 10/4 일요일 일정 몇시 가능한가 질의",
       "time": "",
       "createdAt": 1790055591275
+    },
+    {
+      "id": "todo_1790055837923_xqzd",
+      "title": "미강고 시험종료 휴일 (목금토일)",
+      "categoryId": "cat_1789710695553",
+      "date": "2026-10-08",
+      "status": "TODO",
+      "memo": "",
+      "time": "",
+      "createdAt": 1790055837923
+    },
+    {
+      "id": "todo_1790055842898_ptya",
+      "title": "미강고 시험종료 휴일 (목금토일)",
+      "categoryId": "cat_1789710695553",
+      "date": "2026-10-09",
+      "status": "TODO",
+      "memo": "",
+      "time": "",
+      "createdAt": 1790055842898
+    },
+    {
+      "id": "todo_1790055845762_coys",
+      "title": "미강고 시험종료 휴일 (목금토일)",
+      "categoryId": "cat_1789710695553",
+      "date": "2026-10-10",
+      "status": "TODO",
+      "memo": "",
+      "time": "",
+      "createdAt": 1790055845762
     }
   ]
 }
