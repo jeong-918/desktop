@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-09-22T05:44:11.113Z",
+  "exportedAt": "2026-09-23T06:48:40.161Z",
   "categories": [
     {
       "id": "cat_1789710672289",
@@ -398,6 +398,36 @@
       "memo": "",
       "time": "",
       "createdAt": 1790055845762
+    },
+    {
+      "id": "todo_1790055878338_q9ja",
+      "title": "미사고 시험종료 휴일 (수목금)",
+      "categoryId": "cat_1789710695553",
+      "date": "2026-10-14",
+      "status": "TODO",
+      "memo": "",
+      "time": "",
+      "createdAt": 1790055878338
+    },
+    {
+      "id": "todo_1790055882724_2sp0",
+      "title": "미사고 시험종료 휴일 (수목금)",
+      "categoryId": "cat_1789710695553",
+      "date": "2026-10-15",
+      "status": "TODO",
+      "memo": "",
+      "time": "",
+      "createdAt": 1790055882724
+    },
+    {
+      "id": "todo_1790055885771_kgco",
+      "title": "미사고 시험종료 휴일 (수목금)",
+      "categoryId": "cat_1789710695553",
+      "date": "2026-10-16",
+      "status": "TODO",
+      "memo": "",
+      "time": "",
+      "createdAt": 1790055885771
     }
   ]
 }
