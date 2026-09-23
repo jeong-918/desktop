@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-09-23T10:15:57.005Z",
+  "exportedAt": "2026-09-23T13:25:21.001Z",
   "version": 3,
   "data": {
     "students": [
@@ -1702,21 +1702,24 @@
         "date": "2026-09-23",
         "studentId": "stu_2",
         "content": "수학학원 보강 후 입실 → 이후 8시 수학학원 재이동",
-        "checked": false
+        "checked": true,
+        "checkedAt": "2026-09-23 19:16"
       },
       {
         "id": "rq_mudy5w4xl2ms",
         "date": "2026-09-23",
         "studentId": "stu_5",
         "content": "수학학원 보강 후 입실 → 6시 조금 넘어 도착예상",
-        "checked": false
+        "checked": true,
+        "checkedAt": "2026-09-23 19:16"
       },
       {
         "id": "rq_mudy67qlea6j",
         "date": "2026-09-23",
         "studentId": "stu_14",
         "content": "8시 수학과외 보강으로 7시 30분 퇴실",
-        "checked": false
+        "checked": true,
+        "checkedAt": "2026-09-23 19:16"
       }
     ],
     "workNotes": [
