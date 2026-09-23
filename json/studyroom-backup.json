@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-09-22T12:07:48.557Z",
+  "exportedAt": "2026-09-23T10:15:57.005Z",
   "version": 3,
   "data": {
     "students": [
@@ -1128,6 +1128,10 @@
         "2026-09-22": {
           "status": "중도입실",
           "time": ""
+        },
+        "2026-09-23": {
+          "status": "미입실(학원)",
+          "time": ""
         }
       },
       "stu_2": {
@@ -1138,6 +1142,10 @@
         "2026-09-22": {
           "status": "입실",
           "time": ""
+        },
+        "2026-09-23": {
+          "status": "중도입실",
+          "time": "18:30"
         }
       },
       "stu_3": {
@@ -1147,6 +1155,10 @@
         },
         "2026-09-22": {
           "status": "병결",
+          "time": ""
+        },
+        "2026-09-23": {
+          "status": "미입실(학원)",
           "time": ""
         }
       },
@@ -1158,6 +1170,10 @@
         "2026-09-22": {
           "status": "미입실(학원)",
           "time": ""
+        },
+        "2026-09-23": {
+          "status": "입실",
+          "time": ""
         }
       },
       "stu_5": {
@@ -1168,6 +1184,10 @@
         "2026-09-22": {
           "status": "입실",
           "time": ""
+        },
+        "2026-09-23": {
+          "status": "중도입실",
+          "time": "18:15"
         }
       },
       "stu_6": {
@@ -1178,6 +1198,10 @@
         "2026-09-22": {
           "status": "입실",
           "time": ""
+        },
+        "2026-09-23": {
+          "status": "미입실(학원)",
+          "time": ""
         }
       },
       "stu_7": {
@@ -1186,6 +1210,10 @@
           "time": ""
         },
         "2026-09-22": {
+          "status": "입실",
+          "time": ""
+        },
+        "2026-09-23": {
           "status": "입실",
           "time": ""
         }
@@ -1198,6 +1226,10 @@
         "2026-09-22": {
           "status": "미입실(학원)",
           "time": ""
+        },
+        "2026-09-23": {
+          "status": "입실",
+          "time": ""
         }
       },
       "stu_9": {
@@ -1206,6 +1238,10 @@
           "time": ""
         },
         "2026-09-22": {
+          "status": "입실",
+          "time": ""
+        },
+        "2026-09-23": {
           "status": "입실",
           "time": ""
         }
@@ -1218,6 +1254,10 @@
         "2026-09-22": {
           "status": "입실",
           "time": ""
+        },
+        "2026-09-23": {
+          "status": "미입실(학원)",
+          "time": ""
         }
       },
       "stu_11": {
@@ -1227,6 +1267,10 @@
         },
         "2026-09-22": {
           "status": "입실",
+          "time": ""
+        },
+        "2026-09-23": {
+          "status": "미입실(학원)",
           "time": ""
         }
       },
@@ -1238,6 +1282,10 @@
         "2026-09-22": {
           "status": "중도입실",
           "time": ""
+        },
+        "2026-09-23": {
+          "status": "미입실(학원)",
+          "time": ""
         }
       },
       "stu_13": {
@@ -1246,6 +1294,10 @@
           "time": ""
         },
         "2026-09-22": {
+          "status": "미입실(학원)",
+          "time": ""
+        },
+        "2026-09-23": {
           "status": "미입실(학원)",
           "time": ""
         }
@@ -1258,6 +1310,10 @@
         "2026-09-22": {
           "status": "미입실(학원)",
           "time": ""
+        },
+        "2026-09-23": {
+          "status": "입실",
+          "time": ""
         }
       },
       "stu_19": {
@@ -1268,6 +1324,10 @@
         "2026-09-22": {
           "status": "미입실(학원)",
           "time": ""
+        },
+        "2026-09-23": {
+          "status": "미입실(학원)",
+          "time": ""
         }
       },
       "stu_20": {
@@ -1276,6 +1336,10 @@
           "time": ""
         },
         "2026-09-22": {
+          "status": "미입실(학원)",
+          "time": ""
+        },
+        "2026-09-23": {
           "status": "미입실(학원)",
           "time": ""
         }
@@ -1389,10 +1453,289 @@
         "end": "22:00",
         "minutes": 60,
         "note": ""
+      },
+      {
+        "id": "log_mudx6bzn5hhc",
+        "studentId": "stu_12",
+        "date": "2026-09-22",
+        "subject": "국어",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "21:00",
+        "end": "22:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mudx7ltcvsgn",
+        "studentId": "stu_6",
+        "date": "2026-09-22",
+        "subject": "국어",
+        "type": "과제",
+        "eval": "보완필요",
+        "start": "18:00",
+        "end": "20:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mudx85istvme",
+        "studentId": "stu_6",
+        "date": "2026-09-22",
+        "subject": "과학",
+        "type": "과제",
+        "eval": "보완필요",
+        "start": "20:00",
+        "end": "22:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mudx92rcwscp",
+        "studentId": "stu_5",
+        "date": "2026-09-22",
+        "subject": "국어",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "18:50",
+        "minutes": 50,
+        "note": ""
+      },
+      {
+        "id": "log_mudx9kji90xc",
+        "studentId": "stu_5",
+        "date": "2026-09-22",
+        "subject": "수학",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "18:50",
+        "end": "20:00",
+        "minutes": 70,
+        "note": ""
+      },
+      {
+        "id": "log_mudxbakumqnj",
+        "studentId": "stu_5",
+        "date": "2026-09-22",
+        "subject": "사회",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "20:00",
+        "end": "22:00",
+        "minutes": 120,
+        "note": "한국사 단원 흐름 질의-답변 시간 가짐"
+      },
+      {
+        "id": "log_mudxcbb8c4kx",
+        "studentId": "stu_2",
+        "date": "2026-09-22",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "보완필요",
+        "start": "18:00",
+        "end": "19:50",
+        "minutes": 110,
+        "note": ""
+      },
+      {
+        "id": "log_mudxcy36e1xn",
+        "studentId": "stu_2",
+        "date": "2026-09-22",
+        "subject": "사회",
+        "type": "기타학습",
+        "eval": "학습완료",
+        "start": "20:00",
+        "end": "21:00",
+        "minutes": 60,
+        "note": "자습관 담임선생님 통해 역사 단원 흐름 질의-답변 시간 가짐"
+      },
+      {
+        "id": "log_mudxdpyrmnb0",
+        "studentId": "stu_2",
+        "date": "2026-09-22",
+        "subject": "사회",
+        "type": "복습",
+        "eval": "보완필요",
+        "start": "21:00",
+        "end": "22:00",
+        "minutes": 60,
+        "note": "자습관 담임선생님 통해 역사 단원 흐름 잡은 후 해당 내용 복습"
+      },
+      {
+        "id": "log_mudxeywrx1jh",
+        "studentId": "stu_9",
+        "date": "2026-09-22",
+        "subject": "과학",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "20:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mudxff1yuja7",
+        "studentId": "stu_9",
+        "date": "2026-09-22",
+        "subject": "국어",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "20:00",
+        "end": "22:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mudxg7lpjyr1",
+        "studentId": "stu_7",
+        "date": "2026-09-22",
+        "subject": "과학",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "22:00",
+        "minutes": 240,
+        "note": ""
+      },
+      {
+        "id": "log_mudxhe91x0il",
+        "studentId": "stu_1",
+        "date": "2026-09-22",
+        "subject": "기타",
+        "type": "수행평가",
+        "eval": "학습완료",
+        "start": "18:30",
+        "end": "20:30",
+        "minutes": 120,
+        "note": "일본어 수행평가"
+      },
+      {
+        "id": "log_mudxhv4y3igl",
+        "studentId": "stu_1",
+        "date": "2026-09-22",
+        "subject": "수학",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "20:30",
+        "end": "22:00",
+        "minutes": 90,
+        "note": ""
+      },
+      {
+        "id": "log_mudxir4d0b7x",
+        "studentId": "stu_10",
+        "date": "2026-09-22",
+        "subject": "사회",
+        "type": "기타학습",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "21:00",
+        "minutes": 180,
+        "note": ""
+      },
+      {
+        "id": "log_mudxj8ulzbqu",
+        "studentId": "stu_10",
+        "date": "2026-09-22",
+        "subject": "영어",
+        "type": "영단어",
+        "eval": "보완필요",
+        "start": "21:00",
+        "end": "22:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mudy2i0zqioy",
+        "studentId": "stu_11",
+        "date": "2026-09-22",
+        "subject": "국어",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "19:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mudy2uzbjlz8",
+        "studentId": "stu_11",
+        "date": "2026-09-22",
+        "subject": "과학",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "19:00",
+        "end": "19:30",
+        "minutes": 30,
+        "note": ""
+      },
+      {
+        "id": "log_mudy38pb9in3",
+        "studentId": "stu_11",
+        "date": "2026-09-22",
+        "subject": "사회",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "19:30",
+        "end": "19:50",
+        "minutes": 20,
+        "note": ""
+      },
+      {
+        "id": "log_mudy3l6pslyz",
+        "studentId": "stu_11",
+        "date": "2026-09-22",
+        "subject": "사회",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "20:00",
+        "end": "22:00",
+        "minutes": 120,
+        "note": ""
       }
     ],
     "counseling": [],
-    "requests": [],
-    "workNotes": []
+    "requests": [
+      {
+        "id": "rq_mudy5l9drlyd",
+        "date": "2026-09-23",
+        "studentId": "stu_2",
+        "content": "수학학원 보강 후 입실 → 이후 8시 수학학원 재이동",
+        "checked": false
+      },
+      {
+        "id": "rq_mudy5w4xl2ms",
+        "date": "2026-09-23",
+        "studentId": "stu_5",
+        "content": "수학학원 보강 후 입실 → 6시 조금 넘어 도착예상",
+        "checked": false
+      },
+      {
+        "id": "rq_mudy67qlea6j",
+        "date": "2026-09-23",
+        "studentId": "stu_14",
+        "content": "8시 수학과외 보강으로 7시 30분 퇴실",
+        "checked": false
+      }
+    ],
+    "workNotes": [
+      {
+        "id": "wk_mudprs0213z0",
+        "date": "2026-09-23",
+        "kind": "협조",
+        "content": "ⓐ 6시 출결 체크 + ⓑ 중도 입실인원 체크 + ⓒ 신규 시스템 관련 소통 논의 (전화번호 편집 건)",
+        "checked": true,
+        "checkedAt": "2026-09-23 19:14"
+      },
+      {
+        "id": "wk_mudpsched0ry",
+        "date": "2026-09-23",
+        "kind": "협조",
+        "content": "관련 내용 6시 소통 예정",
+        "checked": true,
+        "checkedAt": "2026-09-23 19:14"
+      }
+    ]
   }
 }
