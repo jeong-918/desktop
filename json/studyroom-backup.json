@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-09-25T23:53:32.830Z",
+  "exportedAt": "2026-09-25T23:54:40.507Z",
   "version": 3,
   "data": {
     "students": [
@@ -1848,55 +1848,14 @@
       }
     ],
     "counseling": [],
-    "requests": [
-      {
-        "id": "rq_mudy5l9drlyd",
-        "date": "2026-09-23",
-        "studentId": "stu_2",
-        "content": "수학학원 보강 후 입실 → 이후 8시 수학학원 재이동",
-        "checked": true,
-        "checkedAt": "2026-09-23 19:16"
-      },
-      {
-        "id": "rq_mudy5w4xl2ms",
-        "date": "2026-09-23",
-        "studentId": "stu_5",
-        "content": "수학학원 보강 후 입실 → 6시 조금 넘어 도착예상",
-        "checked": true,
-        "checkedAt": "2026-09-23 19:16"
-      },
-      {
-        "id": "rq_mudy67qlea6j",
-        "date": "2026-09-23",
-        "studentId": "stu_14",
-        "content": "8시 수학과외 보강으로 7시 30분 퇴실",
-        "checked": true,
-        "checkedAt": "2026-09-23 19:16"
-      },
-      {
-        "id": "rq_muhm9nno6qif",
-        "date": "2026-09-26",
-        "studentId": "",
-        "content": "9/26 입시자습관 출결 \n총원 18 (1자습관 14, 2자습관4)\n10시 출석8 : 이지은, 서도훈, 박찬율, 이현준, 이효준, 서준호, 김보민, 최정우\n다올 수업5 : 장우정, 김수연, 양민경, 임예린, 이윤서\n타학원2 : 장지후(과학), 이선호(국어)\n추석연휴1 : 이재현\n기타2 : 신민정, 백서현 (담임협의)",
-        "checked": false
-      }
-    ],
+    "requests": [],
     "workNotes": [
       {
-        "id": "wk_mudprs0213z0",
+        "id": "wk_muhmb41benpz",
         "date": "2026-09-23",
         "kind": "협조",
-        "content": "ⓐ 6시 출결 체크 + ⓑ 중도 입실인원 체크 + ⓒ 신규 시스템 관련 소통 논의 (전화번호 편집 건)",
-        "checked": true,
-        "checkedAt": "2026-09-23 19:14"
-      },
-      {
-        "id": "wk_mudpsched0ry",
-        "date": "2026-09-23",
-        "kind": "협조",
-        "content": "관련 내용 6시 소통 예정",
-        "checked": true,
-        "checkedAt": "2026-09-23 19:14"
+        "content": "9/26 입시자습관 출결 \n총원 18 (1자습관 14, 2자습관4)\n10시 출석8 : 이지은, 서도훈, 박찬율, 이현준, 이효준, 서준호, 김보민, 최정우\n다올 수업5 : 장우정, 김수연, 양민경, 임예린, 이윤서\n타학원2 : 장지후(과학), 이선호(국어)\n추석연휴1 : 이재현\n기타2 : 신민정, 백서현 (담임협의)",
+        "checked": false
       }
     ]
   }
