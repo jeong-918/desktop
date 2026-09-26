@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-09-23T10:37:39.170Z",
+  "exportedAt": "2026-09-26T05:00:26.794Z",
   "categories": [
     {
       "id": "cat_1789710672289",
@@ -104,7 +104,7 @@
       "title": "오전 근무자 : 인원 체크 특징  / 오후근무자 : 중간 확인 요청",
       "categoryId": "cat_1789710695553",
       "date": "2026-09-26",
-      "status": "IN_PROGRESS",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1789717975417
