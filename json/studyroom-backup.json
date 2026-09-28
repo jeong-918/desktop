@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-09-28T05:37:55.976Z",
+  "exportedAt": "2026-09-28T05:39:32.418Z",
   "version": 3,
   "data": {
     "students": [
@@ -2451,15 +2451,15 @@
         "note": ""
       },
       {
-        "id": "log_muktg8zbmvin",
+        "id": "log_muktgoon41x9",
         "studentId": "stu_3",
         "date": "2026-09-26",
         "subject": "영어",
-        "type": "기타학습",
+        "type": "복습",
         "eval": "학습완료",
-        "start": "18:00",
-        "end": "18:30",
-        "minutes": 30,
+        "start": "21:20",
+        "end": "22:00",
+        "minutes": 40,
         "note": ""
       }
     ],
