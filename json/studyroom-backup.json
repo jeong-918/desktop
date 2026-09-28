@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-09-28T05:24:20.314Z",
+  "exportedAt": "2026-09-28T05:25:27.298Z",
   "version": 3,
   "data": {
     "students": [
@@ -2184,6 +2184,18 @@
         "start": "20:30",
         "end": "22:00",
         "minutes": 90,
+        "note": ""
+      },
+      {
+        "id": "log_mukt079d9k5y",
+        "studentId": "stu_2",
+        "date": "2026-09-26",
+        "subject": "사회",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "15:15",
+        "end": "17:00",
+        "minutes": 105,
         "note": ""
       }
     ],
