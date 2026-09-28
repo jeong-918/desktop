@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-09-28T05:23:08.543Z",
+  "exportedAt": "2026-09-28T05:24:20.314Z",
   "version": 3,
   "data": {
     "students": [
@@ -2136,6 +2136,54 @@
         "start": "15:00",
         "end": "17:00",
         "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_muksxik95mvj",
+        "studentId": "stu_12",
+        "date": "2026-09-26",
+        "subject": "영어",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "14:30",
+        "end": "15:00",
+        "minutes": 30,
+        "note": ""
+      },
+      {
+        "id": "log_muksxrh6cdv6",
+        "studentId": "stu_12",
+        "date": "2026-09-26",
+        "subject": "사회",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "22:00",
+        "minutes": 240,
+        "note": ""
+      },
+      {
+        "id": "log_muksygn5rb1w",
+        "studentId": "stu_8",
+        "date": "2026-09-26",
+        "subject": "사회",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "15:00",
+        "end": "17:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_muksyrghrxi4",
+        "studentId": "stu_8",
+        "date": "2026-09-26",
+        "subject": "사회",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "20:30",
+        "end": "22:00",
+        "minutes": 90,
         "note": ""
       }
     ],
