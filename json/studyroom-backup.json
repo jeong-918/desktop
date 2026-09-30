@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-09-30T06:12:47.572Z",
+  "exportedAt": "2026-09-30T06:13:51.476Z",
   "version": 3,
   "data": {
     "students": [
@@ -4020,6 +4020,30 @@
         "start": "20:00",
         "end": "22:00",
         "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_munpljc7o7wa",
+        "studentId": "stu_9",
+        "date": "2026-09-29",
+        "subject": "수학",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "22:00",
+        "minutes": 240,
+        "note": ""
+      },
+      {
+        "id": "log_munpm5h5t8xj",
+        "studentId": "stu_6",
+        "date": "2026-09-29",
+        "subject": "국어",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "19:00",
+        "minutes": 60,
         "note": ""
       }
     ],
