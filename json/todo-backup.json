@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-01T06:47:15.258Z",
+  "exportedAt": "2026-10-01T07:52:19.987Z",
   "categories": [
     {
       "id": "cat_1789710672289",
@@ -124,7 +124,7 @@
       "title": "한영외고 중간고사 (월화수목금)",
       "categoryId": "cat_1789710672289",
       "date": "2026-09-29",
-      "status": "TODO",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1789724433420
@@ -134,7 +134,7 @@
       "title": "한영외고 중간고사 (월화수목금)",
       "categoryId": "cat_1789710672289",
       "date": "2026-09-30",
-      "status": "TODO",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1789724439355
@@ -444,7 +444,7 @@
       "title": "김민서 5시 면접 수업 1차",
       "categoryId": "cat_1789710672289",
       "date": "2026-10-01",
-      "status": "IN_PROGRESS",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1790159855581
