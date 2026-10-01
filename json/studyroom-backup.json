@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-01T09:29:37.508Z",
+  "exportedAt": "2026-10-01T09:32:43.919Z",
   "version": 3,
   "data": {
     "students": [
@@ -110,7 +110,7 @@
         "id": "stu_18",
         "name": "최정원",
         "school": "미강중",
-        "grade": ""
+        "grade": "3"
       },
       {
         "id": "stu_19",
