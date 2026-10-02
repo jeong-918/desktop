@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-02T06:53:19.843Z",
+  "exportedAt": "2026-10-02T06:57:46.127Z",
   "version": 3,
   "data": {
     "students": [
@@ -4544,16 +4544,7 @@
       }
     ],
     "counseling": [],
-    "requests": [
-      {
-        "id": "rq_muqlwigy5kpt",
-        "date": "2026-10-02",
-        "studentId": "stu_8",
-        "content": "테스트",
-        "checked": true,
-        "checkedAt": "2026-10-02 15:53"
-      }
-    ],
+    "requests": [],
     "workNotes": []
   }
 }
