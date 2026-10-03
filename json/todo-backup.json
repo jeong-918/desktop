@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-03T08:24:14.749Z",
+  "exportedAt": "2026-10-03T11:03:23.826Z",
   "categories": [
     {
       "id": "cat_1789710672289",
@@ -158,16 +158,6 @@
       "memo": "",
       "time": "",
       "createdAt": 1789724446251
-    },
-    {
-      "id": "todo_1789724488540_gttx",
-      "title": "우진 시험종료에 따른 일정 진행 (금 오전 또는 담주 일요일)",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-04",
-      "status": "IN_PROGRESS",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789724488540
     },
     {
       "id": "todo_1789724775579_1qin",
