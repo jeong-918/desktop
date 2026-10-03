@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-03T06:17:42.642Z",
+  "exportedAt": "2026-10-03T06:18:54.851Z",
   "version": 3,
   "data": {
     "students": [
@@ -4768,18 +4768,6 @@
         "note": ""
       },
       {
-        "id": "log_murzt6wdhu9e",
-        "studentId": "stu_16",
-        "date": "2026-10-02",
-        "subject": "수학",
-        "type": "과제",
-        "eval": "보완필요",
-        "start": "17:20",
-        "end": "18:50",
-        "minutes": 90,
-        "note": ""
-      },
-      {
         "id": "log_murztkgls77e",
         "studentId": "stu_16",
         "date": "2026-10-02",
@@ -4816,18 +4804,6 @@
         "note": ""
       },
       {
-        "id": "log_murzv4ydhx8b",
-        "studentId": "stu_18",
-        "date": "2026-10-02",
-        "subject": "수학",
-        "type": "과제",
-        "eval": "학습완료",
-        "start": "19:00",
-        "end": "20:00",
-        "minutes": 60,
-        "note": ""
-      },
-      {
         "id": "log_murzw84db6a2",
         "studentId": "stu_8",
         "date": "2026-10-02",
@@ -4861,6 +4837,42 @@
         "start": "21:00",
         "end": "22:00",
         "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mus030cc0bx1",
+        "studentId": "stu_18",
+        "date": "2026-10-02",
+        "subject": "사회",
+        "type": "복습",
+        "eval": "보완필요",
+        "start": "21:00",
+        "end": "22:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mus03dusf4v8",
+        "studentId": "stu_18",
+        "date": "2026-10-02",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "20:00",
+        "end": "21:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mus047jwbfzw",
+        "studentId": "stu_16",
+        "date": "2026-10-02",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "보완필요",
+        "start": "17:20",
+        "end": "18:00",
+        "minutes": 40,
         "note": ""
       }
     ],
