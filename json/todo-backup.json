@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-03T11:03:23.826Z",
+  "exportedAt": "2026-10-03T12:46:05.181Z",
   "categories": [
     {
       "id": "cat_1789710672289",
@@ -154,7 +154,7 @@
       "title": "한영외고 중간고사 (월화수목금)",
       "categoryId": "cat_1789710672289",
       "date": "2026-10-02",
-      "status": "TODO",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1789724446251
@@ -184,7 +184,7 @@
       "title": "풍문고 중간고사 (목금화수목)",
       "categoryId": "cat_1789710672289",
       "date": "2026-10-02",
-      "status": "TODO",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1789724897699
@@ -274,7 +274,7 @@
       "title": "현대고 중간고서(목금화수목)",
       "categoryId": "cat_1789710672289",
       "date": "2026-10-02",
-      "status": "TODO",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1789725022778
@@ -454,7 +454,7 @@
       "title": "박우진 일정 체크 (한영외고 시험종료)",
       "categoryId": "cat_1789710672289",
       "date": "2026-10-02",
-      "status": "TODO",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1790841430647
