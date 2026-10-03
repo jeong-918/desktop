@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-09-21T09:20:27.959Z",
+  "exportedAt": "2026-10-03T12:48:28.245Z",
   "apps": [
     {
       "id": "app-1",
@@ -95,11 +95,11 @@
     }
   ],
   "settings": {
-    "bgColor": "#0f172a",
-    "overlayColor": "#020617",
+    "bgColor": "#7c2d12",
+    "overlayColor": "#431407",
     "bgOpacity": 0.1,
     "bgBlur": "25",
-    "bgImage": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80",
-    "themePreset": "midnight"
+    "bgImage": "https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=2000&q=80",
+    "themePreset": "custom"
   }
 }
