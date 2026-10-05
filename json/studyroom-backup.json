@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-05T06:57:26.446Z",
+  "exportedAt": "2026-10-05T07:28:14.348Z",
   "version": 3,
   "data": {
     "students": [
@@ -5167,9 +5167,65 @@
         "end": "17:00",
         "minutes": 90,
         "note": ""
+      },
+      {
+        "id": "log_muuwdsw1c1uh",
+        "studentId": "stu_19",
+        "date": "2026-10-03",
+        "subject": "사회",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "19:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_muuwe5g260iu",
+        "studentId": "stu_19",
+        "date": "2026-10-03",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "19:00",
+        "end": "20:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_muuwefz5yonn",
+        "studentId": "stu_19",
+        "date": "2026-10-03",
+        "subject": "과학",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "20:00",
+        "end": "21:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_muuwepw1jn03",
+        "studentId": "stu_19",
+        "date": "2026-10-03",
+        "subject": "과학",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "21:00",
+        "end": "22:00",
+        "minutes": 60,
+        "note": ""
       }
     ],
-    "counseling": [],
+    "counseling": [
+      {
+        "id": "cn_muuxh27c9jim",
+        "studentId": "stu_8",
+        "date": "2026-10-05",
+        "content": "입실 후 독감/감기 등으로 인한 조퇴 (담임선생님 허가)",
+        "scope": "week"
+      }
+    ],
     "requests": [],
     "workNotes": []
   }
