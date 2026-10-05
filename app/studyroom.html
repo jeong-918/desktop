@@ -1016,7 +1016,7 @@
             <button id="wr-pdf" class="bg-gold text-navy-900 font-semibold rounded-lg px-4 py-2 text-sm"><i class="fa-solid fa-file-pdf mr-1"></i>PDF 저장</button>
           </div>
           <div id="week-sheet" class="a4-sheet mx-auto shadow-xl rounded-sm">
-            ${reportHeader("주간 학습 리포트", weekLabel(anchor), reportStudentId)}
+            ${reportHeader("입시자습관 주간 학습 참여 리포트", weekLabel(anchor), reportStudentId)}
             <div class="grid grid-cols-4 gap-2 mb-4">
               ${miniStat("순수 공부시간", fmtMin(total))}
               ${miniStat("입실일", att.present + "일")}
@@ -1133,7 +1133,7 @@
             <button id="mr-pdf" class="bg-gold text-navy-900 font-semibold rounded-lg px-4 py-2 text-sm"><i class="fa-solid fa-file-pdf mr-1"></i>PDF 저장</button>
           </div>
           <div id="month-sheet" class="a4-sheet mx-auto shadow-xl rounded-sm">
-            ${reportHeader("월간 학습 리포트", yy + "년 " + mm + "월", reportStudentId)}
+            ${reportHeader("입시자습관 월간 학습 참여 리포트", yy + "년 " + mm + "월", reportStudentId)}
             <div class="grid grid-cols-4 gap-2 mb-4">
               ${miniStat("월 순수공부", fmtMin(total))}
               ${miniStat("일평균", fmtMin(Math.round(total / last)))}
