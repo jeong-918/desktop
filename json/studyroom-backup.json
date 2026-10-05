@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-05T07:28:14.348Z",
+  "exportedAt": "2026-10-05T12:08:13.884Z",
   "version": 3,
   "data": {
     "students": [
@@ -1047,7 +1047,8 @@
             "20": "O",
             "21": "O"
           }
-        }
+        },
+        "2026-10-05": {}
       },
       "stu_9": {
         "2026-09-21": {
@@ -5223,6 +5224,13 @@
         "studentId": "stu_8",
         "date": "2026-10-05",
         "content": "입실 후 독감/감기 등으로 인한 조퇴 (담임선생님 허가)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_muv7h4f5e9zq",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-05",
+        "content": "가족행사로 인한 미입실",
         "scope": "week"
       }
     ],
