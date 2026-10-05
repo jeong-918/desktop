@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-05T06:14:44.923Z",
+  "exportedAt": "2026-10-05T06:16:40.149Z",
   "version": 3,
   "data": {
     "students": [
@@ -8,121 +8,127 @@
         "id": "stu_1",
         "name": "이재현",
         "school": "미강고",
-        "grade": "2"
+        "grade": "2",
+        "seat": 1
       },
       {
         "id": "stu_2",
         "name": "이지은",
         "school": "미강고",
-        "grade": "1"
+        "grade": "1",
+        "seat": 2
       },
       {
         "id": "stu_3",
         "name": "서도훈",
         "school": "미강고",
-        "grade": "2"
+        "grade": "2",
+        "seat": 3
       },
       {
         "id": "stu_4",
         "name": "장지후",
         "school": "미강고",
-        "grade": "2"
+        "grade": "2",
+        "seat": 4
       },
       {
         "id": "stu_5",
         "name": "박찬율",
         "school": "미강고",
-        "grade": "1"
+        "grade": "1",
+        "seat": 5
       },
       {
         "id": "stu_6",
         "name": "이현준",
         "school": "미강고",
-        "grade": "2"
+        "grade": "2",
+        "seat": 6
       },
       {
         "id": "stu_7",
         "name": "이효준",
         "school": "미강고",
-        "grade": "2"
+        "grade": "2",
+        "seat": 7
       },
       {
         "id": "stu_8",
         "name": "장우정",
         "school": "미사고",
-        "grade": "2"
+        "grade": "2",
+        "seat": 8
       },
       {
         "id": "stu_9",
         "name": "서준호",
         "school": "미강고",
-        "grade": "2"
+        "grade": "2",
+        "seat": 9
       },
       {
         "id": "stu_10",
         "name": "이선호",
         "school": "미강고",
-        "grade": "1"
+        "grade": "1",
+        "seat": 10
       },
       {
         "id": "stu_11",
         "name": "김보민",
         "school": "미강고",
-        "grade": "1"
+        "grade": "1",
+        "seat": 11
       },
       {
         "id": "stu_12",
         "name": "오재원",
         "school": "미강중",
-        "grade": "3"
+        "grade": "3",
+        "seat": 12
       },
       {
         "id": "stu_13",
         "name": "양민경",
         "school": "미사고",
-        "grade": "2"
+        "grade": "2",
+        "seat": 13
       },
       {
         "id": "stu_14",
         "name": "임예린",
         "school": "미사고",
-        "grade": "2"
-      },
-      {
-        "id": "stu_15",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "grade": "2",
+        "seat": 14
       },
       {
         "id": "stu_16",
         "name": "최주원",
         "school": "미강중",
-        "grade": "3"
-      },
-      {
-        "id": "stu_17",
-        "name": "",
-        "school": "",
-        "grade": ""
+        "grade": "3",
+        "seat": 16
       },
       {
         "id": "stu_18",
         "name": "최정원",
         "school": "미강중",
-        "grade": "3"
+        "grade": "3",
+        "seat": 18
       },
       {
         "id": "stu_19",
         "name": "이윤서",
         "school": "미사고",
-        "grade": "2"
+        "grade": "2",
+        "seat": 19
       },
       {
         "id": "stu_20",
         "name": "최정우",
         "school": "미강고",
-        "grade": "2"
+        "grade": "2",
+        "seat": 20
       }
     ],
     "schedules": {
@@ -2130,7 +2136,7 @@
           "time": ""
         },
         "2026-10-05": {
-          "status": "미입실(학원)",
+          "status": "입실",
           "time": ""
         }
       },
