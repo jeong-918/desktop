@@ -1,6 +1,6 @@
 {
   "appName": "소통 이행 관리",
-  "exportedAt": "2026-09-22T10:01:59.173Z",
+  "exportedAt": "2026-10-06T07:57:30.123Z",
   "version": 1,
   "data": {
     "categories": [
@@ -27,7 +27,7 @@
         "person": "박우진",
         "title": "중간고사 이후 체크포인트",
         "firstDate": "2026-09-22",
-        "dueDate": "2026-10-04",
+        "dueDate": "2026-10-11",
         "followupDate": "",
         "priority": "normal",
         "status": "before",
