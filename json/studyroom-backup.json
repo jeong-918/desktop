@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-06T05:15:52.405Z",
+  "exportedAt": "2026-10-06T05:16:58.232Z",
   "version": 3,
   "data": {
     "students": [
@@ -5226,6 +5226,54 @@
         "eval": "학습완료",
         "start": "15:00",
         "end": "17:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_muw86yjke4xw",
+        "studentId": "stu_18",
+        "date": "2026-10-05",
+        "subject": "영어",
+        "type": "기타학습",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "20:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_muw87jk0izya",
+        "studentId": "stu_16",
+        "date": "2026-10-05",
+        "subject": "사회",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "15:00",
+        "end": "15:30",
+        "minutes": 30,
+        "note": ""
+      },
+      {
+        "id": "log_muw87v0gks67",
+        "studentId": "stu_16",
+        "date": "2026-10-05",
+        "subject": "기타",
+        "type": "수행평가",
+        "eval": "학습완료",
+        "start": "15:30",
+        "end": "17:00",
+        "minutes": 90,
+        "note": ""
+      },
+      {
+        "id": "log_muw883kosu8v",
+        "studentId": "stu_16",
+        "date": "2026-10-05",
+        "subject": "영어",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "20:00",
         "minutes": 120,
         "note": ""
       }
