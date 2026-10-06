@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-06T07:07:55.698Z",
+  "exportedAt": "2026-10-06T07:57:40.522Z",
   "categories": [
     {
       "id": "cat_1789710672289",
@@ -74,7 +74,7 @@
       "title": "대체공휴일 일과 진행",
       "categoryId": "cat_1789710695553",
       "date": "2026-10-05",
-      "status": "TODO",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1789710855976
@@ -194,7 +194,7 @@
       "title": "풍문고 중간고사 (목금화수목)",
       "categoryId": "cat_1789710672289",
       "date": "2026-10-06",
-      "status": "TODO",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1789724903331
@@ -284,7 +284,7 @@
       "title": "현대고 중간고서(목금화수목)",
       "categoryId": "cat_1789710672289",
       "date": "2026-10-06",
-      "status": "TODO",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1789725026466
@@ -458,16 +458,6 @@
       "memo": "",
       "time": "",
       "createdAt": 1790841430647
-    },
-    {
-      "id": "todo_1791031588504_1740",
-      "title": "미강고 전 인원 10/4, 10/5, 시험 후 일정 전달 및 문자발송",
-      "categoryId": "cat_1789710695553",
-      "date": "2026-10-03",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1791031588504
     }
   ]
 }
