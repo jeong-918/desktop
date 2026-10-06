@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-06T10:38:35.282Z",
+  "exportedAt": "2026-10-06T10:39:44.533Z",
   "version": 3,
   "data": {
     "students": [
@@ -3662,7 +3662,7 @@
           "time": ""
         },
         "2026-10-06": {
-          "status": "미입실(기타)",
+          "status": "미입실(학원)",
           "time": ""
         }
       },
@@ -6544,6 +6544,27 @@
         "studentId": "stu_muuvk470gwfd",
         "date": "2026-10-05",
         "content": "가족행사로 인한 미입실",
+        "scope": "week"
+      },
+      {
+        "id": "cn_muwjqcf3y5bl",
+        "studentId": "stu_18",
+        "date": "2026-10-06",
+        "content": "개인행사 결시(롯데월드)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_muwjqilqisi1",
+        "studentId": "stu_16",
+        "date": "2026-10-06",
+        "content": "개인행사 결시(롯데월드)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_muwjr6oue8mw",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-06",
+        "content": "등원 지각 → 처음이라 경고 및 관련 안내",
         "scope": "week"
       }
     ],
