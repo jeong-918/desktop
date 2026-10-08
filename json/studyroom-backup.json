@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-08T05:46:08.513Z",
+  "exportedAt": "2026-10-08T05:47:54.579Z",
   "version": 3,
   "data": {
     "students": [
@@ -6720,6 +6720,18 @@
         "start": "20:00",
         "end": "22:00",
         "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_muz47lh2mrl7",
+        "studentId": "stu_18",
+        "date": "2026-10-07",
+        "subject": "영어",
+        "type": "영단어",
+        "eval": "보완필요",
+        "start": "17:00",
+        "end": "17:50",
+        "minutes": 50,
         "note": ""
       }
     ],
