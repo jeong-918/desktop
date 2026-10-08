@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-08T06:25:29.919Z",
+  "exportedAt": "2026-10-08T08:18:00.506Z",
   "apps": [
     {
       "id": "app-1",
@@ -9,7 +9,7 @@
       "icon": "🌐",
       "target": "newtab",
       "xPct": 0.78,
-      "yPct": 1.78
+      "yPct": 1.63
     },
     {
       "id": "app-2",
@@ -18,7 +18,7 @@
       "icon": "🧮",
       "target": "window",
       "xPct": 7.55,
-      "yPct": 77.74
+      "yPct": 71.39
     },
     {
       "id": "app-4",
@@ -27,7 +27,7 @@
       "icon": "⭐",
       "target": "window",
       "xPct": 0.78,
-      "yPct": 20.77
+      "yPct": 19.07
     },
     {
       "id": "app-1789710087650",
@@ -36,7 +36,7 @@
       "target": "newtab",
       "icon": "📝",
       "xPct": 7.55,
-      "yPct": 39.76
+      "yPct": 36.51
     },
     {
       "id": "app-1789710282082",
@@ -45,7 +45,7 @@
       "target": "newtab",
       "icon": "⭐",
       "xPct": 7.55,
-      "yPct": 20.77
+      "yPct": 19.07
     },
     {
       "id": "app-1789710318170",
@@ -54,7 +54,7 @@
       "target": "newtab",
       "icon": "🌐",
       "xPct": 21.09,
-      "yPct": 1.78
+      "yPct": 1.63
     },
     {
       "id": "app-1789710337914",
@@ -63,7 +63,7 @@
       "target": "newtab",
       "icon": "🌐",
       "xPct": 14.32,
-      "yPct": 1.78
+      "yPct": 1.63
     },
     {
       "id": "app-1789711180543",
@@ -72,7 +72,7 @@
       "target": "newtab",
       "icon": "🌐",
       "xPct": 7.55,
-      "yPct": 1.78
+      "yPct": 1.63
     },
     {
       "id": "app-1789725098714",
@@ -81,7 +81,7 @@
       "target": "newtab",
       "icon": "🌐",
       "xPct": 27.86,
-      "yPct": 1.78
+      "yPct": 1.63
     },
     {
       "id": "app-1789727698188",
@@ -90,7 +90,7 @@
       "target": "newtab",
       "icon": "📝",
       "xPct": 0.78,
-      "yPct": 39.76
+      "yPct": 36.51
     },
     {
       "id": "app-1789811920576",
@@ -99,7 +99,7 @@
       "target": "newtab",
       "icon": "🧮",
       "xPct": 0.78,
-      "yPct": 77.74
+      "yPct": 71.39
     },
     {
       "id": "app-1789982418218",
@@ -108,7 +108,16 @@
       "target": "newtab",
       "icon": "📊",
       "xPct": 0.78,
-      "yPct": 58.75
+      "yPct": 53.95
+    },
+    {
+      "id": "app-1791447467073",
+      "name": "파인만입시컨설팅_학생관리",
+      "url": "https://jeong-918.github.io/desktop/app/fineman.html",
+      "target": "newtab",
+      "icon": "📝",
+      "xPct": 14.32,
+      "yPct": 36.51
     }
   ],
   "settings": {
