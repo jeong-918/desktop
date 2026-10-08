@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-08T09:57:40.864Z",
+  "exportedAt": "2026-10-08T12:33:28.642Z",
   "version": 3,
   "data": {
     "students": [
@@ -3942,7 +3942,7 @@
           "time": ""
         },
         "2026-10-08": {
-          "status": "미입실(기타)",
+          "status": "미입실(학원)",
           "time": ""
         }
       },
@@ -3986,7 +3986,7 @@
           "time": ""
         },
         "2026-10-08": {
-          "status": "미입실(기타)",
+          "status": "미입실(학원)",
           "time": ""
         }
       },
@@ -6862,6 +6862,20 @@
         "studentId": "stu_muuvk470gwfd",
         "date": "2026-10-06",
         "content": "등원 지각 → 처음이라 경고 및 관련 안내가 이뤄졌습니다.",
+        "scope": "week"
+      },
+      {
+        "id": "cn_muzd5f306znd",
+        "studentId": "stu_16",
+        "date": "2026-10-07",
+        "content": "과학학원 일정변경으로 미입실",
+        "scope": "week"
+      },
+      {
+        "id": "cn_muzd5ktoqwa3",
+        "studentId": "stu_18",
+        "date": "2026-10-07",
+        "content": "과학학원 일정변경으로 미입실",
         "scope": "week"
       }
     ],
