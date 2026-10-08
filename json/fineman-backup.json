@@ -1,6 +1,6 @@
 {
   "app": "fineman",
-  "exportedAt": "2026-10-08T09:28:29.266Z",
+  "exportedAt": "2026-10-08T09:30:00.219Z",
   "version": 1,
   "data": {
     "students": [
@@ -45,6 +45,21 @@
       "수행평가-과학및기타"
     ],
     "interviews": [
+      {
+        "id": "int_1791451794617",
+        "studentId": "s_1791447476773",
+        "date": "2026-08-30",
+        "type": "교내행사/활동",
+        "contents": [
+          "독서토론 : 작은아씨들로 선정 및 진행"
+        ],
+        "followUp": {
+          "task": "",
+          "date": "",
+          "done": false
+        },
+        "createdAt": "2026-10-08T09:29:54.617Z"
+      },
       {
         "id": "int_1791451607890",
         "studentId": "s_1791447476773",
