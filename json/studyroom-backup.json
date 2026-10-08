@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-08T07:31:10.820Z",
+  "exportedAt": "2026-10-08T08:40:30.635Z",
   "version": 3,
   "data": {
     "students": [
@@ -6865,15 +6865,7 @@
         "scope": "week"
       }
     ],
-    "requests": [
-      {
-        "id": "rq_muz7wddcmhvv",
-        "date": "2026-09-01",
-        "studentId": "",
-        "content": "시험기간 플래너 미작성입니다. (전체)",
-        "checked": false
-      }
-    ],
+    "requests": [],
     "workNotes": []
   }
 }
