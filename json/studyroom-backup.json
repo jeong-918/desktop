@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-08T06:00:59.825Z",
+  "exportedAt": "2026-10-08T07:18:48.672Z",
   "version": 3,
   "data": {
     "students": [
@@ -6855,6 +6855,13 @@
         "studentId": "stu_14",
         "date": "2026-10-07",
         "content": "중간고사 기간으로 플래너 작성 중지 (중간고사 종료 후 진행)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_muz4ouer4wxn",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-06",
+        "content": "등원 지각 → 처음이라 경고 및 관련 안내가 이뤄졌습니다.",
         "scope": "week"
       }
     ],
