@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-08T06:10:02.532Z",
+  "exportedAt": "2026-10-08T06:20:30.813Z",
   "apps": [
     {
       "id": "app-1",
@@ -84,7 +84,9 @@
       "name": "입시자습관",
       "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
       "target": "newtab",
-      "icon": "📊"
+      "icon": "📊",
+      "xPct": 76.63,
+      "yPct": 5.42
     }
   ],
   "settings": {
