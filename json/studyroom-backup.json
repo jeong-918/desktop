@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-08T05:50:49.726Z",
+  "exportedAt": "2026-10-08T05:51:53.679Z",
   "version": 3,
   "data": {
     "students": [
@@ -6756,6 +6756,42 @@
         "start": "16:10",
         "end": "17:00",
         "minutes": 50,
+        "note": ""
+      },
+      {
+        "id": "log_muz4byhwmgne",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-07",
+        "subject": "수학",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "19:15",
+        "end": "20:15",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_muz4cfx0c86l",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-07",
+        "subject": "과학",
+        "type": "인강",
+        "eval": "학습완료",
+        "start": "20:15",
+        "end": "20:55",
+        "minutes": 40,
+        "note": ""
+      },
+      {
+        "id": "log_muz4cpj8getc",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-07",
+        "subject": "과학",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "20:55",
+        "end": "21:30",
+        "minutes": 35,
         "note": ""
       }
     ],
