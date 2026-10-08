@@ -1,20 +1,24 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-08T06:23:02.780Z",
+  "exportedAt": "2026-10-08T06:24:02.635Z",
   "apps": [
     {
       "id": "app-1",
       "name": "Google 검색",
       "url": "https://www.google.com",
       "icon": "🌐",
-      "target": "newtab"
+      "target": "newtab",
+      "xPct": 0.78,
+      "yPct": 1.78
     },
     {
       "id": "app-2",
       "name": "계산기",
       "url": "https://www.desmos.com/scientific?lang=ko",
       "icon": "🧮",
-      "target": "window"
+      "target": "window",
+      "xPct": 48.18,
+      "yPct": 1.78
     },
     {
       "id": "app-4",
@@ -22,17 +26,17 @@
       "url": "https://hjh010501.github.io/neis-counter/",
       "icon": "⭐",
       "target": "window",
-      "xPct": 1.11,
-      "yPct": 16.85
+      "xPct": 0.78,
+      "yPct": 20.77
     },
     {
       "id": "app-1789710087650",
       "name": "스케쥴",
       "url": "https://jeong-918.github.io/desktop/app/to-do.html",
       "target": "newtab",
-      "icon": "⭐",
-      "xPct": 8.03,
-      "yPct": 19.02
+      "icon": "📝",
+      "xPct": 7.55,
+      "yPct": 39.76
     },
     {
       "id": "app-1789710282082",
@@ -40,29 +44,35 @@
       "url": "https://jeong-918.github.io/desktop/app/5to9.html",
       "target": "newtab",
       "icon": "⭐",
-      "xPct": 6.48,
-      "yPct": 37.23
+      "xPct": 7.55,
+      "yPct": 20.77
     },
     {
       "id": "app-1789710318170",
       "name": "학생관리센터",
       "url": "https://docs.google.com/spreadsheets/d/1VfebRB5vLlV-Ni7RT9cp8xWSwVL543DQOuJlzn-uZD4/edit?gid=15478959#gid=15478959",
       "target": "newtab",
-      "icon": "📁"
+      "icon": "📁",
+      "xPct": 34.64,
+      "yPct": 1.78
     },
     {
       "id": "app-1789710337914",
       "name": "파인만컨설팅[26-2]",
       "url": "https://docs.google.com/spreadsheets/d/1EX73Oq9iVTGMll7SY2ZJbQaoG7ATY5ifB7GdyLBER_0/edit?usp=drive_web&ouid=103047718856130833554",
       "target": "newtab",
-      "icon": "📁"
+      "icon": "🌐",
+      "xPct": 14.32,
+      "yPct": 1.78
     },
     {
       "id": "app-1789711180543",
       "name": "ERP",
       "url": "https://system.daol105.co.kr",
       "target": "newtab",
-      "icon": "📂"
+      "icon": "🌐",
+      "xPct": 7.55,
+      "yPct": 1.78
     },
     {
       "id": "app-1789725098714",
@@ -70,22 +80,26 @@
       "url": "https://mogyo.kr/",
       "target": "newtab",
       "icon": "📂",
-      "xPct": 89.44,
-      "yPct": 9.65
+      "xPct": 88.8,
+      "yPct": 1.78
     },
     {
       "id": "app-1789727698188",
       "name": "업무기록-이행",
       "url": "https://jeong-918.github.io/desktop/app/comm.html",
       "target": "newtab",
-      "icon": "📝"
+      "icon": "📝",
+      "xPct": 0.78,
+      "yPct": 39.76
     },
     {
       "id": "app-1789811920576",
       "name": "화원고_대입면접 활동지",
       "url": "https://ppakangna-svg.github.io/interview-record/",
       "target": "newtab",
-      "icon": "📁"
+      "icon": "📁",
+      "xPct": 68.49,
+      "yPct": 1.78
     },
     {
       "id": "app-1789982418218",
@@ -93,8 +107,8 @@
       "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
       "target": "newtab",
       "icon": "📊",
-      "xPct": 76.63,
-      "yPct": 5.42
+      "xPct": 0.78,
+      "yPct": 58.75
     }
   ],
   "settings": {
@@ -103,6 +117,7 @@
     "bgOpacity": 0.2,
     "bgBlur": "39",
     "bgImage": "",
-    "themePreset": "slate"
+    "themePreset": "slate",
+    "snapOnDrop": true
   }
 }
