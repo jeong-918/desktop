@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-08T05:59:34.077Z",
+  "exportedAt": "2026-10-08T06:00:59.825Z",
   "version": 3,
   "data": {
     "students": [
@@ -6837,13 +6837,6 @@
         "scope": "week"
       },
       {
-        "id": "cn_muwjr6oue8mw",
-        "studentId": "stu_muuvk470gwfd",
-        "date": "2026-10-06",
-        "content": "등원 지각 → 처음이라 경고 및 관련 안내",
-        "scope": "week"
-      },
-      {
         "id": "cn_muz4f004t86d",
         "studentId": "stu_8",
         "date": "2026-10-07",
@@ -6863,13 +6856,6 @@
         "date": "2026-10-07",
         "content": "중간고사 기간으로 플래너 작성 중지 (중간고사 종료 후 진행)",
         "scope": "week"
-      },
-      {
-        "id": "cn_muz4ml57lwkd",
-        "studentId": "stu_1",
-        "date": "2026-10-07",
-        "content": "중간고사 기간에는 플래너 기재가 따로 이뤄지지 않아 학습 기록이 없습니다.",
-        "scope": "month"
       }
     ],
     "requests": [],
