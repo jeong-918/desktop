@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-08T05:53:40.029Z",
+  "exportedAt": "2026-10-08T05:58:20.700Z",
   "version": 3,
   "data": {
     "students": [
@@ -6848,6 +6848,27 @@
         "studentId": "stu_8",
         "date": "2026-10-07",
         "content": "중간고사 기간으로 플래너 작성 중지 (중간고사 종료 후 진행)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_muz4f5x84v1a",
+        "studentId": "stu_13",
+        "date": "2026-10-07",
+        "content": "중간고사 기간으로 플래너 작성 중지 (중간고사 종료 후 진행)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_muz4fa2s9kcn",
+        "studentId": "stu_14",
+        "date": "2026-10-07",
+        "content": "중간고사 기간으로 플래너 작성 중지 (중간고사 종료 후 진행)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_muz4l0j8ob8n",
+        "studentId": "stu_1",
+        "date": "2026-10-01",
+        "content": "중간고사 기간의 경우 플래너 작성이 진행되지 않았습니다. 학습 기록 간 참고하시면 됩니다",
         "scope": "week"
       }
     ],
