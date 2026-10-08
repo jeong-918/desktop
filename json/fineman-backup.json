@@ -1,0 +1,45 @@
+{
+  "app": "fineman",
+  "exportedAt": "2026-10-08T08:32:39.651Z",
+  "version": 1,
+  "data": {
+    "students": [
+      {
+        "id": "s_1791447476773",
+        "name": "정인아",
+        "school": "풍문고등학교 2학년",
+        "term": "2026년 1학기",
+        "preInfo": "사학 (예술사학, 고고사학, 미술사학 등) 예술연계 사학 및 역사교육학 희망",
+        "status": "active",
+        "graduatedAt": null
+      },
+      {
+        "id": "s_1791448111232",
+        "name": "박우진",
+        "school": "한영외국어고등학교 2학년",
+        "term": "2026년 1학기",
+        "preInfo": "사회학과 희망.",
+        "status": "active",
+        "graduatedAt": null
+      },
+      {
+        "id": "s_1791448254352",
+        "name": "윤지원",
+        "school": "현대고등학교 2학년",
+        "term": "2026년 2학기",
+        "preInfo": "경영/경졔계열 희망\n자연계열에서 계열 전환",
+        "status": "active",
+        "graduatedAt": null
+      }
+    ],
+    "types": [
+      "시험결과",
+      "교내행사/활동",
+      "동아리",
+      "기타",
+      "교과목탐구",
+      "수행평가"
+    ],
+    "interviews": []
+  }
+}
