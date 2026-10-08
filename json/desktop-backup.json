@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-08T06:24:02.635Z",
+  "exportedAt": "2026-10-08T06:25:29.919Z",
   "apps": [
     {
       "id": "app-1",
@@ -17,8 +17,8 @@
       "url": "https://www.desmos.com/scientific?lang=ko",
       "icon": "🧮",
       "target": "window",
-      "xPct": 48.18,
-      "yPct": 1.78
+      "xPct": 7.55,
+      "yPct": 77.74
     },
     {
       "id": "app-4",
@@ -52,8 +52,8 @@
       "name": "학생관리센터",
       "url": "https://docs.google.com/spreadsheets/d/1VfebRB5vLlV-Ni7RT9cp8xWSwVL543DQOuJlzn-uZD4/edit?gid=15478959#gid=15478959",
       "target": "newtab",
-      "icon": "📁",
-      "xPct": 34.64,
+      "icon": "🌐",
+      "xPct": 21.09,
       "yPct": 1.78
     },
     {
@@ -79,8 +79,8 @@
       "name": "모교_학교정보",
       "url": "https://mogyo.kr/",
       "target": "newtab",
-      "icon": "📂",
-      "xPct": 88.8,
+      "icon": "🌐",
+      "xPct": 27.86,
       "yPct": 1.78
     },
     {
@@ -97,9 +97,9 @@
       "name": "화원고_대입면접 활동지",
       "url": "https://ppakangna-svg.github.io/interview-record/",
       "target": "newtab",
-      "icon": "📁",
-      "xPct": 68.49,
-      "yPct": 1.78
+      "icon": "🧮",
+      "xPct": 0.78,
+      "yPct": 77.74
     },
     {
       "id": "app-1789982418218",
@@ -116,7 +116,7 @@
     "overlayColor": "#0f172a",
     "bgOpacity": 0.2,
     "bgBlur": "39",
-    "bgImage": "",
+    "bgImage": "https://images.unsplash.com/photo-1734116194305-183329509b94?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "themePreset": "slate",
     "snapOnDrop": true
   }
