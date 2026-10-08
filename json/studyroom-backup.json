@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-08T05:49:27.153Z",
+  "exportedAt": "2026-10-08T05:50:49.726Z",
   "version": 3,
   "data": {
     "students": [
@@ -6735,8 +6735,8 @@
         "note": ""
       },
       {
-        "id": "log_muz47wwd6f7q",
-        "studentId": "stu_14",
+        "id": "log_muz49kv95nnm",
+        "studentId": "stu_16",
         "date": "2026-10-07",
         "subject": "영어",
         "type": "영단어",
@@ -6747,14 +6747,14 @@
         "note": ""
       },
       {
-        "id": "log_muz49kv95nnm",
-        "studentId": "stu_16",
+        "id": "log_muz4bcmc605c",
+        "studentId": "stu_muuvk470gwfd",
         "date": "2026-10-07",
-        "subject": "영어",
-        "type": "영단어",
-        "eval": "보완필요",
-        "start": "17:00",
-        "end": "17:50",
+        "subject": "수학",
+        "type": "인강",
+        "eval": "학습완료",
+        "start": "16:10",
+        "end": "17:00",
         "minutes": 50,
         "note": ""
       }
