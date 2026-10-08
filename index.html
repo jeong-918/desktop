@@ -5,6 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>웹 데스크탑 런처 (Web Desktop)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <style>
     :root {
       --bg-color: #1e293b;
@@ -77,30 +79,45 @@
       width: 100%;
       height: calc(100% - 56px);
       z-index: 3;
-      padding: 20px;
-      overflow-y: auto;
-      overflow-x: hidden;
+      padding: 0;
+      overflow: hidden;
     }
 
-    /* 반응형 아이콘 그리드 */
+    /* 자유 배치 아이콘 캔버스 (격자 자동 배치 대신 절대 좌표) */
     .icon-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
-      gap: 20px 16px;
-      align-content: start;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .empty-hint {
+      position: absolute;
+      left: 50%;
+      top: 42%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: var(--text-muted);
+      padding: 20px;
+      line-height: 1.6;
+      width: min(420px, 90%);
+      pointer-events: none;
+    }
+
+    #snap-guide {
+      display: none;
+      position: absolute;
+      border: 2px dashed rgba(59, 130, 246, 0.9);
+      border-radius: 14px;
+      background: rgba(59, 130, 246, 0.12);
+      pointer-events: none;
+      z-index: 20;
     }
 
     @media (max-width: 640px) {
-      .icon-grid {
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-        gap: 16px 10px;
-      }
       :root {
         --icon-size: 58px;
         --icon-font-size: 28px;
-      }
-      #desktop-screen {
-        padding: 12px;
       }
     }
 
@@ -110,20 +127,37 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      cursor: pointer;
+      cursor: grab;
       padding: 8px;
       border-radius: 12px;
-      position: relative;
-      transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+      position: absolute;
+      width: 96px;
+      z-index: 6;
+      touch-action: none;
+      transition: background 0.18s ease, box-shadow 0.18s ease;
     }
 
     .app-icon:hover {
       background: rgba(255, 255, 255, 0.12);
-      transform: translateY(-2px);
     }
 
     .app-icon:active {
-      transform: scale(0.95);
+      transform: scale(0.98);
+    }
+
+    .app-icon.dragging,
+    .app-icon.dragging:hover {
+      cursor: grabbing;
+      z-index: 40;
+      background: rgba(255, 255, 255, 0.18);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+      transform: scale(1.04);
+      animation: none !important;
+      transition: none;
+    }
+
+    @media (max-width: 640px) {
+      .app-icon { width: 84px; }
     }
 
     .icon-box {
@@ -188,7 +222,7 @@
       display: flex;
     }
 
-    body.edit-mode .app-icon {
+    body.edit-mode .app-icon:not(.dragging) {
       animation: wiggle 0.25s infinite alternate ease-in-out;
     }
 
@@ -553,6 +587,24 @@
       background: #ef4444;
     }
 
+    #arrange-menu {
+      position: absolute;
+      display: none;
+      background: rgba(30, 41, 59, 0.96);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      padding: 6px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      z-index: 2000;
+      min-width: 210px;
+    }
+    #arrange-menu .menu-caption {
+      padding: 6px 10px 4px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
     /* 슬라이더 컨트롤 */
     .range-wrap {
       display: flex;
@@ -576,6 +628,7 @@
     <div class="icon-grid" id="icon-grid">
       <!-- 동적 생성되는 앱 아이콘들 -->
     </div>
+    <div id="snap-guide"></div>
   </main>
 
   <!-- 하단 작업표시줄 -->
@@ -588,6 +641,9 @@
       <button class="taskbar-btn" id="btn-toggle-edit" title="삭제/편집 모드">
         <span>🗑️</span>
         <span class="btn-label" id="edit-mode-label">삭제/편집</span>
+      </button>
+      <button class="taskbar-btn" id="btn-arrange" title="아이콘 정렬 / 격자 스냅. 바탕화면 우클릭도 가능">
+        <span><i class="fa-solid fa-table-cells"></i> 정렬</span>
       </button>
       <div class="search-box">
         <span class="search-icon">🔍</span>
@@ -794,7 +850,17 @@
   <div id="context-menu">
     <div class="context-menu-item" id="ctx-run">▶️ 실행</div>
     <div class="context-menu-item" id="ctx-edit">✏️ 수정</div>
+    <div class="context-menu-item" id="ctx-reset-pos">📍 위치 초기화</div>
     <div class="context-menu-item danger" id="ctx-delete">🗑️ 삭제</div>
+  </div>
+
+  <div id="arrange-menu">
+    <div class="menu-caption">드래그로 자유 배치 · 정렬은 여기에 저장되어 동기화됩니다</div>
+    <div class="context-menu-item" id="arr-snap-toggle">🧲 놓을 때 격자 스냅</div>
+    <div class="context-menu-item" id="arr-snap">▦ 현재 위치 격자 맞추기</div>
+    <div class="context-menu-item" id="arr-cols">↕️ 세로 자동 정렬</div>
+    <div class="context-menu-item" id="arr-rows">↔️ 가로 자동 정렬</div>
+    <div class="context-menu-item" id="arr-name">가나다 이름순 정렬</div>
   </div>
 
   <!-- 가상 윈도우 컨테이너 -->
@@ -902,16 +968,307 @@
       document.getElementById("theme-preset").value = settings.themePreset || "custom";
     }
 
+    // --- 아이콘 배치 좌표 (앱 객체에 저장 → 기존 JSON 동기화에 포함) ---
+    function getIconMetrics() {
+      const mobile = window.innerWidth <= 640;
+      return { w: mobile ? 84 : 96, h: mobile ? 108 : 122, pad: mobile ? 8 : 12 };
+    }
+
+    function deskSize() {
+      const desk = document.getElementById("icon-grid");
+      return {
+        w: Math.max(desk.clientWidth || window.innerWidth, 1),
+        h: Math.max(desk.clientHeight || (window.innerHeight - 56), 1)
+      };
+    }
+
+    function hasCustomPos(app) {
+      const x = Number(app && app.xPct);
+      const y = Number(app && app.yPct);
+      return Number.isFinite(x) && Number.isFinite(y);
+    }
+
+    // 좌표가 없는 기존 아이콘은 화면 크기에 맞춰 기본 칸에 배치 (저장은 이동/정렬 때만)
+    function layoutPoint(index) {
+      const { w, h } = deskSize();
+      const m = getIconMetrics();
+      const cellW = m.w + 8;
+      const cellH = m.h + 6;
+      const cols = Math.max(1, Math.floor((w - m.pad) / cellW));
+      const col = index % cols;
+      const row = Math.floor(index / cols);
+      return {
+        xPct: ((m.pad + col * cellW) / w) * 100,
+        yPct: ((m.pad + row * cellH) / h) * 100
+      };
+    }
+
+    function clampPos(left, top) {
+      const { w, h } = deskSize();
+      const m = getIconMetrics();
+      return {
+        left: Math.min(Math.max(0, left), Math.max(0, w - m.w)),
+        top: Math.min(Math.max(0, top), Math.max(0, h - m.h))
+      };
+    }
+
+    function pctToPx(app, index) {
+      const { w, h } = deskSize();
+      const pos = hasCustomPos(app) ? { xPct: Number(app.xPct), yPct: Number(app.yPct) } : layoutPoint(index);
+      return clampPos((pos.xPct / 100) * w, (pos.yPct / 100) * h);
+    }
+
+    function pxToPct(left, top) {
+      const { w, h } = deskSize();
+      return {
+        xPct: Math.round((left / w) * 10000) / 100,
+        yPct: Math.round((top / h) * 10000) / 100
+      };
+    }
+
+    function snapPx(left, top) {
+      const m = getIconMetrics();
+      const cellW = m.w + 8;
+      const cellH = m.h + 6;
+      const col = Math.max(0, Math.round((left - m.pad) / cellW));
+      const row = Math.max(0, Math.round((top - m.pad) / cellH));
+      return clampPos(m.pad + col * cellW, m.pad + row * cellH);
+    }
+
+    function showSnapGuide(left, top) {
+      const guide = document.getElementById("snap-guide");
+      const m = getIconMetrics();
+      if (!guide) return;
+      guide.style.display = "block";
+      guide.style.left = left + "px";
+      guide.style.top = top + "px";
+      guide.style.width = m.w + "px";
+      guide.style.height = m.h + "px";
+    }
+
+    function hideSnapGuide() {
+      const guide = document.getElementById("snap-guide");
+      if (guide) guide.style.display = "none";
+    }
+
+    function placeIconElement(el, app, index) {
+      const pos = pctToPx(app, index);
+      el.style.left = pos.left + "px";
+      el.style.top = pos.top + "px";
+    }
+
+    // 새 아이콘은 비어 있는 첫 칸에 둔다
+    function assignNewAppPosition(app) {
+      const { w, h } = deskSize();
+      const m = getIconMetrics();
+      const cellW = m.w + 8;
+      const cellH = m.h + 6;
+      const cols = Math.max(1, Math.floor((w - m.pad) / cellW));
+      const rows = Math.max(1, Math.floor((h - m.pad) / cellH));
+      const occupied = new Set();
+      apps.forEach((a, i) => {
+        if (a.id === app.id) return;
+        const pos = pctToPx(a, i);
+        const col = Math.round((pos.left - m.pad) / cellW);
+        const row = Math.round((pos.top - m.pad) / cellH);
+        occupied.add(col + "," + row);
+      });
+      const limit = Math.max(cols * rows, 1);
+      for (let i = 0; i < limit; i++) {
+        const col = i % cols;
+        const row = Math.floor(i / cols);
+        if (!occupied.has(col + "," + row)) {
+          const pct = pxToPct(m.pad + col * cellW, m.pad + row * cellH);
+          app.xPct = pct.xPct;
+          app.yPct = pct.yPct;
+          return;
+        }
+      }
+      app.xPct = 1;
+      app.yPct = 1;
+    }
+
+    let iconDrag = null;
+
+    function onIconPointerDown(e, el) {
+      if (e.button !== undefined && e.button !== 0) return;
+      if (e.target.closest(".delete-badge")) return;
+      const rect = el.getBoundingClientRect();
+      const deskRect = document.getElementById("icon-grid").getBoundingClientRect();
+      iconDrag = {
+        id: el.dataset.id,
+        el,
+        pointerId: e.pointerId,
+        startX: e.clientX,
+        startY: e.clientY,
+        origLeft: rect.left - deskRect.left,
+        origTop: rect.top - deskRect.top,
+        moved: false
+      };
+      try { el.setPointerCapture(e.pointerId); } catch (err) {}
+    }
+
+    function onIconPointerMove(e) {
+      if (!iconDrag || e.pointerId !== iconDrag.pointerId) return;
+      const dx = e.clientX - iconDrag.startX;
+      const dy = e.clientY - iconDrag.startY;
+      if (!iconDrag.moved && Math.hypot(dx, dy) < 6) return;
+      iconDrag.moved = true;
+      iconDrag.el.classList.add("dragging");
+      hideContextMenu();
+      const pos = clampPos(iconDrag.origLeft + dx, iconDrag.origTop + dy);
+      iconDrag.el.style.left = pos.left + "px";
+      iconDrag.el.style.top = pos.top + "px";
+      iconDrag.lastLeft = pos.left;
+      iconDrag.lastTop = pos.top;
+      if (settings.snapOnDrop) showSnapGuide(snapPx(pos.left, pos.top).left, snapPx(pos.left, pos.top).top);
+    }
+
+    function onIconPointerUp(e) {
+      if (!iconDrag || e.pointerId !== iconDrag.pointerId) return;
+      const drag = iconDrag;
+      iconDrag = null;
+      hideSnapGuide();
+      drag.el.classList.remove("dragging");
+      if (!drag.moved) return;
+      drag.el.dataset.justDragged = "1";
+      let left = drag.lastLeft;
+      let top = drag.lastTop;
+      if (settings.snapOnDrop) {
+        const snapped = snapPx(left, top);
+        left = snapped.left;
+        top = snapped.top;
+        drag.el.style.left = left + "px";
+        drag.el.style.top = top + "px";
+      }
+      const app = apps.find(a => a.id === drag.id);
+      if (!app) return;
+      const pct = pxToPct(left, top);
+      app.xPct = pct.xPct;
+      app.yPct = pct.yPct;
+      saveApps(); // 위치도 앱 데이터라 기존 자동 업로드 흐름을 그대로 탑니다
+    }
+
+    function arrangeApps(mode) {
+      const { w, h } = deskSize();
+      const m = getIconMetrics();
+      const cellW = m.w + 8;
+      const cellH = m.h + 6;
+      const cols = Math.max(1, Math.floor((w - m.pad) / cellW));
+      const rows = Math.max(1, Math.floor((h - m.pad) / cellH));
+
+      if (mode === "name") {
+        apps.sort((a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ko"));
+      }
+
+      // 화면 안에 모두 들어오도록 칸을 잡고, 넘치면 간격을 줄여 겹침을 최소화한다
+      function slotPx(i, count, flow) {
+        const maxCols = Math.max(1, cols);
+        const maxRows = Math.max(1, rows);
+        let colCount;
+        let rowCount;
+        let col;
+        let row;
+        if (flow === "cols") {
+          rowCount = Math.min(maxRows, Math.max(count, 1));
+          colCount = Math.max(1, Math.ceil(count / rowCount));
+          row = i % rowCount;
+          col = Math.floor(i / rowCount);
+        } else {
+          colCount = Math.min(maxCols, Math.max(count, 1));
+          rowCount = Math.max(1, Math.ceil(count / colCount));
+          col = i % colCount;
+          row = Math.floor(i / colCount);
+        }
+        if (colCount <= maxCols && rowCount <= maxRows) {
+          return clampPos(m.pad + col * cellW, m.pad + row * cellH);
+        }
+        const innerW = Math.max(w - m.w - m.pad * 2, 0);
+        const innerH = Math.max(h - m.h - m.pad * 2, 0);
+        const left = m.pad + (colCount <= 1 ? 0 : (col / (colCount - 1)) * innerW);
+        const top = m.pad + (rowCount <= 1 ? 0 : (row / (rowCount - 1)) * innerH);
+        return clampPos(left, top);
+      }
+
+      if (mode === "snap") {
+        const occupied = [];
+        const ordered = [...apps].sort((a, b) => (Number(a.yPct) || 0) - (Number(b.yPct) || 0) || (Number(a.xPct) || 0) - (Number(b.xPct) || 0));
+        ordered.forEach((app) => {
+          const idx = apps.indexOf(app);
+          const base = snapPx(pctToPx(app, idx).left, pctToPx(app, idx).top);
+          let guard = 0;
+          let pos = base;
+          while (occupied.some(o => Math.abs(o.left - pos.left) < 8 && Math.abs(o.top - pos.top) < 8) && guard < 800) {
+            pos = clampPos(pos.left + cellW, pos.top);
+            if (pos.left >= w - m.w - 1) pos = clampPos(m.pad, pos.top + cellH);
+            guard += 1;
+          }
+          occupied.push(pos);
+          const pct = pxToPct(pos.left, pos.top);
+          app.xPct = pct.xPct;
+          app.yPct = pct.yPct;
+        });
+      } else {
+        const list = mode === "name" ? [...apps] : [...apps].sort((a, b) => {
+          const pa = pctToPx(a, apps.indexOf(a));
+          const pb = pctToPx(b, apps.indexOf(b));
+          return pa.top - pb.top || pa.left - pb.left;
+        });
+        const flow = mode === "cols" ? "cols" : "rows";
+        list.forEach((app, i) => {
+          const pos = slotPx(i, list.length, flow);
+          const pct = pxToPct(pos.left, pos.top);
+          app.xPct = pct.xPct;
+          app.yPct = pct.yPct;
+        });
+      }
+
+      saveApps();
+      renderApps(document.getElementById("search-input").value);
+      showToast(mode === "snap" ? "격자 위치로 맞췄습니다." : "아이콘을 정렬했습니다.");
+    }
+
+    function resetIconPosition(appId) {
+      const app = apps.find(a => a.id === appId);
+      if (!app) return;
+      delete app.xPct;
+      delete app.yPct;
+      saveApps();
+      renderApps(document.getElementById("search-input").value);
+    }
+
+    function refreshArrangeMenu() {
+      const el = document.getElementById("arr-snap-toggle");
+      if (!el) return;
+      el.textContent = settings.snapOnDrop ? "🧲 격자 스냅 켜짐 (끄기)" : "🧲 놓을 때 격자 스냅 (켜기)";
+    }
+
+    function showArrangeMenu(x, y) {
+      const menu = document.getElementById("arrange-menu");
+      refreshArrangeMenu();
+      menu.style.display = "block";
+      const mw = menu.offsetWidth || 220;
+      const mh = menu.offsetHeight || 240;
+      menu.style.left = Math.max(8, Math.min(x, window.innerWidth - mw - 8)) + "px";
+      menu.style.top = Math.max(8, Math.min(y, window.innerHeight - mh - 8)) + "px";
+    }
+
+    function hideArrangeMenu() {
+      const menu = document.getElementById("arrange-menu");
+      if (menu) menu.style.display = "none";
+    }
+
     // --- 앱 렌더링 ---
     function renderApps(filterQuery = "") {
       const grid = document.getElementById("icon-grid");
       grid.innerHTML = "";
 
-      const filtered = apps.filter(a => a.name.toLowerCase().includes(filterQuery.toLowerCase()));
+      const query = (filterQuery || "").toLowerCase();
+      const filtered = apps.filter(a => a.name.toLowerCase().includes(query));
 
       if (filtered.length === 0) {
         grid.innerHTML = `
-          <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 40px 10px;">
+          <div class="empty-hint">
             등록된 프로그램이 없거나 검색 결과가 없습니다.<br>
             하단의 [프로그램 등록] 버튼을 눌러 추가해보세요!
           </div>
@@ -920,14 +1277,15 @@
       }
 
       filtered.forEach(app => {
+        const index = apps.findIndex(a => a.id === app.id);
         const item = document.createElement("div");
         item.className = "app-icon";
         item.dataset.id = app.id;
+        item.title = "드래그하여 이동 · 클릭하여 실행";
 
-        // 아이콘 표시 (이미지 URL vs 이모지/텍스트)
         let iconInner = "";
         if (app.icon && (app.icon.startsWith("http://") || app.icon.startsWith("https://") || app.icon.startsWith("data:image"))) {
-          iconInner = `<img src="${app.icon}" alt="${app.name}" onerror="this.outerHTML='📁'" />`;
+          iconInner = `<img src="${app.icon}" alt="${escapeHtml(app.name)}" draggable="false" onerror="this.outerHTML='📁'" />`;
         } else {
           iconInner = app.icon || "📁";
         }
@@ -937,27 +1295,38 @@
           <div class="icon-box">${iconInner}</div>
           <div class="app-name">${escapeHtml(app.name)}</div>
         `;
+        placeIconElement(item, app, index);
 
-        // 클릭 이벤트
+        item.addEventListener("pointerdown", (e) => onIconPointerDown(e, item));
+        item.addEventListener("pointermove", onIconPointerMove);
+        item.addEventListener("pointerup", onIconPointerUp);
+        item.addEventListener("pointercancel", onIconPointerUp);
+
         item.addEventListener("click", (e) => {
+          if (item.dataset.justDragged === "1") {
+            item.dataset.justDragged = "";
+            e.preventDefault();
+            e.stopPropagation();
+            return;
+          }
           if (isEditMode) {
-            // 편집 모드에서는 아이콘 클릭 시 수정 모달 오픈
             openEditAppModal(app.id);
             return;
           }
           launchApp(app);
         });
 
-        // 삭제 배지 클릭 시 즉시 삭제
         const deleteBadge = item.querySelector(".delete-badge");
+        deleteBadge.addEventListener("pointerdown", (e) => e.stopPropagation());
         deleteBadge.addEventListener("click", (e) => {
           e.stopPropagation();
           deleteApp(app.id);
         });
 
-        // 우클릭 컨텍스트 메뉴 이벤트
         item.addEventListener("contextmenu", (e) => {
           e.preventDefault();
+          e.stopPropagation();
+          if (item.dataset.justDragged === "1") return;
           showContextMenu(e.clientX, e.clientY, app.id);
         });
 
@@ -1125,6 +1494,7 @@
           target,
           icon
         };
+        assignNewAppPosition(newApp);
         apps.push(newApp);
       }
 
@@ -1153,7 +1523,7 @@
       const menu = document.getElementById("context-menu");
       menu.style.display = "block";
       menu.style.left = `${Math.min(x, window.innerWidth - 160)}px`;
-      menu.style.top = `${Math.min(y, window.innerHeight - 140)}px`;
+      menu.style.top = `${Math.min(y, window.innerHeight - 180)}px`;
     }
 
     function hideContextMenu() {
@@ -1572,7 +1942,42 @@
       document.getElementById("sync-save-btn").addEventListener("click", saveSyncSettings);
 
       // 컨텍스트 메뉴 리스너
-      window.addEventListener("click", () => hideContextMenu());
+      window.addEventListener("click", () => {
+        hideContextMenu();
+        hideArrangeMenu();
+      });
+
+      window.addEventListener("resize", () => {
+        if (iconDrag) return;
+        document.querySelectorAll(".app-icon").forEach(el => {
+          const index = apps.findIndex(a => a.id === el.dataset.id);
+          const app = index >= 0 ? apps[index] : null;
+          if (app) placeIconElement(el, app, index);
+        });
+      });
+
+      document.getElementById("desktop-screen").addEventListener("contextmenu", (e) => {
+        if (e.target.closest(".app-icon")) return;
+        e.preventDefault();
+        showArrangeMenu(e.clientX, e.clientY);
+      });
+
+      document.getElementById("btn-arrange").addEventListener("click", (e) => {
+        e.stopPropagation();
+        const rect = e.currentTarget.getBoundingClientRect();
+        showArrangeMenu(rect.left, Math.max(8, rect.top - 248));
+      });
+      document.getElementById("arrange-menu").addEventListener("click", (e) => e.stopPropagation());
+      document.getElementById("arr-snap-toggle").addEventListener("click", () => {
+        settings.snapOnDrop = !settings.snapOnDrop;
+        saveSettings();
+        refreshArrangeMenu();
+        showToast(settings.snapOnDrop ? "놓을 때 격자에 붙입니다." : "자유 배치로 전환했습니다.");
+      });
+      document.getElementById("arr-snap").addEventListener("click", () => { arrangeApps("snap"); hideArrangeMenu(); });
+      document.getElementById("arr-cols").addEventListener("click", () => { arrangeApps("cols"); hideArrangeMenu(); });
+      document.getElementById("arr-rows").addEventListener("click", () => { arrangeApps("rows"); hideArrangeMenu(); });
+      document.getElementById("arr-name").addEventListener("click", () => { arrangeApps("name"); hideArrangeMenu(); });
 
       document.getElementById("ctx-run").addEventListener("click", () => {
         if (!contextTargetId) return;
@@ -1584,6 +1989,12 @@
       document.getElementById("ctx-edit").addEventListener("click", () => {
         if (!contextTargetId) return;
         openEditAppModal(contextTargetId);
+        hideContextMenu();
+      });
+
+      document.getElementById("ctx-reset-pos").addEventListener("click", () => {
+        if (!contextTargetId) return;
+        resetIconPosition(contextTargetId);
         hideContextMenu();
       });
 
