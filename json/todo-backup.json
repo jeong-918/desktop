@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-08T06:20:47.705Z",
+  "exportedAt": "2026-10-08T07:35:20.007Z",
   "categories": [
     {
       "id": "cat_1789710672289",
@@ -204,7 +204,7 @@
       "title": "풍문고 중간고사 (목금화수목)",
       "categoryId": "cat_1789710672289",
       "date": "2026-10-07",
-      "status": "TODO",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1789724906666
@@ -294,7 +294,7 @@
       "title": "현대고 중간고서(목금화수목)",
       "categoryId": "cat_1789710672289",
       "date": "2026-10-07",
-      "status": "TODO",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1789725029355
