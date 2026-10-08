@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-08T05:51:53.679Z",
+  "exportedAt": "2026-10-08T05:53:40.029Z",
   "version": 3,
   "data": {
     "students": [
@@ -6793,6 +6793,18 @@
         "end": "21:30",
         "minutes": 35,
         "note": ""
+      },
+      {
+        "id": "log_muz4cxngj8v7",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-07",
+        "subject": "영어",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "21:30",
+        "end": "21:50",
+        "minutes": 20,
+        "note": ""
       }
     ],
     "counseling": [
@@ -6829,6 +6841,13 @@
         "studentId": "stu_muuvk470gwfd",
         "date": "2026-10-06",
         "content": "등원 지각 → 처음이라 경고 및 관련 안내",
+        "scope": "week"
+      },
+      {
+        "id": "cn_muz4f004t86d",
+        "studentId": "stu_8",
+        "date": "2026-10-07",
+        "content": "중간고사 기간으로 플래너 작성 중지 (중간고사 종료 후 진행)",
         "scope": "week"
       }
     ],
