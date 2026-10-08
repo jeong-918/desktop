@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-08T05:58:20.700Z",
+  "exportedAt": "2026-10-08T05:59:34.077Z",
   "version": 3,
   "data": {
     "students": [
@@ -6865,11 +6865,11 @@
         "scope": "week"
       },
       {
-        "id": "cn_muz4l0j8ob8n",
+        "id": "cn_muz4ml57lwkd",
         "studentId": "stu_1",
-        "date": "2026-10-01",
-        "content": "중간고사 기간의 경우 플래너 작성이 진행되지 않았습니다. 학습 기록 간 참고하시면 됩니다",
-        "scope": "week"
+        "date": "2026-10-07",
+        "content": "중간고사 기간에는 플래너 기재가 따로 이뤄지지 않아 학습 기록이 없습니다.",
+        "scope": "month"
       }
     ],
     "requests": [],
