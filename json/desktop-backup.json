@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-08T06:21:39.276Z",
+  "exportedAt": "2026-10-08T06:23:02.780Z",
   "apps": [
     {
       "id": "app-1",
@@ -18,26 +18,30 @@
     },
     {
       "id": "app-4",
-      "name": "NEIS 글자수체크",
+      "name": "글자수체크",
       "url": "https://hjh010501.github.io/neis-counter/",
-      "icon": "📝",
+      "icon": "⭐",
       "target": "window",
-      "xPct": 0.11,
-      "yPct": 17.15
+      "xPct": 1.11,
+      "yPct": 16.85
     },
     {
       "id": "app-1789710087650",
       "name": "스케쥴",
       "url": "https://jeong-918.github.io/desktop/app/to-do.html",
       "target": "newtab",
-      "icon": "⭐"
+      "icon": "⭐",
+      "xPct": 8.03,
+      "yPct": 19.02
     },
     {
       "id": "app-1789710282082",
       "name": "5등급제환산",
       "url": "https://jeong-918.github.io/desktop/app/5to9.html",
       "target": "newtab",
-      "icon": "📊"
+      "icon": "⭐",
+      "xPct": 6.48,
+      "yPct": 37.23
     },
     {
       "id": "app-1789710318170",
@@ -65,7 +69,9 @@
       "name": "모교_학교정보",
       "url": "https://mogyo.kr/",
       "target": "newtab",
-      "icon": "📂"
+      "icon": "📂",
+      "xPct": 89.44,
+      "yPct": 9.65
     },
     {
       "id": "app-1789727698188",
@@ -96,7 +102,7 @@
     "overlayColor": "#0f172a",
     "bgOpacity": 0.2,
     "bgBlur": "39",
-    "bgImage": "https://images.unsplash.com/photo-1509838174235-432f709c7bfd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "themePreset": "custom"
+    "bgImage": "",
+    "themePreset": "slate"
   }
 }
