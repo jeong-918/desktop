@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-09T12:21:49.510Z",
+  "exportedAt": "2026-10-09T12:27:26.964Z",
   "apps": [
     {
       "id": "app-1",
@@ -113,7 +113,7 @@
     {
       "id": "app-1791447467073",
       "name": "파인만입시컨설팅_학생관리",
-      "url": "https://jeong-918.github.io/desktop/app/fineman2-`.html",
+      "url": "https://jeong-918.github.io/desktop/app/fineman2-1.html",
       "target": "newtab",
       "icon": "📝",
       "xPct": 14.32,
