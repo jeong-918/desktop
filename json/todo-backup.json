@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-08T12:33:05.241Z",
+  "exportedAt": "2026-10-09T12:22:32.564Z",
   "categories": [
     {
       "id": "cat_1789710672289",
@@ -84,7 +84,7 @@
       "title": "한글날 일과 (2시부터)",
       "categoryId": "cat_1789710695553",
       "date": "2026-10-09",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "memo": "",
       "time": "",
       "createdAt": 1789710863353
@@ -354,7 +354,7 @@
       "title": "미강고 시험종료 휴일 (목금토일)",
       "categoryId": "cat_1789710695553",
       "date": "2026-10-09",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "memo": "",
       "time": "",
       "createdAt": 1790055842898
