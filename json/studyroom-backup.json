@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-10T05:07:16.255Z",
+  "exportedAt": "2026-10-10T05:08:25.442Z",
   "version": 3,
   "data": {
     "students": [
@@ -3944,7 +3944,7 @@
           "time": ""
         },
         "2026-10-10": {
-          "status": "미입실(기타)",
+          "status": "중도입실",
           "time": ""
         }
       },
@@ -4070,7 +4070,7 @@
           "time": ""
         },
         "2026-10-10": {
-          "status": "미입실(기타)",
+          "status": "중도입실",
           "time": ""
         }
       },
@@ -4122,7 +4122,7 @@
           "time": ""
         },
         "2026-10-10": {
-          "status": "미입실(기타)",
+          "status": "중도입실",
           "time": ""
         }
       },
@@ -6983,6 +6983,30 @@
         "eval": "학습완료",
         "start": "19:40",
         "end": "20:00",
+        "minutes": 20,
+        "note": ""
+      },
+      {
+        "id": "log_mv1xo8bi94oo",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-09",
+        "subject": "국어",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "16:10",
+        "end": "17:00",
+        "minutes": 50,
+        "note": ""
+      },
+      {
+        "id": "log_mv1xoir9y5l5",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-09",
+        "subject": "국어",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "20:00",
+        "end": "20:20",
         "minutes": 20,
         "note": ""
       }
