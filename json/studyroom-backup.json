@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-10T05:04:43.500Z",
+  "exportedAt": "2026-10-10T05:06:04.797Z",
   "version": 3,
   "data": {
     "students": [
@@ -7056,6 +7056,41 @@
         "studentId": "stu_18",
         "date": "2026-10-07",
         "content": "과학학원 일정변경으로 미입실",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mv1xktil0xdl",
+        "studentId": "stu_1",
+        "date": "2026-10-10",
+        "content": "10/9(금)~10/10(토) 시험종료에 따른 휴식",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mv1xl9wvf66x",
+        "studentId": "stu_2",
+        "date": "2026-10-10",
+        "content": "10/9(금)~10/10(토) 시험종료에 따른 휴식",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mv1xlcm6cbi4",
+        "studentId": "stu_3",
+        "date": "2026-10-10",
+        "content": "10/9(금)~10/10(토) 시험종료에 따른 휴식",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mv1xlfie0jqp",
+        "studentId": "stu_4",
+        "date": "2026-10-10",
+        "content": "10/9(금)~10/10(토) 시험종료에 따른 휴식",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mv1xli5a5cb8",
+        "studentId": "stu_5",
+        "date": "2026-10-10",
+        "content": "10/9(금)~10/10(토) 시험종료에 따른 휴식",
         "scope": "week"
       }
     ],
