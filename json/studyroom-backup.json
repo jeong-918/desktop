@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-10T05:06:04.797Z",
+  "exportedAt": "2026-10-10T05:07:16.255Z",
   "version": 3,
   "data": {
     "students": [
@@ -3500,7 +3500,7 @@
           "time": ""
         },
         "2026-10-10": {
-          "status": "미입실(기타)",
+          "status": "중도입실",
           "time": ""
         }
       },
@@ -3796,7 +3796,7 @@
           "time": ""
         },
         "2026-10-10": {
-          "status": "미입실(기타)",
+          "status": "중도입실",
           "time": ""
         }
       },
@@ -3870,7 +3870,7 @@
           "time": ""
         },
         "2026-10-10": {
-          "status": "미입실(기타)",
+          "status": "입실",
           "time": ""
         }
       },
@@ -4148,7 +4148,7 @@
           "time": ""
         },
         "2026-10-10": {
-          "status": "미입실(기타)",
+          "status": "입실",
           "time": ""
         }
       }
@@ -7089,6 +7089,41 @@
       {
         "id": "cn_mv1xli5a5cb8",
         "studentId": "stu_5",
+        "date": "2026-10-10",
+        "content": "10/9(금)~10/10(토) 시험종료에 따른 휴식",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mv1xln9inbgo",
+        "studentId": "stu_7",
+        "date": "2026-10-10",
+        "content": "10/9(금)~10/10(토) 시험종료에 따른 휴식",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mv1xlqbiy7h7",
+        "studentId": "stu_6",
+        "date": "2026-10-10",
+        "content": "10/9(금)~10/10(토) 시험종료에 따른 휴식",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mv1xlulasp3c",
+        "studentId": "stu_9",
+        "date": "2026-10-10",
+        "content": "10/9(금)~10/10(토) 시험종료에 따른 휴식",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mv1xlxxy8yjt",
+        "studentId": "stu_10",
+        "date": "2026-10-10",
+        "content": "10/9(금)~10/10(토) 시험종료에 따른 휴식",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mv1xm2rqpjw8",
+        "studentId": "stu_20",
         "date": "2026-10-10",
         "content": "10/9(금)~10/10(토) 시험종료에 따른 휴식",
         "scope": "week"
