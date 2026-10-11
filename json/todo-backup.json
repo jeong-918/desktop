@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-09T12:51:13.114Z",
+  "exportedAt": "2026-10-11T04:55:40.513Z",
   "categories": [
     {
       "id": "cat_1789710672289",
@@ -224,7 +224,7 @@
       "title": "지원/인아/우진 인터뷰 진행해야함",
       "categoryId": "cat_1789710672289",
       "date": "2026-10-11",
-      "status": "TODO",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1789724926955
