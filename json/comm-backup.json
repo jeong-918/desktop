@@ -1,6 +1,6 @@
 {
   "appName": "소통 이행 관리",
-  "exportedAt": "2026-10-11T06:26:50.566Z",
+  "exportedAt": "2026-10-11T07:51:43.738Z",
   "version": 1,
   "data": {
     "categories": [
@@ -30,10 +30,10 @@
         "dueDate": "2026-10-11",
         "followupDate": "",
         "priority": "normal",
-        "status": "progress",
+        "status": "complete",
         "note": "※ 1차 완료 : 심영독(화씨451에세이) → 이행준비 :고전기반현대사회연구 + 독서와 작문, 미적1, 중국문학입문, 세계시민과 지리, 과학창의연구(수능문풀), 세계시민과 미래사회(국제관련)",
         "createdAt": "2026-09-22T05:52:44.042Z",
-        "completedAt": null
+        "completedAt": "2026-10-11T07:51:36.662Z"
       },
       {
         "id": "task-1790056229307-cyv3zg5",
@@ -86,10 +86,10 @@
         "dueDate": "2026-10-11",
         "followupDate": "2026-10-09",
         "priority": "normal",
-        "status": "progress",
+        "status": "complete",
         "note": "고전기반현대사회연구 관련 주제, 역할, 이행과정. 선생님 서포트 등 체크 필요",
         "createdAt": "2026-09-18T10:37:57.829Z",
-        "completedAt": null
+        "completedAt": "2026-10-11T07:51:38.427Z"
       }
     ]
   }
