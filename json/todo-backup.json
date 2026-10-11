@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-11T04:55:40.513Z",
+  "exportedAt": "2026-10-11T06:36:57.855Z",
   "categories": [
     {
       "id": "cat_1789710672289",
@@ -84,7 +84,7 @@
       "title": "한글날 일과 (2시부터)",
       "categoryId": "cat_1789710695553",
       "date": "2026-10-09",
-      "status": "IN_PROGRESS",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1789710863353
@@ -354,7 +354,7 @@
       "title": "미강고 시험종료 휴일 (목금토일)",
       "categoryId": "cat_1789710695553",
       "date": "2026-10-09",
-      "status": "IN_PROGRESS",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1790055842898
@@ -364,7 +364,7 @@
       "title": "미강고 시험종료 휴일 (목금토일)",
       "categoryId": "cat_1789710695553",
       "date": "2026-10-10",
-      "status": "TODO",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1790055845762
@@ -458,6 +458,16 @@
       "memo": "",
       "time": "",
       "createdAt": 1790841430647
+    },
+    {
+      "id": "todo_1791700610206_5etq",
+      "title": "민서 10/14일 8시로 일정 픽스",
+      "categoryId": "cat_1789710672289",
+      "date": "2026-10-11",
+      "status": "IN_PROGRESS",
+      "memo": "",
+      "time": "",
+      "createdAt": 1791700610206
     }
   ]
 }
