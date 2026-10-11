@@ -1,6 +1,6 @@
 {
   "app": "fineman2-1",
-  "exportedAt": "2026-10-11T06:24:19.900Z",
+  "exportedAt": "2026-10-11T06:39:16.726Z",
   "version": 5,
   "data": {
     "students": [
@@ -380,7 +380,8 @@
     "extraCategories": [
       "기타 추가",
       "수행평가 추가",
-      "점검 추가"
+      "점검 추가",
+      "콘텐츠제공"
     ],
     "extraRecords": []
   }
