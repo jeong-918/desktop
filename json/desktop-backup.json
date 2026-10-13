@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-13T10:03:13.436Z",
+  "exportedAt": "2026-10-13T10:22:50.221Z",
   "apps": [
     {
       "id": "app-1",
@@ -18,7 +18,7 @@
       "icon": "🧮",
       "target": "window",
       "xPct": 7.55,
-      "yPct": 71.39
+      "yPct": 53.95
     },
     {
       "id": "app-4",
@@ -136,6 +136,15 @@
       "icon": "🧮",
       "xPct": 75.26,
       "yPct": 36.51
+    },
+    {
+      "id": "app-1791885806756",
+      "name": "교과탐구를 위한 기사검색",
+      "url": "https://script.google.com/macros/s/AKfycbzIa3I98g3cQ-HN1xa7HmvvMNzwTUM_G-3JeekRg4OjuzyD4f1CQKKDHgvcKqfbtb_Bdw/exec",
+      "target": "newtab",
+      "icon": "🧮",
+      "xPct": 75.26,
+      "yPct": 53.95
     }
   ],
   "settings": {
