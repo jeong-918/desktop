@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-11T08:17:03.827Z",
+  "exportedAt": "2026-10-13T07:58:49.142Z",
   "categories": [
     {
       "id": "cat_1789710672289",
@@ -464,7 +464,7 @@
       "title": "민서 10/14일 8시로 일정 픽스",
       "categoryId": "cat_1789710672289",
       "date": "2026-10-11",
-      "status": "IN_PROGRESS",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1791700610206
