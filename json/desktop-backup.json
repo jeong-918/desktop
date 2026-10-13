@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-13T07:58:35.363Z",
+  "exportedAt": "2026-10-13T08:01:28.627Z",
   "apps": [
     {
       "id": "app-1",
@@ -118,6 +118,15 @@
       "icon": "📝",
       "xPct": 14.32,
       "yPct": 36.51
+    },
+    {
+      "id": "app-1791878483202",
+      "name": "진로·학업 설계 지원 도구 (학성여고)",
+      "url": "https://geoguymin.github.io/Design-of-Curriculam/",
+      "target": "newtab",
+      "icon": "🌐",
+      "xPct": 34.64,
+      "yPct": 1.63
     }
   ],
   "settings": {
