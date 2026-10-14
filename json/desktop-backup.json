@@ -1,159 +1,42 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-13T10:22:50.221Z",
+  "exportedAt": "2026-10-14T10:22:33.193Z",
   "apps": [
     {
       "id": "app-1",
       "name": "Google 검색",
       "url": "https://www.google.com",
       "icon": "🌐",
-      "target": "newtab",
-      "xPct": 0.78,
-      "yPct": 1.63
+      "target": "newtab"
     },
     {
       "id": "app-2",
       "name": "계산기",
       "url": "https://www.desmos.com/scientific?lang=ko",
       "icon": "🧮",
-      "target": "window",
-      "xPct": 7.55,
-      "yPct": 53.95
+      "target": "window"
+    },
+    {
+      "id": "app-3",
+      "name": "내 로컬 HTML (예시)",
+      "url": "./my-project.html",
+      "icon": "📁",
+      "target": "newtab"
     },
     {
       "id": "app-4",
-      "name": "글자수체크",
-      "url": "https://hjh010501.github.io/neis-counter/",
-      "icon": "⭐",
-      "target": "window",
-      "xPct": 0.78,
-      "yPct": 19.07
-    },
-    {
-      "id": "app-1789710087650",
-      "name": "스케쥴",
-      "url": "https://jeong-918.github.io/desktop/app/to-do.html",
-      "target": "newtab",
+      "name": "온라인 메모장",
+      "url": "https://notes.io",
       "icon": "📝",
-      "xPct": 7.55,
-      "yPct": 36.51
-    },
-    {
-      "id": "app-1789710282082",
-      "name": "5등급제환산",
-      "url": "https://jeong-918.github.io/desktop/app/5to9.html",
-      "target": "newtab",
-      "icon": "⭐",
-      "xPct": 7.55,
-      "yPct": 19.07
-    },
-    {
-      "id": "app-1789710318170",
-      "name": "학생관리센터",
-      "url": "https://docs.google.com/spreadsheets/d/1VfebRB5vLlV-Ni7RT9cp8xWSwVL543DQOuJlzn-uZD4/edit?gid=15478959#gid=15478959",
-      "target": "newtab",
-      "icon": "🌐",
-      "xPct": 21.09,
-      "yPct": 1.63
-    },
-    {
-      "id": "app-1789710337914",
-      "name": "파인만컨설팅[26-2]",
-      "url": "https://docs.google.com/spreadsheets/d/1EX73Oq9iVTGMll7SY2ZJbQaoG7ATY5ifB7GdyLBER_0/edit?usp=drive_web&ouid=103047718856130833554",
-      "target": "newtab",
-      "icon": "🌐",
-      "xPct": 14.32,
-      "yPct": 1.63
-    },
-    {
-      "id": "app-1789711180543",
-      "name": "ERP",
-      "url": "https://system.daol105.co.kr",
-      "target": "newtab",
-      "icon": "🌐",
-      "xPct": 7.55,
-      "yPct": 1.63
-    },
-    {
-      "id": "app-1789725098714",
-      "name": "모교_학교정보",
-      "url": "https://mogyo.kr/",
-      "target": "newtab",
-      "icon": "🌐",
-      "xPct": 27.86,
-      "yPct": 1.63
-    },
-    {
-      "id": "app-1789727698188",
-      "name": "업무기록-이행",
-      "url": "https://jeong-918.github.io/desktop/app/comm.html",
-      "target": "newtab",
-      "icon": "📝",
-      "xPct": 0.78,
-      "yPct": 36.51
-    },
-    {
-      "id": "app-1789811920576",
-      "name": "화원고_대입면접 활동지",
-      "url": "https://ppakangna-svg.github.io/interview-record/",
-      "target": "newtab",
-      "icon": "🧮",
-      "xPct": 75.26,
-      "yPct": 19.07
-    },
-    {
-      "id": "app-1789982418218",
-      "name": "입시자습관",
-      "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
-      "target": "newtab",
-      "icon": "📊",
-      "xPct": 0.78,
-      "yPct": 53.95
-    },
-    {
-      "id": "app-1791447467073",
-      "name": "파인만입시컨설팅_학생관리",
-      "url": "https://jeong-918.github.io/desktop/app/fineman2-1.html",
-      "target": "newtab",
-      "icon": "📝",
-      "xPct": 14.32,
-      "yPct": 36.51
-    },
-    {
-      "id": "app-1791878483202",
-      "name": "진로·학업 설계 지원 도구 (학성여고)",
-      "url": "https://geoguymin.github.io/Design-of-Curriculam/",
-      "target": "newtab",
-      "icon": "🧮",
-      "xPct": 75.26,
-      "yPct": 1.63
-    },
-    {
-      "id": "app-1791885784710",
-      "name": "모두의 교과탐구 기반활동",
-      "url": "https://script.google.com/macros/s/AKfycbxvrCiB6_fc2A3QkXMHrCv4gX8twpLqJY8y2GmdFYLusGnwIIORSs9JNf_PWAJax54lFw/exec",
-      "target": "newtab",
-      "icon": "🧮",
-      "xPct": 75.26,
-      "yPct": 36.51
-    },
-    {
-      "id": "app-1791885806756",
-      "name": "교과탐구를 위한 기사검색",
-      "url": "https://script.google.com/macros/s/AKfycbzIa3I98g3cQ-HN1xa7HmvvMNzwTUM_G-3JeekRg4OjuzyD4f1CQKKDHgvcKqfbtb_Bdw/exec",
-      "target": "newtab",
-      "icon": "🧮",
-      "xPct": 75.26,
-      "yPct": 53.95
+      "target": "window"
     }
   ],
   "settings": {
     "bgColor": "#1e293b",
     "overlayColor": "#0f172a",
-    "bgOpacity": 0.2,
-    "bgBlur": "39",
-    "bgImage": "https://images.unsplash.com/photo-1734116194305-183329509b94?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "themePreset": "slate",
-    "snapOnDrop": true
+    "bgOpacity": 0.75,
+    "bgBlur": 16,
+    "bgImage": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80",
+    "themePreset": "midnight"
   }
 }
