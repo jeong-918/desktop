@@ -1,473 +1,63 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-13T07:58:49.142Z",
+  "exportedAt": "2026-10-14T10:23:04.464Z",
   "categories": [
     {
-      "id": "cat_1789710672289",
-      "name": "파인만입시컨설팅",
-      "color": "#6366f1"
+      "id": "cat_academy",
+      "name": "A학원",
+      "color": "#8b5cf6"
     },
     {
-      "id": "cat_1789710695553",
-      "name": "다올105입시자습관",
-      "color": "#c76000"
+      "id": "cat_work",
+      "name": "업무/과제",
+      "color": "#3b82f6"
     },
     {
-      "id": "cat_1789710714008",
-      "name": "개인",
-      "color": "#006b39"
+      "id": "cat_study",
+      "name": "자기계발",
+      "color": "#06b6d4"
+    },
+    {
+      "id": "cat_workout",
+      "name": "운동/건강",
+      "color": "#10b981"
+    },
+    {
+      "id": "cat_personal",
+      "name": "개인/생활",
+      "color": "#f59e0b"
     }
   ],
   "todos": [
     {
-      "id": "todo_1789710750801_u36l",
-      "title": "김민서 수업일정 픽스본 학원에 통보",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-09-20",
+      "id": "todo_demo_1",
+      "title": "영어 단어 50개 암기 및 단어장 복습",
+      "categoryId": "cat_academy",
+      "date": "2026-10-14",
       "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789710750801
+      "memo": "Chapter 14~15 표제어 중심",
+      "time": "14:00",
+      "createdAt": 1791969779703
     },
     {
-      "id": "todo_1789710774537_izox",
-      "title": "민서 9/30 수업 시작관련 최종 픽스",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-09-20",
-      "status": "DONE",
-      "memo": "10/1목요일 오후 5시로 최종 픽스",
-      "time": "",
-      "createdAt": 1789710774537
+      "id": "todo_demo_2",
+      "title": "수학 모의고사 오답노트 정리",
+      "categoryId": "cat_academy",
+      "date": "2026-10-14",
+      "status": "IN_PROGRESS",
+      "memo": "킬러 문항 21, 29, 30번 풀이 과정 재작성",
+      "time": "16:00",
+      "createdAt": 1791971579703
     },
     {
-      "id": "todo_1789710809049_1lxb",
-      "title": "현우 생일 체크",
-      "categoryId": "cat_1789710714008",
-      "date": "2026-11-16",
-      "status": "TODO",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789710809049
-    },
-    {
-      "id": "todo_1789710820609_vefx",
-      "title": "경남외고 13기 모임",
-      "categoryId": "cat_1789710714008",
-      "date": "2026-11-25",
-      "status": "TODO",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789710820609
-    },
-    {
-      "id": "todo_1789710827936_58t2",
-      "title": "중요한모임",
-      "categoryId": "cat_1789710714008",
-      "date": "2026-11-21",
-      "status": "TODO",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789710827936
-    },
-    {
-      "id": "todo_1789710855976_5gc1",
-      "title": "대체공휴일 일과 진행",
-      "categoryId": "cat_1789710695553",
-      "date": "2026-10-05",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789710855976
-    },
-    {
-      "id": "todo_1789710863353_j43p",
-      "title": "한글날 일과 (2시부터)",
-      "categoryId": "cat_1789710695553",
-      "date": "2026-10-09",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789710863353
-    },
-    {
-      "id": "todo_1789717955450_msyw",
-      "title": "오전오후 근무자 전달 : 다음주 인원 배정 특징",
-      "categoryId": "cat_1789710695553",
-      "date": "2026-09-19",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789717955450
-    },
-    {
-      "id": "todo_1789717975417_r2t0",
-      "title": "오전 근무자 : 인원 체크 특징  / 오후근무자 : 중간 확인 요청",
-      "categoryId": "cat_1789710695553",
-      "date": "2026-09-26",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789717975417
-    },
-    {
-      "id": "todo_1789717990745_97nz",
-      "title": "오전 근무자 : 인원 체크 특징  / 오후근무자 : 중간 확인 요청",
-      "categoryId": "cat_1789710695553",
-      "date": "2026-09-27",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789717990746
-    },
-    {
-      "id": "todo_1789724433420_7qx5",
-      "title": "한영외고 중간고사 (월화수목금)",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-09-29",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789724433420
-    },
-    {
-      "id": "todo_1789724439355_f765",
-      "title": "한영외고 중간고사 (월화수목금)",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-09-30",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789724439355
-    },
-    {
-      "id": "todo_1789724443212_5cet",
-      "title": "한영외고 중간고사 (월화수목금)",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-01",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789724443212
-    },
-    {
-      "id": "todo_1789724446251_ny3i",
-      "title": "한영외고 중간고사 (월화수목금)",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-02",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789724446251
-    },
-    {
-      "id": "todo_1789724775579_1qin",
-      "title": "한영외고 중간고사 (월화수목금)",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-09-28",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789724775579
-    },
-    {
-      "id": "todo_1789724894466_c86m",
-      "title": "풍문고 중간고사 (목금화수목)",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-01",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789724894466
-    },
-    {
-      "id": "todo_1789724897699_h7no",
-      "title": "풍문고 중간고사 (목금화수목)",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-02",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789724897699
-    },
-    {
-      "id": "todo_1789724903331_4hot",
-      "title": "풍문고 중간고사 (목금화수목)",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-06",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789724903331
-    },
-    {
-      "id": "todo_1789724906666_3si9",
-      "title": "풍문고 중간고사 (목금화수목)",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-07",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789724906666
-    },
-    {
-      "id": "todo_1789724909292_nydj",
-      "title": "풍문고 중간고사 (목금화수목)",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-08",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789724909292
-    },
-    {
-      "id": "todo_1789724926955_292o",
-      "title": "지원/인아/우진 인터뷰 진행해야함",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-11",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789724926955
-    },
-    {
-      "id": "todo_1789725002995_wlj7",
-      "title": "현대고 수학여행",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-21",
-      "status": "TODO",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789725002995
-    },
-    {
-      "id": "todo_1789725006682_yxi6",
-      "title": "현대고 수학여행",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-22",
-      "status": "TODO",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789725006682
-    },
-    {
-      "id": "todo_1789725010011_trwc",
-      "title": "현대고 수학여행",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-23",
-      "status": "TODO",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789725010011
-    },
-    {
-      "id": "todo_1789725019195_pajk",
-      "title": "현대고 중간고서(목금화수목)",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-01",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789725019195
-    },
-    {
-      "id": "todo_1789725022778_0set",
-      "title": "현대고 중간고서(목금화수목)",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-02",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789725022778
-    },
-    {
-      "id": "todo_1789725026466_d6bf",
-      "title": "현대고 중간고서(목금화수목)",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-06",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789725026466
-    },
-    {
-      "id": "todo_1789725029355_l5li",
-      "title": "현대고 중간고서(목금화수목)",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-07",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789725029355
-    },
-    {
-      "id": "todo_1789725032386_z0x3",
-      "title": "현대고 중간고서(목금화수목)",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-08",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789725032387
-    },
-    {
-      "id": "todo_1789725045578_grac",
-      "title": "지원/인아/우진 인터뷰 진행해야함",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-18",
-      "status": "TODO",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789725045578
-    },
-    {
-      "id": "todo_1789804224009_k3pn",
-      "title": "김민서 면접지 후보군 작업 완료할 것.",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-09-27",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1789804224009
-    },
-    {
-      "id": "todo_1790055532388_0wdn",
-      "title": "풍문고/현대고 시험 종료에 따른 일정 셋팅 : 10/11일 인터뷰 가능여부 체크",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-08",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1790055532388
-    },
-    {
-      "id": "todo_1790055837923_xqzd",
-      "title": "미강고 시험종료 휴일 (목금토일)",
-      "categoryId": "cat_1789710695553",
-      "date": "2026-10-08",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1790055837923
-    },
-    {
-      "id": "todo_1790055842898_ptya",
-      "title": "미강고 시험종료 휴일 (목금토일)",
-      "categoryId": "cat_1789710695553",
-      "date": "2026-10-09",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1790055842898
-    },
-    {
-      "id": "todo_1790055845762_coys",
-      "title": "미강고 시험종료 휴일 (목금토일)",
-      "categoryId": "cat_1789710695553",
-      "date": "2026-10-10",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1790055845762
-    },
-    {
-      "id": "todo_1790055878338_q9ja",
-      "title": "미사고 시험종료 휴일 (수목금)",
-      "categoryId": "cat_1789710695553",
+      "id": "todo_demo_3",
+      "title": "저녁 조깅 5km 러닝머신",
+      "categoryId": "cat_workout",
       "date": "2026-10-14",
       "status": "TODO",
-      "memo": "",
-      "time": "",
-      "createdAt": 1790055878338
-    },
-    {
-      "id": "todo_1790055882724_2sp0",
-      "title": "미사고 시험종료 휴일 (수목금)",
-      "categoryId": "cat_1789710695553",
-      "date": "2026-10-15",
-      "status": "TODO",
-      "memo": "",
-      "time": "",
-      "createdAt": 1790055882724
-    },
-    {
-      "id": "todo_1790055885771_kgco",
-      "title": "미사고 시험종료 휴일 (수목금)",
-      "categoryId": "cat_1789710695553",
-      "date": "2026-10-16",
-      "status": "TODO",
-      "memo": "",
-      "time": "",
-      "createdAt": 1790055885771
-    },
-    {
-      "id": "todo_1790146368917_izum",
-      "title": "각 인원들 시험기간 최종 체크",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-09-23",
-      "status": "DONE",
-      "memo": "한영외고 : 9/28~ 10/2\n풍문고 : 10/1(목) ~ 10/8(목) [10/5월 대휴가 있어서 그러함]\n현대고 : 10/1(목) ~ 10/8(목) [10/5월 대휴가 있어서 그러함]",
-      "time": "",
-      "createdAt": 1790146368917
-    },
-    {
-      "id": "todo_1790146368917_h1uh",
-      "title": "박우진 : 한영외고 금요일 종료 후 10/4 인터뷰 가능 시간대 확인",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-09-23",
-      "status": "DONE",
-      "memo": "시험일정 : 9/28~10/2 → 10/4 일요일 일정 몇시 가능한가 질의",
-      "time": "",
-      "createdAt": 1790146368917
-    },
-    {
-      "id": "todo_1790146443348_4kt6",
-      "title": "정인아, 윤지원 시험 후 인터뷰 일정 체크",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-08",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1790146443348
-    },
-    {
-      "id": "todo_1790159855581_kuea",
-      "title": "김민서 5시 면접 수업 1차",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-01",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1790159855581
-    },
-    {
-      "id": "todo_1790586288604_k86d",
-      "title": "김민서 면접지 후보군 작업 완료할 것.",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-09-28",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1790586288604
-    },
-    {
-      "id": "todo_1790841430647_7kmr",
-      "title": "박우진 일정 체크 (한영외고 시험종료)",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-02",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1790841430647
-    },
-    {
-      "id": "todo_1791700610206_5etq",
-      "title": "민서 10/14일 8시로 일정 픽스",
-      "categoryId": "cat_1789710672289",
-      "date": "2026-10-11",
-      "status": "DONE",
-      "memo": "",
-      "time": "",
-      "createdAt": 1791700610206
+      "memo": "스트레칭 10분 필수",
+      "time": "20:00",
+      "createdAt": 1791973379703
     }
   ]
 }
