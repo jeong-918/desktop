@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-15T09:57:47.270Z",
+  "exportedAt": "2026-10-15T09:59:09.171Z",
   "version": 3,
   "data": {
     "students": [
@@ -4464,6 +4464,10 @@
         "2026-10-14": {
           "status": "미입실(학원)",
           "time": ""
+        },
+        "2026-10-15": {
+          "status": "입실",
+          "time": ""
         }
       },
       "stu_11": {
@@ -8712,24 +8716,31 @@
         "scope": "week"
       },
       {
-        "id": "cn_mv9d7ozxn0em",
-        "studentId": "stu_14",
+        "id": "cn_mv9d8b39pgxb",
+        "studentId": "stu_8",
         "date": "2026-10-15",
-        "content": "시험종료로 인한 자습관 휴식 요청 - 허가 (10/16-10/17)",
+        "content": "시험종료로 인한 자습관 휴식 요청 - 허가 (10/15-10/16)",
         "scope": "week"
       },
       {
-        "id": "cn_mv9d7shxjyzo",
+        "id": "cn_mv9d8hweidx3",
         "studentId": "stu_19",
         "date": "2026-10-15",
-        "content": "시험종료로 인한 자습관 휴식 요청 - 허가 (10/16-10/17)",
+        "content": "시험종료로 인한 자습관 휴식 요청 - 허가 (10/15-10/16)",
         "scope": "week"
       },
       {
-        "id": "cn_mv9d7wb9qde8",
+        "id": "cn_mv9d8p5xb7xo",
+        "studentId": "stu_14",
+        "date": "2026-10-15",
+        "content": "시험종료로 인한 자습관 휴식 요청 - 허가 (10/15-10/16)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mv9d8selvpq4",
         "studentId": "stu_13",
         "date": "2026-10-15",
-        "content": "시험종료로 인한 자습관 휴식 요청 - 허가 (10/16-10/17)",
+        "content": "시험종료로 인한 자습관 휴식 요청 - 허가 (10/15-10/16)",
         "scope": "week"
       }
     ],
