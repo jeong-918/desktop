@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-15T06:19:25.998Z",
+  "exportedAt": "2026-10-15T09:53:22.478Z",
   "version": 3,
   "data": {
     "students": [
@@ -3740,6 +3740,10 @@
         "2026-10-14": {
           "status": "미입실(학원)",
           "time": ""
+        },
+        "2026-10-15": {
+          "status": "미입실(기타)",
+          "time": ""
         }
       },
       "stu_2": {
@@ -3829,6 +3833,10 @@
         },
         "2026-10-14": {
           "status": "입실",
+          "time": ""
+        },
+        "2026-10-15": {
+          "status": "미입실(학원)",
           "time": ""
         }
       },
@@ -8486,6 +8494,30 @@
         "start": "17:00",
         "end": "18:00",
         "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mv95fd8nmcld",
+        "studentId": "stu_18",
+        "date": "2026-10-14",
+        "subject": "영어",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "17:00",
+        "end": "18:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mv95g8hi85nl",
+        "studentId": "stu_2",
+        "date": "2026-10-14",
+        "subject": "사회",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "19:20",
+        "minutes": 80,
         "note": ""
       }
     ],
