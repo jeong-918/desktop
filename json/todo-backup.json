@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-15T08:56:26.280Z",
+  "exportedAt": "2026-10-15T10:01:05.042Z",
   "categories": [
     {
       "id": "cat_1792046741546",
@@ -21,10 +21,10 @@
   "todos": [
     {
       "id": "todo_1792046844378_4bdm",
-      "title": "미강고 전 인원 상담 진행",
+      "title": "미강고 출석 인원 상담 진행",
       "categoryId": "cat_1792046767402",
       "date": "2026-10-15",
-      "status": "IN_PROGRESS",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1792046844378
