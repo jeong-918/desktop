@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-15T06:47:29.652Z",
+  "exportedAt": "2026-10-15T06:48:40.996Z",
   "categories": [
     {
       "id": "cat_1792046741546",
@@ -24,10 +24,40 @@
       "title": "미강고 전 인원 상담 진행",
       "categoryId": "cat_1792046767402",
       "date": "2026-10-15",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "memo": "",
       "time": "",
       "createdAt": 1792046844378
+    },
+    {
+      "id": "todo_1792046864414_po7g",
+      "title": "민서 면접 2회차 결과 학원으로 전달",
+      "categoryId": "cat_1792046758202",
+      "date": "2026-10-15",
+      "status": "IN_PROGRESS",
+      "memo": "",
+      "time": "",
+      "createdAt": 1792046864414
+    },
+    {
+      "id": "todo_1792046891363_4jwb",
+      "title": "우진 주간 체크 (9시 이후 카톡 전송)",
+      "categoryId": "cat_1792046758202",
+      "date": "2026-10-15",
+      "status": "IN_PROGRESS",
+      "memo": "",
+      "time": "",
+      "createdAt": 1792046891363
+    },
+    {
+      "id": "todo_1792046898722_g80y",
+      "title": "인아 주간 체크 (9시 이후 카톡 전송)",
+      "categoryId": "cat_1792046758202",
+      "date": "2026-10-15",
+      "status": "IN_PROGRESS",
+      "memo": "",
+      "time": "",
+      "createdAt": 1792046898723
     }
   ]
 }
