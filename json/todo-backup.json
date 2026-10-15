@@ -1,63 +1,17 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-15T06:44:59.577Z",
+  "exportedAt": "2026-10-15T06:46:03.475Z",
   "categories": [
     {
-      "id": "cat_academy",
-      "name": "A학원",
-      "color": "#8b5cf6"
+      "id": "cat_1792046741546",
+      "name": "개인",
+      "color": "#ff0000"
     },
     {
-      "id": "cat_work",
-      "name": "업무/과제",
-      "color": "#3b82f6"
-    },
-    {
-      "id": "cat_study",
-      "name": "자기계발",
-      "color": "#06b6d4"
-    },
-    {
-      "id": "cat_workout",
-      "name": "운동/건강",
-      "color": "#10b981"
-    },
-    {
-      "id": "cat_personal",
-      "name": "개인/생활",
-      "color": "#f59e0b"
+      "id": "cat_1792046758202",
+      "name": "파인만입시컨설팅",
+      "color": "#143bff"
     }
   ],
-  "todos": [
-    {
-      "id": "todo_demo_1",
-      "title": "영어 단어 50개 암기 및 단어장 복습",
-      "categoryId": "cat_academy",
-      "date": "2026-10-14",
-      "status": "DONE",
-      "memo": "Chapter 14~15 표제어 중심",
-      "time": "14:00",
-      "createdAt": 1791969779703
-    },
-    {
-      "id": "todo_demo_2",
-      "title": "수학 모의고사 오답노트 정리",
-      "categoryId": "cat_academy",
-      "date": "2026-10-14",
-      "status": "IN_PROGRESS",
-      "memo": "킬러 문항 21, 29, 30번 풀이 과정 재작성",
-      "time": "16:00",
-      "createdAt": 1791971579703
-    },
-    {
-      "id": "todo_demo_3",
-      "title": "저녁 조깅 5km 러닝머신",
-      "categoryId": "cat_workout",
-      "date": "2026-10-14",
-      "status": "TODO",
-      "memo": "스트레칭 10분 필수",
-      "time": "20:00",
-      "createdAt": 1791973379703
-    }
-  ]
+  "todos": []
 }
