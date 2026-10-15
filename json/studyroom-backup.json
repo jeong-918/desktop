@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-15T06:05:12.481Z",
+  "exportedAt": "2026-10-15T06:06:24.140Z",
   "version": 3,
   "data": {
     "students": [
@@ -8243,6 +8243,30 @@
         "subject": "수학",
         "type": "과제",
         "eval": "학습완료",
+        "start": "18:00",
+        "end": "20:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mv94x1uybpoo",
+        "studentId": "stu_18",
+        "date": "2026-10-13",
+        "subject": "영어",
+        "type": "과제",
+        "eval": "보완필요",
+        "start": "20:00",
+        "end": "22:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mv94ybw1yjl7",
+        "studentId": "stu_16",
+        "date": "2026-10-13",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "보완필요",
         "start": "18:00",
         "end": "20:00",
         "minutes": 120,
