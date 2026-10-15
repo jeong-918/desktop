@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-15T06:48:40.996Z",
+  "exportedAt": "2026-10-15T08:56:26.280Z",
   "categories": [
     {
       "id": "cat_1792046741546",
@@ -34,7 +34,7 @@
       "title": "민서 면접 2회차 결과 학원으로 전달",
       "categoryId": "cat_1792046758202",
       "date": "2026-10-15",
-      "status": "IN_PROGRESS",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1792046864414
