@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-15T13:17:54.761Z",
+  "exportedAt": "2026-10-16T07:28:00.840Z",
   "categories": [
     {
       "id": "cat_1792046741546",
@@ -44,7 +44,7 @@
       "title": "우진 주간 체크 (9시 이후 카톡 전송)",
       "categoryId": "cat_1792046758202",
       "date": "2026-10-16",
-      "status": "IN_PROGRESS",
+      "status": "DONE",
       "memo": "",
       "time": "",
       "createdAt": 1792046891363
