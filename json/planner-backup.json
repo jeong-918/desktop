@@ -1,0 +1,158 @@
+{
+  "version": "1.0",
+  "appName": "통합 일정 관리",
+  "exportedAt": "2026-10-16T07:27:55.308Z",
+  "updatedAt": 1792135675308,
+  "daily": {
+    "categories": [
+      {
+        "id": "cat_1792046741546",
+        "name": "개인",
+        "color": "#ff0000"
+      },
+      {
+        "id": "cat_1792046758202",
+        "name": "파인만입시컨설팅",
+        "color": "#143bff"
+      },
+      {
+        "id": "cat_1792046767402",
+        "name": "다올105",
+        "color": "#f0be0a"
+      }
+    ],
+    "todos": [
+      {
+        "id": "todo_1792046844378_4bdm",
+        "title": "미강고 출석 인원 상담 진행",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-10-15",
+        "status": "DONE",
+        "memo": "",
+        "time": "",
+        "createdAt": 1792046844378
+      },
+      {
+        "id": "todo_1792046864414_po7g",
+        "title": "민서 면접 2회차 결과 학원으로 전달",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-10-15",
+        "status": "DONE",
+        "memo": "",
+        "time": "",
+        "createdAt": 1792046864414
+      },
+      {
+        "id": "todo_1792046891363_4jwb",
+        "title": "우진 주간 체크 (9시 이후 카톡 전송)",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-10-16",
+        "status": "DONE",
+        "memo": "",
+        "time": "",
+        "createdAt": 1792046891363
+      },
+      {
+        "id": "todo_1792046898722_g80y",
+        "title": "인아 주간 체크 (9시 이후 카톡 전송)",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-10-16",
+        "status": "IN_PROGRESS",
+        "memo": "",
+        "time": "",
+        "createdAt": 1792046898723
+      }
+    ]
+  },
+  "action": {
+    "categories": [
+      {
+        "id": "category-1789727741661-shxtnf5",
+        "name": "파인만컨설팅",
+        "color": "#5b6ee1"
+      },
+      {
+        "id": "category-1789727750094-2406egk",
+        "name": "입시자습관",
+        "color": "#f15079"
+      },
+      {
+        "id": "category-1789727777204-akof5p9",
+        "name": "제휴협업",
+        "color": "#00faa7"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "task-1790056364042-eot8aat",
+        "categoryId": "category-1789727741661-shxtnf5",
+        "person": "박우진",
+        "title": "중간고사 이후 체크포인트",
+        "firstDate": "2026-09-22",
+        "dueDate": "2026-10-11",
+        "followupDate": "",
+        "priority": "normal",
+        "status": "complete",
+        "note": "※ 1차 완료 : 심영독(화씨451에세이) → 이행준비 :고전기반현대사회연구 + 독서와 작문, 미적1, 중국문학입문, 세계시민과 지리, 과학창의연구(수능문풀), 세계시민과 미래사회(국제관련)",
+        "createdAt": "2026-09-22T05:52:44.042Z",
+        "completedAt": "2026-10-11T07:51:56.844Z"
+      },
+      {
+        "id": "task-1790056229307-cyv3zg5",
+        "categoryId": "category-1789727741661-shxtnf5",
+        "person": "정인아",
+        "title": "중간고사 이후 체크포인트",
+        "firstDate": "2026-09-22",
+        "dueDate": "2026-10-11",
+        "followupDate": "",
+        "priority": "normal",
+        "status": "complete",
+        "note": "※ 1차 완료 : 경제동아리+독서토론,  역사탐구현대사회A/B, 영어A/B, 화법과언어 → 이행준비 : 미적1, 세계문화와 영어, 법과 사회",
+        "createdAt": "2026-09-22T05:50:29.307Z",
+        "completedAt": "2026-10-11T03:05:45.761Z"
+      },
+      {
+        "id": "task-1790056075123-0n69lta",
+        "categoryId": "category-1789727741661-shxtnf5",
+        "person": "윤지원",
+        "title": "중간고사 이후 체크 포인트",
+        "firstDate": "2026-09-22",
+        "dueDate": "2026-10-11",
+        "followupDate": "",
+        "priority": "normal",
+        "status": "complete",
+        "note": "※ 1차 완료 : 사문, 인공지능, 현사윤 → 이행준비 : 미적1, 세포물질대사, 화법과언어, 영어2, 미디어영어 + 독서부(독후감예상) + 융합탐구",
+        "createdAt": "2026-09-22T05:47:55.123Z",
+        "completedAt": "2026-10-11T06:26:45.063Z"
+      },
+      {
+        "id": "task-1789817744260-se3d0ui",
+        "categoryId": "category-1789727741661-shxtnf5",
+        "person": "김민서",
+        "title": "면접 일정 최종 픽스 및 학원 통보 건",
+        "firstDate": "2026-09-19",
+        "dueDate": "2026-09-20",
+        "followupDate": "2026-09-27",
+        "priority": "normal",
+        "status": "complete",
+        "note": "면접일 : 추석마치고 9/30수 또는 10/1목 중 택1 \n시간 : 9/30 수는 7시 이후 | 10/1 목은 2~3시 가능여부 체크",
+        "createdAt": "2026-09-19T11:35:44.260Z",
+        "completedAt": "2026-09-21T05:06:54.699Z"
+      },
+      {
+        "id": "task-1789727877829-cqn4h7p",
+        "categoryId": "category-1789727741661-shxtnf5",
+        "person": "박우진",
+        "title": "고전기반현대사회연구 : 선정됨. 그래서 시험 후 진행할 듯",
+        "firstDate": "2026-09-18",
+        "dueDate": "2026-10-11",
+        "followupDate": "2026-10-09",
+        "priority": "normal",
+        "status": "complete",
+        "note": "고전기반현대사회연구 관련 주제, 역할, 이행과정. 선생님 서포트 등 체크 필요",
+        "createdAt": "2026-09-18T10:37:57.829Z",
+        "completedAt": "2026-10-11T07:51:57.931Z"
+      }
+    ]
+  }
+}
