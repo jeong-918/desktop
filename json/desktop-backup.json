@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-16T09:39:11.909Z",
+  "exportedAt": "2026-10-16T12:46:27.092Z",
   "apps": [
     {
       "id": "app-1",
@@ -76,7 +76,7 @@
     },
     {
       "id": "app-1789811920576",
-      "name": "대입면접 활동지",
+      "name": "대입 면접 활동지",
       "url": "https://ppakangna-svg.github.io/interview-record/",
       "target": "newtab",
       "icon": "🧮",
@@ -103,7 +103,7 @@
     },
     {
       "id": "app-1791878483202",
-      "name": "진로·학업 설계 지원 도구 (학성여고)",
+      "name": "진로/학업 설계 지원",
       "url": "https://geoguymin.github.io/Design-of-Curriculam/",
       "target": "newtab",
       "icon": "🧮",
@@ -112,7 +112,7 @@
     },
     {
       "id": "app-1791885784710",
-      "name": "모두의 교과탐구 기반활동",
+      "name": "교과탐구 기반활동",
       "url": "https://script.google.com/macros/s/AKfycbxvrCiB6_fc2A3QkXMHrCv4gX8twpLqJY8y2GmdFYLusGnwIIORSs9JNf_PWAJax54lFw/exec",
       "target": "newtab",
       "icon": "🧮",
