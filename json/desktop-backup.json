@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-16T08:27:39.409Z",
+  "exportedAt": "2026-10-16T08:37:42.969Z",
   "apps": [
     {
       "id": "app-1",
@@ -17,8 +17,8 @@
       "url": "https://www.desmos.com/scientific?lang=ko",
       "icon": "🧮",
       "target": "window",
-      "xPct": 7.6,
-      "yPct": 54.55
+      "xPct": 0.78,
+      "yPct": 54.25
     },
     {
       "id": "app-4",
@@ -97,7 +97,7 @@
       "name": "파인만입시컨설팅_학생관리",
       "url": "https://jeong-918.github.io/desktop/app/fineman2-1.html",
       "target": "newtab",
-      "icon": "📝",
+      "icon": "📅",
       "xPct": 14.41,
       "yPct": 36.91
     },
