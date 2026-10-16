@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-16T09:37:32.629Z",
+  "exportedAt": "2026-10-16T09:39:11.909Z",
   "apps": [
     {
       "id": "app-1",
@@ -76,7 +76,7 @@
     },
     {
       "id": "app-1789811920576",
-      "name": "화원고_대입면접 활동지",
+      "name": "대입면접 활동지",
       "url": "https://ppakangna-svg.github.io/interview-record/",
       "target": "newtab",
       "icon": "🧮",
@@ -94,7 +94,7 @@
     },
     {
       "id": "app-1791447467073",
-      "name": "파인만입시컨설팅_학생관리",
+      "name": "파인만컨설팅_학생관리",
       "url": "https://jeong-918.github.io/desktop/app/fineman2-1.html",
       "target": "newtab",
       "icon": "📅",
