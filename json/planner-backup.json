@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-10-16T07:27:55.308Z",
-  "updatedAt": 1792135675308,
+  "exportedAt": "2026-10-16T08:37:24.927Z",
+  "updatedAt": 1792139844927,
   "daily": {
     "categories": [
       {
@@ -51,16 +51,6 @@
         "memo": "",
         "time": "",
         "createdAt": 1792046891363
-      },
-      {
-        "id": "todo_1792046898722_g80y",
-        "title": "인아 주간 체크 (9시 이후 카톡 전송)",
-        "categoryId": "cat_1792046758202",
-        "date": "2026-10-16",
-        "status": "IN_PROGRESS",
-        "memo": "",
-        "time": "",
-        "createdAt": 1792046898723
       }
     ]
   },
