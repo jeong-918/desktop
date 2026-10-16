@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-16T08:23:16.318Z",
+  "exportedAt": "2026-10-16T08:27:39.409Z",
   "apps": [
     {
       "id": "app-1",
@@ -28,15 +28,6 @@
       "target": "window",
       "xPct": 0.79,
       "yPct": 19.28
-    },
-    {
-      "id": "app-1789710087650",
-      "name": "스케쥴",
-      "url": "https://jeong-918.github.io/desktop/app/to-do.html",
-      "target": "newtab",
-      "icon": "📝",
-      "xPct": 7.6,
-      "yPct": 36.91
     },
     {
       "id": "app-1789710282082",
@@ -84,15 +75,6 @@
       "yPct": 1.65
     },
     {
-      "id": "app-1789727698188",
-      "name": "업무기록-이행",
-      "url": "https://jeong-918.github.io/desktop/app/comm.html",
-      "target": "newtab",
-      "icon": "📝",
-      "xPct": 0.79,
-      "yPct": 36.91
-    },
-    {
       "id": "app-1789811920576",
       "name": "화원고_대입면접 활동지",
       "url": "https://ppakangna-svg.github.io/interview-record/",
@@ -107,8 +89,8 @@
       "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
       "target": "newtab",
       "icon": "📊",
-      "xPct": 0.79,
-      "yPct": 54.47
+      "xPct": 7.58,
+      "yPct": 36.71
     },
     {
       "id": "app-1791447467073",
@@ -152,8 +134,8 @@
       "url": "https://jeong-918.github.io/desktop/app/planner.html",
       "target": "newtab",
       "icon": "📝",
-      "xPct": 34.75,
-      "yPct": 1.64
+      "xPct": 0.78,
+      "yPct": 36.71
     }
   ],
   "settings": {
