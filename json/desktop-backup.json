@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-16T08:37:42.969Z",
+  "exportedAt": "2026-10-16T09:37:32.629Z",
   "apps": [
     {
       "id": "app-1",
@@ -58,7 +58,7 @@
     },
     {
       "id": "app-1789711180543",
-      "name": "ERP",
+      "name": "SYSTEM-daol",
       "url": "https://system.daol105.co.kr",
       "target": "newtab",
       "icon": "🌐",
