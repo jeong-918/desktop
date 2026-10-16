@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-15T06:44:57.196Z",
+  "exportedAt": "2026-10-16T08:23:16.318Z",
   "apps": [
     {
       "id": "app-1",
@@ -145,6 +145,15 @@
       "icon": "🧮",
       "xPct": 75.7,
       "yPct": 54.55
+    },
+    {
+      "id": "app-1792138990794",
+      "name": "통합일정관리",
+      "url": "https://jeong-918.github.io/desktop/app/planner.html",
+      "target": "newtab",
+      "icon": "📝",
+      "xPct": 34.75,
+      "yPct": 1.64
     }
   ],
   "settings": {
