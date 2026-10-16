@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>통합 일정 관리</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #5b4be5;
+      --bg: #f5f6fa;
+      --line: #e8eaf1;
+      --text: #192033;
+      --muted: #778198;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .app-card { background: #fff; border: 1px solid var(--line); border-radius: 22px; box-shadow: 0 4px 18px rgba(34, 42, 72, 0.035); }
+    .nav-btn, .filter-btn, .view-btn, .board-btn { color: #68748a; border: 1px solid transparent; transition: 0.2s ease; }
+    .nav-btn:hover, .filter-btn:hover, .view-btn:hover, .board-btn:hover { background: #f4f3ff; color: var(--primary); }
+    .filter-btn.active, .view-btn.active, .board-btn.active { color: var(--primary); background: #eeecff; border-color: #ddd9ff; font-weight: 700; }
+    .input-base { width: 100%; border: 1px solid #dfe3ec; border-radius: 12px; background: #fff; outline: none; transition: 0.2s ease; }
+    .input-base:focus { border-color: #887df0; box-shadow: 0 0 0 4px rgba(91, 75, 229, 0.11); }
+    .task-card { position: relative; overflow: hidden; border: 1px solid #e4e7ef; border-radius: 18px; background: #fff; transition: 0.2s ease; }
+    .task-card:hover { transform: translateY(-2px); border-color: #cfcaff; box-shadow: 0 12px 26px rgba(55, 54, 110, 0.08); }
+    .task-card.overdue { border-left: 5px solid #ef4444; }
+    .task-card.due-soon { border-left: 5px solid #f59e0b; }
+    .task-card.followup-due { border-left: 5px solid #7c3aed; }
+    .task-card.completed { opacity: 0.78; }
+    .task-card.completed .task-title, .task-card.completed .task-note { text-decoration: line-through; color: #8a93a5; }
+    .badge { display: inline-flex; align-items: center; gap: 5px; border-radius: 8px; padding: 5px 9px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+    .status-before { color: #657084; background: #eef1f5; border: 1px solid #dce1e9; }
+    .status-progress { color: #a16207; background: #fff6df; border: 1px solid #fde6ae; }
+    .status-complete { color: #047857; background: #e7f9f1; border: 1px solid #bcefd9; }
+    .priority-low { color: #64748b; background: #f1f5f9; }
+    .priority-normal { color: #2563eb; background: #eff6ff; }
+    .priority-high { color: #c2410c; background: #fff1e8; }
+    .priority-urgent { color: #be123c; background: #fff0f3; }
+    .modal-backdrop { position: fixed; z-index: 50; inset: 0; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(24, 29, 47, 0.47); backdrop-filter: blur(3px); }
+    .modal-backdrop.show { display: flex; }
+    .modal-panel { width: min(680px, 100%); max-height: calc(100vh - 40px); overflow-y: auto; border-radius: 22px; background: #fff; box-shadow: 0 22px 70px rgba(12, 16, 33, 0.28); }
+    .toast { position: fixed; z-index: 70; right: 24px; bottom: 24px; display: flex; align-items: center; gap: 10px; max-width: min(420px, calc(100vw - 32px)); border-radius: 14px; padding: 13px 16px; color: #fff; background: #28244d; box-shadow: 0 14px 34px rgba(24, 20, 62, 0.24); transform: translateY(120px); opacity: 0; transition: 0.3s ease; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .cal-cell { min-height: 46px; }
+    .cal-cell.selected { background: #5b4be5; color: #fff; }
+    .cal-cell.today:not(.selected) { box-shadow: inset 0 0 0 1.5px #5b4be5; }
+    @media (max-width: 1023px) {
+      .sidebar-layout { grid-template-columns: 1fr !important; }
+      .desktop-label { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur md:px-7">
+    <div class="mx-auto flex max-w-[1600px] flex-wrap items-center justify-between gap-3">
+      <div class="flex min-w-0 items-center gap-3">
+        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 text-white">
+          <i class="fa-solid fa-calendar-check"></i>
+        </div>
+        <div class="min-w-0">
+          <h1 class="truncate text-base font-extrabold text-slate-900 md:text-lg">통합 일정 관리</h1>
+          <p id="headerDesc" class="truncate text-xs text-slate-500">하루 일정과 소통 이행을 한곳에서 관리합니다</p>
+        </div>
+      </div>
+      <div class="flex rounded-xl bg-slate-100 p-1">
+        <button type="button" class="board-btn rounded-lg px-3 py-2 text-sm" data-board="daily">하루 일정</button>
+        <button type="button" class="board-btn rounded-lg px-3 py-2 text-sm" data-board="action">이행 기록</button>
+      </div>
+      <div class="flex flex-wrap items-center gap-1.5">
+        <button id="backupBtn" type="button" class="nav-btn rounded-xl px-3 py-2 text-sm font-semibold"><i class="fa-solid fa-download mr-1"></i><span class="desktop-label">백업</span></button>
+        <label class="nav-btn rounded-xl px-3 py-2 text-sm font-semibold">
+          <i class="fa-solid fa-upload mr-1"></i><span class="desktop-label">복원</span>
+          <input id="restoreInput" type="file" accept="application/json,.json" class="hidden" />
+        </label>
+        <button id="syncPullBtn" type="button" class="nav-btn rounded-xl px-3 py-2 text-sm font-semibold"><i class="fa-solid fa-cloud-arrow-down mr-1"></i><span class="desktop-label">동기화</span></button>
+        <button id="syncPushBtn" type="button" class="nav-btn rounded-xl px-3 py-2 text-sm font-semibold"><i class="fa-solid fa-cloud-arrow-up mr-1"></i><span class="desktop-label">업로드</span></button>
+        <button id="syncSettingsBtn" type="button" class="nav-btn rounded-xl px-3 py-2 text-sm font-semibold"><i class="fa-solid fa-gear mr-1"></i><span class="desktop-label">동기화 설정</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-[1600px] p-4 md:p-7">
+    <section id="boardDaily">
+      <div id="rolloverBar" class="mb-4 hidden items-center justify-between gap-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+        <p>이전 날짜에 완료하지 못한 <strong id="rolloverCount">0</strong>개의 할 일이 있습니다. 오늘 일정으로 옮겨올까요?</p>
+        <div class="flex shrink-0 gap-2">
+          <button id="carryOverBtn" type="button" class="rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-bold text-white">오늘로 가져오기</button>
+          <button id="dismissRolloverBtn" type="button" class="rounded-lg px-2 py-1.5 text-xs font-bold text-amber-700">닫기</button>
+        </div>
+      </div>
+      <div class="sidebar-layout grid items-start gap-4 lg:grid-cols-[320px_minmax(0,1fr)]">
+        <aside class="app-card space-y-5 p-4 lg:sticky lg:top-24">
+          <div class="flex items-center justify-between">
+            <button id="prevMonthBtn" type="button" class="flex h-9 w-9 items-center justify-center rounded-xl text-slate-500 hover:bg-slate-100"><i class="fa-solid fa-chevron-left"></i></button>
+            <strong id="calendarTitle" class="text-sm">달력</strong>
+            <button id="nextMonthBtn" type="button" class="flex h-9 w-9 items-center justify-center rounded-xl text-slate-500 hover:bg-slate-100"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+          <div class="grid grid-cols-7 gap-1 text-center text-[11px] font-bold text-slate-400">
+            <span class="text-rose-400">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span class="text-blue-400">토</span>
+          </div>
+          <div id="calendarDays" class="grid grid-cols-7 gap-1"></div>
+          <button id="goTodayBtn" type="button" class="w-full rounded-xl border border-slate-200 py-2 text-sm font-bold text-slate-600 hover:bg-slate-50">오늘로 이동</button>
+          <div>
+            <div class="mb-2 flex items-center justify-between">
+              <h2 class="text-sm font-extrabold">범주</h2>
+              <button type="button" class="text-xs font-bold text-violet-600" data-category-board="daily">범주 설정</button>
+            </div>
+            <div id="dailyCategoryFilters" class="flex flex-wrap gap-1.5"></div>
+          </div>
+        </aside>
+        <section class="space-y-4">
+          <div class="app-card p-5">
+            <div class="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <p id="dailyDateText" class="text-lg font-extrabold"></p>
+                <p id="dailyRelative" class="mt-1 text-xs text-slate-500"></p>
+              </div>
+              <button id="copyIncompleteBtn" type="button" class="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-600 hover:bg-slate-50">미완료 항목 내일로 옮기기</button>
+            </div>
+            <div class="mt-4 grid gap-3 sm:grid-cols-4">
+              <div class="rounded-2xl bg-slate-50 p-3"><p class="text-[11px] text-slate-400">달성률</p><p id="dailyRate" class="text-xl font-extrabold text-violet-600">0%</p></div>
+              <div class="rounded-2xl bg-slate-50 p-3"><p class="text-[11px] text-slate-400">전체</p><p id="dailyTotal" class="text-xl font-extrabold">0</p></div>
+              <div class="rounded-2xl bg-slate-50 p-3"><p class="text-[11px] text-slate-400">진행중</p><p id="dailyProgress" class="text-xl font-extrabold">0</p></div>
+              <div class="rounded-2xl bg-slate-50 p-3"><p class="text-[11px] text-slate-400">완료</p><p id="dailyDone" class="text-xl font-extrabold">0</p></div>
+            </div>
+            <div class="mt-3 h-2 overflow-hidden rounded-full bg-slate-100"><div id="dailyProgressBar" class="h-full w-0 rounded-full bg-gradient-to-r from-violet-500 to-indigo-400"></div></div>
+            <p id="dailyCheer" class="mt-2 hidden text-xs font-bold text-emerald-600">오늘 일정을 모두 마쳤습니다.</p>
+          </div>
+          <form id="dailyForm" class="app-card space-y-3 p-4">
+            <div class="grid gap-2 md:grid-cols-[160px_minmax(0,1fr)_auto]">
+              <select id="dailyCategory" class="input-base h-11 px-3 text-sm"></select>
+              <input id="dailyTitle" class="input-base h-11 px-3 text-sm" placeholder="오늘 해야 할 일" />
+              <button class="h-11 rounded-xl bg-violet-600 px-5 text-sm font-bold text-white hover:bg-violet-700">등록</button>
+            </div>
+            <button id="dailyDetailBtn" type="button" class="text-xs font-bold text-slate-500">+ 세부 메모 및 예정 시간 적기</button>
+            <div id="dailyDetail" class="hidden grid gap-2 md:grid-cols-2">
+              <input id="dailyTime" type="time" class="input-base h-11 px-3 text-sm" />
+              <input id="dailyMemo" class="input-base h-11 px-3 text-sm" placeholder="세부 메모" />
+            </div>
+          </form>
+          <div id="dailyStatusFilters" class="flex flex-wrap gap-1.5"></div>
+          <p class="text-xs text-slate-400">상태 뱃지를 클릭하면 시작전 → 진행중 → 완료 순으로 바뀝니다.</p>
+          <div id="dailyList" class="space-y-3"></div>
+        </section>
+      </div>
+    </section>
+
+    <section id="boardAction" class="hidden">
+      <div class="sidebar-layout grid items-start gap-4 lg:grid-cols-[320px_minmax(0,1fr)]">
+        <aside class="space-y-4 lg:sticky lg:top-24">
+          <div class="app-card p-4">
+            <div class="flex items-center justify-between">
+              <h2 class="text-sm font-extrabold">이행 현황</h2>
+              <button id="actionTodayBtn" type="button" class="text-xs font-bold text-violet-600">오늘 확인</button>
+            </div>
+            <p id="actionTodayText" class="mt-1 text-xs text-slate-400"></p>
+            <p id="actionRate" class="mt-3 text-3xl font-extrabold text-violet-600">0%</p>
+            <p id="actionTotalText" class="text-xs text-slate-400">전체 0건</p>
+            <div class="mt-3 h-2 overflow-hidden rounded-full bg-slate-100"><div id="actionProgressBar" class="h-full w-0 rounded-full bg-gradient-to-r from-violet-500 to-indigo-400"></div></div>
+            <div class="mt-3 grid grid-cols-3 gap-2 text-center text-xs">
+              <button type="button" class="filter-btn rounded-xl py-2" data-action-status="before"><b id="beforeCount">0</b><br>시작 전</button>
+              <button type="button" class="filter-btn rounded-xl py-2" data-action-status="progress"><b id="progressCount">0</b><br>진행 중</button>
+              <button type="button" class="filter-btn rounded-xl py-2" data-action-status="complete"><b id="completeCount">0</b><br>완료</button>
+            </div>
+          </div>
+          <div class="app-card p-4">
+            <div class="mb-2 flex items-center justify-between">
+              <h2 class="text-sm font-extrabold">기한 알림</h2>
+              <button id="resetUrgencyBtn" type="button" class="text-xs font-bold text-slate-400">초기화</button>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <button type="button" class="urgency-filter rounded-xl border border-slate-200 px-3 py-2 text-left font-bold" data-urgency="today">오늘 마감 <b id="todayDueCount">0</b></button>
+              <button type="button" class="urgency-filter rounded-xl border border-slate-200 px-3 py-2 text-left font-bold" data-urgency="soon">3일 이내 <b id="soonDueCount">0</b></button>
+              <button type="button" class="urgency-filter rounded-xl border border-slate-200 px-3 py-2 text-left font-bold" data-urgency="overdue">마감 초과 <b id="overdueCount">0</b></button>
+              <button type="button" class="urgency-filter rounded-xl border border-slate-200 px-3 py-2 text-left font-bold" data-urgency="followup">후속 확인 <b id="followupCount">0</b></button>
+            </div>
+          </div>
+          <div class="app-card p-4">
+            <div class="mb-2 flex items-center justify-between">
+              <h2 class="text-sm font-extrabold">관계 분류</h2>
+              <button type="button" class="text-xs font-bold text-violet-600" data-category-board="action">관리</button>
+            </div>
+            <div id="actionCategoryFilters" class="flex flex-wrap gap-1.5"></div>
+          </div>
+          <div class="app-card p-4">
+            <h2 class="mb-2 text-sm font-extrabold">상대방별 보기</h2>
+            <input id="personSearch" class="input-base mb-2 h-10 px-3 text-sm" placeholder="이름 검색" />
+            <div id="personFilters" class="flex max-h-52 flex-wrap gap-1.5 overflow-auto"></div>
+          </div>
+        </aside>
+        <section class="space-y-4">
+          <form id="actionForm" class="app-card space-y-3 p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="font-extrabold">새 이행 업무 등록</h2>
+                <p class="text-xs text-slate-400">소통에서 전달받은 업무를 바로 기록하세요.</p>
+              </div>
+              <button id="actionDetailBtn" type="button" class="text-xs font-bold text-slate-500">상세 입력 열기</button>
+            </div>
+            <div class="grid gap-2 md:grid-cols-[150px_140px_minmax(0,1fr)_auto]">
+              <select id="actionCategory" class="input-base h-11 px-3 text-sm"></select>
+              <input id="actionPerson" class="input-base h-11 px-3 text-sm" placeholder="상대방 이름" />
+              <input id="actionTitle" class="input-base h-11 px-3 text-sm" placeholder="이행해야 할 일" />
+              <button class="h-11 rounded-xl bg-violet-600 px-5 text-sm font-bold text-white hover:bg-violet-700">등록</button>
+            </div>
+            <div id="actionDetail" class="hidden grid gap-2 md:grid-cols-4">
+              <label class="text-xs font-bold text-slate-500">첫 소통일<input id="actionFirstDate" type="date" class="input-base mt-1 h-11 px-3 text-sm" /></label>
+              <label class="text-xs font-bold text-slate-500">마감일<input id="actionDueDate" type="date" class="input-base mt-1 h-11 px-3 text-sm" /></label>
+              <label class="text-xs font-bold text-slate-500">후속 확인일<input id="actionFollowupDate" type="date" class="input-base mt-1 h-11 px-3 text-sm" /></label>
+              <label class="text-xs font-bold text-slate-500">중요도
+                <select id="actionPriority" class="input-base mt-1 h-11 px-3 text-sm">
+                  <option value="low">낮음</option><option value="normal" selected>보통</option><option value="high">높음</option><option value="urgent">긴급</option>
+                </select>
+              </label>
+              <textarea id="actionNote" class="input-base min-h-20 px-3 py-2 text-sm md:col-span-4" placeholder="기타 메모"></textarea>
+            </div>
+          </form>
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div id="actionViews" class="flex gap-1.5">
+              <button type="button" class="view-btn rounded-xl px-3 py-2 text-sm" data-view="active">진행 업무</button>
+              <button type="button" class="view-btn rounded-xl px-3 py-2 text-sm" data-view="all">전체 업무</button>
+              <button type="button" class="view-btn rounded-xl px-3 py-2 text-sm" data-view="complete">완료 보기</button>
+            </div>
+            <div class="flex gap-2">
+              <input id="actionSearch" class="input-base h-10 w-40 px-3 text-sm" placeholder="검색" />
+              <select id="actionSort" class="input-base h-10 px-2 text-sm">
+                <option value="dueAsc">마감일 가까운 순</option>
+                <option value="followupAsc">후속 확인일 가까운 순</option>
+                <option value="firstDesc">첫 소통일 최신 순</option>
+                <option value="createdDesc">최근 등록 순</option>
+                <option value="person">상대방 이름순</option>
+                <option value="priority">중요도 높은 순</option>
+                <option value="status">상태순</option>
+              </select>
+            </div>
+          </div>
+          <p id="actionFilterText" class="text-xs text-slate-400"></p>
+          <div id="actionList" class="space-y-3"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div id="editDailyModal" class="modal-backdrop">
+    <form id="editDailyForm" class="modal-panel">
+      <div class="flex items-center justify-between border-b px-6 py-5"><h2 class="text-lg font-extrabold">할일 수정</h2><button type="button" class="close-modal" data-close="editDailyModal"><i class="fa-solid fa-xmark"></i></button></div>
+      <div class="grid gap-3 p-6 md:grid-cols-2">
+        <input id="editDailyId" type="hidden" />
+        <label class="text-xs font-bold text-slate-500">날짜<input id="editDailyDate" type="date" class="input-base mt-1 h-11 px-3 text-sm" /></label>
+        <label class="text-xs font-bold text-slate-500">범주<select id="editDailyCategory" class="input-base mt-1 h-11 px-3 text-sm"></select></label>
+        <label class="text-xs font-bold text-slate-500 md:col-span-2">제목<input id="editDailyTitle" class="input-base mt-1 h-11 px-3 text-sm" /></label>
+        <label class="text-xs font-bold text-slate-500">상태
+          <select id="editDailyStatus" class="input-base mt-1 h-11 px-3 text-sm"><option value="TODO">시작전</option><option value="IN_PROGRESS">진행중</option><option value="DONE">완료</option></select>
+        </label>
+        <label class="text-xs font-bold text-slate-500">예정 시간<input id="editDailyTime" type="time" class="input-base mt-1 h-11 px-3 text-sm" /></label>
+        <label class="text-xs font-bold text-slate-500 md:col-span-2">메모<textarea id="editDailyMemo" class="input-base mt-1 min-h-20 px-3 py-2 text-sm"></textarea></label>
+      </div>
+      <div class="flex justify-between gap-2 border-t px-6 py-5">
+        <button id="deleteDailyBtn" type="button" class="rounded-xl px-4 py-2.5 text-sm font-bold text-rose-500">삭제</button>
+        <div class="flex gap-2"><button type="button" class="close-modal rounded-xl border px-4 py-2.5 text-sm font-bold" data-close="editDailyModal">취소</button><button class="rounded-xl bg-violet-600 px-5 py-2.5 text-sm font-bold text-white">저장</button></div>
+      </div>
+    </form>
+  </div>
+
+  <div id="editActionModal" class="modal-backdrop">
+    <form id="editActionForm" class="modal-panel">
+      <div class="flex items-center justify-between border-b px-6 py-5"><div><h2 class="text-lg font-extrabold">이행 업무 수정</h2><p class="text-xs text-slate-400">소통 기록과 진행 상태를 수정합니다.</p></div><button type="button" class="close-modal" data-close="editActionModal"><i class="fa-solid fa-xmark"></i></button></div>
+      <div class="grid gap-3 p-6 md:grid-cols-2">
+        <input id="editActionId" type="hidden" />
+        <label class="text-xs font-bold text-slate-500">관계 분류<select id="editActionCategory" class="input-base mt-1 h-11 px-3 text-sm"></select></label>
+        <label class="text-xs font-bold text-slate-500">상대방<input id="editActionPerson" class="input-base mt-1 h-11 px-3 text-sm" /></label>
+        <label class="text-xs font-bold text-slate-500 md:col-span-2">이행해야 할 일<input id="editActionTitle" class="input-base mt-1 h-11 px-3 text-sm" /></label>
+        <label class="text-xs font-bold text-slate-500">첫 소통일<input id="editActionFirst" type="date" class="input-base mt-1 h-11 px-3 text-sm" /></label>
+        <label class="text-xs font-bold text-slate-500">마감일<input id="editActionDue" type="date" class="input-base mt-1 h-11 px-3 text-sm" /></label>
+        <label class="text-xs font-bold text-slate-500">후속 확인일<input id="editActionFollow" type="date" class="input-base mt-1 h-11 px-3 text-sm" /></label>
+        <label class="text-xs font-bold text-slate-500">중요도
+          <select id="editActionPriority" class="input-base mt-1 h-11 px-3 text-sm"><option value="low">낮음</option><option value="normal">보통</option><option value="high">높음</option><option value="urgent">긴급</option></select>
+        </label>
+        <label class="text-xs font-bold text-slate-500">상태
+          <select id="editActionStatus" class="input-base mt-1 h-11 px-3 text-sm"><option value="before">시작 전</option><option value="progress">진행 중</option><option value="complete">완료</option></select>
+        </label>
+        <label class="text-xs font-bold text-slate-500 md:col-span-2">기타 메모<textarea id="editActionNote" class="input-base mt-1 min-h-20 px-3 py-2 text-sm"></textarea></label>
+      </div>
+      <div class="flex justify-between gap-2 border-t px-6 py-5">
+        <button id="deleteActionBtn" type="button" class="rounded-xl px-4 py-2.5 text-sm font-bold text-rose-500">업무 삭제</button>
+        <div class="flex gap-2"><button type="button" class="close-modal rounded-xl border px-4 py-2.5 text-sm font-bold" data-close="editActionModal">취소</button><button class="rounded-xl bg-violet-600 px-5 py-2.5 text-sm font-bold text-white">수정 저장</button></div>
+      </div>
+    </form>
+  </div>
+
+  <div id="moveModal" class="modal-backdrop">
+    <form id="moveForm" class="modal-panel" style="width:min(520px,100%)">
+      <div class="border-b px-6 py-5"><h2 id="moveTitle" class="text-lg font-extrabold">다른 보드로 옮기기</h2><p class="mt-1 text-xs text-slate-400">옮기면 원래 보드에서는 빠지고 대상 보드에만 남습니다.</p></div>
+      <div class="space-y-3 p-6">
+        <label class="block text-xs font-bold text-slate-500">제목<input id="moveTitleInput" class="input-base mt-1 h-11 px-3 text-sm" /></label>
+        <label class="block text-xs font-bold text-slate-500">대상 분류<select id="moveCategory" class="input-base mt-1 h-11 px-3 text-sm"></select></label>
+        <div id="moveDailyFields" class="grid gap-3 md:grid-cols-2">
+          <label class="text-xs font-bold text-slate-500">날짜<input id="moveDate" type="date" class="input-base mt-1 h-11 px-3 text-sm" /></label>
+          <label class="text-xs font-bold text-slate-500">예정 시간<input id="moveTime" type="time" class="input-base mt-1 h-11 px-3 text-sm" /></label>
+          <label class="text-xs font-bold text-slate-500 md:col-span-2">메모<textarea id="moveMemo" class="input-base mt-1 min-h-16 px-3 py-2 text-sm"></textarea></label>
+        </div>
+        <div id="moveActionFields" class="hidden grid gap-3 md:grid-cols-2">
+          <label class="text-xs font-bold text-slate-500">상대방 이름<input id="movePerson" class="input-base mt-1 h-11 px-3 text-sm" /></label>
+          <label class="text-xs font-bold text-slate-500">첫 소통일<input id="moveFirstDate" type="date" class="input-base mt-1 h-11 px-3 text-sm" /></label>
+          <label class="text-xs font-bold text-slate-500">마감일<input id="moveDueDate" type="date" class="input-base mt-1 h-11 px-3 text-sm" /></label>
+          <label class="text-xs font-bold text-slate-500">중요도
+            <select id="movePriority" class="input-base mt-1 h-11 px-3 text-sm"><option value="low">낮음</option><option value="normal" selected>보통</option><option value="high">높음</option><option value="urgent">긴급</option></select>
+          </label>
+          <label class="text-xs font-bold text-slate-500 md:col-span-2">메모<textarea id="moveNote" class="input-base mt-1 min-h-16 px-3 py-2 text-sm"></textarea></label>
+        </div>
+      </div>
+      <div class="flex justify-end gap-2 border-t px-6 py-5">
+        <button type="button" class="close-modal rounded-xl border px-4 py-2.5 text-sm font-bold" data-close="moveModal">취소</button>
+        <button class="rounded-xl bg-violet-600 px-5 py-2.5 text-sm font-bold text-white">옮기기</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="categoryModal" class="modal-backdrop">
+    <div class="modal-panel" style="width:min(520px,100%)">
+      <div class="flex items-center justify-between border-b px-6 py-5"><div><h2 class="text-lg font-extrabold">분류 관리</h2><p class="text-xs text-slate-400">지금 보고 있는 보드의 분류만 수정됩니다.</p></div><button type="button" class="close-modal" data-close="categoryModal"><i class="fa-solid fa-xmark"></i></button></div>
+      <form id="addCategoryForm" class="flex gap-2 p-6">
+        <input id="newCategoryName" class="input-base h-11 px-3 text-sm" placeholder="분류명" />
+        <input id="newCategoryColor" type="color" value="#5b4be5" class="h-11 w-14 rounded-xl border border-slate-200" />
+        <button class="rounded-xl bg-violet-600 px-4 text-sm font-bold text-white">추가</button>
+      </form>
+      <div id="categoryManageList" class="space-y-2 px-6 pb-6"></div>
+    </div>
+  </div>
+
+  <div id="confirmModal" class="modal-backdrop">
+    <div class="modal-panel" style="width:min(440px,100%)">
+      <div class="p-6"><h2 id="confirmTitle" class="text-lg font-extrabold">확인</h2><p id="confirmMessage" class="mt-2 text-sm leading-6 text-slate-500"></p></div>
+      <div class="flex justify-end gap-2 border-t px-6 py-5">
+        <button id="confirmCancelBtn" type="button" class="rounded-xl border px-4 py-2.5 text-sm font-bold">취소</button>
+        <button id="confirmActionBtn" type="button" class="rounded-xl bg-violet-600 px-5 py-2.5 text-sm font-bold text-white">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="syncModal" class="modal-backdrop">
+    <div class="modal-panel" style="width:min(640px,100%)">
+      <div class="flex items-center justify-between border-b px-6 py-5">
+        <div>
+          <h2 class="text-lg font-extrabold">동기화 설정</h2>
+          <p class="mt-1 text-xs text-slate-500">기존 GitHub 방식은 그대로 두고, Firebase 실시간 동기화를 추가로 켤 수 있습니다.</p>
+        </div>
+        <button type="button" class="close-modal" data-close="syncModal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="space-y-6 p-6">
+        <section class="space-y-3 rounded-2xl border border-slate-200 p-4">
+          <h3 class="text-sm font-extrabold">GitHub 자동 동기화</h3>
+          <label class="block text-xs font-bold text-slate-500">Access Token (fine-grained)
+            <input id="syncTokenInput" type="password" class="input-base mt-1 h-11 px-3 text-sm" placeholder="github_pat_..." autocomplete="off" />
+          </label>
+          <p class="text-[11px] leading-5 text-slate-400">기존 desktop 저장소용 토큰을 그대로 씁니다. 업로드 파일은 json/planner-backup.json이며, 이 파일이 아직 없으면 기존 comm-backup.json과 todo-backup.json을 읽어 옵니다.</p>
+          <label class="flex items-center gap-2 rounded-xl bg-slate-50 p-3 text-sm font-semibold"><input id="syncAutoInput" type="checkbox" class="h-4 w-4 accent-violet-600" />자동 백업 켜기 (수정 후 5초 뒤 자동 업로드)</label>
+          <p id="syncStatusText" class="rounded-xl bg-slate-50 px-3 py-2 text-xs text-slate-500">마지막 업로드: 기록 없음</p>
+        </section>
+        <section class="space-y-3 rounded-2xl border border-violet-100 bg-violet-50/40 p-4">
+          <h3 class="text-sm font-extrabold">Firebase 실시간 동기화</h3>
+          <label class="flex items-center gap-2 text-sm font-semibold"><input id="firebaseEnabledInput" type="checkbox" class="h-4 w-4 accent-violet-600" />Firebase 사용 (다른 기기에 바로 반영)</label>
+          <label class="block text-xs font-bold text-slate-500">공유 암호
+            <input id="firebasePassInput" class="input-base mt-1 h-11 px-3 text-sm" placeholder="기기마다 같은 긴 암호" autocomplete="off" />
+          </label>
+          <label class="block text-xs font-bold text-slate-500">firebaseConfig 붙여넣기
+            <textarea id="firebaseConfigInput" class="input-base mt-1 min-h-28 px-3 py-2 text-xs" placeholder="const firebaseConfig = { apiKey: &quot;...&quot;, authDomain: &quot;...&quot;, projectId: &quot;...&quot;, appId: &quot;...&quot; };"></textarea>
+          </label>
+          <p id="firebaseStatusText" class="rounded-xl bg-white px-3 py-2 text-xs text-slate-500">Firebase: 아직 연결 안 함</p>
+          <details class="rounded-xl bg-white p-3 text-xs leading-6 text-slate-600">
+            <summary class="cursor-pointer font-bold text-slate-700">Firebase를 처음 만드는 순서</summary>
+            <ol class="mt-2 list-decimal space-y-1 pl-4">
+              <li>Google 계정으로 console.firebase.google.com 에 가입합니다.</li>
+              <li>프로젝트 추가 후 Firestore Database를 만듭니다. 위치는 asia-northeast3을 권합니다.</li>
+              <li>Authentication에서 익명 로그인을 사용 설정합니다.</li>
+              <li>프로젝트 설정에서 웹 앱을 추가하고 firebaseConfig를 위 칸에 붙여넣습니다.</li>
+              <li>Firestore 규칙에 아래를 붙여넣고 게시합니다.</li>
+            </ol>
+            <textarea readonly class="input-base mt-2 h-28 px-3 py-2 text-[11px]">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /plannerRooms/{roomId} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}</textarea>
+            <p class="mt-2">다른 기기에도 같은 구성값과 같은 공유 암호를 넣으면 실시간으로 맞춰집니다. 암호는 길게 만드세요.</p>
+          </details>
+        </section>
+      </div>
+      <div class="flex justify-end gap-2 border-t px-6 py-5">
+        <button type="button" class="close-modal rounded-xl border px-4 py-2.5 text-sm font-bold" data-close="syncModal">닫기</button>
+        <button id="syncSaveBtn" type="button" class="rounded-xl bg-violet-600 px-5 py-2.5 text-sm font-bold text-white">저장</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"><i class="fa-solid fa-circle-check text-emerald-400"></i><span id="toastMessage" class="text-sm font-medium"></span></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const $ = (selector) => document.querySelector(selector);
+      const STORAGE_KEY = "planner_unified_v1";
+      const UI_KEY = "planner_unified_ui_v1";
+      const LEGACY_ACTION = "communication-action-manager-v1";
+      const LEGACY_TODOS = "gemini_smart_todos_v1";
+      const LEGACY_CATEGORIES = "gemini_smart_categories_v1";
+      const GITHUB_SYNC = { owner: "jeong-918", repo: "desktop", branch: "main", path: "json/planner-backup.json" };
+      const PLANNER_URL = "https://jeong-918.github.io/desktop/json/planner-backup.json";
+      const COMM_URL = "https://jeong-918.github.io/desktop/json/comm-backup.json";
+      const TODO_URL = "https://jeong-918.github.io/desktop/json/todo-backup.json";
+      const SYNC_KEY_TOKEN = "sync_github_token";
+      const SYNC_KEY_AUTO = "sync_planner_auto";
+      const SYNC_KEY_LAST = "sync_planner_last_upload";
+      const SYNC_KEY_LOCAL = "sync_planner_local_updated";
+      const FIREBASE_KEY = "sync_planner_firebase";
+      const DEVICE_KEY = "sync_planner_device_id";
+      const DAILY_CATEGORIES = [
+        { id: "cat_academy", name: "A학원", color: "#8b5cf6" },
+        { id: "cat_work", name: "업무/과제", color: "#3b82f6" },
+        { id: "cat_study", name: "자기계발", color: "#06b6d4" },
+        { id: "cat_workout", name: "운동/건강", color: "#10b981" },
+        { id: "cat_personal", name: "개인/생활", color: "#f59e0b" }
+      ];
+      const ACTION_CATEGORIES = [
+        { id: "student", name: "학생", color: "#5B6EE1" },
+        { id: "parent", name: "학부모", color: "#E0782E" },
+        { id: "teacher", name: "교사", color: "#0F9D76" },
+        { id: "manager", name: "관리자", color: "#A855F7" },
+        { id: "organization", name: "외부기관", color: "#0EA5E9" },
+        { id: "personal", name: "개인", color: "#64748B" }
+      ];
+      const DAILY_STATUS = ["TODO", "IN_PROGRESS", "DONE"];
+      const DAILY_LABEL = { TODO: ["시작전", "status-before"], IN_PROGRESS: ["진행중", "status-progress"], DONE: ["완료", "status-complete"] };
+      const ACTION_STATUS = { before: ["시작 전", "status-before"], progress: ["진행 중", "status-progress"], complete: ["완료", "status-complete"] };
+      const PRIORITY = { low: ["낮음", "priority-low"], normal: ["보통", "priority-normal"], high: ["높음", "priority-high"], urgent: ["긴급", "priority-urgent"] };
+      const PRIORITY_WEIGHT = { urgent: 0, high: 1, normal: 2, low: 3 };
+
+      let state = loadState();
+      let ui = loadUi();
+      let categoryBoard = "daily";
+      let moveContext = null;
+      let confirmCallback = null;
+      let toastTimer = null;
+      let githubTimer = null;
+      let firebaseTimer = null;
+      let suppressRemoteWrite = false;
+      let firebaseDb = null;
+      let firebaseUnsub = null;
+      let firebaseBooted = false;
+      let lastFirebaseSent = 0;
+      const deviceId = localStorage.getItem(DEVICE_KEY) || makeId("device");
+      localStorage.setItem(DEVICE_KEY, deviceId);
+
+      function getTodayString() {
+        const today = new Date();
+        return new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+      }
+      function localDate(value) { return value ? new Date(`${value}T00:00:00`) : null; }
+      function dateDiff(from, to) {
+        if (!from || !to) return null;
+        return Math.round((localDate(to) - localDate(from)) / 86400000);
+      }
+      function formatDate(value) {
+        if (!value) return "미지정";
+        const date = localDate(value);
+        return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, "0")}.${String(date.getDate()).padStart(2, "0")}`;
+      }
+      function makeId(prefix) { return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`; }
+      function escapeHtml(value = "") {
+        return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
+      }
+      function readJson(key) {
+        try { return JSON.parse(localStorage.getItem(key) || "null"); } catch (error) { return null; }
+      }
+      function emptyDaily() { return { categories: DAILY_CATEGORIES.map((item) => ({ ...item })), todos: [] }; }
+      function emptyAction() { return { categories: ACTION_CATEGORIES.map((item) => ({ ...item })), tasks: [] }; }
+
+      // 첫 실행에서만 기존 두 앱의 브라우저 저장값을 각 보드로 이관합니다. 데모 할 일은 새로 넣지 않습니다.
+      function loadState() {
+        const saved = readJson(STORAGE_KEY);
+        if (saved?.daily && saved?.action && Array.isArray(saved.daily.todos) && Array.isArray(saved.action.tasks)) return saved;
+        const legacyAction = readJson(LEGACY_ACTION);
+        const legacyTodos = readJson(LEGACY_TODOS);
+        const legacyCategories = readJson(LEGACY_CATEGORIES);
+        const daily = emptyDaily();
+        const action = emptyAction();
+        if (Array.isArray(legacyCategories) && legacyCategories.length) daily.categories = legacyCategories;
+        if (Array.isArray(legacyTodos)) daily.todos = legacyTodos.filter((item) => item && item.id && !String(item.id).startsWith("todo_demo_"));
+        if (legacyAction && Array.isArray(legacyAction.tasks) && Array.isArray(legacyAction.categories)) {
+          action.categories = legacyAction.categories;
+          action.tasks = legacyAction.tasks;
+        }
+        const migratedAt = Math.max(Number(localStorage.getItem("sync_comm_local_updated") || 0), Number(localStorage.getItem("sync_todo_local_updated") || 0), 0);
+        const next = { daily, action, updatedAt: migratedAt };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+        if (migratedAt) localStorage.setItem(SYNC_KEY_LOCAL, String(migratedAt));
+        return next;
+      }
+      function loadUi() {
+        const saved = readJson(UI_KEY) || {};
+        return {
+          board: saved.board === "action" ? "action" : "daily",
+          month: saved.month || getTodayString().slice(0, 7),
+          selectedDate: saved.selectedDate || getTodayString(),
+          dailyCategory: saved.dailyCategory || "all",
+          dailyStatus: saved.dailyStatus || "ALL",
+          action: saved.action || { view: "active", status: "all", category: "all", person: "all", urgency: "all", search: "", sort: "dueAsc" }
+        };
+      }
+      function saveUi() { localStorage.setItem(UI_KEY, JSON.stringify(ui)); }
+      function saveState() {
+        if (!suppressRemoteWrite) state.updatedAt = Date.now();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        if (!suppressRemoteWrite) {
+          localStorage.setItem(SYNC_KEY_LOCAL, String(state.updatedAt));
+          scheduleGithubPush();
+          scheduleFirebasePush();
+        }
+      }
+      function showToast(message, icon = "fa-circle-check", color = "text-emerald-400") {
+        $("#toastMessage").textContent = message;
+        $("#toast i").className = `fa-solid ${icon} ${color}`;
+        $("#toast").classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => $("#toast").classList.remove("show"), 2800);
+      }
+      function openModal(id) { $(`#${id}`).classList.add("show"); }
+      function closeModal(id) { $(`#${id}`).classList.remove("show"); }
+      function showConfirm(title, message, callback) {
+        $("#confirmTitle").textContent = title;
+        $("#confirmMessage").textContent = message;
+        confirmCallback = callback;
+        openModal("confirmModal");
+      }
+      function boardCategories(board) { return board === "daily" ? state.daily.categories : state.action.categories; }
+      function categoryOf(board, id) {
+        return boardCategories(board).find((item) => item.id === id) || { id: "unknown", name: "기타", color: "#94A3B8" };
+      }
+      function ensureCategory(board, name, color) {
+        const list = boardCategories(board);
+        const found = list.find((item) => item.name === name);
+        if (found) return found.id;
+        const id = makeId(board === "daily" ? "cat" : "category");
+        list.push({ id, name: name || "기타", color: color || "#64748B" });
+        return id;
+      }
+      function optionsHtml(board, selected) {
+        return boardCategories(board).map((item) => `<option value="${escapeHtml(item.id)}" ${item.id === selected ? "selected" : ""}>${escapeHtml(item.name)}</option>`).join("");
+      }
+      function fillCategorySelects() {
+        $("#dailyCategory").innerHTML = optionsHtml("daily");
+        $("#editDailyCategory").innerHTML = optionsHtml("daily");
+        $("#actionCategory").innerHTML = optionsHtml("action");
+        $("#editActionCategory").innerHTML = optionsHtml("action");
+      }
+
+      function setBoard(board) {
+        ui.board = board;
+        saveUi();
+        $("#boardDaily").classList.toggle("hidden", board !== "daily");
+        $("#boardAction").classList.toggle("hidden", board !== "action");
+        document.querySelectorAll(".board-btn").forEach((button) => button.classList.toggle("active", button.dataset.board === board));
+        $("#headerDesc").textContent = board === "daily" ? "선택한 날짜의 할 일을 실행합니다" : "소통으로 생긴 이행 업무를 마감까지 관리합니다";
+        renderAll();
+      }
+
+      function renderAll() {
+        fillCategorySelects();
+        renderDaily();
+        renderAction();
+      }
+
+      function renderDaily() {
+        const monthDate = localDate(`${ui.month}-01`);
+        $("#calendarTitle").textContent = `${monthDate.getFullYear()}년 ${monthDate.getMonth() + 1}월`;
+        const year = monthDate.getFullYear();
+        const month = monthDate.getMonth();
+        const firstDay = new Date(year, month, 1).getDay();
+        const lastDate = new Date(year, month + 1, 0).getDate();
+        const cells = [];
+        for (let i = 0; i < firstDay; i += 1) cells.push(`<button type="button" class="cal-cell rounded-xl text-xs text-slate-300" disabled>${new Date(year, month, -firstDay + i + 1).getDate()}</button>`);
+        for (let day = 1; day <= lastDate; day += 1) {
+          const date = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+          const items = state.daily.todos.filter((item) => item.date === date);
+          const done = items.filter((item) => item.status === "DONE").length;
+          let dot = "bg-transparent";
+          if (items.length) dot = done === items.length ? "bg-emerald-500" : (done || items.some((item) => item.status === "IN_PROGRESS") ? "bg-amber-500" : "bg-slate-300");
+          const weekend = new Date(year, month, day).getDay();
+          const color = weekend === 0 ? "text-rose-500" : weekend === 6 ? "text-blue-500" : "text-slate-700";
+          cells.push(`<button type="button" data-date="${date}" class="cal-cell flex flex-col items-center justify-center rounded-xl text-xs font-semibold hover:bg-violet-50 ${date === ui.selectedDate ? "selected" : color} ${date === getTodayString() ? "today" : ""}"><span>${day}</span><span class="mt-0.5 h-1.5 w-1.5 rounded-full ${date === ui.selectedDate ? "bg-white" : dot}"></span></button>`);
+        }
+        $("#calendarDays").innerHTML = cells.join("");
+        const selected = state.daily.todos.filter((item) => item.date === ui.selectedDate);
+        const visible = selected.filter((item) => ui.dailyCategory === "all" || item.categoryId === ui.dailyCategory);
+        const filtered = visible.filter((item) => ui.dailyStatus === "ALL" || item.status === ui.dailyStatus).sort((a, b) => (a.time || "99:99").localeCompare(b.time || "99:99"));
+        const done = visible.filter((item) => item.status === "DONE").length;
+        const progress = visible.filter((item) => item.status === "IN_PROGRESS").length;
+        const rate = visible.length ? Math.round((done / visible.length) * 100) : 0;
+        const diff = dateDiff(getTodayString(), ui.selectedDate);
+        $("#dailyDateText").textContent = `${formatDate(ui.selectedDate)} ${["일", "월", "화", "수", "목", "금", "토"][localDate(ui.selectedDate).getDay()]}요일`;
+        $("#dailyRelative").textContent = diff === 0 ? "오늘" : diff > 0 ? `${diff}일 후` : `${Math.abs(diff)}일 전`;
+        $("#dailyRate").textContent = `${rate}%`;
+        $("#dailyTotal").textContent = visible.length;
+        $("#dailyProgress").textContent = progress;
+        $("#dailyDone").textContent = done;
+        $("#dailyProgressBar").style.width = `${rate}%`;
+        $("#dailyCheer").classList.toggle("hidden", !(visible.length && rate === 100));
+        $("#dailyCategoryFilters").innerHTML = [`<button type="button" class="filter-btn rounded-full px-3 py-1.5 text-xs ${ui.dailyCategory === "all" ? "active" : ""}" data-daily-category="all">전체</button>`]
+          .concat(state.daily.categories.map((item) => `<button type="button" class="filter-btn rounded-full px-3 py-1.5 text-xs ${ui.dailyCategory === item.id ? "active" : ""}" data-daily-category="${escapeHtml(item.id)}"><i class="mr-1 inline-block h-2 w-2 rounded-full" style="background:${escapeHtml(item.color)}"></i>${escapeHtml(item.name)}</button>`)).join("");
+        $("#dailyStatusFilters").innerHTML = [["ALL", "전체"], ["TODO", "시작전"], ["IN_PROGRESS", "진행중"], ["DONE", "완료"]].map(([value, label]) => `<button type="button" class="filter-btn rounded-xl px-3 py-2 text-sm ${ui.dailyStatus === value ? "active" : ""}" data-daily-status="${value}">${label}</button>`).join("");
+        $("#dailyList").innerHTML = filtered.length ? filtered.map((item) => {
+          const category = categoryOf("daily", item.categoryId);
+          const [label, className] = DAILY_LABEL[item.status] || DAILY_LABEL.TODO;
+          return `<article class="task-card ${item.status === "DONE" ? "completed" : ""} p-4"><div class="flex items-start justify-between gap-3"><div class="min-w-0"><button type="button" class="badge ${className}" data-cycle-daily="${escapeHtml(item.id)}">${label}</button><h3 class="task-title mt-2 font-extrabold">${escapeHtml(item.title)}</h3><p class="mt-1 text-xs text-slate-500"><span class="mr-2 font-bold" style="color:${escapeHtml(category.color)}">${escapeHtml(category.name)}</span>${item.time ? escapeHtml(item.time) : "시간 미정"}</p>${item.memo ? `<p class="task-note mt-2 text-sm text-slate-500">${escapeHtml(item.memo)}</p>` : ""}</div><div class="flex shrink-0 gap-1"><button type="button" class="rounded-lg px-2 py-1 text-slate-400 hover:bg-slate-100" data-edit-daily="${escapeHtml(item.id)}" title="수정"><i class="fa-solid fa-pen"></i></button><button type="button" class="rounded-lg px-2 py-1 text-slate-400 hover:bg-slate-100" data-copy-next="${escapeHtml(item.id)}" title="내일로 옮기기"><i class="fa-solid fa-arrow-right"></i></button><button type="button" class="rounded-lg px-2 py-1 text-violet-500 hover:bg-violet-50" data-move-action="${escapeHtml(item.id)}" title="이행 기록으로 옮기기"><i class="fa-solid fa-right-left"></i></button></div></div></article>`;
+        }).join("") : `<div class="rounded-2xl border border-dashed border-slate-200 p-10 text-center text-sm text-slate-400">등록된 할 일이 없습니다.</div>`;
+        const past = state.daily.todos.filter((item) => item.date < getTodayString() && item.status !== "DONE");
+        $("#rolloverCount").textContent = past.length;
+        if (!$("#rolloverBar").dataset.dismissed) $("#rolloverBar").classList.toggle("hidden", past.length === 0);
+        $("#rolloverBar").classList.toggle("flex", past.length > 0 && !$("#rolloverBar").dataset.dismissed);
+      }
+
+      function taskDueStatus(task) {
+        if (task.status === "complete" || !task.dueDate) return "";
+        const diff = dateDiff(getTodayString(), task.dueDate);
+        if (diff < 0) return "overdue";
+        if (diff <= 3) return "due-soon";
+        return "";
+      }
+      function followupNeeded(task) { return task.status !== "complete" && task.followupDate && dateDiff(task.followupDate, getTodayString()) >= 0; }
+      function dueText(task) {
+        if (!task.dueDate) return ["마감일 미지정", "bg-slate-100 text-slate-500"];
+        const diff = dateDiff(getTodayString(), task.dueDate);
+        if (task.status === "complete") return [`마감 ${formatDate(task.dueDate)}`, "bg-slate-100 text-slate-500"];
+        if (diff < 0) return [`마감 ${Math.abs(diff)}일 초과`, "bg-red-50 text-red-600"];
+        if (diff === 0) return ["오늘 마감", "bg-rose-50 text-rose-600"];
+        return [`마감 D-${diff}`, diff <= 3 ? "bg-amber-50 text-amber-700" : "bg-slate-100 text-slate-600"];
+      }
+      function filteredActions() {
+        const filter = ui.action;
+        return state.action.tasks.filter((task) => {
+          if (filter.view === "active" && task.status === "complete") return false;
+          if (filter.view === "complete" && task.status !== "complete") return false;
+          if (filter.status !== "all" && task.status !== filter.status) return false;
+          if (filter.category !== "all" && task.categoryId !== filter.category) return false;
+          if (filter.person !== "all" && task.person !== filter.person) return false;
+          const keyword = filter.search.trim().toLowerCase();
+          if (keyword && !`${task.person} ${task.title} ${task.note || ""}`.toLowerCase().includes(keyword)) return false;
+          const diff = task.dueDate ? dateDiff(getTodayString(), task.dueDate) : null;
+          if (filter.urgency === "today" && !(task.status !== "complete" && diff === 0)) return false;
+          if (filter.urgency === "soon" && !(task.status !== "complete" && diff !== null && diff >= 0 && diff <= 3)) return false;
+          if (filter.urgency === "overdue" && taskDueStatus(task) !== "overdue") return false;
+          if (filter.urgency === "followup" && !followupNeeded(task)) return false;
+          return true;
+        }).sort((a, b) => {
+          if (filter.sort === "person") return a.person.localeCompare(b.person, "ko");
+          if (filter.sort === "priority") return (PRIORITY_WEIGHT[a.priority] ?? 9) - (PRIORITY_WEIGHT[b.priority] ?? 9);
+          if (filter.sort === "status") return a.status.localeCompare(b.status);
+          if (filter.sort === "createdDesc") return String(b.createdAt || "").localeCompare(String(a.createdAt || ""));
+          if (filter.sort === "firstDesc") return String(b.firstDate || "").localeCompare(String(a.firstDate || ""));
+          if (filter.sort === "followupAsc") return String(a.followupDate || "9999").localeCompare(String(b.followupDate || "9999"));
+          return String(a.dueDate || "9999").localeCompare(String(b.dueDate || "9999"));
+        });
+      }
+      function renderAction() {
+        const active = state.action.tasks.filter((task) => task.status !== "complete");
+        const complete = state.action.tasks.length - active.length;
+        const rate = state.action.tasks.length ? Math.round((complete / state.action.tasks.length) * 100) : 0;
+        $("#actionRate").textContent = `${rate}%`;
+        $("#actionTotalText").textContent = `전체 ${state.action.tasks.length}건`;
+        $("#actionProgressBar").style.width = `${rate}%`;
+        $("#actionTodayText").textContent = `${formatDate(getTodayString())} 기준`;
+        $("#beforeCount").textContent = state.action.tasks.filter((task) => task.status === "before").length;
+        $("#progressCount").textContent = state.action.tasks.filter((task) => task.status === "progress").length;
+        $("#completeCount").textContent = complete;
+        $("#todayDueCount").textContent = active.filter((task) => task.dueDate && dateDiff(getTodayString(), task.dueDate) === 0).length;
+        $("#soonDueCount").textContent = active.filter((task) => task.dueDate && dateDiff(getTodayString(), task.dueDate) >= 0 && dateDiff(getTodayString(), task.dueDate) <= 3).length;
+        $("#overdueCount").textContent = active.filter((task) => taskDueStatus(task) === "overdue").length;
+        $("#followupCount").textContent = active.filter(followupNeeded).length;
+        $("#actionCategoryFilters").innerHTML = [`<button type="button" class="filter-btn rounded-full px-3 py-1.5 text-xs ${ui.action.category === "all" ? "active" : ""}" data-action-category="all">전체</button>`]
+          .concat(state.action.categories.map((item) => `<button type="button" class="filter-btn rounded-full px-3 py-1.5 text-xs ${ui.action.category === item.id ? "active" : ""}" data-action-category="${escapeHtml(item.id)}">${escapeHtml(item.name)}</button>`)).join("");
+        const people = [...new Set(state.action.tasks.map((task) => task.person).filter(Boolean))].sort((a, b) => a.localeCompare(b, "ko"));
+        const keyword = $("#personSearch").value.trim().toLowerCase();
+        $("#personFilters").innerHTML = [`<button type="button" class="filter-btn rounded-full px-3 py-1.5 text-xs ${ui.action.person === "all" ? "active" : ""}" data-person="all">전체</button>`]
+          .concat(people.filter((name) => name.toLowerCase().includes(keyword)).map((name) => `<button type="button" class="filter-btn rounded-full px-3 py-1.5 text-xs ${ui.action.person === name ? "active" : ""}" data-person="${escapeHtml(name)}">${escapeHtml(name)}</button>`)).join("");
+        document.querySelectorAll("[data-view]").forEach((button) => button.classList.toggle("active", button.dataset.view === ui.action.view));
+        document.querySelectorAll("[data-action-status]").forEach((button) => button.classList.toggle("active", button.dataset.actionStatus === ui.action.status));
+        document.querySelectorAll(".urgency-filter").forEach((button) => button.classList.toggle("active", button.dataset.urgency === ui.action.urgency));
+        const names = { all: "전체", active: "진행 업무", complete: "완료 보기", today: "오늘 마감", soon: "3일 이내", overdue: "마감 초과", followup: "후속 확인" };
+        $("#actionFilterText").textContent = `${names[ui.action.view] || "전체"} · ${filteredActions().length}건`;
+        const tasks = filteredActions();
+        $("#actionList").innerHTML = tasks.length ? tasks.map((task) => {
+          const category = categoryOf("action", task.categoryId);
+          const [statusLabel, statusClass] = ACTION_STATUS[task.status] || ACTION_STATUS.before;
+          const [priorityLabel, priorityClass] = PRIORITY[task.priority] || PRIORITY.normal;
+          const [dueLabel, dueClass] = dueText(task);
+          const extra = `${taskDueStatus(task)} ${followupNeeded(task) ? "followup-due" : ""} ${task.status === "complete" ? "completed" : ""}`;
+          return `<article class="task-card ${extra} p-4"><div class="flex items-start gap-3"><button type="button" class="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border ${task.status === "complete" ? "border-emerald-500 bg-emerald-500 text-white" : "border-slate-300"}" data-cycle-action="${escapeHtml(task.id)}"><i class="fa-solid fa-check text-xs"></i></button><div class="min-w-0 flex-1"><div class="flex flex-wrap items-center gap-1.5"><span class="badge ${statusClass}">${statusLabel}</span><span class="badge ${priorityClass}">${priorityLabel}</span><span class="badge ${dueClass}">${dueLabel}</span>${followupNeeded(task) ? `<span class="badge bg-violet-50 text-violet-700">후속 ${formatDate(task.followupDate)}</span>` : ""}</div><h3 class="task-title mt-2 font-extrabold">${escapeHtml(task.title)}</h3><p class="mt-1 text-xs text-slate-500"><span class="mr-1 inline-block h-2 w-2 rounded-full" style="background:${escapeHtml(category.color)}"></span>${escapeHtml(category.name)} · ${escapeHtml(task.person)} · 첫 소통 ${formatDate(task.firstDate)}</p>${task.note ? `<p class="task-note mt-2 text-sm text-slate-500">${escapeHtml(task.note)}</p>` : ""}</div><div class="flex shrink-0 gap-1"><button type="button" class="rounded-lg px-2 py-1 text-slate-400 hover:bg-slate-100" data-edit-action="${escapeHtml(task.id)}"><i class="fa-solid fa-pen"></i></button><button type="button" class="rounded-lg px-2 py-1 text-violet-500 hover:bg-violet-50" data-move-daily="${escapeHtml(task.id)}" title="하루 일정으로 옮기기"><i class="fa-solid fa-right-left"></i></button></div></div></article>`;
+        }).join("") : `<div class="rounded-2xl border border-dashed border-slate-200 p-10 text-center text-sm text-slate-400">조건에 맞는 이행 업무가 없습니다.</div>`;
+      }
+
+      function cycleDaily(id) {
+        const item = state.daily.todos.find((todo) => todo.id === id);
+        if (!item) return;
+        item.status = DAILY_STATUS[(DAILY_STATUS.indexOf(item.status) + 1) % DAILY_STATUS.length];
+        saveState();
+        renderAll();
+      }
+      function cycleAction(id) {
+        const task = state.action.tasks.find((item) => item.id === id);
+        if (!task) return;
+        const order = ["before", "progress", "complete"];
+        task.status = order[(order.indexOf(task.status) + 1) % order.length];
+        task.completedAt = task.status === "complete" ? new Date().toISOString() : null;
+        saveState();
+        renderAll();
+      }
+      function shiftDate(value, days) {
+        const date = localDate(value);
+        date.setDate(date.getDate() + days);
+        return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+      }
+      function moveDailyBy(id, days) {
+        const item = state.daily.todos.find((todo) => todo.id === id);
+        if (!item) return;
+        item.date = shiftDate(item.date, days);
+        item.status = "TODO";
+        ui.selectedDate = item.date;
+        saveUi();
+        saveState();
+        renderAll();
+        showToast("선택한 날짜로 옮겼습니다.");
+      }
+
+      function openMove(direction, id) {
+        moveContext = { direction, id };
+        const toDaily = direction === "toDaily";
+        $("#moveTitle").textContent = toDaily ? "하루 일정으로 옮기기" : "이행 기록으로 옮기기";
+        $("#moveDailyFields").classList.toggle("hidden", !toDaily);
+        $("#moveActionFields").classList.toggle("hidden", toDaily);
+        if (toDaily) {
+          const task = state.action.tasks.find((item) => item.id === id);
+          const category = categoryOf("action", task.categoryId);
+          $("#moveCategory").innerHTML = optionsHtml("daily");
+          $("#moveCategory").value = ensurePreview("daily", category.name);
+          $("#moveTitleInput").value = task.title;
+          $("#moveDate").value = ui.selectedDate || getTodayString();
+          $("#moveTime").value = "";
+          $("#moveMemo").value = [`상대방: ${task.person}`, task.note, task.dueDate ? `마감: ${task.dueDate}` : ""].filter(Boolean).join("\n");
+        } else {
+          const todo = state.daily.todos.find((item) => item.id === id);
+          const category = categoryOf("daily", todo.categoryId);
+          $("#moveCategory").innerHTML = optionsHtml("action");
+          $("#moveCategory").value = ensurePreview("action", category.name);
+          $("#moveTitleInput").value = todo.title;
+          $("#movePerson").value = "";
+          $("#moveFirstDate").value = todo.date || getTodayString();
+          $("#moveDueDate").value = "";
+          $("#movePriority").value = "normal";
+          $("#moveNote").value = [todo.time ? `예정 시간: ${todo.time}` : "", todo.memo].filter(Boolean).join("\n");
+        }
+        openModal("moveModal");
+      }
+      function ensurePreview(board, name) {
+        const found = boardCategories(board).find((item) => item.name === name);
+        if (found) return found.id;
+        return boardCategories(board)[0]?.id || "";
+      }
+      function mapStatusToDaily(status) { return status === "complete" ? "DONE" : status === "progress" ? "IN_PROGRESS" : "TODO"; }
+      function mapStatusToAction(status) { return status === "DONE" ? "complete" : status === "IN_PROGRESS" ? "progress" : "before"; }
+
+      function renderCategoryManager() {
+        $("#categoryManageList").innerHTML = boardCategories(categoryBoard).map((item) => `<div class="flex items-center gap-2 rounded-xl border border-slate-200 p-2"><input type="color" value="${escapeHtml(item.color)}" data-color-id="${escapeHtml(item.id)}" class="h-9 w-10 rounded-lg border-0" /><input value="${escapeHtml(item.name)}" data-name-id="${escapeHtml(item.id)}" class="input-base h-9 px-2 text-sm" /><button type="button" class="rounded-lg px-2 text-rose-500" data-delete-category="${escapeHtml(item.id)}"><i class="fa-solid fa-trash"></i></button></div>`).join("");
+      }
+
+      document.addEventListener("click", (event) => {
+        const dateButton = event.target.closest("[data-date]");
+        if (dateButton) { ui.selectedDate = dateButton.dataset.date; saveUi(); renderDaily(); }
+        const boardButton = event.target.closest("[data-board]");
+        if (boardButton) setBoard(boardButton.dataset.board);
+        const dailyCategory = event.target.closest("[data-daily-category]");
+        if (dailyCategory) { ui.dailyCategory = dailyCategory.dataset.dailyCategory; saveUi(); renderDaily(); }
+        const dailyStatus = event.target.closest("[data-daily-status]");
+        if (dailyStatus) { ui.dailyStatus = dailyStatus.dataset.dailyStatus; saveUi(); renderDaily(); }
+        const cycleDailyButton = event.target.closest("[data-cycle-daily]");
+        if (cycleDailyButton) cycleDaily(cycleDailyButton.dataset.cycleDaily);
+        const editDaily = event.target.closest("[data-edit-daily]");
+        if (editDaily) openDailyEdit(editDaily.dataset.editDaily);
+        const copyNext = event.target.closest("[data-copy-next]");
+        if (copyNext) moveDailyBy(copyNext.dataset.copyNext, 1);
+        const moveAction = event.target.closest("[data-move-action]");
+        if (moveAction) openMove("toAction", moveAction.dataset.moveAction);
+        const moveDaily = event.target.closest("[data-move-daily]");
+        if (moveDaily) openMove("toDaily", moveDaily.dataset.moveDaily);
+        const cycleActionButton = event.target.closest("[data-cycle-action]");
+        if (cycleActionButton) cycleAction(cycleActionButton.dataset.cycleAction);
+        const editAction = event.target.closest("[data-edit-action]");
+        if (editAction) openActionEdit(editAction.dataset.editAction);
+        const actionStatus = event.target.closest("[data-action-status]");
+        if (actionStatus) { ui.action.status = ui.action.status === actionStatus.dataset.actionStatus ? "all" : actionStatus.dataset.actionStatus; saveUi(); renderAction(); }
+        const actionCategory = event.target.closest("[data-action-category]");
+        if (actionCategory) { ui.action.category = actionCategory.dataset.actionCategory; saveUi(); renderAction(); }
+        const person = event.target.closest("[data-person]");
+        if (person) { ui.action.person = person.dataset.person; saveUi(); renderAction(); }
+        const urgency = event.target.closest(".urgency-filter");
+        if (urgency) { ui.action.urgency = ui.action.urgency === urgency.dataset.urgency ? "all" : urgency.dataset.urgency; saveUi(); renderAction(); }
+        const view = event.target.closest("[data-view]");
+        if (view) { ui.action.view = view.dataset.view; saveUi(); renderAction(); }
+        const categoryButton = event.target.closest("[data-category-board]");
+        if (categoryButton) { categoryBoard = categoryButton.dataset.categoryBoard; renderCategoryManager(); openModal("categoryModal"); }
+        const deleteCategory = event.target.closest("[data-delete-category]");
+        if (deleteCategory) deleteCategoryById(deleteCategory.dataset.deleteCategory);
+        const closeButton = event.target.closest("[data-close]");
+        if (closeButton) closeModal(closeButton.dataset.close);
+        if (event.target.classList.contains("modal-backdrop")) event.target.classList.remove("show");
+      });
+      document.addEventListener("input", (event) => {
+        const nameInput = event.target.closest("[data-name-id]");
+        const colorInput = event.target.closest("[data-color-id]");
+        if (!nameInput && !colorInput) return;
+        const id = (nameInput || colorInput).dataset.nameId || (nameInput || colorInput).dataset.colorId;
+        const category = boardCategories(categoryBoard).find((item) => item.id === id);
+        if (!category) return;
+        if (nameInput) category.name = nameInput.value.trim() || category.name;
+        if (colorInput) category.color = colorInput.value;
+        saveState();
+        renderAll();
+        renderCategoryManager();
+      });
+
+      function openDailyEdit(id) {
+        const item = state.daily.todos.find((todo) => todo.id === id);
+        if (!item) return;
+        $("#editDailyId").value = item.id;
+        $("#editDailyDate").value = item.date || "";
+        $("#editDailyCategory").value = item.categoryId;
+        $("#editDailyTitle").value = item.title;
+        $("#editDailyStatus").value = item.status || "TODO";
+        $("#editDailyTime").value = item.time || "";
+        $("#editDailyMemo").value = item.memo || "";
+        openModal("editDailyModal");
+      }
+      function openActionEdit(id) {
+        const task = state.action.tasks.find((item) => item.id === id);
+        if (!task) return;
+        $("#editActionId").value = task.id;
+        $("#editActionCategory").value = task.categoryId;
+        $("#editActionPerson").value = task.person;
+        $("#editActionTitle").value = task.title;
+        $("#editActionFirst").value = task.firstDate || "";
+        $("#editActionDue").value = task.dueDate || "";
+        $("#editActionFollow").value = task.followupDate || "";
+        $("#editActionPriority").value = task.priority || "normal";
+        $("#editActionStatus").value = task.status || "before";
+        $("#editActionNote").value = task.note || "";
+        openModal("editActionModal");
+      }
+      function deleteCategoryById(id) {
+        const used = categoryBoard === "daily" ? state.daily.todos.some((item) => item.categoryId === id) : state.action.tasks.some((item) => item.categoryId === id);
+        if (used) { showToast("사용 중인 분류는 삭제할 수 없습니다.", "fa-circle-exclamation", "text-amber-300"); return; }
+        if (boardCategories(categoryBoard).length <= 1) { showToast("분류는 하나 이상 남겨 주세요.", "fa-circle-exclamation", "text-amber-300"); return; }
+        if (categoryBoard === "daily") state.daily.categories = state.daily.categories.filter((item) => item.id !== id);
+        else state.action.categories = state.action.categories.filter((item) => item.id !== id);
+        saveState();
+        renderAll();
+        renderCategoryManager();
+      }
+
+      $("#dailyForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const title = $("#dailyTitle").value.trim();
+        if (!title) return;
+        state.daily.todos.push({ id: makeId("todo"), title, categoryId: $("#dailyCategory").value, date: ui.selectedDate, status: "TODO", memo: $("#dailyMemo").value.trim(), time: $("#dailyTime").value, createdAt: Date.now() });
+        event.target.reset();
+        $("#dailyDetail").classList.add("hidden");
+        saveState();
+        renderAll();
+        showToast("할 일을 등록했습니다.");
+      });
+      $("#dailyDetailBtn").addEventListener("click", () => {
+        const hidden = $("#dailyDetail").classList.toggle("hidden");
+        $("#dailyDetailBtn").textContent = hidden ? "+ 세부 메모 및 예정 시간 적기" : "- 세부 입력 닫기";
+      });
+      $("#actionForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const person = $("#actionPerson").value.trim();
+        const title = $("#actionTitle").value.trim();
+        if (!person || !title) { showToast("상대방 이름과 이행 업무를 입력해 주세요.", "fa-circle-exclamation", "text-amber-300"); return; }
+        state.action.tasks.unshift({ id: makeId("task"), categoryId: $("#actionCategory").value, person, title, firstDate: $("#actionFirstDate").value || getTodayString(), dueDate: $("#actionDueDate").value, followupDate: $("#actionFollowupDate").value, priority: $("#actionPriority").value || "normal", status: "before", note: $("#actionNote").value.trim(), createdAt: new Date().toISOString(), completedAt: null });
+        event.target.reset();
+        $("#actionPriority").value = "normal";
+        $("#actionFirstDate").value = getTodayString();
+        saveState();
+        renderAll();
+        showToast("새 이행 업무를 등록했습니다.");
+      });
+      $("#actionDetailBtn").addEventListener("click", () => {
+        const hidden = $("#actionDetail").classList.toggle("hidden");
+        $("#actionDetailBtn").textContent = hidden ? "상세 입력 열기" : "상세 입력 닫기";
+      });
+      $("#editDailyForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const item = state.daily.todos.find((todo) => todo.id === $("#editDailyId").value);
+        if (!item) return;
+        item.date = $("#editDailyDate").value;
+        item.categoryId = $("#editDailyCategory").value;
+        item.title = $("#editDailyTitle").value.trim();
+        item.status = $("#editDailyStatus").value;
+        item.time = $("#editDailyTime").value;
+        item.memo = $("#editDailyMemo").value.trim();
+        closeModal("editDailyModal");
+        saveState();
+        renderAll();
+      });
+      $("#editActionForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const task = state.action.tasks.find((item) => item.id === $("#editActionId").value);
+        if (!task || !$("#editActionPerson").value.trim() || !$("#editActionTitle").value.trim()) return;
+        Object.assign(task, { categoryId: $("#editActionCategory").value, person: $("#editActionPerson").value.trim(), title: $("#editActionTitle").value.trim(), firstDate: $("#editActionFirst").value, dueDate: $("#editActionDue").value, followupDate: $("#editActionFollow").value, priority: $("#editActionPriority").value, status: $("#editActionStatus").value, note: $("#editActionNote").value.trim() });
+        task.completedAt = task.status === "complete" ? (task.completedAt || new Date().toISOString()) : null;
+        closeModal("editActionModal");
+        saveState();
+        renderAll();
+      });
+      $("#deleteDailyBtn").addEventListener("click", () => {
+        const id = $("#editDailyId").value;
+        showConfirm("할일을 삭제할까요?", "삭제한 할 일은 복구할 수 없습니다.", () => {
+          state.daily.todos = state.daily.todos.filter((item) => item.id !== id);
+          closeModal("editDailyModal");
+          saveState();
+          renderAll();
+        });
+      });
+      $("#deleteActionBtn").addEventListener("click", () => {
+        const id = $("#editActionId").value;
+        showConfirm("업무를 삭제할까요?", "삭제한 이행 기록은 복구할 수 없습니다.", () => {
+          state.action.tasks = state.action.tasks.filter((item) => item.id !== id);
+          closeModal("editActionModal");
+          saveState();
+          renderAll();
+        });
+      });
+      $("#moveForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!moveContext) return;
+        const title = $("#moveTitleInput").value.trim();
+        if (!title) return;
+        if (moveContext.direction === "toDaily") {
+          const source = state.action.tasks.find((item) => item.id === moveContext.id);
+          if (!source) return;
+          const chosen = state.daily.categories.find((item) => item.id === $("#moveCategory").value);
+          const categoryId = chosen ? chosen.id : ensureCategory("daily", categoryOf("action", source.categoryId).name, categoryOf("action", source.categoryId).color);
+          state.daily.todos.push({ id: makeId("todo"), title, categoryId, date: $("#moveDate").value || getTodayString(), status: mapStatusToDaily(source.status), memo: $("#moveMemo").value.trim(), time: $("#moveTime").value, createdAt: Date.now() });
+          state.action.tasks = state.action.tasks.filter((item) => item.id !== source.id);
+          ui.selectedDate = $("#moveDate").value || ui.selectedDate;
+        } else {
+          const source = state.daily.todos.find((item) => item.id === moveContext.id);
+          const person = $("#movePerson").value.trim();
+          if (!source || !person) { showToast("상대방 이름을 입력해 주세요.", "fa-circle-exclamation", "text-amber-300"); return; }
+          const chosen = state.action.categories.find((item) => item.id === $("#moveCategory").value);
+          const categoryId = chosen ? chosen.id : ensureCategory("action", categoryOf("daily", source.categoryId).name, categoryOf("daily", source.categoryId).color);
+          state.action.tasks.unshift({ id: makeId("task"), categoryId, person, title, firstDate: $("#moveFirstDate").value || source.date, dueDate: $("#moveDueDate").value, followupDate: "", priority: $("#movePriority").value, status: mapStatusToAction(source.status), note: $("#moveNote").value.trim(), createdAt: new Date().toISOString(), completedAt: source.status === "DONE" ? new Date().toISOString() : null });
+          state.daily.todos = state.daily.todos.filter((item) => item.id !== source.id);
+        }
+        closeModal("moveModal");
+        saveUi();
+        saveState();
+        renderAll();
+        showToast("다른 보드로 옮겼습니다.");
+      });
+      $("#addCategoryForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const name = $("#newCategoryName").value.trim();
+        if (!name) return;
+        if (boardCategories(categoryBoard).some((item) => item.name.toLowerCase() === name.toLowerCase())) { showToast("같은 이름의 분류가 있습니다.", "fa-circle-exclamation", "text-amber-300"); return; }
+        boardCategories(categoryBoard).push({ id: makeId(categoryBoard === "daily" ? "cat" : "category"), name, color: $("#newCategoryColor").value });
+        event.target.reset();
+        $("#newCategoryColor").value = "#5b4be5";
+        saveState();
+        renderAll();
+        renderCategoryManager();
+      });
+      $("#prevMonthBtn").addEventListener("click", () => changeMonth(-1));
+      $("#nextMonthBtn").addEventListener("click", () => changeMonth(1));
+      function changeMonth(offset) {
+        const date = localDate(`${ui.month}-01`);
+        date.setMonth(date.getMonth() + offset);
+        ui.month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+        saveUi();
+        renderDaily();
+      }
+      $("#goTodayBtn").addEventListener("click", () => { ui.selectedDate = getTodayString(); ui.month = ui.selectedDate.slice(0, 7); saveUi(); renderDaily(); });
+      $("#actionTodayBtn").addEventListener("click", () => { ui.action.urgency = "today"; ui.action.view = "active"; saveUi(); renderAction(); });
+      $("#resetUrgencyBtn").addEventListener("click", () => { ui.action.urgency = "all"; saveUi(); renderAction(); });
+      $("#copyIncompleteBtn").addEventListener("click", () => {
+        const items = state.daily.todos.filter((item) => item.date === ui.selectedDate && item.status !== "DONE");
+        if (!items.length) { showToast("옮길 미완료 항목이 없습니다.", "fa-circle-info", "text-violet-300"); return; }
+        const next = shiftDate(ui.selectedDate, 1);
+        showConfirm("내일로 옮길까요?", `${items.length}개 항목이 ${next}로 이동하고, 오늘 목록에서는 빠집니다.`, () => {
+          items.forEach((item) => { item.date = next; item.status = "TODO"; });
+          ui.selectedDate = next;
+          ui.month = next.slice(0, 7);
+          saveUi();
+          saveState();
+          renderAll();
+        });
+      });
+      $("#carryOverBtn").addEventListener("click", () => {
+        const today = getTodayString();
+        state.daily.todos.filter((item) => item.date < today && item.status !== "DONE").forEach((item) => {
+          if (!state.daily.todos.some((todo) => todo.date === today && todo.title === item.title)) item.date = today;
+        });
+        ui.selectedDate = today;
+        ui.month = today.slice(0, 7);
+        $("#rolloverBar").dataset.dismissed = "1";
+        saveUi();
+        saveState();
+        renderAll();
+        showToast("과거 미완료 항목을 오늘로 가져왔습니다.");
+      });
+      $("#dismissRolloverBtn").addEventListener("click", () => { $("#rolloverBar").dataset.dismissed = "1"; $("#rolloverBar").classList.add("hidden"); });
+      $("#personSearch").addEventListener("input", renderAction);
+      $("#actionSearch").addEventListener("input", () => { ui.action.search = $("#actionSearch").value; renderAction(); });
+      $("#actionSort").addEventListener("change", () => { ui.action.sort = $("#actionSort").value; saveUi(); renderAction(); });
+      $("#confirmCancelBtn").addEventListener("click", () => { confirmCallback = null; closeModal("confirmModal"); });
+      $("#confirmActionBtn").addEventListener("click", () => { const callback = confirmCallback; confirmCallback = null; closeModal("confirmModal"); if (callback) callback(); });
+
+      function getSyncToken() { return localStorage.getItem(SYNC_KEY_TOKEN) || ""; }
+      function isAutoUpload() { return localStorage.getItem(SYNC_KEY_AUTO) === "true"; }
+      function getFirebaseSettings() { return readJson(FIREBASE_KEY) || { enabled: false, passphrase: "", raw: "", config: null }; }
+      function utf8ToBase64(value) {
+        const bytes = new TextEncoder().encode(value);
+        let binary = "";
+        for (let index = 0; index < bytes.length; index += 0x8000) binary += String.fromCharCode(...bytes.subarray(index, index + 0x8000));
+        return btoa(binary);
+      }
+      function buildSyncData() {
+        return { version: "1.0", appName: "통합 일정 관리", exportedAt: new Date(state.updatedAt || Date.now()).toISOString(), updatedAt: state.updatedAt || Date.now(), daily: state.daily, action: state.action };
+      }
+      function stampOf(parsed) { return Number(parsed?.updatedAt || (parsed?.exportedAt ? new Date(parsed.exportedAt).getTime() : 0)); }
+      function unwrapUnified(parsed) {
+        if (!parsed?.daily || !parsed?.action || !Array.isArray(parsed.daily.todos) || !Array.isArray(parsed.action.tasks)) return null;
+        return { daily: parsed.daily, action: parsed.action, time: stampOf(parsed), source: "planner-backup.json" };
+      }
+      function unwrapAction(parsed) {
+        const data = parsed?.data || parsed;
+        if (!data || !Array.isArray(data.tasks) || !Array.isArray(data.categories)) return null;
+        return { categories: data.categories, tasks: data.tasks, time: stampOf(parsed) };
+      }
+      function unwrapDaily(parsed) {
+        if (!parsed || !Array.isArray(parsed.todos) || !Array.isArray(parsed.categories)) return null;
+        return { categories: parsed.categories, todos: parsed.todos.filter((item) => item && !String(item.id || "").startsWith("todo_demo_")), time: stampOf(parsed) };
+      }
+      async function fetchJson(url) {
+        const response = await fetch(`${url}?t=${Date.now()}`);
+        if (!response.ok) return null;
+        return response.json();
+      }
+      // planner 파일이 없을 때만 기존 두 JSON을 읽어 하나의 후보로 합칩니다.
+      async function fetchGithubCandidate() {
+        const planner = unwrapUnified(await fetchJson(PLANNER_URL));
+        if (planner) return planner;
+        const [action, daily] = await Promise.all([fetchJson(COMM_URL).then(unwrapAction), fetchJson(TODO_URL).then(unwrapDaily)]);
+        if (!action && !daily) return null;
+        const base = buildSyncData();
+        return {
+          source: "기존 comm-backup.json / todo-backup.json",
+          time: Math.max(action?.time || 0, daily?.time || 0),
+          daily: daily ? { categories: daily.categories, todos: daily.todos } : base.daily,
+          action: action ? { categories: action.categories, tasks: action.tasks } : base.action
+        };
+      }
+      function applyRemote(payload, time, origin) {
+        suppressRemoteWrite = true;
+        try {
+          state = { daily: payload.daily, action: payload.action, updatedAt: time || Date.now() };
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          localStorage.setItem(SYNC_KEY_LOCAL, String(state.updatedAt));
+          renderAll();
+        } finally {
+          suppressRemoteWrite = false;
+        }
+        if (origin === "firebase" && isAutoUpload() && getSyncToken()) pushToGitHub(true);
+        if (origin === "github" && getFirebaseSettings().enabled) pushFirebase(true);
+      }
+      async function pushToGitHub(silent) {
+        const token = getSyncToken();
+        if (!token) { if (!silent) showToast("동기화 설정에서 토큰을 먼저 입력하세요.", "fa-circle-exclamation", "text-amber-300"); return false; }
+        const apiUrl = `https://api.github.com/repos/${GITHUB_SYNC.owner}/${GITHUB_SYNC.repo}/contents/${GITHUB_SYNC.path}`;
+        const headers = { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json" };
+        try {
+          if (!silent) showToast("GitHub에 업로드 중...", "fa-cloud-arrow-up", "text-violet-300");
+          let sha = null;
+          const getResponse = await fetch(`${apiUrl}?ref=${GITHUB_SYNC.branch}`, { headers });
+          if (getResponse.ok) sha = (await getResponse.json()).sha;
+          else if (getResponse.status !== 404) throw new Error(String(getResponse.status));
+          const putResponse = await fetch(apiUrl, { method: "PUT", headers, body: JSON.stringify({ message: `통합 일정 동기화 - ${new Date().toLocaleString("ko-KR")}`, content: utf8ToBase64(JSON.stringify(buildSyncData(), null, 2)), branch: GITHUB_SYNC.branch, ...(sha ? { sha } : {}) }) });
+          if (!putResponse.ok) {
+            if (!silent) showToast(putResponse.status === 409 ? "서버 파일이 방금 바뀌었습니다. 동기화 후 다시 업로드하세요." : `업로드 실패 (${putResponse.status})`, "fa-circle-exclamation", "text-rose-300");
+            return false;
+          }
+          localStorage.setItem(SYNC_KEY_LAST, String(Date.now()));
+          updateSyncStatusText();
+          if (!silent) showToast("GitHub 업로드를 완료했습니다.");
+          return true;
+        } catch (error) {
+          if (!silent) showToast("업로드 실패: 인터넷 연결을 확인하세요.", "fa-circle-exclamation", "text-rose-300");
+          return false;
+        }
+      }
+      function scheduleGithubPush() {
+        if (!isAutoUpload()) return;
+        clearTimeout(githubTimer);
+        githubTimer = setTimeout(() => pushToGitHub(true), 5000);
+      }
+      async function chooseRemote() {
+        const github = await fetchGithubCandidate();
+        let best = github;
+        if (firebaseDb && currentRoom()) {
+          const snap = await firebaseDb.collection("plannerRooms").doc(currentRoom()).get();
+          if (snap.exists) {
+            const remote = snap.data();
+            const payload = remote.payload;
+            if (payload?.daily && payload?.action && (remote.updatedAt || 0) > (best?.time || 0)) best = { ...payload, time: remote.updatedAt, source: "Firebase" };
+          }
+        }
+        return best;
+      }
+      async function loadFromServer() {
+        try {
+          showToast("서버 데이터를 확인하는 중...", "fa-cloud-arrow-down", "text-violet-300");
+          const remote = await chooseRemote();
+          if (!remote) { showToast("가져올 백업이 없습니다. 먼저 업로드하면 planner-backup.json이 만들어집니다.", "fa-circle-exclamation", "text-amber-300"); return; }
+          const when = remote.time ? new Date(remote.time).toLocaleString("ko-KR") : "시점 미상";
+          showConfirm("서버 데이터로 교체", `${remote.source} (${when}) 데이터로 이 기기를 교체할까요?`, () => {
+            applyRemote(remote, remote.time, remote.source === "Firebase" ? "firebase" : "github");
+            showToast("서버 데이터를 가져왔습니다.");
+          });
+        } catch (error) {
+          showToast("동기화 실패: 인터넷 연결을 확인하세요.", "fa-circle-exclamation", "text-rose-300");
+        }
+      }
+      async function autoSyncOnStart() {
+        try {
+          const remote = await fetchGithubCandidate();
+          if (!remote) return;
+          const localTime = Number(state.updatedAt || localStorage.getItem(SYNC_KEY_LOCAL) || 0);
+          if (remote.time > localTime) {
+            showConfirm("최신 데이터 가져오기", `${remote.source}에 더 최신 데이터가 있습니다. 이 기기로 가져올까요?`, () => applyRemote(remote, remote.time, "github"));
+          } else if (localTime > remote.time && isAutoUpload() && getSyncToken()) {
+            pushToGitHub(true);
+          }
+        } catch (error) {
+          console.error("시작 동기화 오류", error);
+        }
+      }
+      function updateSyncStatusText() {
+        const last = Number(localStorage.getItem(SYNC_KEY_LAST) || 0);
+        $("#syncStatusText").textContent = last ? `마지막 업로드: ${new Date(last).toLocaleString("ko-KR")}` : "마지막 업로드: 기록 없음";
+      }
+      function parseFirebaseConfig(text) {
+        const pick = (key) => (text.match(new RegExp(key + "\\s*[:=]\\s*[\"']([^\"']+)[\"']")) || [])[1] || "";
+        const config = { apiKey: pick("apiKey"), authDomain: pick("authDomain"), projectId: pick("projectId"), storageBucket: pick("storageBucket"), messagingSenderId: pick("messagingSenderId"), appId: pick("appId") };
+        if (!config.apiKey || !config.authDomain || !config.projectId || !config.appId) return null;
+        if (!config.storageBucket) delete config.storageBucket;
+        if (!config.messagingSenderId) delete config.messagingSenderId;
+        return config;
+      }
+      let roomCache = "";
+      function currentRoom() { return roomCache; }
+      async function roomId(passphrase) {
+        const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`planner:${passphrase.trim()}`));
+        return Array.from(new Uint8Array(digest)).map((byte) => byte.toString(16).padStart(2, "0")).join("").slice(0, 32);
+      }
+      function loadFirebaseSdk() {
+        if (window.firebase?.firestore) return Promise.resolve();
+        const urls = ["https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js", "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js", "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"];
+        return urls.reduce((chain, url) => chain.then(() => new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src = url;
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        })), Promise.resolve());
+      }
+      function setFirebaseStatus(message) { $("#firebaseStatusText").textContent = message; }
+      async function disconnectFirebase() {
+        if (firebaseUnsub) firebaseUnsub();
+        firebaseUnsub = null;
+        firebaseDb = null;
+        firebaseBooted = false;
+        roomCache = "";
+      }
+      async function pushFirebase(silent) {
+        if (suppressRemoteWrite || !firebaseDb || !currentRoom()) return false;
+        try {
+          lastFirebaseSent = state.updatedAt || Date.now();
+          await firebaseDb.collection("plannerRooms").doc(currentRoom()).set({ updatedAt: lastFirebaseSent, deviceId, payload: { daily: state.daily, action: state.action } });
+          if (!silent) showToast("Firebase에 업로드했습니다.");
+          setFirebaseStatus("실시간 연결됨");
+          return true;
+        } catch (error) {
+          if (!silent) showToast("Firebase 업로드에 실패했습니다. 규칙과 익명 로그인을 확인해 주세요.", "fa-circle-exclamation", "text-rose-300");
+          return false;
+        }
+      }
+      function scheduleFirebasePush() {
+        if (!getFirebaseSettings().enabled || !firebaseDb) return;
+        clearTimeout(firebaseTimer);
+        firebaseTimer = setTimeout(() => pushFirebase(true), 1200);
+      }
+      async function connectFirebase(silent) {
+        const settings = getFirebaseSettings();
+        if (!settings.enabled) { await disconnectFirebase(); setFirebaseStatus("Firebase: 사용 안 함"); return; }
+        if (!settings.config || !settings.passphrase) { if (!silent) showToast("Firebase 구성값과 공유 암호를 입력해 주세요.", "fa-circle-exclamation", "text-amber-300"); return; }
+        try {
+          await loadFirebaseSdk();
+          await disconnectFirebase();
+          if (firebase.apps.length) await firebase.app().delete();
+          firebase.initializeApp(settings.config);
+          await firebase.auth().signInAnonymously();
+          firebaseDb = firebase.firestore();
+          roomCache = await roomId(settings.passphrase);
+          firebaseBooted = false;
+          firebaseUnsub = firebaseDb.collection("plannerRooms").doc(roomCache).onSnapshot((snap) => {
+            if (!snap.exists) { if (!firebaseBooted) { firebaseBooted = true; pushFirebase(true); } return; }
+            const remote = snap.data();
+            const incoming = Number(remote.updatedAt || 0);
+            if (!firebaseBooted) {
+              firebaseBooted = true;
+              if (incoming > (state.updatedAt || 0)) applyRemote(remote.payload, incoming, "firebase");
+              else pushFirebase(true);
+              setFirebaseStatus("실시간 연결됨");
+              return;
+            }
+            if (remote.deviceId === deviceId && incoming === lastFirebaseSent) return;
+            if (incoming <= (state.updatedAt || 0)) return;
+            applyRemote(remote.payload, incoming, "firebase");
+            showToast("다른 기기의 변경을 반영했습니다.", "fa-bolt", "text-violet-300");
+          }, () => setFirebaseStatus("Firebase 연결 실패: 규칙 또는 네트워크를 확인하세요."));
+        } catch (error) {
+          const code = error?.code || "";
+          setFirebaseStatus(code.includes("operation-not-allowed") ? "익명 로그인이 꺼져 있습니다." : "Firebase 연결에 실패했습니다.");
+          if (!silent) showToast("Firebase 연결에 실패했습니다.", "fa-circle-exclamation", "text-rose-300");
+        }
+      }
+
+      function openSyncModal() {
+        const settings = getFirebaseSettings();
+        $("#syncTokenInput").value = getSyncToken();
+        $("#syncAutoInput").checked = isAutoUpload();
+        $("#firebaseEnabledInput").checked = !!settings.enabled;
+        $("#firebasePassInput").value = settings.passphrase || "";
+        $("#firebaseConfigInput").value = settings.raw || "";
+        updateSyncStatusText();
+        openModal("syncModal");
+      }
+      async function saveSyncSettings() {
+        localStorage.setItem(SYNC_KEY_TOKEN, $("#syncTokenInput").value.trim());
+        localStorage.setItem(SYNC_KEY_AUTO, String($("#syncAutoInput").checked));
+        const enabled = $("#firebaseEnabledInput").checked;
+        const raw = $("#firebaseConfigInput").value.trim();
+        const config = raw ? parseFirebaseConfig(raw) : null;
+        if (enabled && (!config || !$("#firebasePassInput").value.trim())) {
+          showToast("Firebase를 켜려면 구성값과 공유 암호가 필요합니다.", "fa-circle-exclamation", "text-amber-300");
+          return;
+        }
+        localStorage.setItem(FIREBASE_KEY, JSON.stringify({ enabled, passphrase: $("#firebasePassInput").value.trim(), raw, config }));
+        closeModal("syncModal");
+        showToast("동기화 설정을 저장했습니다.");
+        await connectFirebase(false);
+        if (getSyncToken() && isAutoUpload()) pushToGitHub(false);
+      }
+      $("#backupBtn").addEventListener("click", () => {
+        const blob = new Blob([JSON.stringify(buildSyncData(), null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `통합일정_백업_${getTodayString().replaceAll("-", "")}.json`;
+        link.click();
+        URL.revokeObjectURL(url);
+        showToast("백업 파일을 저장했습니다.");
+      });
+      $("#restoreInput").addEventListener("change", (event) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const parsed = JSON.parse(reader.result);
+            const unified = unwrapUnified(parsed);
+            const action = unwrapAction(parsed);
+            const daily = unwrapDaily(parsed);
+            if (!unified && !action && !daily) throw new Error("형식 오류");
+            showConfirm("백업을 복원할까요?", unified ? "두 보드가 모두 백업 내용으로 바뀝니다." : "인식한 보드만 바뀌고 다른 보드는 유지됩니다.", () => {
+              if (unified) state = { daily: unified.daily, action: unified.action, updatedAt: Date.now() };
+              else {
+                if (action) state.action = { categories: action.categories, tasks: action.tasks };
+                if (daily) state.daily = { categories: daily.categories, todos: daily.todos };
+                state.updatedAt = Date.now();
+              }
+              saveState();
+              renderAll();
+              showToast("백업을 복원했습니다.");
+            });
+          } catch (error) {
+            showToast("복원할 수 없는 파일입니다.", "fa-circle-exclamation", "text-rose-300");
+          }
+        };
+        reader.readAsText(file);
+        event.target.value = "";
+      });
+      $("#syncPullBtn").addEventListener("click", loadFromServer);
+      $("#syncPushBtn").addEventListener("click", async () => {
+        const githubOk = await pushToGitHub(false);
+        if (getFirebaseSettings().enabled) await pushFirebase(false);
+        if (!githubOk && !getFirebaseSettings().enabled) return;
+      });
+      $("#syncSettingsBtn").addEventListener("click", openSyncModal);
+      $("#syncSaveBtn").addEventListener("click", saveSyncSettings);
+
+      $("#actionFirstDate").value = getTodayString();
+      $("#actionSort").value = ui.action.sort;
+      setBoard(ui.board);
+      updateSyncStatusText();
+      autoSyncOnStart();
+      if (getFirebaseSettings().enabled) connectFirebase(true);
+    });
+  </script>
+</body>
+</html>
