@@ -1,6 +1,6 @@
 {
   "app": "fineman2-1",
-  "exportedAt": "2026-10-16T11:04:20.358Z",
+  "exportedAt": "2026-10-16T12:48:06.542Z",
   "version": 5,
   "data": {
     "students": [
@@ -274,7 +274,7 @@
         "followUp": {
           "task": "가례재현 기간까지 그 사이 발생한 수행평가 중간 체크 한번 더 예정",
           "date": "2026-10-16",
-          "done": false
+          "done": true
         },
         "createdAt": "2026-10-11T02:57:49.890Z"
       },
