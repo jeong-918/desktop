@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-17T06:00:58.512Z",
+  "exportedAt": "2026-10-17T06:02:07.789Z",
   "version": 3,
   "data": {
     "students": [
@@ -4126,7 +4126,7 @@
           "time": ""
         },
         "2026-10-16": {
-          "status": "미입실(학원)",
+          "status": "입실",
           "time": ""
         }
       },
@@ -8826,6 +8826,30 @@
         "start": "19:30",
         "end": "20:00",
         "minutes": 30,
+        "note": ""
+      },
+      {
+        "id": "log_mvbzo9cpwww7",
+        "studentId": "stu_16",
+        "date": "2026-10-16",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "17:00",
+        "end": "18:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvbzojlsirxk",
+        "studentId": "stu_16",
+        "date": "2026-10-16",
+        "subject": "수학",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "20:45",
+        "end": "22:00",
+        "minutes": 75,
         "note": ""
       }
     ],
