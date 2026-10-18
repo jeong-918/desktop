@@ -1,6 +1,6 @@
 {
   "app": "fineman2-1",
-  "exportedAt": "2026-10-16T12:48:06.542Z",
+  "exportedAt": "2026-10-18T04:29:49.973Z",
   "version": 5,
   "data": {
     "students": [
@@ -88,7 +88,7 @@
         "followUp": {
           "task": "진로심화스터디 건은 10월 중하순에 한번 더 체크",
           "date": "2026-10-17",
-          "done": false
+          "done": true
         },
         "createdAt": "2026-10-13T11:10:34.618Z"
       },
