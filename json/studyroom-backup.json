@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-18T06:27:11.883Z",
+  "exportedAt": "2026-10-18T06:28:26.241Z",
   "version": 3,
   "data": {
     "students": [
@@ -9086,6 +9086,42 @@
         "start": "10:00",
         "end": "12:00",
         "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mvdg0xcn3nmk",
+        "studentId": "stu_20",
+        "date": "2026-10-17",
+        "subject": "사회",
+        "type": "기타학습",
+        "eval": "학습완료",
+        "start": "13:00",
+        "end": "17:00",
+        "minutes": 240,
+        "note": ""
+      },
+      {
+        "id": "log_mvdg1tg6rxzf",
+        "studentId": "stu_11",
+        "date": "2026-10-17",
+        "subject": "사회",
+        "type": "기타학습",
+        "eval": "학습완료",
+        "start": "19:00",
+        "end": "20:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvdg28dmm86m",
+        "studentId": "stu_11",
+        "date": "2026-10-17",
+        "subject": "과학",
+        "type": "기타학습",
+        "eval": "학습완료",
+        "start": "20:00",
+        "end": "21:00",
+        "minutes": 60,
         "note": ""
       }
     ],
