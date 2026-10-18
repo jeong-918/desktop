@@ -9,6 +9,10 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -28,7 +32,16 @@
     .view.active { display: block; }
     .nav-btn.active { background: #c9a227; color: #14213d; }
     .sch-input { width: 4.6rem; text-align: center; font-size: 12px; }
+    .sch-input:focus { outline: 2px solid #c9a227; outline-offset: -1px; background: #fffbeb; }
     .sticky-col { position: sticky; left: 0; background: #fff; z-index: 2; }
+    .sch-scroll { max-height: calc(100vh - 230px); overflow: auto; }
+    .sch-scroll thead th { position: sticky; top: 0; z-index: 3; }
+    .sch-scroll .sticky-col { z-index: 4; }
+    .sch-scroll thead .sticky-col { z-index: 5; background: #14213d; }
+    .sch-fit { width: 100%; table-layout: fixed; }
+    .sch-fit .sch-input { width: 100%; min-width: 0; font-size: 11px; padding: 2px; }
+    .consult-box { min-height: 180px; }
+    .break-inside-avoid { break-inside: avoid; page-break-inside: avoid; }
     .chart-box { position: relative; height: 240px; }
     .chart-box.sm { height: 180px; }
     .chart-box.lg { height: 280px; }
@@ -52,13 +65,13 @@
 </head>
 <body class="min-h-screen text-slate-800">
   <div class="flex min-h-screen">
-    <aside class="no-print w-64 shrink-0 bg-navy-900 text-white flex flex-col">
+    <aside class="no-print w-64 shrink-0 bg-navy-900 text-white flex flex-col h-screen sticky top-0">
       <div class="px-5 py-6 border-b border-white/10">
         <p class="text-gold text-xs tracking-widest font-semibold">ACADEMY SUITE</p>
         <h1 class="text-lg font-bold mt-1 leading-snug">학습관리 통합 시스템</h1>
         <p class="text-white/60 text-xs mt-2" id="today-label"></p>
       </div>
-      <nav class="flex-1 p-3 space-y-1 text-sm" id="side-nav"></nav>
+      <nav class="flex-1 min-h-0 p-3 space-y-1 text-sm overflow-y-auto" id="side-nav"></nav>
       <div class="p-4 border-t border-white/10 space-y-2 text-xs">
         <button id="btn-export" class="w-full bg-white/10 hover:bg-white/20 rounded-lg py-2 transition"><i class="fa-solid fa-download mr-1"></i>데이터 백업</button>
         <label class="w-full bg-white/10 hover:bg-white/20 rounded-lg py-2 transition block text-center cursor-pointer">
@@ -67,7 +80,7 @@
         </label>
         <button id="btn-sync-pull" class="w-full bg-white/10 hover:bg-white/20 rounded-lg py-2 transition" title="GitHub 서버 백업으로 이 기기 데이터 교체"><i class="fa-solid fa-cloud-arrow-down mr-1"></i>서버 동기화</button>
         <button id="btn-sync-push" class="w-full bg-white/10 hover:bg-white/20 rounded-lg py-2 transition" title="지금 GitHub(json/studyroom-backup.json)에 업로드"><i class="fa-solid fa-cloud-arrow-up mr-1"></i>서버 업로드</button>
-        <button id="btn-sync-settings" class="w-full bg-white/10 hover:bg-white/20 rounded-lg py-2 transition" title="GitHub 자동 동기화 설정"><i class="fa-solid fa-gear mr-1"></i>자동동기화 설정</button>
+        <button id="btn-sync-settings" class="w-full bg-white/10 hover:bg-white/20 rounded-lg py-2 transition" title="GitHub 유지 + Firebase 추가"><i class="fa-solid fa-gear mr-1"></i>자동동기화 설정</button>
       </div>
     </aside>
 
@@ -77,7 +90,7 @@
           <h2 id="view-title" class="text-xl font-bold text-navy-900">대시보드</h2>
           <p id="view-sub" class="text-sm text-slate-500">선택 날짜의 업무와 전날 미확인 건을 확인합니다.</p>
         </div>
-        <div class="flex items-center gap-2">
+        <div id="date-nav" class="flex items-center gap-2">
           <button id="btn-prev" class="h-9 w-9 rounded-lg border hover:bg-slate-50"><i class="fa-solid fa-chevron-left"></i></button>
           <input id="anchor-date" type="date" class="border rounded-lg px-3 py-1.5 text-sm" />
           <button id="btn-next" class="h-9 w-9 rounded-lg border hover:bg-slate-50"><i class="fa-solid fa-chevron-right"></i></button>
@@ -93,26 +106,64 @@
         <section class="view" id="view-week-report"></section>
         <section class="view" id="view-month-report"></section>
         <section class="view" id="view-counsel"></section>
+        <section class="view" id="view-consult-log"></section>
         <section class="view" id="view-requests"></section>
         <section class="view" id="view-work"></section>
         <section class="view" id="view-stats"></section>
       </div>
     </main>
   </div>
-  <!-- GitHub 자동 동기화 설정 모달 -->
+  <!-- GitHub + Firebase 동기화 설정 -->
   <div id="sync-modal" class="hidden fixed inset-0 z-[100] items-center justify-center p-4 no-print" style="background:rgba(15,23,42,.55);">
-    <div class="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl">
+    <div class="bg-white rounded-2xl w-full max-w-2xl p-6 shadow-2xl max-h-[92vh] overflow-y-auto">
       <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-bold text-slate-900">GitHub 자동 동기화 설정</h3>
+        <h3 class="text-lg font-bold text-slate-900">자동동기화 설정</h3>
         <button id="sync-modal-close" class="text-slate-400 hover:text-slate-700 text-xl leading-none">&times;</button>
       </div>
-      <label class="block text-xs font-bold text-slate-600 mb-1.5">Access Token (fine-grained)</label>
-      <input id="sync-token-input" type="password" placeholder="github_pat_..." class="w-full border rounded-lg px-3 py-2.5 text-sm mb-1.5" />
-      <p class="text-[11px] text-slate-400 leading-5 mb-4">기존에 발급받은 desktop 저장소용 토큰을 그대로 사용하세요. 새로 발급받을 필요 없으며, 토큰은 이 기기 브라우저에만 저장됩니다.</p>
-      <label class="flex items-center gap-2.5 bg-slate-50 border rounded-xl p-3 text-sm cursor-pointer mb-3">
-        <input id="sync-auto-input" type="checkbox" class="w-4 h-4" />
-        <span class="font-semibold text-slate-700">자동 백업 켜기 (수정 후 5초 뒤 자동 업로드)</span>
-      </label>
+      <div class="border rounded-xl p-4 mb-4">
+        <p class="text-sm font-bold text-navy-900 mb-3"><i class="fa-brands fa-github mr-1"></i>GitHub 동기화 (기존 유지)</p>
+        <label class="block text-xs font-bold text-slate-600 mb-1.5">Access Token (fine-grained)</label>
+        <input id="sync-token-input" type="password" placeholder="github_pat_..." class="w-full border rounded-lg px-3 py-2.5 text-sm mb-1.5" />
+        <p class="text-[11px] text-slate-400 leading-5 mb-3">기존 desktop 저장소용 토큰을 그대로 사용하세요. 토큰은 이 기기 브라우저에만 저장됩니다. 왼쪽의 서버 동기화·서버 업로드는 이전과 같이 GitHub만 다룹니다.</p>
+        <label class="flex items-center gap-2.5 bg-slate-50 border rounded-xl p-3 text-sm cursor-pointer">
+          <input id="sync-auto-input" type="checkbox" class="w-4 h-4" />
+          <span class="font-semibold text-slate-700">GitHub 자동 백업 (수정 후 5초 뒤 업로드)</span>
+        </label>
+      </div>
+      <div class="border rounded-xl p-4 mb-4">
+        <p class="text-sm font-bold text-navy-900 mb-1"><i class="fa-solid fa-fire mr-1 text-amber-500"></i>Firebase 동기화 (추가)</p>
+        <p class="text-[11px] text-slate-500 leading-5 mb-3">아직 가입 전이어도 앱은 그대로 동작합니다. 프로젝트 생성 후 값만 넣으면 GitHub과 별도로 Realtime Database에 동기화됩니다. 이 설정은 백업 파일에 포함되지 않고 이 브라우저에만 저장됩니다.</p>
+        <label class="flex items-center gap-2.5 bg-amber-50 border border-amber-100 rounded-xl p-3 text-sm cursor-pointer mb-3">
+          <input id="fb-enabled-input" type="checkbox" class="w-4 h-4" />
+          <span class="font-semibold text-slate-700">Firebase 동기화 사용</span>
+        </label>
+        <div class="grid sm:grid-cols-2 gap-2 mb-2">
+          <label class="text-xs text-slate-600">apiKey<input id="fb-api-key" class="border rounded-lg px-2 py-2 text-sm block w-full mt-1" placeholder="AIza..." /></label>
+          <label class="text-xs text-slate-600">projectId<input id="fb-project-id" class="border rounded-lg px-2 py-2 text-sm block w-full mt-1" placeholder="my-project" /></label>
+          <label class="text-xs text-slate-600 sm:col-span-2">databaseURL<input id="fb-database-url" class="border rounded-lg px-2 py-2 text-sm block w-full mt-1" placeholder="https://my-project-default-rtdb.asia-southeast1.firebasedatabase.app" /></label>
+          <label class="text-xs text-slate-600">authDomain (선택)<input id="fb-auth-domain" class="border rounded-lg px-2 py-2 text-sm block w-full mt-1" placeholder="my-project.firebaseapp.com" /></label>
+          <label class="text-xs text-slate-600">appId (선택)<input id="fb-app-id" class="border rounded-lg px-2 py-2 text-sm block w-full mt-1" placeholder="1:....:web:...." /></label>
+        </div>
+        <label class="flex items-center gap-2 text-sm mb-2"><input id="fb-anon-input" type="checkbox" class="w-4 h-4" checked /> <span>익명 로그인 사용 (Authentication에서 Anonymous를 켜 두세요)</span></label>
+        <label class="flex items-center gap-2.5 bg-slate-50 border rounded-xl p-3 text-sm cursor-pointer mb-3">
+          <input id="fb-auto-input" type="checkbox" class="w-4 h-4" />
+          <span class="font-semibold text-slate-700">Firebase 자동 백업 (수정 후 5초 뒤 업로드)</span>
+        </label>
+        <div class="flex flex-wrap gap-2 mb-3">
+          <button id="fb-test-btn" type="button" class="text-sm border rounded-lg px-3 py-2 hover:bg-slate-50">연결 테스트</button>
+          <button id="fb-push-btn" type="button" class="text-sm bg-amber-500 text-white rounded-lg px-3 py-2 hover:bg-amber-600">Firebase 업로드</button>
+          <button id="fb-pull-btn" type="button" class="text-sm bg-navy-900 text-white rounded-lg px-3 py-2">Firebase 가져오기</button>
+        </div>
+        <pre class="text-[10px] bg-slate-900 text-slate-100 rounded-lg p-3 overflow-auto leading-4">Realtime Database 규칙 예시
+{
+  "rules": {
+    "studyroom": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    }
+  }
+}</pre>
+      </div>
       <p id="sync-status-text" class="text-xs text-slate-500 bg-slate-50 rounded-lg px-3 py-2 mb-5">마지막 업로드: 기록 없음</p>
       <div class="flex justify-end gap-2">
         <button id="sync-cancel-btn" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold">닫기</button>
@@ -129,13 +180,13 @@
       const MAX_STUDENTS = 20;
       const DAYS = ["월", "화", "수", "목", "금", "토", "일"];
       const HOURS = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
-      const SUBJECTS = ["국어", "수학", "영어", "과학", "사회", "기타"];
+      const SUBJECTS = ["국어", "수학", "영어", "한국사", "사회", "과학", "물리", "화학", "생명", "지학", "기타"];
       const STUDY_TYPES = ["복습", "예습", "과제", "문제풀이", "수행평가", "기타학습", "영단어", "오답정리", "인강"];
       const EVALS = ["학습완료", "보완필요", "미완료"];
       const EVAL_MIGRATE = { "O": "학습완료", "△": "보완필요", "X": "미완료", "x": "미완료" };
       const ATTEND = ["입실", "지각", "중도입실", "병결", "미입실(학원)", "미입실(기타)", "미입실(무단)"];
       const PRESENT = ["입실", "지각", "중도입실"];
-      const SUBJECT_COLOR = { "국어": "#3b82f6", "수학": "#ef4444", "영어": "#10b981", "과학": "#8b5cf6", "사회": "#f59e0b", "기타": "#64748b" };
+      const SUBJECT_COLOR = { "국어": "#3b82f6", "수학": "#ef4444", "영어": "#10b981", "한국사": "#b45309", "사회": "#f59e0b", "과학": "#8b5cf6", "물리": "#4f46e5", "화학": "#db2777", "생명": "#0d9488", "지학": "#78716c", "기타": "#64748b" };
       const TYPE_COLOR = {
         "복습": "#2563eb", "예습": "#059669", "과제": "#d97706", "문제풀이": "#dc2626",
         "수행평가": "#7c3aed", "기타학습": "#475569", "영단어": "#0ea5e9", "오답정리": "#be123c", "인강": "#0284c7"
@@ -153,18 +204,21 @@
       const NAV = [
         { id: "dashboard", icon: "fa-table-columns", title: "대시보드", sub: "선택 날짜의 업무와 전날 미확인 건을 확인합니다." },
         { id: "students", icon: "fa-user-graduate", title: "학생 명단", sub: "자리 배치(1–20)로 입반·퇴원을 구분하고, 명단을 삭제할 수 있습니다." },
-        { id: "schedule", icon: "fa-calendar-week", title: "주간 스케줄", sub: "월~일, 10시~22시, 칸당 5글자, 방향키로 이동." },
+        { id: "schedule", icon: "fa-calendar-week", title: "주간 스케줄", sub: "날짜 없는 고정 루틴입니다. 개인별과 전체 인원은 같은 표를 함께 수정합니다." },
         { id: "attend", icon: "fa-clipboard-check", title: "출석 체크", sub: "당일 기준 일괄 적용과 개별 출석 상태를 기록합니다." },
         { id: "study", icon: "fa-book-open", title: "학습 기록", sub: "과목·유형·완료평가·시간대로 순수 공부시간을 집계합니다." },
         { id: "week-report", icon: "fa-chart-column", title: "주간 리포트", sub: "한 주 데이터를 A4 시각화 리포트로 출력합니다." },
         { id: "month-report", icon: "fa-calendar", title: "월간 리포트", sub: "한 달치를 모아 학습 리포트를 만듭니다." },
         { id: "counsel", icon: "fa-comments", title: "담임선생님 의견", sub: "주간리포트/월간리포트용 의견을 따로 기록하고 복사합니다." },
+        { id: "consult-log", icon: "fa-note-sticky", title: "개인별 상담 기록", sub: "상담 기록만 축적합니다. 명단을 삭제해도 이 기록은 유지됩니다." },
         { id: "requests", icon: "fa-bell", title: "사전 요청", sub: "날짜별 사전 요청사항을 기록하고 확인합니다." },
         { id: "work", icon: "fa-handshake", title: "업무 협조", sub: "업무 협조 및 참고 공유를 날짜별로 입력합니다." },
         { id: "stats", icon: "fa-chart-pie", title: "기간 학습 통계", sub: "주간·월별 개별/전체 통계로 학습을 분석합니다." }
       ];
 
+      var lastHydrateMigrated = false;
       let db = load();
+      let scheduleMigrated = lastHydrateMigrated;
       let currentView = "dashboard";
       let anchor = new Date();
       let selectedStudentId = (seatedStudents()[0] || db.students[0] || {}).id || "";
@@ -173,6 +227,14 @@
       let counselScope = "week"; // 주간/월간 담임의견 분리
       let statsScope = "one";
       let charts = {};
+      let scheduleMode = "person"; // person | all. 두 화면은 같은 스케줄 칸을 사용
+      let scheduleDay = (new Date().getDay() + 6) % 7; // 월=0
+      let consultStudentId = "";
+      let consultEditId = "";
+      let consultTypeFilter = "";
+      let consultFrom = "";
+      let consultTo = "";
+      let consultListAll = false;
 
       const $ = (sel) => document.querySelector(sel);
 
@@ -334,6 +396,46 @@
         }));
       }
 
+      function isDateKey(k) { return /^\d{4}-\d{2}-\d{2}$/.test(String(k || "")); }
+      function scheduleHasContent(grid) {
+        if (!grid || typeof grid !== "object" || Array.isArray(grid)) return false;
+        return Object.values(grid).some((day) => day && typeof day === "object" && Object.values(day).some((v) => String(v || "").trim()));
+      }
+      function migrateStudentSchedule(sch) {
+        if (!sch || typeof sch !== "object" || Array.isArray(sch)) return { grid: {}, changed: false };
+        const dateKeys = Object.keys(sch).filter(isDateKey);
+        if (!dateKeys.length) return { grid: sch, changed: false };
+        dateKeys.sort();
+        let chosen = dateKeys[dateKeys.length - 1];
+        for (let i = dateKeys.length - 1; i >= 0; i--) {
+          if (scheduleHasContent(sch[dateKeys[i]])) { chosen = dateKeys[i]; break; }
+        }
+        return { grid: JSON.parse(JSON.stringify(sch[chosen] || {})), changed: true };
+      }
+      function migrateAllSchedules(box) {
+        let changed = false;
+        box.schedules = box.schedules || {};
+        Object.keys(box.schedules).forEach((sid) => {
+          const migrated = migrateStudentSchedule(box.schedules[sid]);
+          if (migrated.changed) { box.schedules[sid] = migrated.grid; changed = true; }
+        });
+        return changed;
+      }
+      function hydrateDb(data) {
+        const box = data || {};
+        box.schedules = box.schedules || {};
+        box.attendance = box.attendance || {};
+        box.studyLogs = (box.studyLogs || []).map((l) => ({ ...l, eval: EVAL_MIGRATE[l.eval] || l.eval }));
+        box.counseling = (box.counseling || []).map((c) => ({ ...c, scope: c.scope === "month" ? "month" : "week" }));
+        box.requests = box.requests || [];
+        box.workNotes = box.workNotes || [];
+        box.consultLogs = Array.isArray(box.consultLogs) ? box.consultLogs : [];
+        box.consultTypes = Array.isArray(box.consultTypes) ? box.consultTypes.map((t) => String(t || "").trim()).filter(Boolean) : [];
+        if (migrateAllSchedules(box)) lastHydrateMigrated = true;
+        box.students = normalizeStudents(box.students || defaultStudents(), box);
+        return box;
+      }
+
       function defaultStudents() {
         return Array.from({ length: MAX_STUDENTS }, (_, i) => ({
           id: "stu_" + (i + 1), name: "", school: "", grade: ""
@@ -342,27 +444,13 @@
       function load() {
         try {
           const raw = localStorage.getItem(STORAGE_KEY);
-          if (raw) {
-            const parsed = JSON.parse(raw);
-            parsed.schedules = parsed.schedules || {};
-            parsed.attendance = parsed.attendance || {};
-            parsed.studyLogs = (parsed.studyLogs || []).map((l) => ({ ...l, eval: EVAL_MIGRATE[l.eval] || l.eval }));
-            parsed.counseling = (parsed.counseling || []).map((c) => ({ ...c, scope: c.scope === "month" ? "month" : "week" }));
-            parsed.requests = parsed.requests || [];
-            parsed.workNotes = parsed.workNotes || [];
-            parsed.students = normalizeStudents(parsed.students || defaultStudents(), parsed);
-            return parsed;
-          }
+          if (raw) return hydrateDb(JSON.parse(raw));
         } catch (e) {}
-        return {
+        return hydrateDb({
           students: defaultStudents(),
-          schedules: {},
-          attendance: {},
-          studyLogs: [],
-          counseling: [],
-          requests: [],
-          workNotes: []
-        };
+          schedules: {}, attendance: {}, studyLogs: [], counseling: [],
+          requests: [], workNotes: [], consultLogs: [], consultTypes: []
+        });
       }
       function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(db)); scheduleAutoPush(); } // 데이터 변경 시 자동 업로드 예약
 
@@ -396,14 +484,22 @@
         render();
       }
 
+      function syncChrome() {
+        const bar = $("#date-nav");
+        if (bar) bar.classList.toggle("hidden", currentView === "schedule");
+      }
+      function subjectAxis() {
+        return { y: yPlain(), x: { ticks: { maxRotation: 45, minRotation: 0, autoSkip: false, font: { size: 9 } } } };
+      }
       function render() {
         $("#today-label").textContent = toISO(new Date()) + " · " + ["일","월","화","수","목","금","토"][new Date().getDay()] + "요일";
         $("#anchor-date").value = toISO(anchor);
+        syncChrome();
         const map = {
           dashboard: renderDashboard, students: renderStudents, schedule: renderSchedule,
           attend: renderAttend, study: renderStudy, "week-report": renderWeekReport,
-          "month-report": renderMonthReport, counsel: renderCounsel, requests: renderRequests,
-          work: renderWork, stats: renderStats
+          "month-report": renderMonthReport, counsel: renderCounsel, "consult-log": renderConsultLog,
+          requests: renderRequests, work: renderWork, stats: renderStats
         };
         map[currentView]();
       }
@@ -597,7 +693,7 @@
         $("#view-students").querySelectorAll("[data-remove]").forEach((btn) => btn.addEventListener("click", () => {
           const stu = db.students.find((x) => x.id === btn.dataset.remove);
           if (!stu) return;
-          if (!confirm((stu.name || "이 학생") + "을 명단에서 삭제할까요? 스케줄·출석·학습·상담 기록도 함께 삭제됩니다.")) return;
+          if (!confirm((stu.name || "이 학생") + "을 명단에서 삭제할까요?\n스케줄·출석·학습·담임의견·사전요청은 삭제됩니다.\n개인별 상담 기록은 삭제되지 않습니다.")) return;
           const id = stu.id;
           db.students = db.students.filter((x) => x.id !== id);
           db.studyLogs = (db.studyLogs || []).filter((l) => l.studentId !== id);
@@ -612,117 +708,157 @@
         }));
       }
 
-      function focusSchCell(day, hour) {
-        const el = document.querySelector(`.sch-input[data-day="${day}"][data-hour="${hour}"]`);
-        if (el) { el.focus(); el.select(); }
+      function routineGrid(sid) {
+        if (!sid) return {};
+        if (!db.schedules[sid] || typeof db.schedules[sid] !== "object" || Array.isArray(db.schedules[sid])) db.schedules[sid] = {};
+        const sch = db.schedules[sid];
+        if (Object.keys(sch).some(isDateKey)) {
+          const migrated = migrateStudentSchedule(sch);
+          db.schedules[sid] = migrated.grid;
+          scheduleMigrated = true;
+        }
+        return db.schedules[sid];
       }
-      function moveSch(day, hour, key, shift) {
-        const hi = HOURS.indexOf(hour);
-        let nd = day, nh = hi;
-        if (key === "ArrowRight" || (key === "Tab" && !shift)) {
-          if (nd < 6) nd += 1;
-          else if (nh < HOURS.length - 1) { nd = 0; nh += 1; }
-        } else if (key === "ArrowLeft" || (key === "Tab" && shift)) {
-          if (nd > 0) nd -= 1;
-          else if (nh > 0) { nd = 6; nh -= 1; }
-        } else if (key === "ArrowDown" || (key === "Enter" && !shift)) {
-          if (nh < HOURS.length - 1) nh += 1;
-        } else if (key === "ArrowUp" || (key === "Enter" && shift)) {
-          if (nh > 0) nh -= 1;
-        } else return false;
-        focusSchCell(nd, HOURS[nh]);
-        return true;
+      // 개인별·전체 인원이 같은 칸을 읽고 쓴다
+      function getSchCell(sid, day, hour) {
+        if (!sid) return "";
+        const g = routineGrid(sid);
+        const box = g[String(day)] || {};
+        return box[String(hour)] || "";
       }
-      function renderSchedule() {
-        const dates = weekDates(anchor);
-        if (!seatedStudents().find((s) => s.id === selectedStudentId)) selectedStudentId = (seatedStudents()[0] || {}).id || "";
-        const key = toISO(dates[0]);
-        if (!db.schedules[selectedStudentId]) db.schedules[selectedStudentId] = {};
-        if (!db.schedules[selectedStudentId][key]) db.schedules[selectedStudentId][key] = {};
-        const grid = db.schedules[selectedStudentId][key];
-
-        $("#view-schedule").innerHTML = `
-          <div class="bg-white rounded-2xl border p-4 mb-4 flex flex-wrap gap-3 items-center">
-            <label class="text-sm">학생</label>
-            ${studentSelect("sch-student", selectedStudentId)}
-            <span class="text-sm text-slate-500">${weekLabel(anchor)}</span>
-            <span class="text-xs text-slate-400">방향키·Tab·Enter로 칸 이동 (엑셀형)</span>
-            <button id="copy-last-week" class="ml-auto text-sm border rounded-lg px-3 py-2 hover:bg-slate-50"><i class="fa-regular fa-copy mr-1"></i>이 학생 지난주 복사</button>
-            <button id="copy-last-all" class="text-sm bg-indigo-600 text-white rounded-lg px-3 py-2 hover:bg-indigo-700"><i class="fa-regular fa-copy mr-1"></i>전체인원 지난주 복사</button>
-            <button id="clear-week" class="text-sm border rounded-lg px-3 py-2 hover:bg-rose-50 text-rose-600">이번주 비우기</button>
-          </div>
-          <div class="bg-white rounded-2xl border overflow-auto">
-            <table class="min-w-full text-xs">
-              <thead class="bg-navy-900 text-white">
-                <tr>
-                  <th class="px-2 py-2 text-center">시간</th>
-                  ${dates.map((d, i) => `<th class="px-2 py-2 text-center">${DAYS[i]}<br><span class="font-normal text-white/70">${toISO(d).slice(5)}</span></th>`).join("")}
-                </tr>
-              </thead>
-              <tbody>
-                ${HOURS.map((h) => `
-                  <tr class="border-t">
-                    <td class="px-2 py-1 font-semibold bg-slate-50 whitespace-nowrap text-center">${pad(h)}:00–${pad(h + 1)}:00</td>
-                    ${DAYS.map((_, di) => {
-                      const val = (grid[di] && grid[di][h]) || "";
-                      return `<td class="px-1 py-1 text-center"><input maxlength="5" data-day="${di}" data-hour="${h}" value="${escapeHtml(val)}" class="sch-input border rounded px-1 py-1" /></td>`;
-                    }).join("")}
-                  </tr>`).join("")}
-              </tbody>
-            </table>
-          </div>
-          <p class="text-xs text-slate-400 mt-2">각 칸은 5글자까지 입력됩니다. ←→↑↓, Tab, Enter로 이동합니다.</p>`;
-        $("#sch-student").value = selectedStudentId;
-        $("#sch-student").addEventListener("change", (e) => {
-          selectedStudentId = e.target.value;
-          reportStudentId = selectedStudentId;
-          renderSchedule();
+      function setSchCell(sid, day, hour, value) {
+        if (!sid) return;
+        const g = routineGrid(sid);
+        const d = String(day);
+        if (!g[d] || typeof g[d] !== "object") g[d] = {};
+        g[d][String(hour)] = value;
+      }
+      function seatColumns() {
+        const seated = seatedStudents();
+        return Array.from({ length: MAX_STUDENTS }, (_, i) => {
+          const seat = i + 1;
+          return seated.find((s) => s.seat === seat) || { id: "", seat, name: "", empty: true };
         });
+      }
+      function moveSchInput(inp, key, shift) {
+        const root = $("#view-schedule");
+        let r = Number(inp.dataset.row);
+        let c = Number(inp.dataset.col);
+        const maxR = Number(inp.dataset.maxrow);
+        const maxC = Number(inp.dataset.maxcol);
+        const step = () => {
+          if (key === "ArrowRight" || (key === "Tab" && !shift)) {
+            if (c < maxC) c += 1;
+            else if (r < maxR) { c = 0; r += 1; }
+            else return false;
+          } else if (key === "ArrowLeft" || (key === "Tab" && shift)) {
+            if (c > 0) c -= 1;
+            else if (r > 0) { c = maxC; r -= 1; }
+            else return false;
+          } else if (key === "ArrowDown" || (key === "Enter" && !shift)) {
+            if (r < maxR) r += 1;
+            else return false;
+          } else if (key === "ArrowUp" || (key === "Enter" && shift)) {
+            if (r > 0) r -= 1;
+            else return false;
+          } else return false;
+          return true;
+        };
+        for (let n = 0; n < (maxR + 1) * (maxC + 1) + 2; n++) {
+          if (!step()) return false;
+          const next = root.querySelector('.sch-input[data-row="' + r + '"][data-col="' + c + '"]:not(:disabled)');
+          if (next) { next.focus(); next.select(); return true; }
+        }
+        return false;
+      }
+      function commitSchInput(inp) {
+        if (!inp || inp.disabled) return;
+        inp.value = Array.from(inp.value).slice(0, 5).join("");
+        setSchCell(inp.dataset.sid, inp.dataset.day, inp.dataset.hour, inp.value);
+        save();
+      }
+      function bindSchInputs() {
         $("#view-schedule").querySelectorAll(".sch-input").forEach((inp) => {
-          inp.addEventListener("input", () => {
-            inp.value = Array.from(inp.value).slice(0, 5).join("");
-            const day = inp.dataset.day;
-            const hour = inp.dataset.hour;
-            if (!grid[day]) grid[day] = {};
-            grid[day][hour] = inp.value;
-            save();
-          });
+          inp.addEventListener("input", () => { if (!inp.isComposing) commitSchInput(inp); });
+          inp.addEventListener("compositionend", () => commitSchInput(inp));
+          inp.addEventListener("change", () => commitSchInput(inp));
+          inp.addEventListener("blur", () => commitSchInput(inp));
           inp.addEventListener("keydown", (e) => {
             if (e.isComposing || e.keyCode === 229) return;
             const keys = ["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown", "Tab", "Enter"];
             if (!keys.includes(e.key)) return;
-            if (moveSch(Number(inp.dataset.day), Number(inp.dataset.hour), e.key, e.shiftKey)) e.preventDefault();
+            if (moveSchInput(inp, e.key, e.shiftKey)) e.preventDefault();
           });
           inp.addEventListener("focus", () => inp.select());
         });
-        $("#copy-last-week").addEventListener("click", () => {
-          const prevKey = toISO(addDays(dates[0], -7));
-          const src = (db.schedules[selectedStudentId] || {})[prevKey];
-          if (!src) { alert("지난주 스케줄이 없습니다."); return; }
-          db.schedules[selectedStudentId][key] = JSON.parse(JSON.stringify(src));
-          save();
+      }
+      function renderSchedule() {
+        if (!seatedStudents().find((s) => s.id === selectedStudentId)) selectedStudentId = (seatedStudents()[0] || {}).id || "";
+        const cols = seatColumns();
+        const modeBtn = (id, label) => '<button type="button" data-sch-mode="' + id + '" class="px-3 py-2 text-sm ' + (scheduleMode === id ? "bg-navy-900 text-white" : "bg-white text-slate-700") + '">' + label + "</button>";
+        const dayBtn = (i) => '<button type="button" data-sch-day="' + i + '" class="px-3 py-2 text-sm ' + (scheduleDay === i ? "bg-gold text-navy-900 font-semibold" : "bg-white") + '">' + DAYS[i] + "</button>";
+        const personHead = DAYS.map((d) => '<th class="px-2 py-2 text-center">' + d + "</th>").join("");
+        const personBody = HOURS.map((h, ri) => {
+          const cells = DAYS.map((_, di) => {
+            const val = getSchCell(selectedStudentId, di, h);
+            return '<td class="px-1 py-1 text-center"><input maxlength="5" autocomplete="off" data-sid="' + selectedStudentId + '" data-day="' + di + '" data-hour="' + h + '" data-row="' + ri + '" data-col="' + di + '" data-maxrow="' + (HOURS.length - 1) + '" data-maxcol="6" value="' + escapeHtml(val) + '" class="sch-input border rounded px-1 py-1" ' + (selectedStudentId ? "" : "disabled") + " /></td>";
+          }).join("");
+          return '<tr class="border-t"><td class="px-2 py-1 font-semibold bg-slate-50 whitespace-nowrap text-center sticky-col">' + pad(h) + ":00–" + pad(h + 1) + ":00</td>" + cells + "</tr>";
+        }).join("");
+        const allHead = cols.map((s) => '<th class="px-0.5 py-1 text-center"><div class="text-[10px] text-white/60">' + s.seat + '</div><div class="truncate text-[11px]" title="' + escapeHtml(s.empty ? "빈자리" : (s.name || "이름없음")) + '">' + (s.empty ? "빈" : escapeHtml(s.name || "무명")) + "</div></th>").join("");
+        const allBody = HOURS.map((h, ri) => {
+          const cells = cols.map((s, ci) => {
+            const val = s.empty ? "" : getSchCell(s.id, scheduleDay, h);
+            return '<td class="px-0.5 py-0.5 text-center"><input maxlength="5" autocomplete="off" data-sid="' + s.id + '" data-day="' + scheduleDay + '" data-hour="' + h + '" data-row="' + ri + '" data-col="' + ci + '" data-maxrow="' + (HOURS.length - 1) + '" data-maxcol="' + (MAX_STUDENTS - 1) + '" value="' + escapeHtml(val) + '" class="sch-input border rounded" ' + (s.empty ? "disabled" : "") + " /></td>";
+          }).join("");
+          return '<tr class="border-t"><td class="px-1 py-1 font-semibold bg-slate-50 text-center sticky-col whitespace-nowrap">' + pad(h) + "</td>" + cells + "</tr>";
+        }).join("");
+        $("#view-schedule").innerHTML = `
+          <div class="bg-white rounded-2xl border p-4 mb-4 flex flex-wrap gap-3 items-center">
+            <div class="inline-flex rounded-lg border overflow-hidden">${modeBtn("person", "개인별")}${modeBtn("all", "전체 인원")}</div>
+            ${scheduleMode === "person" ? `<label class="text-sm">학생</label>${studentSelect("sch-student", selectedStudentId)}` : `<div class="inline-flex rounded-lg border overflow-hidden">${DAYS.map((_, i) => dayBtn(i)).join("")}</div>`}
+            <span class="text-xs text-slate-400">같은 루틴 · 칸당 5글자 · 방향키·Tab·Enter</span>
+            <button id="clear-routine" class="ml-auto text-sm border rounded-lg px-3 py-2 hover:bg-rose-50 text-rose-600">${scheduleMode === "person" ? "이 학생 비우기" : "이 요일 전체 비우기"}</button>
+          </div>
+          <p class="text-xs text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-lg px-3 py-2 mb-3">개인별과 전체 인원은 같은 칸을 사용합니다. 한쪽에서 입력을 마치면 다른 화면을 열었을 때 바로 같은 내용이 보입니다.</p>
+          ${scheduleMigrated ? `<p class="text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2 mb-3">이전 주차별 스케줄은 내용이 있는 가장 최근 주를 고정 루틴으로 가져왔습니다.</p>` : ""}
+          ${scheduleMode === "person" ? `
+          <div class="bg-white rounded-2xl border overflow-auto sch-scroll">
+            <table class="min-w-full text-xs"><thead class="bg-navy-900 text-white"><tr><th class="px-2 py-2 text-center sticky-col">시간</th>${personHead}</tr></thead><tbody>${personBody}</tbody></table>
+          </div>
+          <p class="text-xs text-slate-400 mt-2">←→는 요일, ↑↓·Enter는 시간입니다. 여기 입력한 값은 전체 인원 화면의 같은 요일·시간에 반영됩니다.</p>` : `
+          <div class="bg-white rounded-2xl border sch-scroll">
+            <table class="sch-fit text-xs"><thead class="bg-navy-900 text-white"><tr><th class="px-1 py-2 text-center sticky-col w-16">시간</th>${allHead}</tr></thead><tbody>${allBody}</tbody></table>
+          </div>
+          <p class="text-xs text-slate-400 mt-2">${DAYS[scheduleDay]}요일 · 자리 1–${MAX_STUDENTS}. 여기서 고친 칸은 그 학생의 개인별 스케줄에도 바로 반영됩니다.</p>`}`;
+        $("#view-schedule").querySelectorAll("[data-sch-mode]").forEach((btn) => btn.addEventListener("click", () => {
+          scheduleMode = btn.dataset.schMode;
+          renderSchedule();
+        }));
+        $("#view-schedule").querySelectorAll("[data-sch-day]").forEach((btn) => btn.addEventListener("click", () => {
+          scheduleDay = Number(btn.dataset.schDay);
+          renderSchedule();
+        }));
+        const stuSel = $("#sch-student");
+        if (stuSel) stuSel.addEventListener("change", (e) => {
+          selectedStudentId = e.target.value;
+          reportStudentId = selectedStudentId;
           renderSchedule();
         });
-        // 20명 지난주 일정을 이번 주 키로 각각 복사
-        $("#copy-last-all").addEventListener("click", () => {
-          const prevKey = toISO(addDays(dates[0], -7));
-          if (!confirm("전체 인원의 지난주(" + prevKey + ") 스케줄을 이번 주(" + key + ")로 복사할까요?")) return;
-          let copied = 0;
-          db.students.forEach((s) => {
-            const src = (db.schedules[s.id] || {})[prevKey];
-            if (!src) return;
-            if (!db.schedules[s.id]) db.schedules[s.id] = {};
-            db.schedules[s.id][key] = JSON.parse(JSON.stringify(src));
-            copied += 1;
-          });
-          if (!copied) { alert("복사할 지난주 스케줄이 없습니다."); return; }
-          save();
-          renderSchedule();
-          alert(copied + "명의 지난주 일정을 이번 주로 복사했습니다.");
-        });
-        $("#clear-week").addEventListener("click", () => {
-          if (!confirm("이번 주 스케줄을 모두 지울까요?")) return;
-          db.schedules[selectedStudentId][key] = {};
+        bindSchInputs();
+        const clearBtn = $("#clear-routine");
+        if (clearBtn) clearBtn.addEventListener("click", () => {
+          if (scheduleMode === "person") {
+            if (!selectedStudentId) return;
+            if (!confirm("이 학생의 주간 루틴을 모두 지울까요? 전체 인원 화면에서도 함께 비워집니다.")) return;
+            db.schedules[selectedStudentId] = {};
+          } else {
+            if (!confirm(DAYS[scheduleDay] + "요일 전체 인원 루틴을 지울까요? 개인별 화면에도 반영됩니다.")) return;
+            seatedStudents().forEach((s) => {
+              const g = routineGrid(s.id);
+              delete g[String(scheduleDay)];
+            });
+          }
           save();
           renderSchedule();
         });
@@ -999,8 +1135,6 @@
         const total = logs.reduce((a, b) => a + (b.minutes || 0), 0);
         const att = attendSummary(reportStudentId, isoList);
         const daily = dailyMinutes(logs, isoList);
-        const schKey = isoList[0];
-        const grid = ((db.schedules[reportStudentId] || {})[schKey]) || {};
         const opinions = db.counseling.filter((c) => c.studentId === reportStudentId && isoList.includes(c.date) && (c.scope || "week") === "week");
         const ev = evalBySubject(logs);
         const doneAll = logs.filter((l) => normEval(l.eval) === "학습완료").length;
@@ -1016,7 +1150,7 @@
             <button id="wr-pdf" class="bg-gold text-navy-900 font-semibold rounded-lg px-4 py-2 text-sm"><i class="fa-solid fa-file-pdf mr-1"></i>PDF 저장</button>
           </div>
           <div id="week-sheet" class="a4-sheet mx-auto shadow-xl rounded-sm">
-            ${reportHeader("입시자습관 주간 학습 참여 리포트", weekLabel(anchor), reportStudentId)}
+            ${reportHeader("주간 학습 리포트", weekLabel(anchor), reportStudentId)}
             <div class="grid grid-cols-4 gap-2 mb-4">
               ${miniStat("순수 공부시간", fmtMin(total))}
               ${miniStat("입실일", att.present + "일")}
@@ -1035,7 +1169,7 @@
                 <p class="text-[10px] text-slate-500">전체 ${doneAll}/${logs.length || 0}건 학습완료 (${doneRate}%)</p>
               </div>
               <div class="chart-box sm"><canvas id="c-eval"></canvas></div>
-              <div class="grid grid-cols-6 gap-1 mt-2 text-[9px] text-center">
+              <div class="grid grid-cols-4 gap-1 mt-2 text-[9px] text-center">
                 ${ev.map((r) => `<div class="border rounded py-1"><div class="font-semibold">${r.s}</div><div>${r.n}회</div><div style="color:${EVAL_COLOR["학습완료"]}">${r.n ? r.rate + "%" : "-"}</div></div>`).join("")}
               </div>
             </div>
@@ -1063,7 +1197,7 @@
         makeChart("c-sub", {
           type: "bar",
           data: { labels: SUBJECTS, datasets: [{ data: SUBJECTS.map((s) => logs.filter((l) => l.subject === s).reduce((a, b) => a + b.minutes, 0)), backgroundColor: SUBJECTS.map((s) => SUBJECT_COLOR[s]) }] },
-          options: { plugins: { legend: { display: false } }, scales: { y: yPlain(), x: { ticks: { maxRotation: 0, minRotation: 0 } } } }
+          options: { plugins: { legend: { display: false } }, scales: subjectAxis() }
         });
         makeChart("c-type", {
           type: "doughnut",
@@ -1133,7 +1267,7 @@
             <button id="mr-pdf" class="bg-gold text-navy-900 font-semibold rounded-lg px-4 py-2 text-sm"><i class="fa-solid fa-file-pdf mr-1"></i>PDF 저장</button>
           </div>
           <div id="month-sheet" class="a4-sheet mx-auto shadow-xl rounded-sm">
-            ${reportHeader("입시자습관 월간 학습 참여 리포트", yy + "년 " + mm + "월", reportStudentId)}
+            ${reportHeader("월간 학습 리포트", yy + "년 " + mm + "월", reportStudentId)}
             <div class="grid grid-cols-4 gap-2 mb-4">
               ${miniStat("월 순수공부", fmtMin(total))}
               ${miniStat("일평균", fmtMin(Math.round(total / last)))}
@@ -1183,7 +1317,7 @@
         makeChart("m-sub", {
           type: "bar",
           data: { labels: SUBJECTS, datasets: [{ data: SUBJECTS.map((s) => logs.filter((l) => l.subject === s).reduce((a, b) => a + b.minutes, 0)), backgroundColor: SUBJECTS.map((s) => SUBJECT_COLOR[s]) }] },
-          options: { plugins: { legend: { display: false } }, scales: { y: yPlain(), x: { ticks: { maxRotation: 0, minRotation: 0 } } } }
+          options: { plugins: { legend: { display: false } }, scales: subjectAxis() }
         });
         makeChart("m-type", {
           type: "doughnut",
@@ -1294,6 +1428,214 @@
             renderCounsel();
           });
         });
+      }
+
+      function consultPeople() {
+        const live = rosterStudents().filter((s) => s.name);
+        const ids = new Set(db.students.map((s) => s.id));
+        const orphans = [];
+        (db.consultLogs || []).forEach((r) => {
+          if (!r.studentId || ids.has(r.studentId) || orphans.some((o) => o.id === r.studentId)) return;
+          orphans.push({ id: r.studentId, name: r.name || "이름없음", orphan: true });
+        });
+        return { live, orphans };
+      }
+      function consultView(rec) {
+        const s = db.students.find((x) => x.id === rec.studentId);
+        if (s) return { name: s.name || rec.name || "", school: s.school || rec.school || "", grade: s.grade || rec.grade || "", orphan: false };
+        return { name: rec.name || "이름없음", school: rec.school || "", grade: rec.grade || "", orphan: true };
+      }
+      function consultMeta(id) {
+        const s = db.students.find((x) => x.id === id);
+        if (s) return { name: s.name || "", school: s.school || "", grade: s.grade || "", orphan: false };
+        const rec = (db.consultLogs || []).find((r) => r.studentId === id);
+        if (rec) return { name: rec.name || "", school: rec.school || "", grade: rec.grade || "", orphan: true };
+        return { name: "", school: "", grade: "", orphan: true };
+      }
+      function filteredConsultLogs() {
+        return (db.consultLogs || []).filter((r) => {
+          if (!consultListAll && consultStudentId && r.studentId !== consultStudentId) return false;
+          if (consultTypeFilter && r.type !== consultTypeFilter) return false;
+          if (consultFrom && String(r.date || "") < consultFrom) return false;
+          if (consultTo && String(r.date || "") > consultTo) return false;
+          return true;
+        }).sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")) || String(b.createdAt || "").localeCompare(String(a.createdAt || "")));
+      }
+      function consultExportRows(list) {
+        return list.map((r) => {
+          const v = consultView(r);
+          return { 이름: v.name, 학교: v.school, 학년: v.grade, 상담유형: r.type || "", 상담일자: r.date || "", 내용: r.content || "", 명단상태: v.orphan ? "명단삭제(기록유지)" : "명단유지" };
+        });
+      }
+      function downloadConsultExcel(list) {
+        const rows = consultExportRows(list);
+        if (!rows.length) { alert("내보낼 상담 기록이 없습니다."); return; }
+        const filename = "상담기록_" + toISO(new Date());
+        if (typeof XLSX === "undefined") {
+          const header = Object.keys(rows[0]);
+          const csv = "\uFEFF" + [header.join(","), ...rows.map((r) => header.map((h) => '"' + String(r[h] || "").replaceAll('"', '""') + '"').join(","))].join("\n");
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+          a.download = filename + ".csv";
+          a.click();
+          return;
+        }
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.json_to_sheet(rows);
+        ws["!cols"] = [{ wch: 12 }, { wch: 16 }, { wch: 8 }, { wch: 14 }, { wch: 12 }, { wch: 60 }, { wch: 18 }];
+        XLSX.utils.book_append_sheet(wb, ws, "상담기록");
+        XLSX.writeFile(wb, filename + ".xlsx");
+      }
+      function downloadConsultPdf(list) {
+        if (!list.length) { alert("내보낼 상담 기록이 없습니다."); return; }
+        const sheet = document.createElement("div");
+        sheet.className = "a4-sheet";
+        sheet.innerHTML = '<div class="flex justify-between items-end border-b-2 border-navy-900 pb-2 mb-3"><div><p class="text-[10px] tracking-widest text-slate-500">COUNSEL LOG</p><h3 class="text-xl font-black text-navy-900">개인별 상담 기록</h3></div><p class="text-xs text-slate-500">출력일 ' + toISO(new Date()) + " · " + list.length + '건</p></div>' + list.map((r) => {
+          const v = consultView(r);
+          return '<div class="border rounded p-2 mb-2 break-inside-avoid"><p class="text-xs font-bold">' + escapeHtml(v.name) + " · " + escapeHtml(v.school || "-") + " · " + escapeHtml(v.grade || "-") + (v.orphan ? ' <span class="text-rose-600">(명단 삭제)</span>' : "") + '</p><p class="text-[11px] text-slate-500 mb-1">' + escapeHtml(r.date || "") + " · " + escapeHtml(r.type || "유형없음") + '</p><p class="text-xs whitespace-pre-wrap">' + escapeHtml(r.content || "") + "</p></div>";
+        }).join("");
+        if (typeof html2pdf === "undefined") { alert("PDF 라이브러리를 불러오지 못했습니다."); return; }
+        html2pdf().set({ margin: [8, 8, 8, 8], filename: "상담기록_" + toISO(new Date()) + ".pdf", image: { type: "jpeg", quality: 0.98 }, html2canvas: { scale: 2, useCORS: true, backgroundColor: "#ffffff" }, jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }, pagebreak: { mode: ["css", "legacy"] } }).from(sheet).save();
+      }
+      function renderConsultLog() {
+        db.consultLogs = db.consultLogs || [];
+        db.consultTypes = db.consultTypes || [];
+        const people = consultPeople();
+        const allIds = people.live.map((s) => s.id).concat(people.orphans.map((s) => s.id));
+        if (!allIds.includes(consultStudentId)) consultStudentId = (people.live[0] || people.orphans[0] || {}).id || "";
+        const meta = consultMeta(consultStudentId);
+        const editing = db.consultLogs.find((r) => r.id === consultEditId);
+        const formDate = editing ? editing.date : toISO(new Date());
+        const formType = editing ? (editing.type || "") : (db.consultTypes[0] || "");
+        const formContent = editing ? (editing.content || "") : "";
+        const typeOptions = db.consultTypes.slice();
+        if (formType && !typeOptions.includes(formType)) typeOptions.unshift(formType);
+        const knownTypes = Array.from(new Set(db.consultTypes.concat(db.consultLogs.map((r) => r.type).filter(Boolean))));
+        const list = filteredConsultLogs();
+        const opt = (s, orphan) => '<option value="' + s.id + '"' + (s.id === consultStudentId ? " selected" : "") + ">" + escapeHtml(s.name || "이름없음") + (orphan ? " (명단 삭제)" : "") + "</option>";
+        $("#view-consult-log").innerHTML = `
+          <div class="bg-white rounded-2xl border p-4 mb-4">
+            <div class="flex flex-wrap gap-3 items-end">
+              <label class="text-sm">학생
+                <select id="cl-student" class="border rounded-lg px-3 py-2 text-sm bg-white block mt-1 min-w-[180px]">
+                  ${people.live.length ? `<optgroup label="현재 명단">${people.live.map((s) => opt(s, false)).join("")}</optgroup>` : ""}
+                  ${people.orphans.length ? `<optgroup label="명단에서 삭제됨 · 기록 유지">${people.orphans.map((s) => opt(s, true)).join("")}</optgroup>` : ""}
+                  ${!people.live.length && !people.orphans.length ? '<option value="">학생 없음</option>' : ""}
+                </select>
+              </label>
+              <div class="text-sm bg-slate-50 border rounded-lg px-3 py-2 min-w-[220px]">
+                <p class="text-[11px] text-slate-400">이름 / 학교 / 학년 ${meta.orphan ? "· 저장 당시 정보" : "· 명단 연동"}</p>
+                <p class="font-semibold text-navy-900">${escapeHtml(meta.name || "-")} · ${escapeHtml(meta.school || "-")} · ${escapeHtml(meta.grade || "-")}</p>
+              </div>
+              <label class="text-sm">상담 유형
+                <select id="cl-type" class="border rounded-lg px-3 py-2 text-sm bg-white block mt-1 min-w-[140px]">
+                  ${typeOptions.length ? typeOptions.map((t) => '<option' + (t === formType ? " selected" : "") + ">" + escapeHtml(t) + "</option>").join("") : '<option value="">유형을 먼저 추가</option>'}
+                </select>
+              </label>
+              <label class="text-sm">상담일자<input id="cl-date" type="date" value="${formDate}" class="border rounded-lg px-3 py-2 text-sm block mt-1" /></label>
+              <div class="ml-auto flex flex-wrap gap-2">
+                <button id="cl-xlsx" type="button" class="text-sm border rounded-lg px-3 py-2 hover:bg-slate-50"><i class="fa-solid fa-file-excel mr-1 text-emerald-600"></i>현재 목록 엑셀</button>
+                <button id="cl-xlsx-all" type="button" class="text-sm border rounded-lg px-3 py-2 hover:bg-slate-50">전체 엑셀</button>
+                <button id="cl-pdf" type="button" class="text-sm bg-gold text-navy-900 font-semibold rounded-lg px-3 py-2"><i class="fa-solid fa-file-pdf mr-1"></i>현재 목록 PDF</button>
+                <button id="cl-pdf-all" type="button" class="text-sm border rounded-lg px-3 py-2">전체 PDF</button>
+              </div>
+            </div>
+            <label class="text-sm block mt-3">내용<textarea id="cl-content" rows="8" class="consult-box border rounded-lg px-3 py-2 w-full mt-1 text-sm" placeholder="상담 내용을 입력하세요. 다른 기능과 연동되지 않으며, 명단을 삭제해도 이 기록은 남습니다.">${escapeHtml(formContent)}</textarea></label>
+            <div class="flex gap-2 mt-3">
+              <button id="cl-save" type="button" class="bg-navy-900 text-white rounded-lg px-4 py-2 text-sm">${editing ? "수정 반영" : "상담 기록 저장"}</button>
+              ${editing ? '<button id="cl-cancel" type="button" class="border rounded-lg px-4 py-2 text-sm">새 기록</button>' : ""}
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl border p-4 mb-4">
+            <p class="text-sm font-bold text-navy-900 mb-2">상담 유형 관리</p>
+            <div class="flex flex-wrap gap-2 mb-2">
+              <input id="cl-new-type" maxlength="20" class="border rounded-lg px-3 py-2 text-sm" placeholder="예: 학습상담, 학부모상담" />
+              <button id="cl-add-type" type="button" class="bg-indigo-600 text-white rounded-lg px-3 py-2 text-sm">유형 추가</button>
+            </div>
+            <div class="flex flex-wrap gap-2">${db.consultTypes.length ? db.consultTypes.map((t) => '<span class="inline-flex items-center gap-1 bg-slate-100 rounded-full pl-3 pr-1 py-1 text-xs">' + escapeHtml(t) + '<button type="button" data-type-del="' + escapeHtml(t) + '" class="w-5 h-5 rounded-full hover:bg-rose-100 text-rose-600">×</button></span>').join("") : '<span class="text-xs text-slate-400">등록된 유형이 없습니다.</span>'}</div>
+            <p class="text-[11px] text-slate-400 mt-2">유형을 지워도 이미 저장된 상담 내용은 삭제되지 않습니다.</p>
+          </div>
+          <div class="bg-white rounded-2xl border p-4">
+            <div class="flex flex-wrap gap-2 items-end mb-3">
+              <label class="text-xs">목록 범위<select id="cl-scope" class="border rounded-lg px-2 py-2 text-sm block mt-1"><option value="one" ${consultListAll ? "" : "selected"}>선택 학생</option><option value="all" ${consultListAll ? "selected" : ""}>전체 기록</option></select></label>
+              <label class="text-xs">유형 필터<select id="cl-filter-type" class="border rounded-lg px-2 py-2 text-sm block mt-1"><option value="">전체 유형</option>${knownTypes.map((t) => '<option' + (t === consultTypeFilter ? " selected" : "") + ">" + escapeHtml(t) + "</option>").join("")}</select></label>
+              <label class="text-xs">시작일<input id="cl-from" type="date" value="${consultFrom}" class="border rounded-lg px-2 py-2 text-sm block mt-1" /></label>
+              <label class="text-xs">종료일<input id="cl-to" type="date" value="${consultTo}" class="border rounded-lg px-2 py-2 text-sm block mt-1" /></label>
+              <span class="text-xs text-slate-400 ml-auto">${list.length}건</span>
+            </div>
+            <div class="space-y-2">
+              ${list.length ? list.map((r) => {
+                const v = consultView(r);
+                return `<article class="border rounded-xl p-3"><div class="flex flex-wrap gap-2 items-center text-sm"><span class="font-bold text-navy-900">${escapeHtml(v.name)}</span><span class="text-slate-500">${escapeHtml(v.school || "-")} · ${escapeHtml(v.grade || "-")}</span><span class="text-xs bg-slate-100 rounded px-2 py-0.5">${escapeHtml(r.type || "유형없음")}</span><input type="date" data-cl-date="${r.id}" value="${r.date || ""}" class="border rounded px-2 py-1 text-xs" />${v.orphan ? '<span class="text-[11px] text-rose-600">명단에서 삭제됨 · 기록 유지</span>' : ""}<span class="ml-auto flex gap-1"><button type="button" data-cl-edit="${r.id}" class="text-xs border rounded px-2 py-1">수정</button><button type="button" data-cl-del="${r.id}" class="text-xs border rounded px-2 py-1 text-rose-600">삭제</button></span></div><p class="text-sm whitespace-pre-wrap mt-2 text-slate-700">${escapeHtml(r.content || "")}</p></article>`;
+              }).join("") : '<p class="text-sm text-slate-400 py-6 text-center">조건에 맞는 상담 기록이 없습니다.</p>'}
+            </div>
+          </div>`;
+        const studentSel = $("#cl-student");
+        if (studentSel) studentSel.addEventListener("change", (e) => { consultStudentId = e.target.value; consultEditId = ""; renderConsultLog(); });
+        $("#cl-scope").addEventListener("change", (e) => { consultListAll = e.target.value === "all"; renderConsultLog(); });
+        $("#cl-filter-type").addEventListener("change", (e) => { consultTypeFilter = e.target.value; renderConsultLog(); });
+        $("#cl-from").addEventListener("change", (e) => { consultFrom = e.target.value; renderConsultLog(); });
+        $("#cl-to").addEventListener("change", (e) => { consultTo = e.target.value; renderConsultLog(); });
+        $("#cl-add-type").addEventListener("click", () => {
+          const name = $("#cl-new-type").value.trim();
+          if (!name) { alert("유형 이름을 입력하세요."); return; }
+          if (!db.consultTypes.includes(name)) db.consultTypes.push(name);
+          save();
+          renderConsultLog();
+        });
+        $("#view-consult-log").querySelectorAll("[data-type-del]").forEach((btn) => btn.addEventListener("click", () => {
+          if (!confirm("유형 '" + btn.dataset.typeDel + "'을 목록에서 뺄까요? 이미 저장된 기록은 유지됩니다.")) return;
+          db.consultTypes = db.consultTypes.filter((t) => t !== btn.dataset.typeDel);
+          save();
+          renderConsultLog();
+        }));
+        $("#cl-save").addEventListener("click", () => {
+          if (!consultStudentId) { alert("학생을 선택하세요."); return; }
+          if (meta.orphan && !editing) { alert("명단에서 삭제된 학생에게는 새 기록을 추가할 수 없습니다."); return; }
+          const type = ($("#cl-type").value || "").trim();
+          if (!type) { alert("상담 유형을 먼저 추가한 뒤 선택하세요."); return; }
+          const date = $("#cl-date").value;
+          if (!date) { alert("상담일자를 입력하세요."); return; }
+          const content = $("#cl-content").value.trim();
+          if (!content) { alert("상담 내용을 입력하세요."); return; }
+          const snap = consultMeta(consultStudentId);
+          const payload = { studentId: consultStudentId, name: snap.name, school: snap.school, grade: snap.grade, type, date, content };
+          if (consultEditId) {
+            const rec = db.consultLogs.find((r) => r.id === consultEditId);
+            if (rec) Object.assign(rec, payload, { updatedAt: new Date().toISOString() });
+          } else db.consultLogs.push({ id: uid("cl"), ...payload, createdAt: new Date().toISOString() });
+          if (!db.consultTypes.includes(type)) db.consultTypes.push(type);
+          consultEditId = "";
+          save();
+          renderConsultLog();
+        });
+        const cancelBtn = $("#cl-cancel");
+        if (cancelBtn) cancelBtn.addEventListener("click", () => { consultEditId = ""; renderConsultLog(); });
+        $("#view-consult-log").querySelectorAll("[data-cl-edit]").forEach((btn) => btn.addEventListener("click", () => {
+          consultEditId = btn.dataset.clEdit;
+          const rec = db.consultLogs.find((r) => r.id === consultEditId);
+          if (rec) consultStudentId = rec.studentId;
+          renderConsultLog();
+        }));
+        $("#view-consult-log").querySelectorAll("[data-cl-del]").forEach((btn) => btn.addEventListener("click", () => {
+          if (!confirm("이 상담 기록을 삭제할까요?")) return;
+          db.consultLogs = db.consultLogs.filter((r) => r.id !== btn.dataset.clDel);
+          if (consultEditId === btn.dataset.clDel) consultEditId = "";
+          save();
+          renderConsultLog();
+        }));
+        $("#view-consult-log").querySelectorAll("[data-cl-date]").forEach((inp) => inp.addEventListener("change", () => {
+          const rec = db.consultLogs.find((r) => r.id === inp.dataset.clDate);
+          if (!rec || !inp.value) return;
+          rec.date = inp.value;
+          rec.updatedAt = new Date().toISOString();
+          save();
+        }));
+        const byDate = (a, b) => String(b.date || "").localeCompare(String(a.date || ""));
+        $("#cl-xlsx").addEventListener("click", () => downloadConsultExcel(filteredConsultLogs()));
+        $("#cl-pdf").addEventListener("click", () => downloadConsultPdf(filteredConsultLogs()));
+        $("#cl-xlsx-all").addEventListener("click", () => downloadConsultExcel((db.consultLogs || []).slice().sort(byDate)));
+        $("#cl-pdf-all").addEventListener("click", () => downloadConsultPdf((db.consultLogs || []).slice().sort(byDate)));
       }
 
       function itemCard(item, who, kind) {
@@ -1564,7 +1906,7 @@
         makeChart("s-sub", {
           type: "bar",
           data: { labels: SUBJECTS, datasets: [{ data: SUBJECTS.map((s) => logs.filter((l) => l.subject === s).reduce((a, b) => a + b.minutes, 0)), backgroundColor: SUBJECTS.map((s) => SUBJECT_COLOR[s]) }] },
-          options: { plugins: { legend: { display: false } }, scales: { y: yPlain(), x: { ticks: { maxRotation: 0, minRotation: 0 } } } }
+          options: { plugins: { legend: { display: false } }, scales: subjectAxis() }
         });
         makeChart("s-type", {
           type: "doughnut",
@@ -1662,7 +2004,7 @@
         makeChart("a-sub", {
           type: "bar",
           data: { labels: SUBJECTS, datasets: [{ data: SUBJECTS.map((s) => allLogs.filter((l) => l.subject === s).reduce((a, b) => a + b.minutes, 0)), backgroundColor: SUBJECTS.map((s) => SUBJECT_COLOR[s]) }] },
-          options: { plugins: { legend: { display: false } }, scales: { y: yPlain(), x: { ticks: { maxRotation: 0, minRotation: 0 } } } }
+          options: { plugins: { legend: { display: false } }, scales: subjectAxis() }
         });
       }
 
@@ -1749,91 +2091,151 @@
         }
       }
 
-      // [자동 업로드 예약] 데이터가 바뀐 뒤 5초간 추가 변경이 없을 때 업로드 실행
       let autoPushTimer = null;
-      let suppressAutoPush = false; // 서버 데이터 적용 시 재업로드 방지
+      let suppressAutoPush = false;
       function scheduleAutoPush() {
         if (suppressAutoPush) return;
-        localStorage.setItem(SYNC_KEY_LOCAL, String(Date.now())); // 로컬 수정 시각 기록
-        if (!isAutoUpload()) return;
+        localStorage.setItem(SYNC_KEY_LOCAL, String(Date.now()));
+        const doGh = isAutoUpload() && !!getSyncToken();
+        const doFb = isFbEnabled() && isFbAuto();
+        if (!doGh && !doFb) return;
         if (autoPushTimer) clearTimeout(autoPushTimer);
-        autoPushTimer = setTimeout(() => pushToGitHub(true), 5000);
+        autoPushTimer = setTimeout(() => {
+          if (isAutoUpload() && getSyncToken()) pushToGitHub(true);
+          if (isFbEnabled() && isFbAuto()) pushToFirebase(true);
+        }, 5000);
       }
-
-      // 서버 백업 데이터를 이 기기에 적용 (기존 '데이터 복원'과 동일한 마이그레이션 수행)
       function applyServerData(data, serverTime) {
         suppressAutoPush = true;
         try {
-          db = data;
-          db.schedules = db.schedules || {};
-          db.attendance = db.attendance || {};
-          db.studyLogs = (db.studyLogs || []).map((l) => ({ ...l, eval: EVAL_MIGRATE[l.eval] || l.eval }));
-          db.counseling = db.counseling || [];
-          db.requests = db.requests || [];
-          db.workNotes = db.workNotes || [];
-          db.students = normalizeStudents(db.students, db);
-          db.counseling = (db.counseling || []).map((c) => ({ ...c, scope: c.scope === "month" ? "month" : "week" }));
+          db = hydrateDb(data);
+          scheduleMigrated = scheduleMigrated || lastHydrateMigrated;
           save();
           selectedStudentId = (seatedStudents()[0] || db.students[0] || {}).id || "";
           reportStudentId = selectedStudentId;
           render();
           localStorage.setItem(SYNC_KEY_LOCAL, String(serverTime || Date.now()));
-        } finally {
-          suppressAutoPush = false;
+        } finally { suppressAutoPush = false; }
+      }
+      const FB_CFG = "sync_studyroom_firebase_cfg";
+      const FB_ON = "sync_studyroom_firebase_on";
+      const FB_AUTO = "sync_studyroom_firebase_auto";
+      const FB_ANON = "sync_studyroom_firebase_anon";
+      const FB_LAST = "sync_studyroom_firebase_last";
+      function getFbConfig() { try { return JSON.parse(localStorage.getItem(FB_CFG) || "{}") || {}; } catch (e) { return {}; } }
+      function isFbAnon() { const v = localStorage.getItem(FB_ANON); return v === null || v === "true"; }
+      function isFbEnabled() {
+        if (localStorage.getItem(FB_ON) !== "true") return false;
+        const cfg = getFbConfig();
+        return !!(cfg.apiKey && cfg.projectId && cfg.databaseURL);
+      }
+      function isFbAuto() { return localStorage.getItem(FB_AUTO) === "true"; }
+      async function ensureFirebase() {
+        if (typeof firebase === "undefined") throw new Error("Firebase SDK를 불러오지 못했습니다. 인터넷 연결을 확인하세요.");
+        const cfg = getFbConfig();
+        if (!cfg.apiKey || !cfg.projectId || !cfg.databaseURL) throw new Error("apiKey, projectId, databaseURL을 입력하세요.");
+        const opts = {
+          apiKey: String(cfg.apiKey).trim(),
+          authDomain: String(cfg.authDomain || (cfg.projectId + ".firebaseapp.com")).trim(),
+          projectId: String(cfg.projectId).trim(),
+          databaseURL: String(cfg.databaseURL).trim().replace(/\/+$/, "")
+        };
+        if (cfg.appId) opts.appId = String(cfg.appId).trim();
+        if (firebase.apps.length) {
+          const cur = firebase.app().options || {};
+          if (cur.databaseURL !== opts.databaseURL || cur.projectId !== opts.projectId || cur.apiKey !== opts.apiKey) await firebase.app().delete();
+        }
+        if (!firebase.apps.length) firebase.initializeApp(opts);
+        if (isFbAnon()) {
+          try { if (!firebase.auth().currentUser) await firebase.auth().signInAnonymously(); }
+          catch (e) { console.warn("익명 로그인 실패", e); }
+        }
+        return firebase.database();
+      }
+      async function pushToFirebase(silent) {
+        try {
+          const rtdb = await ensureFirebase();
+          await rtdb.ref("studyroom/backup").set(buildSyncData());
+          localStorage.setItem(FB_LAST, String(Date.now()));
+          updateSyncStatusText();
+          if (!silent) alert("Firebase 업로드를 완료했습니다.");
+        } catch (err) {
+          console.error(err);
+          if (!silent) alert("Firebase 업로드 실패: " + (err && err.message ? err.message : err));
         }
       }
-
-      // [시작 시 자동 동기화] 페이지를 열 때 서버/로컬 중 더 최신 데이터를 자동 반영
+      async function fetchFirebaseRemote() {
+        const rtdb = await ensureFirebase();
+        const snap = await rtdb.ref("studyroom/backup").once("value");
+        const parsed = snap.val();
+        if (!parsed) return null;
+        const data = parsed.data ? parsed.data : parsed;
+        if (!data || !data.students) return null;
+        return { label: "Firebase", time: parsed.exportedAt ? new Date(parsed.exportedAt).getTime() : 0, data };
+      }
+      async function pullFromFirebase() {
+        try {
+          const remote = await fetchFirebaseRemote();
+          if (!remote) { alert("Firebase에 저장된 학습관리 데이터가 없습니다."); return; }
+          const when = remote.time ? new Date(remote.time).toLocaleString("ko-KR") : "시점 미상";
+          if (!confirm("Firebase 백업(" + when + ")으로 이 기기 데이터를 교체할까요?")) return;
+          applyServerData(remote.data, remote.time);
+          alert("Firebase 데이터를 가져왔습니다.");
+        } catch (err) {
+          alert("Firebase 가져오기 실패: " + (err && err.message ? err.message : err));
+        }
+      }
+      async function testFirebase() {
+        try {
+          const rtdb = await ensureFirebase();
+          await rtdb.ref("studyroom/backup").once("value");
+          alert("Firebase 연결에 성공했습니다.");
+        } catch (err) {
+          alert("Firebase 연결 실패: " + (err && err.message ? err.message : err));
+        }
+      }
       async function autoSyncOnStart() {
-        if (!getSyncToken()) return; // 토큰이 없으면 수동 모드 유지
-        try {
-          const res = await fetch(`${SERVER_JSON_URL}?t=${Date.now()}`); // 캐시 우회
-          if (!res.ok) return;
-          const parsed = await res.json();
-          const data = parsed && parsed.data ? parsed.data : parsed;
-          if (!data || !data.students) return;
-
-          const serverTime = parsed.exportedAt ? new Date(parsed.exportedAt).getTime() : 0;
-          const localTime = Number(localStorage.getItem(SYNC_KEY_LOCAL) || 0);
-
-          if (serverTime > localTime) {
-            // 서버가 더 최신이면 이 기기로 자동 가져오기
-            if (confirm("서버에 더 최신 학습관리 데이터가 있습니다. 이 기기로 가져올까요?")) {
-              applyServerData(data, serverTime);
-              alert("서버의 최신 데이터를 가져왔습니다.");
+        const localTime = Number(localStorage.getItem(SYNC_KEY_LOCAL) || 0);
+        const remotes = [];
+        if (getSyncToken()) {
+          try {
+            const res = await fetch(`${SERVER_JSON_URL}?t=${Date.now()}`);
+            if (res.ok) {
+              const parsed = await res.json();
+              const data = parsed && parsed.data ? parsed.data : parsed;
+              if (data && data.students) remotes.push({ label: "GitHub 서버", time: parsed.exportedAt ? new Date(parsed.exportedAt).getTime() : 0, data });
             }
-          } else if (localTime > serverTime && isAutoUpload()) {
-            // 로컬이 더 최신이면 자동으로 서버에 업로드
-            pushToGitHub(true);
-          }
-        } catch (err) {
-          console.error("시작 동기화 오류:", err);
+          } catch (err) { console.error(err); }
         }
-      }
-
-      // [수동 동기화] 서버 백업으로 이 기기 데이터 교체 (토큰 불필요)
-      async function loadFromServer() {
-        try {
-          const res = await fetch(`${SERVER_JSON_URL}?t=${Date.now()}`);
-          if (!res.ok) { alert("백업 파일을 찾을 수 없습니다. json 폴더의 studyroom-backup.json을 확인하세요."); return; }
-          const parsed = await res.json();
-          const data = parsed && parsed.data ? parsed.data : parsed;
-          if (!data || !data.students) { alert("백업 파일 형식이 올바르지 않습니다."); return; }
-          const when = parsed.exportedAt ? new Date(parsed.exportedAt).toLocaleString("ko-KR") : "시점 미상";
-          if (confirm(`서버 백업(${when})으로 이 기기의 데이터를 교체할까요?`)) {
-            applyServerData(data, parsed.exportedAt ? new Date(parsed.exportedAt).getTime() : 0);
-            alert("서버 데이터 동기화를 완료했습니다.");
-          }
-        } catch (err) {
-          console.error("서버 동기화 오류:", err);
-          alert("동기화 실패: 인터넷 연결을 확인하세요.");
+        if (isFbEnabled()) {
+          try { const remote = await fetchFirebaseRemote(); if (remote) remotes.push(remote); }
+          catch (err) { console.error(err); }
         }
+        const newer = remotes.filter((r) => r.time > localTime).sort((a, b) => b.time - a.time)[0];
+        if (newer) {
+          if (confirm(newer.label + "에 더 최신 학습관리 데이터가 있습니다. 이 기기로 가져올까요?")) {
+            applyServerData(newer.data, newer.time);
+            alert(newer.label + "의 최신 데이터를 가져왔습니다.");
+          }
+          return;
+        }
+        const gh = remotes.find((r) => r.label === "GitHub 서버");
+        if (getSyncToken() && isAutoUpload() && gh && localTime > gh.time) pushToGitHub(true);
+        const fb = remotes.find((r) => r.label === "Firebase");
+        if (isFbEnabled() && isFbAuto() && (!fb || localTime > fb.time)) pushToFirebase(true);
       }
-
-      // ---------- 동기화 설정 모달 제어 ----------
       function openSyncModal() {
         document.getElementById("sync-token-input").value = getSyncToken();
         document.getElementById("sync-auto-input").checked = isAutoUpload();
+        const cfg = getFbConfig();
+        document.getElementById("fb-api-key").value = cfg.apiKey || "";
+        document.getElementById("fb-project-id").value = cfg.projectId || "";
+        document.getElementById("fb-database-url").value = cfg.databaseURL || "";
+        document.getElementById("fb-auth-domain").value = cfg.authDomain || "";
+        document.getElementById("fb-app-id").value = cfg.appId || "";
+        document.getElementById("fb-enabled-input").checked = localStorage.getItem(FB_ON) === "true";
+        document.getElementById("fb-auto-input").checked = isFbAuto();
+        document.getElementById("fb-anon-input").checked = isFbAnon();
         updateSyncStatusText();
         document.getElementById("sync-modal").classList.remove("hidden");
         document.getElementById("sync-modal").classList.add("flex");
@@ -1842,27 +2244,59 @@
         document.getElementById("sync-modal").classList.add("hidden");
         document.getElementById("sync-modal").classList.remove("flex");
       }
-      function saveSyncSettings() {
+      function persistSyncForm() {
         localStorage.setItem(SYNC_KEY_TOKEN, document.getElementById("sync-token-input").value.trim());
         localStorage.setItem(SYNC_KEY_AUTO, String(document.getElementById("sync-auto-input").checked));
+        localStorage.setItem(FB_CFG, JSON.stringify({
+          apiKey: document.getElementById("fb-api-key").value.trim(),
+          projectId: document.getElementById("fb-project-id").value.trim(),
+          databaseURL: document.getElementById("fb-database-url").value.trim(),
+          authDomain: document.getElementById("fb-auth-domain").value.trim(),
+          appId: document.getElementById("fb-app-id").value.trim()
+        }));
+        localStorage.setItem(FB_ON, String(document.getElementById("fb-enabled-input").checked));
+        localStorage.setItem(FB_AUTO, String(document.getElementById("fb-auto-input").checked));
+        localStorage.setItem(FB_ANON, String(document.getElementById("fb-anon-input").checked));
+      }
+      function saveSyncSettings() {
+        persistSyncForm();
         closeSyncModal();
-        // 토큰과 자동 백업이 모두 켜져 있으면 즉시 한 번 업로드 시도
         if (getSyncToken() && isAutoUpload()) pushToGitHub(false);
+        if (isFbEnabled() && isFbAuto()) pushToFirebase(false);
       }
       function updateSyncStatusText() {
         const el = document.getElementById("sync-status-text");
         if (!el) return;
-        const last = Number(localStorage.getItem(SYNC_KEY_LAST) || 0);
-        el.textContent = last ? `마지막 업로드: ${new Date(last).toLocaleString("ko-KR")}` : "마지막 업로드: 기록 없음";
+        const gh = Number(localStorage.getItem(SYNC_KEY_LAST) || 0);
+        const fb = Number(localStorage.getItem(FB_LAST) || 0);
+        el.textContent = "GitHub 마지막 업로드: " + (gh ? new Date(gh).toLocaleString("ko-KR") : "기록 없음") + " · Firebase 마지막 업로드: " + (fb ? new Date(fb).toLocaleString("ko-KR") : "기록 없음");
       }
-
-      // 동기화 버튼 이벤트 연결
+      async function loadFromServer() {
+        try {
+          const res = await fetch(`${SERVER_JSON_URL}?t=${Date.now()}`);
+          if (!res.ok) { alert("백업 파일을 찾을 수 없습니다. json 폴더의 studyroom-backup.json을 확인하세요."); return; }
+          const parsed = await res.json();
+          const data = parsed && parsed.data ? parsed.data : parsed;
+          if (!data || !data.students) { alert("백업 파일 형식이 올바르지 않습니다."); return; }
+          const when = parsed.exportedAt ? new Date(parsed.exportedAt).toLocaleString("ko-KR") : "시점 미상";
+          if (confirm("서버 백업(" + when + ")으로 이 기기의 데이터를 교체할까요?")) {
+            applyServerData(data, parsed.exportedAt ? new Date(parsed.exportedAt).getTime() : 0);
+            alert("서버 데이터 동기화를 완료했습니다.");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("동기화 실패: 인터넷 연결을 확인하세요.");
+        }
+      }
       document.getElementById("btn-sync-pull").addEventListener("click", loadFromServer);
       document.getElementById("btn-sync-push").addEventListener("click", () => pushToGitHub(false));
       document.getElementById("btn-sync-settings").addEventListener("click", openSyncModal);
       document.getElementById("sync-modal-close").addEventListener("click", closeSyncModal);
       document.getElementById("sync-cancel-btn").addEventListener("click", closeSyncModal);
       document.getElementById("sync-save-btn").addEventListener("click", saveSyncSettings);
+      document.getElementById("fb-test-btn").addEventListener("click", () => { persistSyncForm(); testFirebase(); });
+      document.getElementById("fb-push-btn").addEventListener("click", () => { persistSyncForm(); pushToFirebase(false); });
+      document.getElementById("fb-pull-btn").addEventListener("click", () => { persistSyncForm(); pullFromFirebase(); });
 
       $("#btn-export").addEventListener("click", () => {
         const blob = new Blob([JSON.stringify(db, null, 2)], { type: "application/json" });
@@ -1878,17 +2312,10 @@
         reader.onload = () => {
           try {
             const parsed0 = JSON.parse(reader.result);
-            const parsed = parsed0 && parsed0.data ? parsed0.data : parsed0; // 동기화 래핑 형식도 지원
+            const parsed = parsed0 && parsed0.data ? parsed0.data : parsed0;
             if (!parsed.students) throw new Error("형식 오류");
-            db = parsed;
-            db.schedules = db.schedules || {};
-            db.attendance = db.attendance || {};
-            db.studyLogs = (db.studyLogs || []).map((l) => ({ ...l, eval: EVAL_MIGRATE[l.eval] || l.eval }));
-            db.counseling = db.counseling || [];
-            db.requests = db.requests || [];
-            db.workNotes = db.workNotes || [];
-            db.students = normalizeStudents(db.students, db);
-            db.counseling = (db.counseling || []).map((c) => ({ ...c, scope: c.scope === "month" ? "month" : "week" }));
+            db = hydrateDb(parsed);
+            scheduleMigrated = scheduleMigrated || lastHydrateMigrated;
             save();
             selectedStudentId = (seatedStudents()[0] || db.students[0] || {}).id || "";
             reportStudentId = selectedStudentId;
