@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-18T06:34:30.439Z",
+  "exportedAt": "2026-10-18T06:35:43.163Z",
   "version": 3,
   "data": {
     "students": [
@@ -9313,6 +9313,54 @@
         "eval": "학습완료",
         "start": "10:00",
         "end": "11:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvdgac9w69dh",
+        "studentId": "stu_2",
+        "date": "2026-10-17",
+        "subject": "영어",
+        "type": "문제풀이",
+        "eval": "보완필요",
+        "start": "11:00",
+        "end": "12:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvdgar9k6c1f",
+        "studentId": "stu_2",
+        "date": "2026-10-17",
+        "subject": "사회",
+        "type": "인강",
+        "eval": "학습완료",
+        "start": "13:00",
+        "end": "14:50",
+        "minutes": 110,
+        "note": ""
+      },
+      {
+        "id": "log_mvdgb39ydx2g",
+        "studentId": "stu_2",
+        "date": "2026-10-17",
+        "subject": "과학",
+        "type": "인강",
+        "eval": "학습완료",
+        "start": "15:00",
+        "end": "16:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvdgblc53a6d",
+        "studentId": "stu_2",
+        "date": "2026-10-17",
+        "subject": "영어",
+        "type": "인강",
+        "eval": "미완료",
+        "start": "16:00",
+        "end": "17:00",
         "minutes": 60,
         "note": ""
       }
