@@ -1,6 +1,6 @@
 {
   "app": "fineman2-1",
-  "exportedAt": "2026-10-19T07:02:11.296Z",
+  "exportedAt": "2026-10-19T07:03:18.331Z",
   "version": 5,
   "data": {
     "students": [
@@ -76,6 +76,21 @@
       "온라인점검"
     ],
     "interviews": [
+      {
+        "id": "int_1792393392975",
+        "studentId": "s_1791460481655",
+        "date": "2026-08-28",
+        "type": "온라인점검",
+        "contents": [
+          "한 주간 특이사항 점검 - 특이사항 없었다고 함"
+        ],
+        "followUp": {
+          "task": "",
+          "date": "",
+          "done": false
+        },
+        "createdAt": "2026-10-19T07:03:12.975Z"
+      },
       {
         "id": "int_1792393325911",
         "studentId": "s_1791460481655",
