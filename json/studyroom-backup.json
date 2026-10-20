@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-20T05:37:27.770Z",
+  "exportedAt": "2026-10-20T05:38:42.678Z",
   "version": 3,
   "data": {
     "students": [
@@ -7234,6 +7234,30 @@
         "end": "19:10",
         "minutes": 40,
         "note": ""
+      },
+      {
+        "id": "log_mvg94q20q5mr",
+        "studentId": "stu_14",
+        "date": "2026-10-19",
+        "subject": "기타",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "19:10",
+        "end": "19:40",
+        "minutes": 30,
+        "note": ""
+      },
+      {
+        "id": "log_mvg953ug4p5u",
+        "studentId": "stu_18",
+        "date": "2026-10-19",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "17:00",
+        "end": "18:00",
+        "minutes": 60,
+        "note": ""
       }
     ],
     "counseling": [
@@ -7403,6 +7427,13 @@
         "studentId": "stu_1",
         "date": "2026-10-15",
         "content": "학교 수행평가 일정으로 미입실 요청 - 허가",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mvg95zhcdqu2",
+        "studentId": "stu_16",
+        "date": "2026-10-19",
+        "content": "플래너 기재 누락 제출 (경고-향후 재발견시 벌점 부여)",
         "scope": "week"
       }
     ],
