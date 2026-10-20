@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-20T13:05:58.423Z",
+  "exportedAt": "2026-10-20T13:07:02.997Z",
   "version": 3,
   "data": {
     "students": [
@@ -7514,6 +7514,13 @@
         "studentId": "stu_16",
         "date": "2026-10-19",
         "content": "플래너 기재 누락 제출 (경고-향후 재발견시 벌점 부여)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mvgp6jxi05sp",
+        "studentId": "stu_19",
+        "date": "2026-10-20",
+        "content": "30분 지각 (영어 휴강에 따른 자습관 입실 시간 놓침) -> 경고로만 처리  (벌점 적용X)",
         "scope": "week"
       }
     ],
