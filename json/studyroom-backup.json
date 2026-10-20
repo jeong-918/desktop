@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-20T05:36:06.569Z",
+  "exportedAt": "2026-10-20T05:37:27.770Z",
   "version": 3,
   "data": {
     "students": [
@@ -7197,6 +7197,42 @@
         "start": "18:00",
         "end": "19:00",
         "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvg930uwri6b",
+        "studentId": "stu_6",
+        "date": "2026-10-19",
+        "subject": "지학",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "19:00",
+        "end": "20:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvg93qds45yd",
+        "studentId": "stu_20",
+        "date": "2026-10-19",
+        "subject": "사회",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "20:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mvg94dt5bheg",
+        "studentId": "stu_14",
+        "date": "2026-10-19",
+        "subject": "영어",
+        "type": "수행평가",
+        "eval": "학습완료",
+        "start": "18:30",
+        "end": "19:10",
+        "minutes": 40,
         "note": ""
       }
     ],
