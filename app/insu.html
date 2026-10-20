@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>학원 인수인계 관리</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Noto Sans KR', sans-serif; }
+  .card { background:#fff; border-radius:14px; box-shadow:0 1px 3px rgba(15,23,42,.08); border:1px solid #e2e8f0; }
+  .btn { display:inline-flex; align-items:center; gap:.4rem; padding:.45rem .9rem; border-radius:10px; font-size:.875rem; font-weight:500; transition:all .15s; cursor:pointer; white-space:nowrap; }
+  .btn-primary { background:#4f46e5; color:#fff; } .btn-primary:hover { background:#4338ca; }
+  .btn-ghost { background:#fff; color:#334155; border:1px solid #cbd5e1; } .btn-ghost:hover { background:#f1f5f9; }
+  .btn-danger { background:#fff; color:#dc2626; border:1px solid #fecaca; } .btn-danger:hover { background:#fef2f2; }
+  .btn-ok { background:#059669; color:#fff; } .btn-ok:hover { background:#047857; }
+  .inp { width:100%; border:1px solid #cbd5e1; border-radius:10px; padding:.45rem .7rem; font-size:.875rem; background:#fff; outline:none; transition:border .15s, box-shadow .15s; }
+  .inp:focus { border-color:#6366f1; box-shadow:0 0 0 3px rgba(99,102,241,.15); }
+  .tab-btn { padding:.55rem 1rem; border-radius:10px; font-size:.9rem; font-weight:500; color:#475569; white-space:nowrap; transition:all .15s; cursor:pointer; }
+  .tab-btn:hover { background:#e2e8f0; } .tab-btn.on { background:#4f46e5; color:#fff; }
+  .row-hover:hover { background:#f8fafc; cursor:pointer; }
+  .fade-in { animation:fi .2s ease; } @keyframes fi { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+  .day-btn { width:30px; height:30px; border-radius:8px; border:1px solid #cbd5e1; font-size:.8rem; cursor:pointer; transition:all .15s; }
+  .day-btn.on { background:#4f46e5; color:#fff; border-color:#4f46e5; }
+  .tl-line { border-left:2px solid #c7d2fe; }
+  th { white-space:nowrap; }
+</style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen">
+<div id="app"></div>
+<div id="modal"></div>
+<div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[100] space-y-2"></div>
+<input type="file" id="importFile" accept=".json,application/json" class="hidden">
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+/* ================= 설정 상수 ================= */
+// 배포 시 Firebase Realtime Database 주소를 미리 넣어두면 모든 기기에서 자동 연결됩니다.
+const DEFAULT_SYNC_URL = '';
+const LS_DATA = 'handoverApp.data.v1', LS_SYNC = 'handoverApp.sync.v1', LS_SESS = 'handoverApp.session.v1';
+const DAYS = ['일','월','화','수','목','금','토'];
+const COLLECTIONS = ['users','types','fields','filters','handovers'];
+const STATUS = {
+  unconfirmed: { label:'미확인', color:'#dc2626' },
+  partial: { label:'일부 확인', color:'#d97706' },
+  done: { label:'확인 완료', color:'#059669' }
+};
+
+/* ================= 유틸 ================= */
+const now = () => Date.now();
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad = n => String(n).padStart(2, '0');
+const ymd = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const parseYmd = s => { const [y,m,d] = s.split('-').map(Number); return new Date(y, m-1, d); };
+const addDays = (s, n) => { const d = parseYmd(s); d.setDate(d.getDate()+n); return ymd(d); };
+const todayStr = () => ymd(new Date());
+const fmtD = s => { if (!s) return ''; const d = parseYmd(s); return `${d.getMonth()+1}/${d.getDate()}(${DAYS[d.getDay()]})`; };
+const fmtDT = t => { const d = new Date(t); return `${d.getMonth()+1}/${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())}`; };
+const diffDays = (a, b) => Math.round((parseYmd(a) - parseYmd(b)) / 86400000);
+const arrOf = x => Array.isArray(x) ? x : (x && typeof x === 'object' ? Object.values(x) : []);
+const live = a => arrOf(a).filter(x => !x.deleted);
+const safeUrl = u => /^https?:\/\//i.test(u) ? u : 'https://' + u;
+const badge = (t, c) => `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap" style="background:${c}1f;color:${c}">${esc(t)}</span>`;
+const prioColor = v => ({'긴급':'#dc2626','보통':'#2563eb','낮음':'#64748b'}[v] || '#7c3aed');
+const PRIO_RANK = { '긴급':0, '보통':1, '낮음':2 };
+
+// 빈 값/순서 차이를 무시하는 안정적 문자열화 (동기화 변경 감지용)
+function stable(o) {
+  if (o === null || o === undefined) return '';
+  if (Array.isArray(o)) { const r = o.map(stable).filter(x => x !== ''); return r.length ? '[' + r.join(',') + ']' : ''; }
+  if (typeof o === 'object') {
+    const r = Object.keys(o).sort().map(k => { const v = stable(o[k]); return v === '' ? '' : JSON.stringify(k) + ':' + v; }).filter(Boolean);
+    return r.length ? '{' + r.join(',') + '}' : '';
+  }
+  return JSON.stringify(o);
+}
+const sig = s => COLLECTIONS.map(c => stable([...arrOf(s[c])].sort((a,b) => String(a.id).localeCompare(String(b.id))))).join('|');
+
+async function hashPw(loginId, pw) {
+  const s = `hov|${loginId.toLowerCase()}|${pw}`;
+  if (window.crypto && crypto.subtle) {
+    const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+    return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2,'0')).join('');
+  }
+  let h = 5381; for (const c of s) h = ((h << 5) + h + c.charCodeAt(0)) >>> 0;
+  return 'x' + h;
+}
+function toast(msg, type) {
+  const el = document.createElement('div');
+  el.className = 'fade-in px-4 py-2 rounded-xl text-sm text-white shadow-lg ' + (type === 'err' ? 'bg-red-600' : 'bg-slate-800');
+  el.textContent = msg;
+  document.getElementById('toast').appendChild(el);
+  setTimeout(() => el.remove(), 2800);
+}
+async function copyText(t) {
+  try { await navigator.clipboard.writeText(t); }
+  catch (e) { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+  toast('복사했습니다. 카톡/슬랙에 붙여넣으세요.');
+}
+function download(name, text, mime) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([text], { type: mime }));
+  a.download = name; a.click(); URL.revokeObjectURL(a.href);
+}
+
+/* ================= 데이터 모델 ================= */
+function defaultState() {
+  const types = [['t_counsel','학생 상담/학부모 연락','#0ea5e9'],['t_class','수업/진도','#4f46e5'],['t_attend','출결/결석 보강','#f59e0b'],
+    ['t_admin','수납/행정','#10b981'],['t_facility','시설/비품','#8b5cf6'],['t_exam','시험/과제 관리','#ef4444'],['t_etc','기타','#64748b']]
+    .map((t, i) => ({ id:t[0], name:t[1], color:t[2], ord:i, updatedAt:1 }));
+  const F = (id, label, type, role, o = {}) => Object.assign({ id, label, type, role, options:[], system:!!role, visible:true, inTable:true, updatedAt:1 }, o);
+  const fields = [
+    F('f_date','작성일','date','date',{ ord:0 }),
+    F('f_author','작성자','author','author',{ ord:1 }),
+    F('f_recipients','받는 사람','users','recipients',{ ord:2 }),
+    F('f_type','유형','type','type',{ ord:3 }),
+    F('f_title','제목','text','title',{ ord:4 }),
+    F('f_content','내용','textarea','content',{ ord:5, inTable:false }),
+    F('f_priority','중요도','select','priority',{ ord:6, options:['긴급','보통','낮음'] }),
+    F('f_due','마감일','date','due',{ ord:7 }),
+    F('f_student','관련 학생/반','text',null,{ ord:8 }),
+    F('f_link','첨부 링크','url',null,{ ord:9, inTable:false })
+  ];
+  const filters = [['fl_keyword','키워드 검색','__keyword'],['fl_period','기간(작성일)','f_date'],['fl_type','유형','f_type'],['fl_author','작성자','f_author'],
+    ['fl_recipient','담당자(받는 사람)','__recipient'],['fl_status','확인 여부','__status'],['fl_priority','중요도','f_priority']]
+    .map((f, i) => ({ id:f[0], label:f[1], key:f[2], ord:i, updatedAt:1 }));
+  return { users:[], types, fields, filters, handovers:[] };
+}
+function normalize(s) {
+  s = s || {};
+  COLLECTIONS.forEach(c => s[c] = arrOf(s[c]));
+  s.users.forEach(u => u.workDays = arrOf(u.workDays).map(Number));
+  s.fields.forEach(f => f.options = arrOf(f.options));
+  s.handovers.forEach(h => { h.data = h.data || {}; h.confirms = h.confirms || {}; });
+  return s;
+}
+function mergeConfirms(a, b) {
+  const out = Object.assign({}, a || {});
+  for (const k in (b || {})) if (!out[k] || (b[k].at || 0) > (out[k].at || 0)) out[k] = b[k];
+  return out;
+}
+// 기기 간 병합: 항목별 최신 수정본 우선, 확인 기록은 사용자별 최신 우선
+function mergeState(a, b) {
+  const out = {};
+  for (const c of COLLECTIONS) {
+    const m = new Map();
+    arrOf(a[c]).forEach(it => m.set(it.id, it));
+    arrOf(b[c]).forEach(it => {
+      const ex = m.get(it.id);
+      if (!ex) { m.set(it.id, it); return; }
+      let win = (it.updatedAt || 0) > (ex.updatedAt || 0) ? it : ex;
+      if (c === 'handovers') { win = Object.assign({}, win); win.confirms = mergeConfirms(ex.confirms, it.confirms); }
+      m.set(it.id, win);
+    });
+    out[c] = [...m.values()];
+    if (['types','fields','filters'].includes(c)) out[c].sort((x, y) => (x.ord || 0) - (y.ord || 0));
+  }
+  return normalize(out);
+}
+
+/* ================= 상태 ================= */
+let state = defaultState();
+try { const raw = localStorage.getItem(LS_DATA); if (raw) state = normalize(JSON.parse(raw)); } catch (e) {}
+let sync = { url: DEFAULT_SYNC_URL, key: 'main', auto: true };
+try { const raw = localStorage.getItem(LS_SYNC); if (raw) sync = Object.assign(sync, JSON.parse(raw)); } catch (e) {}
+let me = localStorage.getItem(LS_SESS) || sessionStorage.getItem(LS_SESS) || null;
+let syncStatus = { text: '로컬 저장', color: '#64748b', icon: 'fa-hard-drive' };
+let syncTimer = null, pollTimer = null, syncing = false;
+const ui = { tab:'dash', view:'table', filters:{}, briefDate: addDays(todayStr(), 1), sTab:'staff', authMode:'login' };
+
+/* ================= 조회 헬퍼 ================= */
+const activeUsers = () => live(state.users).filter(u => u.status === 'active');
+const userById = id => state.users.find(u => u.id === id);
+const userName = id => id === 'ALL' ? '전체' : (userById(id)?.name || '(삭제됨)');
+const meUser = () => userById(me);
+const isAdmin = () => meUser()?.role === 'admin';
+const typeById = id => state.types.find(t => t.id === id);
+const fieldById = id => state.fields.find(f => f.id === id);
+const fieldByRole = r => state.fields.find(f => f.role === r && !f.deleted);
+const liveFields = () => live(state.fields).sort((a, b) => (a.ord||0) - (b.ord||0));
+const liveTypes = () => live(state.types).sort((a, b) => (a.ord||0) - (b.ord||0));
+const liveFilters = () => live(state.filters).sort((a, b) => (a.ord||0) - (b.ord||0));
+const gv = (h, role) => { const f = fieldByRole(role); return f ? h.data[f.id] : undefined; };
+const authorOf = h => gv(h, 'author');
+const titleOf = h => gv(h, 'title') || '(제목 없음)';
+const allH = () => live(state.handovers);
+
+// 확인 대상자: 받는 사람 미지정/전체 → 모든 활성 근무자, 작성자 본인은 제외
+function targetsOf(h) {
+  const r = arrOf(gv(h, 'recipients'));
+  const act = activeUsers().map(u => u.id);
+  const ids = (!r.length || r.includes('ALL')) ? act : r.filter(x => act.includes(x));
+  return ids.filter(i => i !== authorOf(h));
+}
+const isConf = (h, u) => !!(h.confirms[u] && h.confirms[u].on !== false);
+function statusOf(h) {
+  const t = targetsOf(h); if (!t.length) return 'done';
+  const c = t.filter(i => isConf(h, i)).length;
+  return c === 0 ? 'unconfirmed' : (c < t.length ? 'partial' : 'done');
+}
+const confCount = h => { const t = targetsOf(h); return [t.filter(i => isConf(h, i)).length, t.length]; };
+function nextWorkDate(u, from) {
+  for (let i = 0; i < 14; i++) { const d = addDays(from, i); if (u.workDays.includes(parseYmd(d).getDay())) return d; }
+  return null;
+}
+const sortItems = list => list.sort((a, b) => (PRIO_RANK[gv(a,'priority')] ?? 3) - (PRIO_RANK[gv(b,'priority')] ?? 3)
+  || (gv(a,'due') || '9999').localeCompare(gv(b,'due') || '9999') || (a.createdAt - b.createdAt));
+const pendingOf = u => sortItems(allH().filter(h => targetsOf(h).includes(u) && !isConf(h, u)));
+
+/* ================= 저장 / 동기화 ================= */
+function saveLocal() { localStorage.setItem(LS_DATA, JSON.stringify(state)); }
+function save() { saveLocal(); scheduleSync(); }
+function touch(o) { o.updatedAt = now(); return o; }
+const endpoint = () => `${sync.url.replace(/\/+$/, '')}/handoverApp/${encodeURIComponent(sync.key || 'main')}.json`;
+const syncChip = () => `<button id="syncChip" data-act="openSync" class="btn btn-ghost !px-2.5 !py-1.5 text-xs" title="동기화 설정"><i class="fa-solid ${syncStatus.icon}" style="color:${syncStatus.color}"></i><span class="hidden sm:inline">${esc(syncStatus.text)}</span></button>`;
+function setStatus(text, color, icon) { syncStatus = { text, color, icon }; const el = document.getElementById('syncChip'); if (el) el.outerHTML = syncChip(); }
+function scheduleSync() { if (!sync.url) return; clearTimeout(syncTimer); syncTimer = setTimeout(() => syncNow(false), 1200); }
+function startPolling() {
+  clearInterval(pollTimer);
+  if (sync.url && sync.auto) pollTimer = setInterval(() => syncNow(false), 30000);
+}
+async function syncNow(manual) {
+  if (!sync.url) { if (manual) toast('동기화 주소가 설정되지 않았습니다.', 'err'); return; }
+  if (syncing) return; syncing = true;
+  setStatus('동기화 중...', '#4f46e5', 'fa-rotate fa-spin');
+  try {
+    const r = await fetch(endpoint());
+    if (!r.ok) throw new Error('GET ' + r.status);
+    const remoteRaw = await r.json();
+    const remote = remoteRaw ? normalize(remoteRaw) : null;
+    const before = sig(state);
+    const merged = remote ? mergeState(state, remote) : state;
+    const changed = sig(merged) !== before;
+    state = merged; saveLocal();
+    if (!remote || sig(merged) !== sig(remote)) {
+      const p = await fetch(endpoint(), { method:'PUT', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(state) });
+      if (!p.ok) throw new Error('PUT ' + p.status);
+    }
+    setStatus('동기화됨 ' + fmtDT(now()).split(' ')[1], '#059669', 'fa-cloud');
+    if (me && !activeUsers().some(u => u.id === me)) { me = null; localStorage.removeItem(LS_SESS); sessionStorage.removeItem(LS_SESS); changed && render(); }
+    if (changed) { if (manual) toast('최신 데이터를 반영했습니다.'); if (!document.getElementById('modal').innerHTML) render(); }
+    else if (manual) toast('이미 최신 상태입니다.');
+  } catch (e) {
+    setStatus('동기화 오류', '#dc2626', 'fa-triangle-exclamation');
+    if (manual) toast('동기화 실패: ' + e.message + ' (주소/규칙 확인)', 'err');
+  } finally { syncing = false; }
+}
+
+/* ================= 모달 ================= */
+function openModal(html, wide) {
+  document.getElementById('modal').innerHTML = `<div data-act="backdrop" class="fixed inset-0 z-50 bg-slate-900/50 flex items-start sm:items-center justify-center p-3 overflow-y-auto">
+    <div class="card fade-in w-full ${wide ? 'max-w-3xl' : 'max-w-lg'} my-4 max-h-[92vh] overflow-y-auto">${html}</div></div>`;
+}
+const closeModal = () => document.getElementById('modal').innerHTML = '';
+const modalHead = (title, icon) => `<div class="flex items-center justify-between px-5 py-3 border-b sticky top-0 bg-white z-10 rounded-t-[14px]">
+  <h3 class="font-bold text-base"><i class="fa-solid ${icon} text-indigo-600 mr-2"></i>${title}</h3>
+  <button data-act="closeModal" class="text-slate-400 hover:text-slate-700 text-lg px-2"><i class="fa-solid fa-xmark"></i></button></div>`;
+
+/* ================= 렌더: 최상위 ================= */
+function render() {
+  const app = document.getElementById('app');
+  if (!live(state.users).length) { app.innerHTML = setupHtml(); return; }
+  if (!me || !activeUsers().some(u => u.id === me)) { app.innerHTML = authHtml(); return; }
+  const u = meUser();
+  const pend = pendingOf(me).length;
+  const tabs = [['dash','fa-chart-pie','대시보드'],['list','fa-table-list','인수인계 목록'],['brief','fa-calendar-check','출근일 브리핑'],['settings','fa-gear','설정']];
+  app.innerHTML = `
+  <header class="bg-white border-b sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-3 sm:px-5 py-2.5 flex items-center gap-2 flex-wrap">
+      <div class="flex items-center gap-2 mr-2"><div class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center"><i class="fa-solid fa-right-left"></i></div>
+        <div class="font-bold leading-tight">인수인계<div class="text-[11px] font-normal text-slate-500 -mt-0.5">학원 업무 연속성 관리</div></div></div>
+      <nav class="flex gap-1 overflow-x-auto flex-1 order-last sm:order-none w-full sm:w-auto">
+        ${tabs.map(t => `<button data-act="nav" data-tab="${t[0]}" class="tab-btn ${ui.tab === t[0] ? 'on' : ''}"><i class="fa-solid ${t[1]} mr-1.5"></i>${t[2]}${t[0]==='dash' && pend ? `<span class="ml-1.5 bg-red-500 text-white text-[11px] rounded-full px-1.5">${pend}</span>` : ''}</button>`).join('')}
+      </nav>
+      <button data-act="newH" class="btn btn-primary"><i class="fa-solid fa-plus"></i><span>새 인수인계</span></button>
+      ${syncChip()}
+      <div class="flex items-center gap-2 text-sm"><span class="hidden sm:inline text-slate-600"><i class="fa-solid fa-user mr-1"></i>${esc(u.name)}${u.role === 'admin' ? ' <span class="text-[11px] text-indigo-600">(관리자)</span>' : ''}</span>
+        <button data-act="logout" class="btn btn-ghost !px-2.5 !py-1.5" title="로그아웃"><i class="fa-solid fa-right-from-bracket"></i></button></div>
+    </div>
+  </header>
+  <main class="max-w-7xl mx-auto px-3 sm:px-5 py-5 fade-in">${ui.tab === 'dash' ? dashHtml() : ui.tab === 'list' ? listPage() : ui.tab === 'brief' ? briefHtml() : settingsHtml()}</main>`;
+  if (ui.tab === 'list') renderListArea();
+}
+
+/* ================= 인증 화면 ================= */
+const authShell = inner => `<div class="min-h-screen flex items-center justify-center p-4"><div class="card w-full max-w-md p-6 fade-in">
+  <div class="text-center mb-5"><div class="w-14 h-14 mx-auto rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-2xl mb-2"><i class="fa-solid fa-right-left"></i></div>
+  <h1 class="text-xl font-bold">학원 인수인계 관리</h1><p class="text-sm text-slate-500">근무자 간 업무 연속성을 위한 공유 노트</p></div>${inner}
+  <div class="mt-4 pt-3 border-t text-center"><button data-act="openSync" class="text-xs text-slate-500 hover:text-indigo-600"><i class="fa-solid fa-cloud-arrow-down mr-1"></i>다른 기기 데이터 불러오기 (동기화 설정)</button></div></div></div>`;
+const setupHtml = () => authShell(`<div class="bg-indigo-50 text-indigo-800 text-sm rounded-xl p-3 mb-4"><i class="fa-solid fa-circle-info mr-1"></i>처음 사용하시네요. 먼저 <b>관리자 계정</b>을 만들어 주세요. 이미 다른 기기에서 쓰고 있다면 아래 '동기화 설정'으로 데이터를 먼저 불러오세요.</div>
+  <form data-form="setup" class="space-y-3">
+    <input class="inp" name="name" placeholder="이름 (예: 홍길동)" required>
+    <input class="inp" name="loginId" placeholder="아이디" required autocomplete="username">
+    <input class="inp" type="password" name="pw" placeholder="비밀번호 (4자 이상)" required minlength="4" autocomplete="new-password">
+    <button class="btn btn-primary w-full justify-center">관리자 계정 만들기</button></form>`);
+function authHtml() {
+  const login = ui.authMode === 'login';
+  return authShell(`<div class="flex gap-1 mb-4 bg-slate-100 p-1 rounded-xl">
+    <button data-act="authMode" data-m="login" class="flex-1 py-1.5 rounded-lg text-sm ${login ? 'bg-white shadow font-medium' : 'text-slate-500'}">로그인</button>
+    <button data-act="authMode" data-m="signup" class="flex-1 py-1.5 rounded-lg text-sm ${!login ? 'bg-white shadow font-medium' : 'text-slate-500'}">가입 신청</button></div>
+    ${login ? `<form data-form="login" class="space-y-3">
+      <input class="inp" name="loginId" placeholder="아이디" required autocomplete="username">
+      <input class="inp" type="password" name="pw" placeholder="비밀번호" required autocomplete="current-password">
+      <label class="flex items-center gap-2 text-sm text-slate-600"><input type="checkbox" name="keep"> 이 기기에서 로그인 유지 (개인 기기에서만)</label>
+      <button class="btn btn-primary w-full justify-center">로그인</button></form>`
+    : `<form data-form="signup" class="space-y-3">
+      <input class="inp" name="name" placeholder="이름" required>
+      <input class="inp" name="loginId" placeholder="아이디" required autocomplete="username">
+      <input class="inp" type="password" name="pw" placeholder="비밀번호 (4자 이상)" required minlength="4" autocomplete="new-password">
+      <input class="inp" type="password" name="pw2" placeholder="비밀번호 확인" required autocomplete="new-password">
+      <p class="text-xs text-slate-500">가입 후 <b>관리자의 승인</b>이 있어야 로그인할 수 있습니다.</p>
+      <button class="btn btn-primary w-full justify-center">가입 신청</button></form>`}`);
+}
+
+/* ================= 대시보드 ================= */
+function dashHtml() {
+  const hs = allH(), t = todayStr();
+  const st = hs.map(statusOf);
+  const open = hs.filter((h, i) => st[i] !== 'done');
+  const cnt = { total: hs.length, un: st.filter(s => s === 'unconfirmed').length, pa: st.filter(s => s === 'partial').length, dn: st.filter(s => s === 'done').length,
+    urgent: open.filter(h => gv(h,'priority') === '긴급').length, overdue: open.filter(h => gv(h,'due') && gv(h,'due') < t).length };
+  const mine = pendingOf(me);
+  const card = (ic, label, val, c) => `<div class="card p-4 flex items-center gap-3"><div class="w-11 h-11 rounded-xl flex items-center justify-center text-lg" style="background:${c}1a;color:${c}"><i class="fa-solid ${ic}"></i></div>
+    <div><div class="text-xs text-slate-500">${label}</div><div class="text-2xl font-bold leading-tight">${val}</div></div></div>`;
+  const types = liveTypes().map(ty => ({ ty, total: hs.filter(h => gv(h,'type') === ty.id).length, open: open.filter(h => gv(h,'type') === ty.id).length }));
+  const maxT = Math.max(1, ...types.map(x => x.total));
+  const staff = activeUsers().map(u => ({ u, n: pendingOf(u.id).length }));
+  const maxS = Math.max(1, ...staff.map(x => x.n));
+  const confs = []; hs.forEach(h => Object.entries(h.confirms).forEach(([k, v]) => { if (v.on !== false) confs.push({ h, k, v }); }));
+  confs.sort((a, b) => b.v.at - a.v.at);
+  const recent = [...hs].sort((a, b) => b.createdAt - a.createdAt).slice(0, 6);
+  return `<div class="space-y-5">
+  <div class="grid grid-cols-2 lg:grid-cols-6 gap-3">
+    ${card('fa-inbox','전체 인수인계',cnt.total,'#4f46e5')}${card('fa-circle-exclamation','미확인',cnt.un,'#dc2626')}${card('fa-hourglass-half','일부 확인',cnt.pa,'#d97706')}
+    ${card('fa-circle-check','확인 완료',cnt.dn,'#059669')}${card('fa-fire','긴급 미완료',cnt.urgent,'#e11d48')}${card('fa-calendar-xmark','마감 초과',cnt.overdue,'#7c3aed')}</div>
+  <div class="card p-4"><div class="flex items-center justify-between mb-3 flex-wrap gap-2"><h2 class="font-bold"><i class="fa-solid fa-bell text-red-500 mr-2"></i>내가 확인해야 할 인수인계 <span class="text-red-600">${mine.length}건</span></h2>
+    ${mine.length ? `<button data-act="copyBrief" data-uid="${me}" class="btn btn-ghost text-xs"><i class="fa-regular fa-copy"></i>메신저용 복사</button>` : ''}</div>
+    ${mine.length ? `<div class="space-y-2">${mine.map(h => itemRow(h, me)).join('')}</div>` : '<p class="text-sm text-slate-500 py-4 text-center"><i class="fa-solid fa-face-smile mr-1"></i>확인할 인수인계가 없습니다.</p>'}</div>
+  <div class="grid lg:grid-cols-2 gap-5">
+    <div class="card p-4"><h2 class="font-bold mb-3"><i class="fa-solid fa-tags text-indigo-600 mr-2"></i>유형별 현황 <span class="text-xs font-normal text-slate-500">(진하게: 미완료 / 연하게: 전체)</span></h2>
+      <div class="space-y-2.5">${types.map(x => `<div><div class="flex justify-between text-sm mb-1"><span>${esc(x.ty.name)}</span><span class="text-slate-500">${x.open} / ${x.total}</span></div>
+        <div class="h-2.5 rounded-full bg-slate-100 overflow-hidden relative"><div class="absolute h-full rounded-full opacity-30" style="width:${x.total / maxT * 100}%;background:${x.ty.color}"></div>
+        <div class="absolute h-full rounded-full" style="width:${x.open / maxT * 100}%;background:${x.ty.color}"></div></div></div>`).join('') || '<p class="text-sm text-slate-400">유형이 없습니다.</p>'}</div></div>
+    <div class="card p-4"><h2 class="font-bold mb-3"><i class="fa-solid fa-user-clock text-indigo-600 mr-2"></i>담당자별 미확인 건수</h2>
+      <div class="space-y-2.5">${staff.map(x => `<div><div class="flex justify-between text-sm mb-1"><span>${esc(x.u.name)} <span class="text-xs text-slate-400">${x.u.workDays.map(d => DAYS[d]).join('·') || '근무요일 미등록'}</span></span><span class="${x.n ? 'text-red-600 font-medium' : 'text-slate-500'}">${x.n}건</span></div>
+        <div class="h-2.5 rounded-full bg-slate-100 overflow-hidden"><div class="h-full rounded-full ${x.n ? 'bg-red-400' : 'bg-emerald-400'}" style="width:${x.n / maxS * 100}%"></div></div></div>`).join('')}</div></div></div>
+  <div class="grid lg:grid-cols-2 gap-5">
+    <div class="card p-4"><h2 class="font-bold mb-3"><i class="fa-solid fa-clock-rotate-left text-indigo-600 mr-2"></i>최근 등록</h2>
+      <div class="divide-y">${recent.map(h => `<div data-act="detail" data-id="${h.id}" class="py-2 row-hover px-1 rounded flex items-center gap-2 text-sm"><span class="flex-1 truncate">${esc(titleOf(h))}</span>
+        <span class="text-xs text-slate-500 whitespace-nowrap">${esc(userName(authorOf(h)))} · ${fmtDT(h.createdAt)}</span></div>`).join('') || '<p class="text-sm text-slate-400">없음</p>'}</div></div>
+    <div class="card p-4"><h2 class="font-bold mb-3"><i class="fa-solid fa-clipboard-check text-emerald-600 mr-2"></i>최근 확인 기록</h2>
+      <div class="divide-y">${confs.slice(0, 6).map(c => `<div data-act="detail" data-id="${c.h.id}" class="py-2 row-hover px-1 rounded flex items-center gap-2 text-sm"><i class="fa-solid fa-check text-emerald-600"></i>
+        <span class="flex-1 truncate"><b>${esc(userName(c.k))}</b> · ${esc(titleOf(c.h))}</span><span class="text-xs text-slate-500 whitespace-nowrap">${fmtDT(c.v.at)}</span></div>`).join('') || '<p class="text-sm text-slate-400">아직 확인 기록이 없습니다.</p>'}</div></div></div>
+  </div>`;
+}
+function itemRow(h, uidForConfirm) {
+  const ty = typeById(gv(h,'type')), p = gv(h,'priority'), due = gv(h,'due');
+  const over = due && due < todayStr();
+  const sf = fieldByRole('student') || fieldById('f_student');
+  return `<div data-act="detail" data-id="${h.id}" class="border rounded-xl p-3 row-hover flex items-center gap-3 flex-wrap">
+    <div class="flex-1 min-w-[200px]"><div class="flex items-center gap-1.5 flex-wrap mb-0.5">${ty ? badge(ty.name, ty.color) : ''}${p ? badge(p, prioColor(p)) : ''}
+      ${due ? `<span class="text-xs ${over ? 'text-red-600 font-medium' : 'text-slate-500'}"><i class="fa-regular fa-calendar mr-0.5"></i>마감 ${fmtD(due)}${over ? ' 초과' : ''}</span>` : ''}</div>
+      <div class="font-medium text-sm">${esc(titleOf(h))}</div>
+      <div class="text-xs text-slate-500">${esc(userName(authorOf(h)))} · ${fmtD(gv(h,'date'))}${sf && h.data[sf.id] ? ' · ' + esc(h.data[sf.id]) : ''}</div></div>
+    <button data-act="toggleConfirm" data-id="${h.id}" data-uid="${uidForConfirm}" class="btn btn-ok !py-1.5"><i class="fa-solid fa-check"></i>확인</button></div>`;
+}
+
+/* ================= 출근일 브리핑 ================= */
+function rosterHtml() {
+  return `<div class="grid grid-cols-7 gap-1.5 text-center">${DAYS.map((d, i) => {
+    const w = activeUsers().filter(u => u.workDays.includes(i));
+    return `<div class="rounded-xl border p-2 ${i === 0 ? 'bg-red-50/40' : i === 6 ? 'bg-blue-50/40' : 'bg-white'}"><div class="text-xs font-bold mb-1 ${i === 0 ? 'text-red-600' : i === 6 ? 'text-blue-600' : ''}">${d}</div>
+      <div class="space-y-0.5 text-[11px] sm:text-xs">${w.map(u => `<div class="truncate rounded bg-indigo-50 text-indigo-700 px-1">${esc(u.name)}</div>`).join('') || '<div class="text-slate-300">-</div>'}</div></div>`;
+  }).join('')}</div>`;
+}
+function briefHtml() {
+  const base = ui.briefDate;
+  const list = activeUsers().map(u => ({ u, next: nextWorkDate(u, base), items: pendingOf(u.id) }));
+  list.sort((a, b) => (a.next || '9999').localeCompare(b.next || '9999'));
+  return `<div class="space-y-5"><div class="card p-4"><div class="flex flex-wrap items-center gap-3 mb-3">
+    <h2 class="font-bold"><i class="fa-solid fa-calendar-check text-indigo-600 mr-2"></i>출근일 기준 확인 목록</h2>
+    <div class="flex items-center gap-2 ml-auto flex-wrap"><label class="text-sm text-slate-600">기준일</label>
+      <input type="date" data-chg="briefDate" class="inp !w-auto" value="${base}">
+      <button data-act="briefTomorrow" class="btn btn-ghost">내일</button><button data-act="briefToday" class="btn btn-ghost">오늘</button></div></div>
+    <p class="text-sm text-slate-600 mb-3">기준일(<b>${fmtD(base)}</b>) 이후 첫 출근일이 빠른 순서로 정렬됩니다. 각 담당자가 다음 출근 때 확인해야 할 미확인 인수인계를 모았습니다.</p>${rosterHtml()}</div>
+  <div class="grid md:grid-cols-2 gap-4">${list.map(x => `<div class="card p-4 ${x.next === base ? 'ring-2 ring-indigo-400' : ''}">
+    <div class="flex items-center gap-2 flex-wrap mb-2"><div class="font-bold">${esc(x.u.name)}</div>
+      ${x.next ? badge(`${fmtD(x.next)} 출근${x.next === base ? ' (기준일)' : ' · D+' + diffDays(x.next, base)}`, x.next === base ? '#4f46e5' : '#64748b') : badge('근무요일 미등록','#94a3b8')}
+      <span class="ml-auto text-sm ${x.items.length ? 'text-red-600 font-medium' : 'text-emerald-600'}">${x.items.length ? x.items.length + '건 대기' : '대기 없음'}</span>
+      ${x.items.length ? `<button data-act="copyBrief" data-uid="${x.u.id}" data-date="${x.next || base}" class="btn btn-ghost !py-1 text-xs"><i class="fa-regular fa-copy"></i>복사</button>` : ''}</div>
+    <div class="space-y-2">${x.items.map(h => itemRow(h, x.u.id)).join('')}</div></div>`).join('') || '<div class="card p-8 text-center text-slate-400 md:col-span-2">등록된 근무자가 없습니다.</div>'}</div></div>`;
+}
+
+/* ================= 목록 (필터 + 표/칸반/타임라인) ================= */
+function listPage() {
+  return `<div class="space-y-4"><div class="card p-4"><div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+    <h2 class="font-bold"><i class="fa-solid fa-filter text-indigo-600 mr-2"></i>검색 · 필터</h2>
+    <div class="flex gap-2"><button data-act="resetFilters" class="btn btn-ghost text-xs"><i class="fa-solid fa-rotate-left"></i>초기화</button>
+    <button data-act="copyList" class="btn btn-ghost text-xs"><i class="fa-regular fa-copy"></i>결과 복사</button></div></div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">${liveFilters().map(filterControl).join('')}</div></div>
+  <div class="flex items-center gap-2 flex-wrap"><div class="flex bg-white border rounded-xl p-1">${[['table','fa-table','표'],['kanban','fa-table-columns','칸반'],['timeline','fa-timeline','타임라인']]
+    .map(v => `<button data-act="setView" data-v="${v[0]}" class="px-3 py-1.5 rounded-lg text-sm ${ui.view === v[0] ? 'bg-indigo-600 text-white' : 'text-slate-600 hover:bg-slate-100'}"><i class="fa-solid ${v[1]} mr-1"></i>${v[2]}</button>`).join('')}</div>
+    <span id="listCount" class="text-sm text-slate-500"></span></div>
+  <div id="listArea"></div></div>`;
+}
+function filterControl(fl) {
+  const lbl = `<label class="block text-xs text-slate-500 mb-1">${esc(fl.label)}</label>`;
+  const sel = (opts, v) => `<select class="inp" data-fil="${fl.id}"><option value="">전체</option>${opts.map(o => `<option value="${esc(o[0])}" ${v === o[0] ? 'selected' : ''}>${esc(o[1])}</option>`).join('')}</select>`;
+  const v = ui.filters[fl.id];
+  if (fl.key === '__keyword') return `<div class="sm:col-span-2">${lbl}<input class="inp" data-fil="${fl.id}" placeholder="제목·내용·학생명 등 검색" value="${esc(v || '')}"></div>`;
+  if (fl.key === '__status') return `<div>${lbl}${sel([['unconfirmed','미확인'],['partial','일부 확인'],['done','확인 완료'],['mine','내 미확인']], v)}</div>`;
+  if (fl.key === '__recipient') return `<div>${lbl}${sel(activeUsers().map(u => [u.id, u.name]), v)}</div>`;
+  const f = fieldById(fl.key); if (!f || f.deleted) return `<div>${lbl}<div class="text-xs text-red-500">연결된 필드가 삭제됨</div></div>`;
+  if (f.type === 'date') { const r = v || {}; return `<div class="sm:col-span-2">${lbl}<div class="flex items-center gap-2"><input type="date" class="inp" data-fil="${fl.id}" data-part="from" value="${r.from || ''}"><span>~</span><input type="date" class="inp" data-fil="${fl.id}" data-part="to" value="${r.to || ''}"></div></div>`; }
+  if (f.type === 'select') return `<div>${lbl}${sel(f.options.map(o => [o, o]), v)}</div>`;
+  if (f.type === 'type') return `<div>${lbl}${sel(liveTypes().map(t => [t.id, t.name]), v)}</div>`;
+  if (f.type === 'author' || f.type === 'users') return `<div>${lbl}${sel(activeUsers().map(u => [u.id, u.name]), v)}</div>`;
+  return `<div>${lbl}<input class="inp" data-fil="${fl.id}" placeholder="포함 검색" value="${esc(v || '')}"></div>`;
+}
+function fmtPlain(f, h) {
+  const v = h.data[f.id];
+  if (f.type === 'author') return userName(v);
+  if (f.type === 'users') { const a = arrOf(v); return (!a.length || a.includes('ALL')) ? '전체' : a.map(userName).join(', '); }
+  if (f.type === 'type') return typeById(v)?.name || '';
+  if (f.type === 'date') return v ? fmtD(v) : '';
+  return v == null ? '' : String(v);
+}
+const textAll = h => liveFields().map(f => fmtPlain(f, h)).join(' ').toLowerCase();
+function filteredList() {
+  const list = allH().filter(h => liveFilters().every(fl => {
+    const v = ui.filters[fl.id];
+    if (v === undefined || v === '' || (typeof v === 'object' && !v.from && !v.to)) return true;
+    if (fl.key === '__keyword') return textAll(h).includes(String(v).toLowerCase());
+    if (fl.key === '__status') return v === 'mine' ? (targetsOf(h).includes(me) && !isConf(h, me)) : statusOf(h) === v;
+    if (fl.key === '__recipient') return targetsOf(h).includes(v);
+    const f = fieldById(fl.key); if (!f || f.deleted) return true;
+    const x = h.data[f.id];
+    if (f.type === 'date') return (!v.from || (x && x >= v.from)) && (!v.to || (x && x <= v.to));
+    if (f.type === 'users') return targetsOf(h).includes(v);
+    if (['select','type','author'].includes(f.type)) return x === v;
+    return String(x || '').toLowerCase().includes(String(v).toLowerCase());
+  }));
+  return list.sort((a, b) => (gv(b,'date') || '').localeCompare(gv(a,'date') || '') || b.createdAt - a.createdAt);
+}
+function cellHtml(f, h) {
+  const v = h.data[f.id];
+  if (f.type === 'type') { const t = typeById(v); return t ? badge(t.name, t.color) : '<span class="text-slate-300">-</span>'; }
+  if (f.type === 'select') return v ? (f.role === 'priority' ? badge(v, prioColor(v)) : esc(v)) : '';
+  if (f.type === 'url') return v ? `<a href="${esc(safeUrl(v))}" target="_blank" rel="noopener" class="text-blue-600 hover:underline"><i class="fa-solid fa-link mr-1"></i>링크</a>` : '';
+  if (f.type === 'textarea') return `<span class="text-slate-600">${esc(String(v || '').slice(0, 50))}${String(v || '').length > 50 ? '…' : ''}</span>`;
+  if (f.type === 'date' && f.role === 'due' && v && v < todayStr() && statusOf(h) !== 'done') return `<span class="text-red-600 font-medium">${fmtD(v)}</span>`;
+  if (f.role === 'title') return `<span class="font-medium">${esc(v || '(제목 없음)')}</span>`;
+  return esc(fmtPlain(f, h));
+}
+function confCell(h) {
+  const s = statusOf(h), [c, t] = confCount(h);
+  const mineBtn = targetsOf(h).includes(me) ? `<button data-act="toggleConfirm" data-id="${h.id}" data-uid="${me}" class="ml-1 text-xs ${isConf(h, me) ? 'text-emerald-600' : 'text-indigo-600'} hover:underline">${isConf(h, me) ? '<i class="fa-solid fa-circle-check"></i>' : '확인하기'}</button>` : '';
+  return `<div class="flex items-center gap-1 flex-wrap">${badge(STATUS[s].label, STATUS[s].color)}<span class="text-xs text-slate-500">${c}/${t}</span>${mineBtn}</div>`;
+}
+function renderListArea() {
+  const el = document.getElementById('listArea'); if (!el) return;
+  const list = filteredList();
+  document.getElementById('listCount').textContent = `총 ${list.length}건`;
+  if (!list.length) { el.innerHTML = '<div class="card p-10 text-center text-slate-400"><i class="fa-regular fa-folder-open text-3xl mb-2"></i><div>조건에 맞는 인수인계가 없습니다.</div></div>'; return; }
+  if (ui.view === 'table') {
+    const cols = liveFields().filter(f => f.inTable);
+    el.innerHTML = `<div class="card overflow-x-auto"><table class="w-full text-sm"><thead class="bg-slate-50 text-slate-600 text-left"><tr>
+      ${cols.map(f => `<th class="px-3 py-2.5 font-medium">${esc(f.label)}</th>`).join('')}<th class="px-3 py-2.5 font-medium">확인 현황</th></tr></thead>
+      <tbody class="divide-y">${list.map(h => `<tr data-act="detail" data-id="${h.id}" class="row-hover">${cols.map(f => `<td class="px-3 py-2.5 align-top">${cellHtml(f, h)}</td>`).join('')}<td class="px-3 py-2.5 align-top">${confCell(h)}</td></tr>`).join('')}</tbody></table></div>`;
+  } else if (ui.view === 'kanban') {
+    const rf = fieldByRole('recipients');
+    el.innerHTML = `<div class="grid md:grid-cols-3 gap-4">${Object.keys(STATUS).map(k => {
+      const items = list.filter(h => statusOf(h) === k);
+      return `<div class="bg-slate-200/60 rounded-2xl p-3"><div class="flex items-center justify-between mb-2 px-1"><div class="font-bold text-sm" style="color:${STATUS[k].color}"><i class="fa-solid fa-circle text-[8px] mr-1.5"></i>${STATUS[k].label}</div><span class="text-xs bg-white rounded-full px-2 py-0.5">${items.length}</span></div>
+      <div class="space-y-2 max-h-[70vh] overflow-y-auto pr-1">${items.map(h => {
+        const ty = typeById(gv(h,'type')), p = gv(h,'priority'), due = gv(h,'due'), [c, t] = confCount(h);
+        return `<div data-act="detail" data-id="${h.id}" class="card p-3 row-hover"><div class="flex gap-1.5 flex-wrap mb-1">${ty ? badge(ty.name, ty.color) : ''}${p ? badge(p, prioColor(p)) : ''}</div>
+          <div class="font-medium text-sm mb-1">${esc(titleOf(h))}</div><div class="text-xs text-slate-500">${esc(userName(authorOf(h)))} → ${esc(rf ? fmtPlain(rf, h) : '')}</div>
+          <div class="flex items-center justify-between mt-2 text-xs text-slate-500"><span>${fmtD(gv(h,'date'))}${due ? ' · 마감 ' + fmtD(due) : ''}</span><span>${c}/${t} 확인</span></div></div>`;
+      }).join('') || '<div class="text-xs text-slate-400 text-center py-4">없음</div>'}</div></div>`;
+    }).join('')}</div>`;
+  } else {
+    const groups = {}; list.forEach(h => { const d = gv(h,'date') || '날짜 없음'; (groups[d] = groups[d] || []).push(h); });
+    el.innerHTML = `<div class="card p-4 sm:p-6">${Object.keys(groups).sort().reverse().map(d => `<div class="mb-5 last:mb-0"><div class="font-bold text-indigo-700 mb-2"><i class="fa-regular fa-calendar mr-1.5"></i>${d === '날짜 없음' ? d : fmtD(d) + ' <span class="text-xs font-normal text-slate-400">' + d + '</span>'}</div>
+      <div class="tl-line ml-2 pl-4 space-y-2">${groups[d].map(h => {
+        const ty = typeById(gv(h,'type')), p = gv(h,'priority'), s = statusOf(h);
+        return `<div data-act="detail" data-id="${h.id}" class="border rounded-xl p-3 row-hover relative"><span class="absolute -left-[23px] top-4 w-3 h-3 rounded-full border-2 border-white" style="background:${STATUS[s].color}"></span>
+          <div class="flex items-center gap-1.5 flex-wrap mb-1">${ty ? badge(ty.name, ty.color) : ''}${p ? badge(p, prioColor(p)) : ''}${badge(STATUS[s].label, STATUS[s].color)}<span class="text-xs text-slate-400 ml-auto">${fmtDT(h.createdAt)} · ${esc(userName(authorOf(h)))}</span></div>
+          <div class="font-medium text-sm">${esc(titleOf(h))}</div><div class="text-sm text-slate-600 line-clamp-2">${esc(gv(h,'content') || '')}</div></div>`;
+      }).join('')}</div></div>`).join('')}</div>`;
+  }
+}
+
+/* ================= 상세 / 작성 모달 ================= */
+function openDetail(id) {
+  const h = state.handovers.find(x => x.id === id); if (!h) return;
+  const fields = liveFields().filter(f => f.role !== 'title');
+  const s = statusOf(h);
+  const rows = fields.map(f => { const v = fmtPlain(f, h);
+    if (f.type === 'url' && h.data[f.id]) return `<div><dt class="text-xs text-slate-500">${esc(f.label)}</dt><dd class="text-sm">${cellHtml(f, h)}</dd></div>`;
+    if (!v) return '';
+    return `<div class="${f.type === 'textarea' ? 'sm:col-span-2' : ''}"><dt class="text-xs text-slate-500">${esc(f.label)}</dt><dd class="text-sm ${f.type === 'textarea' ? 'whitespace-pre-wrap bg-slate-50 rounded-lg p-3' : ''}">${f.type === 'type' || f.role === 'priority' ? cellHtml(f, h) : esc(v)}</dd></div>`; }).join('');
+  const targets = targetsOf(h).map(i => userById(i)).filter(Boolean);
+  openModal(`${modalHead('인수인계 상세', 'fa-file-lines')}<div class="p-5 space-y-4">
+    <div><div class="flex items-center gap-2 mb-1">${badge(STATUS[s].label, STATUS[s].color)}<span class="text-xs text-slate-400">등록 ${fmtDT(h.createdAt)}${h.updatedAt > h.createdAt + 1000 ? ' · 수정 ' + fmtDT(h.updatedAt) : ''}</span></div>
+      <h2 class="text-lg font-bold">${esc(titleOf(h))}</h2></div>
+    <dl class="grid sm:grid-cols-2 gap-3">${rows}</dl>
+    <div><div class="font-bold text-sm mb-2"><i class="fa-solid fa-user-check text-emerald-600 mr-1.5"></i>담당자별 확인 현황</div>
+      <div class="border rounded-xl divide-y">${targets.map(u => { const c = h.confirms[u.id], ok = isConf(h, u.id), nx = nextWorkDate(u, todayStr());
+        return `<div class="flex items-center gap-2 p-2.5 text-sm flex-wrap"><span class="font-medium w-20">${esc(u.name)}</span>
+          <span class="flex-1 text-xs ${ok ? 'text-emerald-600' : 'text-slate-500'}">${ok ? `<i class="fa-solid fa-circle-check mr-1"></i>${fmtDT(c.at)} 확인${c.by && c.by !== u.id ? ' (' + esc(userName(c.by)) + ' 대리)' : ''}` : `미확인${nx ? ' · 다음 출근 ' + fmtD(nx) : ''}`}</span>
+          ${(u.id === me || isAdmin()) ? `<button data-act="toggleConfirm" data-id="${h.id}" data-uid="${u.id}" data-reopen="1" class="btn ${ok ? 'btn-ghost' : 'btn-ok'} !py-1 text-xs">${ok ? '확인 취소' : '<i class="fa-solid fa-check"></i>확인'}</button>` : ''}</div>`; }).join('') || '<div class="p-3 text-sm text-slate-400">확인 대상자가 없습니다.</div>'}</div></div>
+    <div class="flex gap-2 flex-wrap pt-2 border-t"><button data-act="copyH" data-id="${h.id}" class="btn btn-ghost"><i class="fa-regular fa-copy"></i>카톡/슬랙용 복사</button>
+      <button data-act="editH" data-id="${h.id}" class="btn btn-ghost"><i class="fa-solid fa-pen"></i>수정</button>
+      <button data-act="delH" data-id="${h.id}" class="btn btn-danger ml-auto"><i class="fa-regular fa-trash-can"></i>삭제</button></div></div>`, true);
+}
+function fieldInput(f, v) {
+  const a = `id="fv_${f.id}" data-fid="${f.id}"`;
+  if (f.type === 'textarea') return `<textarea ${a} rows="5" class="inp">${esc(v || '')}</textarea>`;
+  if (f.type === 'date') return `<input ${a} type="date" class="inp" value="${esc(v || '')}">`;
+  if (f.type === 'author') return `<select ${a} class="inp">${activeUsers().map(u => `<option value="${u.id}" ${v === u.id ? 'selected' : ''}>${esc(u.name)}</option>`).join('')}</select>`;
+  if (f.type === 'type') return `<select ${a} class="inp"><option value="">선택</option>${liveTypes().map(t => `<option value="${t.id}" ${v === t.id ? 'selected' : ''}>${esc(t.name)}</option>`).join('')}</select>`;
+  if (f.type === 'select') return `<select ${a} class="inp"><option value="">선택 안 함</option>${f.options.map(o => `<option ${v === o ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>`;
+  if (f.type === 'users') {
+    const sel = arrOf(v), all = !sel.length || sel.includes('ALL');
+    return `<div ${a} class="flex flex-wrap gap-2"><label class="flex items-center gap-1.5 border rounded-lg px-2.5 py-1.5 text-sm bg-indigo-50"><input type="checkbox" class="rec-all" value="ALL" ${all ? 'checked' : ''}> 전체</label>
+      ${activeUsers().map(u => `<label class="flex items-center gap-1.5 border rounded-lg px-2.5 py-1.5 text-sm"><input type="checkbox" class="rec-cb" value="${u.id}" ${!all && sel.includes(u.id) ? 'checked' : ''} ${all ? 'disabled' : ''}> ${esc(u.name)}</label>`).join('')}</div>`;
+  }
+  return `<input ${a} type="${f.type === 'number' ? 'number' : f.type === 'url' ? 'url' : 'text'}" class="inp" value="${esc(v || '')}" ${f.type === 'url' ? 'placeholder="https://"' : ''}>`;
+}
+function openForm(id) {
+  const h = id ? state.handovers.find(x => x.id === id) : null;
+  const data = h ? h.data : {};
+  const fields = liveFields().filter(f => f.visible);
+  const dflt = f => { if (data[f.id] !== undefined) return data[f.id]; if (f.role === 'date') return todayStr(); if (f.type === 'author') return me; if (f.type === 'users') return ['ALL']; return ''; };
+  openModal(`${modalHead(h ? '인수인계 수정' : '새 인수인계 작성', h ? 'fa-pen' : 'fa-pen-to-square')}<form data-form="handover" data-id="${id || ''}" class="p-5 space-y-3">
+    ${fields.map(f => `<div><label class="block text-sm font-medium mb-1">${esc(f.label)}</label>${fieldInput(f, dflt(f))}</div>`).join('')}
+    <div class="flex gap-2 justify-end pt-2"><button type="button" data-act="closeModal" class="btn btn-ghost">취소</button><button class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>저장</button></div></form>`, true);
+}
+function saveHandover(form) {
+  const id = form.dataset.id;
+  let h = id ? state.handovers.find(x => x.id === id) : null;
+  if (!h) { h = { id: uid(), createdAt: now(), data: {}, confirms: {} }; state.handovers.push(h); }
+  liveFields().forEach(f => {
+    const el = form.querySelector(`[data-fid="${f.id}"]`);
+    if (el) {
+      if (f.type === 'users') { const all = el.querySelector('.rec-all').checked; const ids = [...el.querySelectorAll('.rec-cb:checked')].map(x => x.value); h.data[f.id] = (all || !ids.length) ? ['ALL'] : ids; }
+      else h.data[f.id] = el.value;
+    } else if (h.data[f.id] === undefined) {
+      if (f.role === 'date') h.data[f.id] = todayStr(); else if (f.type === 'author') h.data[f.id] = me; else if (f.type === 'users') h.data[f.id] = ['ALL'];
+    }
+  });
+  touch(h); save(); closeModal(); render(); toast('저장했습니다.');
+}
+
+/* ================= 메신저용 텍스트 ================= */
+function buildCopy(h) {
+  const [c, t] = confCount(h);
+  const lines = [`📌 [인수인계] ${titleOf(h)}`];
+  liveFields().filter(f => !['title','content','date','author'].includes(f.role)).forEach(f => { const v = fmtPlain(f, h); if (v) lines.push(`• ${f.label}: ${v}`); });
+  lines.push(`• 작성: ${userName(authorOf(h))} (${fmtD(gv(h,'date'))})`);
+  const un = targetsOf(h).filter(i => !isConf(h, i)).map(userName);
+  lines.push(`• 확인 현황: ${c}/${t}${un.length ? ' (미확인: ' + un.join(', ') + ')' : ''}`);
+  const content = gv(h, 'content'); if (content) lines.push('', content);
+  return lines.join('\n');
+}
+function buildBrief(u, date) {
+  const user = userById(u), items = pendingOf(u);
+  const lines = [`📋 ${user.name}님 확인 요청 인수인계 ${items.length}건${date ? ` (출근일 ${fmtD(date)})` : ''}`];
+  items.forEach((h, i) => { const ty = typeById(gv(h,'type')), p = gv(h,'priority'), d = gv(h,'due');
+    lines.push(`${i + 1}. ${p ? '[' + p + '] ' : ''}${titleOf(h)}${ty ? ' (' + ty.name + ')' : ''} - ${userName(authorOf(h))}${d ? ', 마감 ' + fmtD(d) : ''}`); });
+  return lines.join('\n');
+}
+
+/* ================= 설정 화면 ================= */
+function settingsHtml() {
+  const tabs = [['staff','fa-users','근무자·근무표'],['types','fa-tags','유형'],['fields','fa-list-check','입력 필드'],['filters','fa-filter','필터'],['data','fa-cloud','계정·동기화·백업']];
+  const body = { staff: staffTab, types: typesTab, fields: fieldsTab, filters: filtersTab, data: dataTab }[ui.sTab]();
+  return `<div class="space-y-4"><div class="flex gap-1 overflow-x-auto bg-white border rounded-xl p-1">${tabs.map(t => `<button data-act="sTab" data-t="${t[0]}" class="tab-btn ${ui.sTab === t[0] ? 'on' : ''}"><i class="fa-solid ${t[1]} mr-1.5"></i>${t[2]}</button>`).join('')}</div>${body}</div>`;
+}
+const moveBtns = (col, id) => `<button data-act="move" data-col="${col}" data-id="${id}" data-dir="-1" class="text-slate-400 hover:text-indigo-600 px-1"><i class="fa-solid fa-chevron-up"></i></button><button data-act="move" data-col="${col}" data-id="${id}" data-dir="1" class="text-slate-400 hover:text-indigo-600 px-1"><i class="fa-solid fa-chevron-down"></i></button>`;
+const delBtn = (col, id) => `<button data-act="delCfg" data-col="${col}" data-id="${id}" class="btn btn-danger !py-1" title="삭제"><i class="fa-regular fa-trash-can"></i></button>`;
+
+function staffTab() {
+  const adm = isAdmin();
+  const pend = live(state.users).filter(u => u.status === 'pending');
+  return `<div class="card p-4"><h2 class="font-bold mb-3"><i class="fa-solid fa-calendar-week text-indigo-600 mr-2"></i>요일별 근무표</h2>${rosterHtml()}</div>
+  ${pend.length && adm ? `<div class="card p-4 border-amber-300 bg-amber-50"><h2 class="font-bold mb-2 text-amber-800"><i class="fa-solid fa-user-clock mr-2"></i>가입 승인 대기 ${pend.length}명</h2>
+    ${pend.map(u => `<div class="flex items-center gap-2 py-1.5 text-sm"><span class="flex-1">${esc(u.name)} <span class="text-slate-500">(${esc(u.loginId)})</span></span>
+      <button data-act="approve" data-id="${u.id}" class="btn btn-ok !py-1">승인</button><button data-act="delUser" data-id="${u.id}" class="btn btn-danger !py-1">거절</button></div>`).join('')}</div>` : ''}
+  <div class="card p-4"><div class="flex items-center justify-between mb-3 flex-wrap gap-2"><h2 class="font-bold"><i class="fa-solid fa-users text-indigo-600 mr-2"></i>근무자 목록</h2>
+    ${adm ? '<button data-act="addUser" class="btn btn-primary"><i class="fa-solid fa-user-plus"></i>근무자 추가</button>' : '<span class="text-xs text-slate-500">이름·권한은 관리자만 편집하고, 근무요일은 본인도 수정할 수 있습니다.</span>'}</div>
+    <div class="overflow-x-auto"><table class="w-full text-sm"><thead class="text-left text-slate-500"><tr><th class="py-2 pr-3">이름</th><th class="pr-3">아이디</th><th class="pr-3">권한</th><th class="pr-3">근무 요일</th>${adm ? '<th></th>' : ''}</tr></thead><tbody class="divide-y">
+    ${activeUsers().map(u => `<tr><td class="py-2 pr-3">${adm ? `<input class="inp !w-28" data-cfg="users|name" data-id="${u.id}" value="${esc(u.name)}">` : esc(u.name)}</td><td class="pr-3 text-slate-500">${esc(u.loginId)}</td>
+      <td class="pr-3">${adm ? `<select class="inp !w-24" data-cfg="users|role" data-id="${u.id}"><option value="staff" ${u.role === 'staff' ? 'selected' : ''}>근무자</option><option value="admin" ${u.role === 'admin' ? 'selected' : ''}>관리자</option></select>` : (u.role === 'admin' ? '관리자' : '근무자')}</td>
+      <td class="pr-3"><div class="flex gap-1">${DAYS.map((d, i) => `<button ${adm || u.id === me ? `data-act="toggleDay" data-id="${u.id}" data-day="${i}"` : 'disabled'} class="day-btn ${u.workDays.includes(i) ? 'on' : ''}">${d}</button>`).join('')}</div></td>
+      ${adm ? `<td class="text-right whitespace-nowrap"><button data-act="resetPw" data-id="${u.id}" class="btn btn-ghost !py-1 text-xs">비번 초기화</button> <button data-act="delUser" data-id="${u.id}" class="btn btn-danger !py-1 text-xs"><i class="fa-regular fa-trash-can"></i></button></td>` : ''}</tr>`).join('')}
+    </tbody></table></div></div>`;
+}
+function typesTab() {
+  return `<div class="card p-4"><div class="flex items-center justify-between mb-3"><h2 class="font-bold"><i class="fa-solid fa-tags text-indigo-600 mr-2"></i>인수인계 유형(항목)</h2>
+    <button data-act="addCfg" data-col="types" class="btn btn-primary"><i class="fa-solid fa-plus"></i>유형 추가</button></div>
+    ${liveTypes().map(t => `<div class="flex items-center gap-2 py-2 border-b last:border-0"><input type="color" data-cfg="types|color" data-id="${t.id}" value="${t.color}" class="w-9 h-9 rounded cursor-pointer border">
+      <input class="inp flex-1" data-cfg="types|name" data-id="${t.id}" value="${esc(t.name)}">${moveBtns('types', t.id)}${delBtn('types', t.id)}</div>`).join('')}
+    <p class="text-xs text-slate-500 mt-3">삭제한 유형을 쓰던 기존 인수인계는 유형이 비어 표시됩니다.</p></div>`;
+}
+const FIELD_TYPES = [['text','한 줄 글'],['textarea','여러 줄 글'],['select','선택 목록'],['date','날짜'],['url','링크'],['number','숫자']];
+const SYS_LABEL = { date:'작성일', author:'작성자', recipients:'받는 사람', type:'유형', title:'제목', content:'내용', priority:'중요도', due:'마감일' };
+function fieldsTab() {
+  return `<div class="card p-4"><div class="flex items-center justify-between mb-3 flex-wrap gap-2"><h2 class="font-bold"><i class="fa-solid fa-list-check text-indigo-600 mr-2"></i>입력 필드</h2>
+    <button data-act="addCfg" data-col="fields" class="btn btn-primary"><i class="fa-solid fa-plus"></i>필드 추가</button></div>
+    <div class="space-y-2">${liveFields().map(f => `<div class="border rounded-xl p-3 flex items-center gap-2 flex-wrap">
+      <input class="inp !w-40" data-cfg="fields|label" data-id="${f.id}" value="${esc(f.label)}">
+      ${f.system ? `<span class="text-xs bg-slate-100 text-slate-600 rounded-full px-2 py-1">기본 필드 · ${SYS_LABEL[f.role] || ''}</span>`
+        : `<select class="inp !w-32" data-cfg="fields|type" data-id="${f.id}">${FIELD_TYPES.map(t => `<option value="${t[0]}" ${f.type === t[0] ? 'selected' : ''}>${t[1]}</option>`).join('')}</select>`}
+      ${f.type === 'select' ? `<input class="inp flex-1 min-w-[160px]" data-cfg="fields|options" data-id="${f.id}" value="${esc(f.options.join(', '))}" placeholder="선택지를 쉼표(,)로 구분">` : '<span class="flex-1"></span>'}
+      <label class="text-xs flex items-center gap-1"><input type="checkbox" data-cfg="fields|visible" data-id="${f.id}" ${f.visible ? 'checked' : ''}>입력폼</label>
+      <label class="text-xs flex items-center gap-1"><input type="checkbox" data-cfg="fields|inTable" data-id="${f.id}" ${f.inTable ? 'checked' : ''}>표 열</label>
+      ${moveBtns('fields', f.id)}${f.system ? '<span class="w-9"></span>' : delBtn('fields', f.id)}</div>`).join('')}</div>
+    <p class="text-xs text-slate-500 mt-3">기본 필드는 대시보드·확인 기능에 쓰이므로 삭제할 수 없고, 이름 변경·숨김·순서 변경은 가능합니다.</p></div>`;
+}
+function filtersTab() {
+  const keys = [['__keyword','키워드 검색(전체)'],['__status','확인 여부'],['__recipient','담당자(받는 사람)'], ...liveFields().map(f => [f.id, '필드: ' + f.label])];
+  return `<div class="card p-4"><div class="flex items-center justify-between mb-3"><h2 class="font-bold"><i class="fa-solid fa-filter text-indigo-600 mr-2"></i>검색 · 필터 항목</h2>
+    <button data-act="addCfg" data-col="filters" class="btn btn-primary"><i class="fa-solid fa-plus"></i>필터 추가</button></div>
+    ${liveFilters().map(fl => `<div class="flex items-center gap-2 py-2 border-b last:border-0 flex-wrap"><input class="inp !w-44" data-cfg="filters|label" data-id="${fl.id}" value="${esc(fl.label)}">
+      <select class="inp flex-1 min-w-[180px]" data-cfg="filters|key" data-id="${fl.id}">${keys.map(k => `<option value="${k[0]}" ${fl.key === k[0] ? 'selected' : ''}>${esc(k[1])}</option>`).join('')}</select>
+      ${moveBtns('filters', fl.id)}${delBtn('filters', fl.id)}</div>`).join('')}
+    <p class="text-xs text-slate-500 mt-3">필드 종류에 따라 입력 방식이 자동으로 정해집니다. 날짜는 기간, 선택/유형/사람은 드롭다운, 글은 포함 검색입니다.</p></div>`;
+}
+function syncFormHtml() {
+  return `<div class="space-y-3"><div class="text-sm text-slate-600">Firebase Realtime Database 주소를 넣으면 PC·가정 기기가 같은 데이터를 공유합니다. 이 설정은 기기마다 한 번씩 입력하면 됩니다.</div>
+    <div><label class="block text-xs text-slate-500 mb-1">데이터베이스 주소</label><input id="syncUrl" class="inp" placeholder="https://프로젝트명-default-rtdb.firebaseio.com" value="${esc(sync.url)}"></div>
+    <div><label class="block text-xs text-slate-500 mb-1">공유 키 (학원 구분용, 추측하기 어려운 값 권장)</label><input id="syncKey" class="inp" value="${esc(sync.key)}"></div>
+    <label class="flex items-center gap-2 text-sm"><input id="syncAuto" type="checkbox" ${sync.auto ? 'checked' : ''}> 30초마다 자동 동기화</label>
+    <div class="flex gap-2 flex-wrap"><button data-act="saveSync" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>저장 후 동기화</button>
+      <button data-act="syncNowBtn" class="btn btn-ghost"><i class="fa-solid fa-rotate"></i>지금 동기화</button></div></div>`;
+}
+function dataTab() {
+  const u = meUser();
+  return `<div class="grid lg:grid-cols-2 gap-4">
+  <div class="card p-4 space-y-3"><h2 class="font-bold"><i class="fa-solid fa-user-gear text-indigo-600 mr-2"></i>내 계정</h2>
+    <div class="text-sm">${esc(u.name)} (${esc(u.loginId)}) · ${u.role === 'admin' ? '관리자' : '근무자'}</div>
+    <button data-act="changePw" class="btn btn-ghost"><i class="fa-solid fa-key"></i>비밀번호 변경</button></div>
+  <div class="card p-4"><h2 class="font-bold mb-3"><i class="fa-solid fa-cloud text-indigo-600 mr-2"></i>기기 간 동기화</h2>${syncFormHtml()}
+    <details class="mt-3 text-sm text-slate-600"><summary class="cursor-pointer font-medium text-indigo-700">설정 방법 (Firebase, 무료)</summary>
+      <ol class="list-decimal ml-5 mt-2 space-y-1"><li>Firebase 콘솔에서 프로젝트를 만들고 Realtime Database를 생성합니다.</li>
+      <li>Rules 탭에서 읽기/쓰기를 허용합니다. (테스트 모드)</li><li>상단의 데이터베이스 주소(https://…firebaseio.com)를 위 칸에 붙여넣습니다.</li>
+      <li>다른 기기에서도 같은 주소와 공유 키를 입력하면 같은 데이터가 보입니다.</li></ol>
+      <p class="mt-2 text-xs text-amber-700">주의: 주소와 키를 아는 사람은 데이터를 읽을 수 있습니다. 학생 실명·연락처 등 민감 정보는 가급적 입력하지 마세요. 비밀번호는 암호화(SHA-256)해 저장하지만, 서버 인증이 없는 간이 방식입니다.</p></details></div>
+  <div class="card p-4 space-y-3 lg:col-span-2"><h2 class="font-bold"><i class="fa-solid fa-box-archive text-indigo-600 mr-2"></i>백업 · 복원</h2>
+    <div class="flex gap-2 flex-wrap"><button data-act="exportJson" class="btn btn-ghost"><i class="fa-solid fa-file-code"></i>JSON 내보내기</button>
+      <button data-act="importJson" class="btn btn-ghost"><i class="fa-solid fa-file-import"></i>JSON 불러오기(병합)</button>
+      <button data-act="exportCsv" class="btn btn-ghost"><i class="fa-solid fa-file-csv"></i>인수인계 CSV</button>
+      ${isAdmin() ? '<button data-act="wipe" class="btn btn-danger ml-auto"><i class="fa-solid fa-triangle-exclamation"></i>이 기기 데이터 초기화</button>' : ''}</div>
+    <p class="text-xs text-slate-500">JSON에는 계정 정보(암호화된 비밀번호 포함)가 들어 있으니 안전하게 보관하세요.</p></div></div>`;
+}
+function exportCsv() {
+  const fs = liveFields();
+  const q = v => '"' + String(v ?? '').replace(/"/g, '""') + '"';
+  const rows = [[...fs.map(f => f.label), '확인 현황', '확인 기록'].map(q).join(',')];
+  allH().sort((a, b) => a.createdAt - b.createdAt).forEach(h => {
+    const [c, t] = confCount(h);
+    const rec = targetsOf(h).filter(i => isConf(h, i)).map(i => `${userName(i)}(${fmtDT(h.confirms[i].at)})`).join(' / ');
+    rows.push([...fs.map(f => f.type === 'date' ? (h.data[f.id] || '') : fmtPlain(f, h)), `${STATUS[statusOf(h)].label} ${c}/${t}`, rec].map(q).join(','));
+  });
+  download(`인수인계_${todayStr()}.csv`, '\ufeff' + rows.join('\n'), 'text/csv;charset=utf-8');
+}
+
+/* ================= 액션 처리 ================= */
+function reorder(col, id, dir) {
+  const list = col === 'types' ? liveTypes() : col === 'fields' ? liveFields() : liveFilters();
+  const i = list.findIndex(x => x.id === id), j = i + dir;
+  if (j < 0 || j >= list.length) return;
+  [list[i], list[j]] = [list[j], list[i]];
+  list.forEach((it, k) => { if (it.ord !== k) { it.ord = k; touch(it); } });
+}
+function addUserForm() {
+  openModal(`${modalHead('근무자 추가', 'fa-user-plus')}<form data-form="addUser" class="p-5 space-y-3">
+    <input class="inp" name="name" placeholder="이름" required><input class="inp" name="loginId" placeholder="아이디" required>
+    <input class="inp" type="password" name="pw" placeholder="임시 비밀번호 (4자 이상)" required minlength="4">
+    <select class="inp" name="role"><option value="staff">근무자</option><option value="admin">관리자</option></select>
+    <div class="flex justify-end gap-2"><button type="button" data-act="closeModal" class="btn btn-ghost">취소</button><button class="btn btn-primary">추가</button></div></form>`);
+}
+function changePwForm() {
+  openModal(`${modalHead('비밀번호 변경', 'fa-key')}<form data-form="changePw" class="p-5 space-y-3">
+    <input class="inp" type="password" name="cur" placeholder="현재 비밀번호" required>
+    <input class="inp" type="password" name="np" placeholder="새 비밀번호 (4자 이상)" required minlength="4">
+    <div class="flex justify-end gap-2"><button type="button" data-act="closeModal" class="btn btn-ghost">취소</button><button class="btn btn-primary">변경</button></div></form>`);
+}
+const idTaken = id => live(state.users).some(u => u.loginId.toLowerCase() === id.toLowerCase());
+const newUser = async (name, loginId, pw, role, status) => ({ id: uid(), name, loginId, pwHash: await hashPw(loginId, pw), role, status, workDays: [], createdAt: now(), updatedAt: now() });
+const login = (id, keep) => { me = id; (keep ? localStorage : sessionStorage).setItem(LS_SESS, id); if (!keep) localStorage.removeItem(LS_SESS); };
+
+const actions = {
+  closeModal: () => closeModal(),
+  backdrop: (el, e) => { if (e.target === el) closeModal(); },
+  nav: el => { ui.tab = el.dataset.tab; render(); window.scrollTo(0, 0); },
+  sTab: el => { ui.sTab = el.dataset.t; render(); },
+  authMode: el => { ui.authMode = el.dataset.m; render(); },
+  logout: () => { me = null; localStorage.removeItem(LS_SESS); sessionStorage.removeItem(LS_SESS); ui.tab = 'dash'; render(); },
+  newH: () => openForm(), detail: el => openDetail(el.dataset.id), editH: el => openForm(el.dataset.id),
+  delH: el => { if (!confirm('이 인수인계를 삭제할까요?')) return; const h = state.handovers.find(x => x.id === el.dataset.id); h.deleted = true; touch(h); save(); closeModal(); render(); toast('삭제했습니다.'); },
+  toggleConfirm: el => {
+    const h = state.handovers.find(x => x.id === el.dataset.id), u = el.dataset.uid;
+    if (u !== me && !isAdmin()) return toast('본인만 확인할 수 있습니다.', 'err');
+    h.confirms[u] = { at: now(), by: me, on: !isConf(h, u) }; touch(h); save();
+    if (el.dataset.reopen) openDetail(h.id);
+    render(); toast(h.confirms[u].on ? '확인 처리했습니다.' : '확인을 취소했습니다.');
+  },
+  copyH: el => copyText(buildCopy(state.handovers.find(x => x.id === el.dataset.id))),
+  copyBrief: el => copyText(buildBrief(el.dataset.uid, el.dataset.date)),
+  copyList: () => { const l = filteredList(); copyText(`📚 인수인계 목록 (${l.length}건)\n\n` + l.map(buildCopy).join('\n\n──────────\n\n')); },
+  setView: el => { ui.view = el.dataset.v; render(); },
+  resetFilters: () => { ui.filters = {}; render(); },
+  briefTomorrow: () => { ui.briefDate = addDays(todayStr(), 1); render(); },
+  briefToday: () => { ui.briefDate = todayStr(); render(); },
+  move: el => { reorder(el.dataset.col, el.dataset.id, +el.dataset.dir); save(); render(); },
+  addCfg: el => {
+    const col = el.dataset.col, list = state[col], ord = Math.max(-1, ...list.map(x => x.ord ?? 0)) + 1;
+    if (col === 'types') list.push({ id: 't_' + uid(), name: '새 유형', color: '#64748b', ord, updatedAt: now() });
+    if (col === 'fields') list.push({ id: 'f_' + uid(), label: '새 필드', type: 'text', role: null, options: [], system: false, visible: true, inTable: false, ord, updatedAt: now() });
+    if (col === 'filters') list.push({ id: 'fl_' + uid(), label: '새 필터', key: '__keyword', ord, updatedAt: now() });
+    save(); render();
+  },
+  delCfg: el => { if (!confirm('삭제할까요?')) return; const it = state[el.dataset.col].find(x => x.id === el.dataset.id); it.deleted = true; touch(it); save(); render(); },
+  toggleDay: el => { const u = userById(el.dataset.id), d = +el.dataset.day; u.workDays = u.workDays.includes(d) ? u.workDays.filter(x => x !== d) : [...u.workDays, d].sort(); touch(u); save(); render(); },
+  approve: el => { const u = userById(el.dataset.id); u.status = 'active'; touch(u); save(); render(); toast('승인했습니다.'); },
+  delUser: el => {
+    const u = userById(el.dataset.id);
+    if (u.id === me) return toast('본인 계정은 삭제할 수 없습니다.', 'err');
+    if (u.role === 'admin' && activeUsers().filter(x => x.role === 'admin').length <= 1) return toast('마지막 관리자는 삭제할 수 없습니다.', 'err');
+    if (!confirm(`${u.name} 계정을 삭제할까요?`)) return;
+    u.deleted = true; touch(u); save(); render();
+  },
+  addUser: () => addUserForm(),
+  resetPw: async el => { const u = userById(el.dataset.id), p = prompt(`${u.name}의 새 임시 비밀번호 (4자 이상)`); if (!p || p.length < 4) return; u.pwHash = await hashPw(u.loginId, p); touch(u); save(); toast('비밀번호를 초기화했습니다.'); },
+  changePw: () => changePwForm(),
+  openSync: () => openModal(`${modalHead('동기화 설정', 'fa-cloud')}<div class="p-5">${syncFormHtml()}</div>`),
+  saveSync: async () => {
+    sync = { url: document.getElementById('syncUrl').value.trim(), key: document.getElementById('syncKey').value.trim() || 'main', auto: document.getElementById('syncAuto').checked };
+    localStorage.setItem(LS_SYNC, JSON.stringify(sync)); startPolling();
+    if (!sync.url) { setStatus('로컬 저장', '#64748b', 'fa-hard-drive'); return toast('동기화를 해제했습니다.'); }
+    await syncNow(true); render();
+  },
+  syncNowBtn: async () => { await syncNow(true); render(); },
+  exportJson: () => download(`인수인계_백업_${todayStr()}.json`, JSON.stringify(state, null, 2), 'application/json'),
+  importJson: () => document.getElementById('importFile').click(),
+  exportCsv: () => exportCsv(),
+  wipe: () => { if (!confirm('이 기기의 저장 데이터를 모두 지울까요? (동기화된 서버 데이터는 유지됩니다)')) return; localStorage.removeItem(LS_DATA); localStorage.removeItem(LS_SESS); sessionStorage.removeItem(LS_SESS); location.reload(); }
+};
+
+/* ================= 이벤트 위임 ================= */
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-act]'); if (!el) return;
+  if (e.target.closest('a') && el.tagName === 'TR') return;
+  const fn = actions[el.dataset.act]; if (fn) fn(el, e);
+});
+document.addEventListener('submit', async e => {
+  const form = e.target.closest('[data-form]'); if (!form) return;
+  e.preventDefault();
+  const fd = Object.fromEntries(new FormData(form).entries()), kind = form.dataset.form;
+  if (kind === 'handover') return saveHandover(form);
+  if (kind === 'setup' || kind === 'signup' || kind === 'addUser') {
+    if (idTaken(fd.loginId)) return toast('이미 사용 중인 아이디입니다.', 'err');
+    if (kind === 'signup' && fd.pw !== fd.pw2) return toast('비밀번호 확인이 일치하지 않습니다.', 'err');
+    const role = kind === 'setup' ? 'admin' : (kind === 'addUser' ? fd.role : 'staff');
+    const status = kind === 'signup' ? 'pending' : 'active';
+    const u = await newUser(fd.name.trim(), fd.loginId.trim(), fd.pw, role, status);
+    state.users.push(u); save();
+    if (kind === 'setup') { login(u.id, false); render(); toast('관리자 계정을 만들었습니다.'); }
+    else if (kind === 'signup') { ui.authMode = 'login'; render(); toast('가입 신청 완료. 관리자 승인 후 로그인할 수 있습니다.'); }
+    else { closeModal(); render(); toast('근무자를 추가했습니다.'); }
+  }
+  if (kind === 'login') {
+    const u = live(state.users).find(x => x.loginId.toLowerCase() === fd.loginId.trim().toLowerCase());
+    if (!u || u.pwHash !== await hashPw(u.loginId, fd.pw)) return toast('아이디 또는 비밀번호가 올바르지 않습니다.', 'err');
+    if (u.status !== 'active') return toast('관리자 승인 대기 중입니다.', 'err');
+    login(u.id, !!fd.keep); render();
+  }
+  if (kind === 'changePw') {
+    const u = meUser();
+    if (u.pwHash !== await hashPw(u.loginId, fd.cur)) return toast('현재 비밀번호가 다릅니다.', 'err');
+    u.pwHash = await hashPw(u.loginId, fd.np); touch(u); save(); closeModal(); toast('비밀번호를 변경했습니다.');
+  }
+});
+function onFilter(e) {
+  const el = e.target; if (!el.dataset.fil) return;
+  const id = el.dataset.fil;
+  if (el.dataset.part) { ui.filters[id] = Object.assign({}, ui.filters[id], { [el.dataset.part]: el.value }); }
+  else ui.filters[id] = el.value;
+  renderListArea();
+}
+document.addEventListener('input', onFilter);
+document.addEventListener('change', e => {
+  const el = e.target;
+  if (el.dataset.fil) return onFilter(e);
+  if (el.dataset.chg === 'briefDate') { ui.briefDate = el.value || todayStr(); return render(); }
+  if (el.classList.contains('rec-all')) { el.closest('[data-fid]').querySelectorAll('.rec-cb').forEach(c => { c.disabled = el.checked; if (el.checked) c.checked = false; }); return; }
+  if (el.classList.contains('rec-cb')) { return; }
+  if (el.id === 'importFile') {
+    const file = el.files[0]; if (!file) return;
+    const r = new FileReader();
+    r.onload = () => {
+      try {
+        const incoming = normalize(JSON.parse(r.result));
+        if (!confirm('불러온 데이터를 현재 데이터와 병합할까요?')) return;
+        state = mergeState(state, incoming); save(); render(); toast('불러오기를 완료했습니다.');
+      } catch (err) { toast('올바른 JSON 파일이 아닙니다.', 'err'); }
+      el.value = '';
+    };
+    r.readAsText(file); return;
+  }
+  if (el.dataset.cfg) {
+    const [col, prop] = el.dataset.cfg.split('|');
+    const it = state[col].find(x => x.id === el.dataset.id); if (!it) return;
+    let v = el.type === 'checkbox' ? el.checked : el.value;
+    if (prop === 'options') v = v.split(',').map(s => s.trim()).filter(Boolean);
+    if (col === 'users' && prop === 'role' && v !== 'admin' && it.role === 'admin' && activeUsers().filter(u => u.role === 'admin').length <= 1) {
+      toast('최소 1명의 관리자가 필요합니다.', 'err'); return render();
+    }
+    it[prop] = v; touch(it); save();
+    if (col === 'fields' && prop === 'type') render();
+  }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ================= 초기 실행 ================= */
+render();
+startPolling();
+if (sync.url) syncNow(false);
+
+});
+</script>
+</body>
+</html>
