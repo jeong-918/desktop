@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-21T08:05:14.844Z",
+  "exportedAt": "2026-10-21T08:26:02.078Z",
   "version": 3,
   "data": {
     "students": [
@@ -2717,6 +2717,10 @@
         "2026-10-20": {
           "status": "입실",
           "time": ""
+        },
+        "2026-10-21": {
+          "status": "입실",
+          "time": ""
         }
       },
       "stu_17": {
@@ -2801,6 +2805,10 @@
         "2026-10-20": {
           "status": "입실",
           "time": ""
+        },
+        "2026-10-21": {
+          "status": "입실",
+          "time": ""
         }
       },
       "stu_muuvk470gwfd": {
@@ -2857,6 +2865,10 @@
           "time": ""
         },
         "2026-10-20": {
+          "status": "입실",
+          "time": ""
+        },
+        "2026-10-21": {
           "status": "입실",
           "time": ""
         }
@@ -7601,6 +7613,30 @@
         "start": "20:40",
         "end": "22:00",
         "minutes": 80,
+        "note": ""
+      },
+      {
+        "id": "log_mvhtusdedr8g",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-20",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "19:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvhtuz54v4hj",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-20",
+        "subject": "영어",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "19:00",
+        "end": "20:00",
+        "minutes": 60,
         "note": ""
       }
     ],
