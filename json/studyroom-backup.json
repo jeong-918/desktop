@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-20T13:08:18.352Z",
+  "exportedAt": "2026-10-21T07:58:25.365Z",
   "version": 3,
   "data": {
     "students": [
@@ -7337,6 +7337,18 @@
         "start": "17:00",
         "end": "18:00",
         "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvhtlhrx5me6",
+        "studentId": "stu_19",
+        "date": "2026-10-20",
+        "subject": "생명",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "18:55",
+        "end": "20:00",
+        "minutes": 65,
         "note": ""
       }
     ],
