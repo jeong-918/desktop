@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-22T05:46:13.978Z",
+  "exportedAt": "2026-10-22T05:47:39.112Z",
   "version": 3,
   "data": {
     "students": [
@@ -7705,6 +7705,54 @@
         "start": "18:00",
         "end": "20:00",
         "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mvj4bqfa4xuo",
+        "studentId": "stu_4",
+        "date": "2026-10-21",
+        "subject": "화학",
+        "type": "복습",
+        "eval": "미완료",
+        "start": "20:00",
+        "end": "22:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mvj4c7itvb9z",
+        "studentId": "stu_2",
+        "date": "2026-10-21",
+        "subject": "영어",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "18:20",
+        "minutes": 20,
+        "note": ""
+      },
+      {
+        "id": "log_mvj4cj9i4e9z",
+        "studentId": "stu_2",
+        "date": "2026-10-21",
+        "subject": "한국사",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "18:20",
+        "end": "19:00",
+        "minutes": 40,
+        "note": ""
+      },
+      {
+        "id": "log_mvj4d6w5grft",
+        "studentId": "stu_14",
+        "date": "2026-10-21",
+        "subject": "영어",
+        "type": "수행평가",
+        "eval": "학습완료",
+        "start": "17:30",
+        "end": "18:00",
+        "minutes": 30,
         "note": ""
       }
     ],
