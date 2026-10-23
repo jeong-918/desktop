@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-10-16T08:37:24.927Z",
-  "updatedAt": 1792139844927,
+  "exportedAt": "2026-10-23T05:32:02.712Z",
+  "updatedAt": 1792733522712,
   "daily": {
     "categories": [
       {
@@ -51,6 +51,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1792046891363
+      },
+      {
+        "id": "todo_1792733522711_hgo6d",
+        "title": "우진 수업 온라인 (22시)",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-10-25",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1792733522711
       }
     ]
   },
