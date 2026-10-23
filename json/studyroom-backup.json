@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-23T08:28:08.284Z",
+  "exportedAt": "2026-10-23T08:46:12.132Z",
   "version": 3,
   "data": {
     "students": [
@@ -3061,7 +3061,7 @@
           "time": ""
         },
         "2026-10-23": {
-          "status": "미입실(학원)",
+          "status": "입실",
           "time": ""
         }
       }
@@ -8565,13 +8565,6 @@
         "studentId": "stu_19",
         "date": "2026-10-20",
         "content": "30분 지각 (영어 휴강에 따른 자습관 입실 시간 놓침) -> 경고로만 처리  (벌점 적용X)",
-        "scope": "week"
-      },
-      {
-        "id": "cn_mvkkmsov17hf",
-        "studentId": "stu_muuvk470gwfd",
-        "date": "2026-10-23",
-        "content": "미강중 체육대회 건 - 미입실",
         "scope": "week"
       },
       {
