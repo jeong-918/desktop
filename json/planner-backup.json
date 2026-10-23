@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-10-23T05:34:57.149Z",
-  "updatedAt": 1792733697149,
+  "exportedAt": "2026-10-23T06:17:05.998Z",
+  "updatedAt": 1792736225998,
   "daily": {
     "categories": [
       {
@@ -107,10 +107,30 @@
         "title": "남한고 설명회 결과 정리",
         "categoryId": "cat_1792046767402",
         "date": "2026-10-23",
-        "status": "TODO",
+        "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
         "createdAt": 1792733697149
+      },
+      {
+        "id": "todo_1792733731125_lmcp0",
+        "title": "원장보고 진행 - 다음주 학교 진행 (신장 → 풍산/청아 → 하남까지) // 미사, 미강은 자체 편성 요청",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-10-23",
+        "status": "IN_PROGRESS",
+        "memo": "",
+        "time": "",
+        "createdAt": 1792733731125
+      },
+      {
+        "id": "todo_1792733748589_y10q6",
+        "title": "자습관 중간고사 성적 입력 종료할 것",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-10-23",
+        "status": "DONE",
+        "memo": "",
+        "time": "",
+        "createdAt": 1792733748589
       }
     ]
   },
