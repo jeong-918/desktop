@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-16T14:55:58.244Z",
+  "exportedAt": "2026-10-23T08:54:14.028Z",
   "apps": [
     {
       "id": "app-1",
@@ -136,6 +136,15 @@
       "icon": "📝",
       "xPct": 0.78,
       "yPct": 36.71
+    },
+    {
+      "id": "app-1792745646001",
+      "name": "2028대입분석",
+      "url": "https://power-2028-admission-atlas.pages.dev/",
+      "target": "newtab",
+      "icon": "🧮",
+      "xPct": 68.89,
+      "yPct": 1.65
     }
   ],
   "settings": {
