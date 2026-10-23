@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-23T08:46:12.132Z",
+  "exportedAt": "2026-10-23T09:33:31.689Z",
   "version": 3,
   "data": {
     "students": [
@@ -1973,7 +1973,7 @@
           "time": ""
         },
         "2026-10-23": {
-          "status": "미입실(학원)",
+          "status": "입실",
           "time": ""
         }
       },
@@ -2091,7 +2091,7 @@
           "time": ""
         },
         "2026-10-23": {
-          "status": "미입실(학원)",
+          "status": "입실",
           "time": ""
         }
       },
@@ -8568,17 +8568,17 @@
         "scope": "week"
       },
       {
-        "id": "cn_mvkkmxdqvu6n",
+        "id": "cn_mvkq747vke54",
         "studentId": "stu_16",
         "date": "2026-10-23",
-        "content": "미강중 체육대회 건 - 미입실",
+        "content": "미강중 체육대회 건 : 8시부터 입실",
         "scope": "week"
       },
       {
-        "id": "cn_mvkkn2h32g7n",
+        "id": "cn_mvkq77bg7r16",
         "studentId": "stu_18",
         "date": "2026-10-23",
-        "content": "미강중 체육대회 건 - 미입실",
+        "content": "미강중 체육대회 건 : 8시부터 입실",
         "scope": "week"
       }
     ],
