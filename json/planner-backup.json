@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-10-23T05:33:05.909Z",
-  "updatedAt": 1792733585909,
+  "exportedAt": "2026-10-23T05:34:57.149Z",
+  "updatedAt": 1792733697149,
   "daily": {
     "categories": [
       {
@@ -91,6 +91,26 @@
         "memo": "",
         "time": "",
         "createdAt": 1792733580407
+      },
+      {
+        "id": "todo_1792733617645_rqx4e",
+        "title": "인아 역사로 이해하는 현대세계 설계 최종픽스하기 (일월 검토하도록)",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-10-24",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1792733617645
+      },
+      {
+        "id": "todo_1792733697149_lpd3z",
+        "title": "남한고 설명회 결과 정리",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-10-23",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1792733697149
       }
     ]
   },
