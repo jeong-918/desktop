@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-23T06:05:13.658Z",
+  "exportedAt": "2026-10-23T06:10:41.600Z",
   "version": 3,
   "data": {
     "students": [
@@ -8301,6 +8301,18 @@
         "start": "20:00",
         "end": "22:00",
         "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mvkkg7jbz6ad",
+        "studentId": "stu_6",
+        "date": "2026-10-22",
+        "subject": "물리",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "21:15",
+        "end": "22:00",
+        "minutes": 45,
         "note": ""
       }
     ],
