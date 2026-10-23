@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-10-23T05:32:02.712Z",
-  "updatedAt": 1792733522712,
+  "exportedAt": "2026-10-23T05:33:05.909Z",
+  "updatedAt": 1792733585909,
   "daily": {
     "categories": [
       {
@@ -61,6 +61,36 @@
         "memo": "",
         "time": "",
         "createdAt": 1792733522711
+      },
+      {
+        "id": "todo_1792733543238_s0m1j",
+        "title": "민서 면접 일정 10.28 수 / 시간대 9시 풀픽스해보기",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-10-24",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1792733543238
+      },
+      {
+        "id": "todo_1792733555894_d4q36",
+        "title": "파인만에 민서 면접 일정 최종 통보",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-10-25",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1792733555894
+      },
+      {
+        "id": "todo_1792733580407_r95z7",
+        "title": "우진 세계문제와 미래사회 과목 정리 종료 및 슬라이드 추출 왼료시점",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-10-24",
+        "status": "IN_PROGRESS",
+        "memo": "",
+        "time": "",
+        "createdAt": 1792733580407
       }
     ]
   },
