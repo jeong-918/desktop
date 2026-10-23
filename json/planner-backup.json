@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-10-23T06:17:05.998Z",
-  "updatedAt": 1792736225998,
+  "exportedAt": "2026-10-23T06:32:12.819Z",
+  "updatedAt": 1792737132819,
   "daily": {
     "categories": [
       {
@@ -107,7 +107,7 @@
         "title": "남한고 설명회 결과 정리",
         "categoryId": "cat_1792046767402",
         "date": "2026-10-23",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1792733697149
