@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-23T08:54:14.028Z",
+  "exportedAt": "2026-10-23T10:23:02.054Z",
   "apps": [
     {
       "id": "app-1",
@@ -145,6 +145,15 @@
       "icon": "🧮",
       "xPct": 68.89,
       "yPct": 1.65
+    },
+    {
+      "id": "app-1792750973122",
+      "name": "강남권 고교편제",
+      "url": "https://dh.mirae-academy.co.kr/custom-page/260721/dh-spqb",
+      "target": "newtab",
+      "icon": "🧮",
+      "xPct": 68.89,
+      "yPct": 19.28
     }
   ],
   "settings": {
