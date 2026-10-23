@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-23T06:10:41.600Z",
+  "exportedAt": "2026-10-23T06:41:19.072Z",
   "version": 3,
   "data": {
     "students": [
@@ -1117,8 +1117,8 @@
           "21": "수학(유)"
         },
         "3": {
-          "18": "O",
-          "19": "O",
+          "18": "영어",
+          "19": "영어",
           "20": "영어",
           "21": "영어"
         },
@@ -8497,6 +8497,27 @@
         "studentId": "stu_19",
         "date": "2026-10-20",
         "content": "30분 지각 (영어 휴강에 따른 자습관 입실 시간 놓침) -> 경고로만 처리  (벌점 적용X)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mvkkmsov17hf",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-23",
+        "content": "미강중 체육대회 건 - 미입실",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mvkkmxdqvu6n",
+        "studentId": "stu_16",
+        "date": "2026-10-23",
+        "content": "미강중 체육대회 건 - 미입실",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mvkkn2h32g7n",
+        "studentId": "stu_18",
+        "date": "2026-10-23",
+        "content": "미강중 체육대회 건 - 미입실",
         "scope": "week"
       }
     ],
