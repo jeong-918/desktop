@@ -1,6 +1,6 @@
 {
   "app": "fineman2-1",
-  "exportedAt": "2026-10-19T11:39:48.566Z",
+  "exportedAt": "2026-10-23T05:34:09.318Z",
   "version": 5,
   "data": {
     "students": [
@@ -153,7 +153,7 @@
         "followUp": {
           "task": "내용 분석 후 관련 개요 수업 요청 (10/19~20일 사이 꼭 컨택 필수)",
           "date": "2026-10-20",
-          "done": false
+          "done": true
         },
         "createdAt": "2026-10-19T07:02:05.911Z"
       },
