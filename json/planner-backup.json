@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-10-24T09:16:54.385Z",
-  "updatedAt": 1792833414385,
+  "exportedAt": "2026-10-24T09:52:43.211Z",
+  "updatedAt": 1792835563211,
   "daily": {
     "categories": [
       {
@@ -67,7 +67,7 @@
         "title": "민서 면접 일정 10.28 수 / 시간대 9시 풀픽스해보기",
         "categoryId": "cat_1792046758202",
         "date": "2026-10-24",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1792733543238
