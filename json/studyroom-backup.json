@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-24T04:55:21.980Z",
+  "exportedAt": "2026-10-24T05:08:23.398Z",
   "version": 3,
   "data": {
     "students": [
@@ -8381,6 +8381,18 @@
         "start": "21:15",
         "end": "22:00",
         "minutes": 45,
+        "note": ""
+      },
+      {
+        "id": "log_mvlxue6ktidn",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-23",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "16:40",
+        "end": "17:00",
+        "minutes": 20,
         "note": ""
       }
     ],
