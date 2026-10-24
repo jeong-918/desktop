@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-24T09:25:37.687Z",
+  "exportedAt": "2026-10-24T11:13:11.224Z",
   "version": 3,
   "data": {
     "students": [
@@ -2242,6 +2242,10 @@
         },
         "2026-10-23": {
           "status": "미입실(학원)",
+          "time": ""
+        },
+        "2026-10-24": {
+          "status": "중도입실",
           "time": ""
         }
       },
@@ -8799,6 +8803,41 @@
         "studentId": "stu_18",
         "date": "2026-10-23",
         "content": "미강중 체육대회 건 : 8시부터 입실",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mvm71dc74j24",
+        "studentId": "stu_3",
+        "date": "2026-10-24",
+        "content": "10/24 토요일 : 학교 동아리 행사로 인한 미입실 (사전협의)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mvm71g8g0j2c",
+        "studentId": "stu_4",
+        "date": "2026-10-24",
+        "content": "10/24 토요일 : 학교 동아리 행사로 인한 미입실 (사전협의)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mvm71iimd6na",
+        "studentId": "stu_6",
+        "date": "2026-10-24",
+        "content": "10/24 토요일 : 학교 동아리 행사로 인한 미입실 (사전협의)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mvm71smvqe1j",
+        "studentId": "stu_11",
+        "date": "2026-10-24",
+        "content": "10/24 토요일 : 학교 동아리 행사로 인한 늦은 입실 요청 (사전 협의)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mvm71vzjhjg0",
+        "studentId": "stu_20",
+        "date": "2026-10-24",
+        "content": "10/24 토요일 : 학교 동아리 행사로 인한 미입실 (사전협의)",
         "scope": "week"
       }
     ],
