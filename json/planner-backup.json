@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-10-23T10:09:17.725Z",
-  "updatedAt": 1792750157725,
+  "exportedAt": "2026-10-24T06:13:48.497Z",
+  "updatedAt": 1792822428497,
   "daily": {
     "categories": [
       {
@@ -97,7 +97,7 @@
         "title": "인아 역사로 이해하는 현대세계 설계 최종픽스하기 (일월 검토하도록)",
         "categoryId": "cat_1792046758202",
         "date": "2026-10-24",
-        "status": "TODO",
+        "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
         "createdAt": 1792733617645
