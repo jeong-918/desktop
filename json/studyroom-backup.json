@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-25T03:26:37.896Z",
+  "exportedAt": "2026-10-25T03:27:46.254Z",
   "version": 3,
   "data": {
     "students": [
@@ -8940,6 +8940,54 @@
         "eval": "보완필요",
         "start": "14:00",
         "end": "14:50",
+        "minutes": 50,
+        "note": ""
+      },
+      {
+        "id": "log_mvn9nsc4307w",
+        "studentId": "stu_2",
+        "date": "2026-10-24",
+        "subject": "과학",
+        "type": "인강",
+        "eval": "학습완료",
+        "start": "15:00",
+        "end": "16:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvn9o2fyqks9",
+        "studentId": "stu_2",
+        "date": "2026-10-24",
+        "subject": "과학",
+        "type": "문제풀이",
+        "eval": "보완필요",
+        "start": "16:00",
+        "end": "17:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvn9ohmg9qdf",
+        "studentId": "stu_2",
+        "date": "2026-10-24",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "19:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvn9oupcl0vh",
+        "studentId": "stu_2",
+        "date": "2026-10-24",
+        "subject": "영어",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "19:00",
+        "end": "19:50",
         "minutes": 50,
         "note": ""
       }
