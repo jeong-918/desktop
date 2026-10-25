@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-25T03:54:58.964Z",
+  "exportedAt": "2026-10-25T03:56:10.899Z",
   "version": 3,
   "data": {
     "students": [
@@ -9265,6 +9265,42 @@
         "start": "20:00",
         "end": "21:00",
         "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvnao4dvjy1f",
+        "studentId": "stu_11",
+        "date": "2026-10-24",
+        "subject": "한국사",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "21:00",
+        "end": "22:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvnap48fyi0s",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-24",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "10:00",
+        "end": "10:30",
+        "minutes": 30,
+        "note": ""
+      },
+      {
+        "id": "log_mvnape1tomic",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-24",
+        "subject": "한국사",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "10:30",
+        "end": "11:00",
+        "minutes": 30,
         "note": ""
       }
     ],
