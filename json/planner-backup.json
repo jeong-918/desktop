@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-10-24T09:52:43.211Z",
-  "updatedAt": 1792835563211,
+  "exportedAt": "2026-10-24T09:52:57.939Z",
+  "updatedAt": 1792835577939,
   "daily": {
     "categories": [
       {
@@ -131,6 +131,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1792733748589
+      },
+      {
+        "id": "todo_1792835577939_z09ot",
+        "title": "민서 서류 면접 3회차 (20시)",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-10-28",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1792835577939
       }
     ]
   },
