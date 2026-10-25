@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-10-24T09:52:57.939Z",
-  "updatedAt": 1792835577939,
+  "exportedAt": "2026-10-25T17:51:57.580Z",
+  "updatedAt": 1792950717580,
   "daily": {
     "categories": [
       {
@@ -54,9 +54,9 @@
       },
       {
         "id": "todo_1792733522711_hgo6d",
-        "title": "우진 수업 온라인 (22시)",
+        "title": "우진 수업 온라인 (22시 30분)",
         "categoryId": "cat_1792046758202",
-        "date": "2026-10-25",
+        "date": "2026-10-27",
         "status": "TODO",
         "memo": "",
         "time": "",
@@ -77,7 +77,7 @@
         "title": "파인만에 민서 면접 일정 최종 통보",
         "categoryId": "cat_1792046758202",
         "date": "2026-10-25",
-        "status": "TODO",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1792733555894
@@ -87,7 +87,7 @@
         "title": "우진 세계문제와 미래사회 과목 정리 종료 및 슬라이드 추출 왼료시점",
         "categoryId": "cat_1792046758202",
         "date": "2026-10-24",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1792733580407
@@ -141,6 +141,36 @@
         "memo": "",
         "time": "",
         "createdAt": 1792835577939
+      },
+      {
+        "id": "todo_1792950693276_pls34",
+        "title": "신장고 입시설명회 지원",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-10-26",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1792950693276
+      },
+      {
+        "id": "todo_1792950702108_yfcw4",
+        "title": "풍산고 입시설명회 지원",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-10-27",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1792950702108
+      },
+      {
+        "id": "todo_1792950717580_fm6hk",
+        "title": "하남고 입시설명회 지원",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-10-30",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1792950717580
       }
     ]
   },
