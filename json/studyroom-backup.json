@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-25T03:25:25.563Z",
+  "exportedAt": "2026-10-25T03:26:37.896Z",
   "version": 3,
   "data": {
     "students": [
@@ -8893,6 +8893,54 @@
         "start": "20:00",
         "end": "22:00",
         "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mvn9m8yifqt4",
+        "studentId": "stu_2",
+        "date": "2026-10-24",
+        "subject": "국어",
+        "type": "인강",
+        "eval": "학습완료",
+        "start": "10:00",
+        "end": "10:40",
+        "minutes": 40,
+        "note": ""
+      },
+      {
+        "id": "log_mvn9ml9dx29x",
+        "studentId": "stu_2",
+        "date": "2026-10-24",
+        "subject": "한국사",
+        "type": "복습",
+        "eval": "보완필요",
+        "start": "10:40",
+        "end": "12:00",
+        "minutes": 80,
+        "note": ""
+      },
+      {
+        "id": "log_mvn9mz94bi63",
+        "studentId": "stu_2",
+        "date": "2026-10-24",
+        "subject": "사회",
+        "type": "인강",
+        "eval": "학습완료",
+        "start": "13:00",
+        "end": "14:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvn9ne6c3r9v",
+        "studentId": "stu_2",
+        "date": "2026-10-24",
+        "subject": "사회",
+        "type": "문제풀이",
+        "eval": "보완필요",
+        "start": "14:00",
+        "end": "14:50",
+        "minutes": 50,
         "note": ""
       }
     ],
