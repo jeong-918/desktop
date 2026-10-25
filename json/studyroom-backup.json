@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-25T03:18:28.184Z",
+  "exportedAt": "2026-10-25T03:19:36.118Z",
   "version": 3,
   "data": {
     "students": [
@@ -8665,6 +8665,30 @@
         "start": "13:30",
         "end": "16:00",
         "minutes": 150,
+        "note": ""
+      },
+      {
+        "id": "log_mvn9db2ftwi9",
+        "studentId": "stu_19",
+        "date": "2026-10-24",
+        "subject": "생명",
+        "type": "인강",
+        "eval": "학습완료",
+        "start": "16:00",
+        "end": "17:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvn9ec3k92w0",
+        "studentId": "stu_19",
+        "date": "2026-10-24",
+        "subject": "영어",
+        "type": "과제",
+        "eval": "보완필요",
+        "start": "18:30",
+        "end": "20:00",
+        "minutes": 90,
         "note": ""
       }
     ],
