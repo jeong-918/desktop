@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-10-25T17:51:57.580Z",
-  "updatedAt": 1792950717580,
+  "exportedAt": "2026-10-26T11:35:55.120Z",
+  "updatedAt": 1793014555120,
   "daily": {
     "categories": [
       {
@@ -147,7 +147,7 @@
         "title": "신장고 입시설명회 지원",
         "categoryId": "cat_1792046767402",
         "date": "2026-10-26",
-        "status": "TODO",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1792950693276
