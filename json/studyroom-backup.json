@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-27T05:19:22.189Z",
+  "exportedAt": "2026-10-27T05:20:32.885Z",
   "version": 3,
   "data": {
     "students": [
@@ -9597,6 +9597,54 @@
         "start": "20:45",
         "end": "21:00",
         "minutes": 15,
+        "note": ""
+      },
+      {
+        "id": "log_mvq8ken0g2xt",
+        "studentId": "stu_16",
+        "date": "2026-10-26",
+        "subject": "과학",
+        "type": "문제풀이",
+        "eval": "보완필요",
+        "start": "21:00",
+        "end": "22:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvq8kwp85xcu",
+        "studentId": "stu_18",
+        "date": "2026-10-26",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "17:00",
+        "end": "18:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvq8l78coe45",
+        "studentId": "stu_18",
+        "date": "2026-10-26",
+        "subject": "한국사",
+        "type": "수행평가",
+        "eval": "학습완료",
+        "start": "20:00",
+        "end": "22:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mvq8llejeof7",
+        "studentId": "stu_9",
+        "date": "2026-10-26",
+        "subject": "지학",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "20:00",
+        "minutes": 120,
         "note": ""
       }
     ],
