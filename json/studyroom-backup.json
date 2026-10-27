@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-27T05:15:42.633Z",
+  "exportedAt": "2026-10-27T05:16:56.304Z",
   "version": 3,
   "data": {
     "students": [
@@ -9428,6 +9428,54 @@
         "eval": "학습완료",
         "start": "16:10",
         "end": "16:30",
+        "minutes": 20,
+        "note": ""
+      },
+      {
+        "id": "log_mvq8g0pw4f3a",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-26",
+        "subject": "국어",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "16:30",
+        "end": "17:00",
+        "minutes": 30,
+        "note": ""
+      },
+      {
+        "id": "log_mvq8gcr0t0id",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-26",
+        "subject": "국어",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "18:20",
+        "minutes": 20,
+        "note": ""
+      },
+      {
+        "id": "log_mvq8gmd8rd8t",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-26",
+        "subject": "국어",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "18:20",
+        "end": "19:20",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvq8gy5wc1s2",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-26",
+        "subject": "한국사",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "19:20",
+        "end": "19:40",
         "minutes": 20,
         "note": ""
       }
