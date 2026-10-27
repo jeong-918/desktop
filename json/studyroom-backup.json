@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-27T05:20:32.885Z",
+  "exportedAt": "2026-10-27T05:21:35.552Z",
   "version": 3,
   "data": {
     "students": [
@@ -9645,6 +9645,42 @@
         "start": "18:00",
         "end": "20:00",
         "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mvq8lxctkzy4",
+        "studentId": "stu_9",
+        "date": "2026-10-26",
+        "subject": "수학",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "20:00",
+        "end": "22:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mvq8mgg4fjn7",
+        "studentId": "stu_14",
+        "date": "2026-10-26",
+        "subject": "지학",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "17:40",
+        "end": "18:40",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvq8mxrn5x80",
+        "studentId": "stu_14",
+        "date": "2026-10-26",
+        "subject": "수학",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "19:40",
+        "end": "20:10",
+        "minutes": 30,
         "note": ""
       }
     ],
