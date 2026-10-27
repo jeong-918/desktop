@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-27T05:11:52.704Z",
+  "exportedAt": "2026-10-27T05:15:42.633Z",
   "version": 3,
   "data": {
     "students": [
@@ -9418,6 +9418,18 @@
         "end": "22:00",
         "minutes": 30,
         "note": ""
+      },
+      {
+        "id": "log_mvq8fded1064",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-10-26",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "16:10",
+        "end": "16:30",
+        "minutes": 20,
+        "note": ""
       }
     ],
     "counseling": [
@@ -9653,24 +9665,10 @@
         "scope": "week"
       },
       {
-        "id": "cn_mvq8a8na5txf",
+        "id": "cn_mvq8b3mdaiis",
         "studentId": "stu_muuvk470gwfd",
         "date": "2026-10-27",
-        "content": "고입설명회 참여로 미입실",
-        "scope": "week"
-      },
-      {
-        "id": "cn_mvq8ac9au0y2",
-        "studentId": "stu_muuvk470gwfd",
-        "date": "2026-10-28",
-        "content": "고입설명회 참여로 미입실",
-        "scope": "week"
-      },
-      {
-        "id": "cn_mvq8afwljvao",
-        "studentId": "stu_muuvk470gwfd",
-        "date": "2026-10-30",
-        "content": "고입설명회 참여로 미입실",
+        "content": "고입설명회 참여로 미입실 (27,28,30)",
         "scope": "week"
       }
     ],
