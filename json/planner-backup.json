@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-10-26T11:35:55.120Z",
-  "updatedAt": 1793014555120,
+  "exportedAt": "2026-10-28T13:22:39.903Z",
+  "updatedAt": 1793193759903,
   "daily": {
     "categories": [
       {
@@ -57,7 +57,7 @@
         "title": "우진 수업 온라인 (22시 30분)",
         "categoryId": "cat_1792046758202",
         "date": "2026-10-27",
-        "status": "TODO",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1792733522711
@@ -137,7 +137,7 @@
         "title": "민서 서류 면접 3회차 (20시)",
         "categoryId": "cat_1792046758202",
         "date": "2026-10-28",
-        "status": "TODO",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1792835577939
@@ -157,7 +157,7 @@
         "title": "풍산고 입시설명회 지원",
         "categoryId": "cat_1792046767402",
         "date": "2026-10-27",
-        "status": "TODO",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1792950702108
@@ -171,6 +171,106 @@
         "memo": "",
         "time": "",
         "createdAt": 1792950717580
+      },
+      {
+        "id": "todo_1793192254965_sc045",
+        "title": "화/수 플래너 모두 완료시킬 것",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-10-29",
+        "status": "IN_PROGRESS",
+        "memo": "",
+        "time": "",
+        "createdAt": 1793192254965
+      },
+      {
+        "id": "todo_1793192274581_9i37h",
+        "title": "미사고 설명회 자료 정리 완료시킬 것",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-10-29",
+        "status": "IN_PROGRESS",
+        "memo": "",
+        "time": "",
+        "createdAt": 1793192274581
+      },
+      {
+        "id": "todo_1793192283309_gmwwy",
+        "title": "미강고 설명회 자료 정리 완료시킬 것",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-10-29",
+        "status": "IN_PROGRESS",
+        "memo": "",
+        "time": "",
+        "createdAt": 1793192283309
+      },
+      {
+        "id": "todo_1793192298514_vvex5",
+        "title": "하남고 설명회 리포트 완료시킬 것",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-10-30",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1793192298514
+      },
+      {
+        "id": "todo_1793192316021_0q34o",
+        "title": "우진 컨설팅 진행 내역 모두 업로드 정리하기",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-10-28",
+        "status": "DONE",
+        "memo": "",
+        "time": "",
+        "createdAt": 1793192316021
+      },
+      {
+        "id": "todo_1793192333493_f07pn",
+        "title": "우진 세계시민과 지리 과목 2차 심화 탐구 자료 만들기",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-10-28",
+        "status": "IN_PROGRESS",
+        "memo": "",
+        "time": "",
+        "createdAt": 1793192333493
+      },
+      {
+        "id": "todo_1793193513829_65iuq",
+        "title": "박우진- 전공문화학술제 대응하기 (완료시점 11/2발표)",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-11-01",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1793193513829
+      },
+      {
+        "id": "todo_1793193577157_y72wk",
+        "title": "우진 인문학 동아리 대응 (12월 기말직후 가동)",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-11-30",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1793193577157
+      },
+      {
+        "id": "todo_1793193685021_gq5l6",
+        "title": "박우진 - 세계문제와 미래사회 마감 대응 (완료시점 11/2발표)",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-11-01",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1793193685021
+      },
+      {
+        "id": "todo_1793193750492_azsie",
+        "title": "박우진- 세계문제와 미래사회 선택지 체크 (토/일작업 완료해야함)",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-10-30",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1793193750492
       }
     ]
   },
