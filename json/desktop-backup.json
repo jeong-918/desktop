@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-23T10:23:02.054Z",
+  "exportedAt": "2026-10-29T09:12:48.190Z",
   "apps": [
     {
       "id": "app-1",
@@ -154,6 +154,15 @@
       "icon": "🧮",
       "xPct": 68.89,
       "yPct": 19.28
+    },
+    {
+      "id": "app-1793265158909",
+      "name": "고등학교 교사 업무지원 (옆반)",
+      "url": "https://yeopban.kr/#sharing",
+      "target": "newtab",
+      "icon": "🧮",
+      "xPct": 68.58,
+      "yPct": 36.66
     }
   ],
   "settings": {
