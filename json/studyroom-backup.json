@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-29T06:05:16.557Z",
+  "exportedAt": "2026-10-29T06:06:41.935Z",
   "version": 3,
   "data": {
     "students": [
@@ -9973,6 +9973,54 @@
         "start": "21:00",
         "end": "21:30",
         "minutes": 30,
+        "note": ""
+      },
+      {
+        "id": "log_mvt53498jn0v",
+        "studentId": "stu_14",
+        "date": "2026-10-27",
+        "subject": "사회",
+        "type": "수행평가",
+        "eval": "학습완료",
+        "start": "21:30",
+        "end": "22:00",
+        "minutes": 30,
+        "note": ""
+      },
+      {
+        "id": "log_mvt53mjwmd2m",
+        "studentId": "stu_7",
+        "date": "2026-10-27",
+        "subject": "기타",
+        "type": "기타학습",
+        "eval": "학습완료",
+        "start": "19:40",
+        "end": "22:00",
+        "minutes": 140,
+        "note": ""
+      },
+      {
+        "id": "log_mvt53xc4ce4z",
+        "studentId": "stu_3",
+        "date": "2026-10-27",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "20:00",
+        "end": "22:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mvt54n44lhlu",
+        "studentId": "stu_9",
+        "date": "2026-10-27",
+        "subject": "지학",
+        "type": "인강",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "20:00",
+        "minutes": 120,
         "note": ""
       }
     ],
