@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-10-29T07:24:15.085Z",
-  "updatedAt": 1793258655085,
+  "exportedAt": "2026-10-29T08:44:48.493Z",
+  "updatedAt": 1793263488493,
   "daily": {
     "categories": [
       {
@@ -187,7 +187,7 @@
         "title": "미사고 설명회 자료 정리 완료시킬 것",
         "categoryId": "cat_1792046767402",
         "date": "2026-10-29",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1793192274581
@@ -197,7 +197,7 @@
         "title": "미강고 설명회 자료 정리 완료시킬 것",
         "categoryId": "cat_1792046767402",
         "date": "2026-10-29",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1793192283309
