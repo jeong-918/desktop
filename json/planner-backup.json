@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-10-28T13:22:39.903Z",
-  "updatedAt": 1793193759903,
+  "exportedAt": "2026-10-29T07:24:15.085Z",
+  "updatedAt": 1793258655085,
   "daily": {
     "categories": [
       {
@@ -177,7 +177,7 @@
         "title": "화/수 플래너 모두 완료시킬 것",
         "categoryId": "cat_1792046767402",
         "date": "2026-10-29",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1793192254965
@@ -227,7 +227,7 @@
         "title": "우진 세계시민과 지리 과목 2차 심화 탐구 자료 만들기",
         "categoryId": "cat_1792046758202",
         "date": "2026-10-28",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1793192333493
