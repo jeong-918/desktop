@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-29T09:12:48.190Z",
+  "exportedAt": "2026-10-29T11:01:14.211Z",
   "apps": [
     {
       "id": "app-1",
@@ -163,6 +163,15 @@
       "icon": "🧮",
       "xPct": 68.58,
       "yPct": 36.66
+    },
+    {
+      "id": "app-1793265195604",
+      "name": "다올대시보드",
+      "url": "https://jayu0422-blip.github.io/daol-timetable/admin.html",
+      "target": "newtab",
+      "icon": "🧮",
+      "xPct": 34.68,
+      "yPct": 1.64
     }
   ],
   "settings": {
