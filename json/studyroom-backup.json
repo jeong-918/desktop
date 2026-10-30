@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-30T06:34:36.770Z",
+  "exportedAt": "2026-10-30T08:11:19.995Z",
   "version": 3,
   "data": {
     "students": [
@@ -10593,6 +10593,18 @@
         "start": "18:00",
         "end": "20:00",
         "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mvulkqcp7sz1",
+        "studentId": "stu_8",
+        "date": "2026-10-29",
+        "subject": "국어",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "20:00",
+        "end": "20:30",
+        "minutes": 30,
         "note": ""
       }
     ],
