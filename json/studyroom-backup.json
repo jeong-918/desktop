@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-10-31T05:16:58.306Z",
+  "exportedAt": "2026-10-31T05:18:24.654Z",
   "version": 3,
   "data": {
     "students": [
@@ -1286,6 +1286,10 @@
         },
         "2026-10-30": {
           "status": "미입실(학원)",
+          "time": ""
+        },
+        "2026-10-31": {
+          "status": "미입실(기타)",
           "time": ""
         }
       },
@@ -10780,6 +10784,18 @@
         "eval": "학습완료",
         "start": "18:00",
         "end": "20:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mvvy8ldclw7v",
+        "studentId": "stu_9",
+        "date": "2026-10-30",
+        "subject": "영어",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "20:00",
+        "end": "22:00",
         "minutes": 120,
         "note": ""
       }
