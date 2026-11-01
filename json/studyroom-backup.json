@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-01T03:34:30.124Z",
+  "exportedAt": "2026-11-01T03:38:08.619Z",
   "version": 3,
   "data": {
     "students": [
@@ -73,6 +73,41 @@
         "school": "미사고등학교",
         "grade": "2",
         "seat": 8
+      },
+      {
+        "id": "stu_mvxa0qh4w0xv",
+        "name": "이선호",
+        "school": "미강고등학교",
+        "grade": "1",
+        "seat": 10
+      },
+      {
+        "id": "stu_mvxa0yyv2w6o",
+        "name": "양민경",
+        "school": "미사고등학교",
+        "grade": "2",
+        "seat": 13
+      },
+      {
+        "id": "stu_mvxa16hosf8g",
+        "name": "임예린",
+        "school": "미사고등학교",
+        "grade": "2",
+        "seat": 14
+      },
+      {
+        "id": "stu_mvxa1ckuj8o0",
+        "name": "이윤서",
+        "school": "미사고등학교",
+        "grade": "2",
+        "seat": 19
+      },
+      {
+        "id": "stu_mvxa1j4qx0kd",
+        "name": "최정우",
+        "school": "미강고등학교",
+        "grade": "2",
+        "seat": 20
       }
     ],
     "schedules": {
@@ -231,7 +266,19 @@
           "20": "영어/o",
           "21": "영어/o"
         }
-      }
+      },
+      "stu_mvx9zcrv16m5": {},
+      "stu_mvx9zk6negj6": {},
+      "stu_mvx9zro0kvqx": {},
+      "stu_mvx9zz365o7j": {},
+      "stu_mvxa04ymfwd2": {},
+      "stu_mvxa0b80pl0k": {},
+      "stu_mvxa0h8n6ert": {},
+      "stu_mvxa0qh4w0xv": {},
+      "stu_mvxa0yyv2w6o": {},
+      "stu_mvxa16hosf8g": {},
+      "stu_mvxa1ckuj8o0": {},
+      "stu_mvxa1j4qx0kd": {}
     },
     "attendance": {
       "stu_15": {
@@ -2559,6 +2606,18 @@
         "eval": "보완필요",
         "start": "21:00",
         "end": "22:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mvxa55rs79uu",
+        "studentId": "stu_16",
+        "date": "2026-10-31",
+        "subject": "국어",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "10:00",
+        "end": "11:00",
         "minutes": 60,
         "note": ""
       }
