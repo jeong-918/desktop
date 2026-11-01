@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-01T03:33:26.570Z",
+  "exportedAt": "2026-11-01T03:34:30.124Z",
   "version": 3,
   "data": {
     "students": [
@@ -24,6 +24,55 @@
         "school": "미사강변중학교",
         "grade": "3",
         "seat": 12
+      },
+      {
+        "id": "stu_mvx9zcrv16m5",
+        "name": "이재현",
+        "school": "미강고등학교",
+        "grade": "2",
+        "seat": 1
+      },
+      {
+        "id": "stu_mvx9zk6negj6",
+        "name": "이지은",
+        "school": "미강고등학교",
+        "grade": "1",
+        "seat": 2
+      },
+      {
+        "id": "stu_mvx9zro0kvqx",
+        "name": "서도훈",
+        "school": "미강고등학교",
+        "grade": "2",
+        "seat": 3
+      },
+      {
+        "id": "stu_mvx9zz365o7j",
+        "name": "장지후",
+        "school": "미강고등학교",
+        "grade": "2",
+        "seat": 4
+      },
+      {
+        "id": "stu_mvxa04ymfwd2",
+        "name": "이현준",
+        "school": "미강고등학교",
+        "grade": "2",
+        "seat": 6
+      },
+      {
+        "id": "stu_mvxa0b80pl0k",
+        "name": "이효준",
+        "school": "미강고등학교",
+        "grade": "2",
+        "seat": 7
+      },
+      {
+        "id": "stu_mvxa0h8n6ert",
+        "name": "장우정",
+        "school": "미사고등학교",
+        "grade": "2",
+        "seat": 8
       }
     ],
     "schedules": {
