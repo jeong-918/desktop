@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-01T04:46:57.755Z",
-  "updatedAt": 1793508417755,
+  "exportedAt": "2026-11-01T04:47:13.743Z",
+  "updatedAt": 1793508433743,
   "daily": {
     "categories": [
       {
@@ -166,8 +166,8 @@
         "id": "todo_1792950717580_fm6hk",
         "title": "하남고 입시설명회 지원",
         "categoryId": "cat_1792046767402",
-        "date": "2026-10-30",
-        "status": "TODO",
+        "date": "2026-11-01",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1792950717580
@@ -206,8 +206,8 @@
         "id": "todo_1793192298514_vvex5",
         "title": "하남고 설명회 리포트 완료시킬 것",
         "categoryId": "cat_1792046767402",
-        "date": "2026-10-30",
-        "status": "TODO",
+        "date": "2026-11-01",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1793192298514
@@ -266,8 +266,8 @@
         "id": "todo_1793193750492_azsie",
         "title": "박우진- 세계문제와 미래사회 선택지 체크 (토/일작업 완료해야함)",
         "categoryId": "cat_1792046758202",
-        "date": "2026-10-30",
-        "status": "TODO",
+        "date": "2026-11-01",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1793193750492
