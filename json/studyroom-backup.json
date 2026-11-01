@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-01T04:45:16.406Z",
+  "exportedAt": "2026-11-01T15:24:26.123Z",
   "version": 3,
   "data": {
     "students": [
@@ -267,7 +267,11 @@
           "21": "영어/o"
         }
       },
-      "stu_mvx9zcrv16m5": {},
+      "stu_mvx9zcrv16m5": {
+        "0": {
+          "11": ""
+        }
+      },
       "stu_mvx9zk6negj6": {},
       "stu_mvx9zro0kvqx": {},
       "stu_mvx9zz365o7j": {},
