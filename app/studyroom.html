@@ -181,7 +181,7 @@
       const DAYS = ["월", "화", "수", "목", "금", "토", "일"];
       const HOURS = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
       const SUBJECTS = ["국어", "수학", "영어", "한국사", "사회", "과학", "물리", "화학", "생명", "지학", "기타"];
-      const STUDY_TYPES = ["복습", "예습", "과제", "문제풀이", "수행평가", "기타학습", "영단어", "오답정리", "인강"];
+      const STUDY_TYPES = ["복습", "예습", "과제", "문제풀이", "수행평가", "기타학습", "영단어", "오답정리", "인강", "복습+문풀", "인강+문풀"];
       const EVALS = ["학습완료", "보완필요", "미완료"];
       const EVAL_MIGRATE = { "O": "학습완료", "△": "보완필요", "X": "미완료", "x": "미완료" };
       const ATTEND = ["입실", "지각", "중도입실", "병결", "미입실(학원)", "미입실(기타)", "미입실(무단)"];
@@ -189,7 +189,7 @@
       const SUBJECT_COLOR = { "국어": "#3b82f6", "수학": "#ef4444", "영어": "#10b981", "한국사": "#b45309", "사회": "#f59e0b", "과학": "#8b5cf6", "물리": "#4f46e5", "화학": "#db2777", "생명": "#0d9488", "지학": "#78716c", "기타": "#64748b" };
       const TYPE_COLOR = {
         "복습": "#2563eb", "예습": "#059669", "과제": "#d97706", "문제풀이": "#dc2626",
-        "수행평가": "#7c3aed", "기타학습": "#475569", "영단어": "#0ea5e9", "오답정리": "#be123c", "인강": "#0284c7"
+        "수행평가": "#7c3aed", "기타학습": "#475569", "영단어": "#0ea5e9", "오답정리": "#be123c", "인강": "#0284c7", "복습+문풀": "#1d4ed8", "인강+문풀": "#0369a1"
       };
       const EVAL_COLOR = { "학습완료": "#059669", "보완필요": "#d97706", "미완료": "#dc2626" };
       const ATTEND_COLOR = {
@@ -264,10 +264,17 @@
         return x;
       }
       function weekDates(d) { return DAYS.map((_, i) => addDays(mondayOf(d), i)); }
+      function studyWeekDates(d) { return weekDates(d).slice(0, 6); }
+      function studyWeekISO(d) { return studyWeekDates(d).map(toISO); }
       function weekLabel(d) {
         const dates = weekDates(d);
         return toISO(dates[0]) + " ~ " + toISO(dates[6]);
       }
+      function studyWeekLabel(d) {
+        const dates = studyWeekDates(d);
+        return toISO(dates[0]) + " ~ " + toISO(dates[5]) + " (월–토)";
+      }
+      function koSorted(arr) { return arr.slice().sort((a, b) => String(a).localeCompare(String(b), "ko")); }
       function monthKey(d) {
         const x = new Date(d);
         return x.getFullYear() + "-" + pad(x.getMonth() + 1);
@@ -382,6 +389,7 @@
         const map = {};
         for (let d = 1; d <= last; d++) {
           const dt = new Date(yy, mm - 1, d);
+          if (dt.getDay() === 0) continue;
           const key = toISO(mondayOf(dt));
           if (!map[key]) {
             map[key] = { mondayISO: key, dates: [] };
@@ -566,7 +574,7 @@
         const workPack = dashItems(db.workNotes, day);
         const dayAttend = seatedStudents().map((s) => ({ s, rec: (db.attendance[s.id] || {})[day] }));
         const checked = dayAttend.filter((x) => x.rec && x.rec.status).length;
-        const weekStudy = db.studyLogs.filter((l) => weekISO.includes(l.date));
+        const weekStudy = db.studyLogs.filter((l) => studyWeekISO(anchor).includes(l.date));
         const weekMin = weekStudy.reduce((a, b) => a + (b.minutes || 0), 0);
         const unconf = reqPack.carry.length + workPack.carry.length;
         const opinions = db.counseling.filter((x) => weekISO.includes(x.date) && (x.scope || "week") === "week");
@@ -589,7 +597,7 @@
                     <p class="text-sm font-semibold truncate">${escapeHtml(studentName(s.id))}</p>
                     <p class="text-[11px] text-slate-400 truncate">${escapeHtml(s.school || "-")}</p>
                     <p class="mt-2 text-xs"><span class="px-2 py-0.5 rounded-full ${ATTEND_COLOR[rec?.status] || "bg-slate-100 text-slate-500"}">${rec?.status || "미기록"}</span></p>
-                    <p class="text-[11px] text-slate-500 mt-1">${rec?.time || ""}</p>
+                    
                   </div>`).join("")}
               </div>
             </div>
@@ -870,9 +878,50 @@
         return db.attendance[sid][date];
       }
 
+function moveGrid(inp, key, shift, root, cls) {
+        let r = Number(inp.dataset.row);
+        let c = Number(inp.dataset.col);
+        const maxR = Number(inp.dataset.maxrow);
+        const maxC = Number(inp.dataset.maxcol);
+        const step = () => {
+          if (key === "ArrowRight" || (key === "Tab" && !shift)) {
+            if (c < maxC) c += 1;
+            else if (r < maxR) { c = 0; r += 1; }
+            else return false;
+          } else if (key === "ArrowLeft" || (key === "Tab" && shift)) {
+            if (c > 0) c -= 1;
+            else if (r > 0) { c = maxC; r -= 1; }
+            else return false;
+          } else if (key === "ArrowDown" || (key === "Enter" && !shift)) {
+            if (r < maxR) r += 1;
+            else return false;
+          } else if (key === "ArrowUp" || (key === "Enter" && shift)) {
+            if (r > 0) r -= 1;
+            else return false;
+          } else return false;
+          return true;
+        };
+        for (let n = 0; n < (maxR + 1) * (maxC + 1) + 2; n++) {
+          if (!step()) return false;
+          const next = root.querySelector("." + cls + '[data-row="' + r + '"][data-col="' + c + '"]:not(:disabled)');
+          if (next) { next.focus(); return true; }
+        }
+        return false;
+      }
+      function bindAttendGrid(root) {
+        root.querySelectorAll(".att-cell").forEach((el) => {
+          el.addEventListener("keydown", (e) => {
+            if (e.isComposing || e.keyCode === 229) return;
+            if (!["ArrowRight", "ArrowLeft", "Tab"].includes(e.key)) return;
+            if (moveGrid(el, e.key, e.shiftKey, root, "att-cell")) e.preventDefault();
+          });
+        });
+      }
       function renderAttend() {
         const dates = weekDates(anchor);
         const today = toISO(new Date());
+        const students = seatedStudents();
+        const maxR = Math.max(0, students.length - 1);
         $("#view-attend").innerHTML = `
           <div class="bg-white rounded-2xl border p-4 mb-4 space-y-3">
             <div class="flex flex-wrap gap-3 items-center">
@@ -881,174 +930,196 @@
             </div>
             <div class="flex flex-wrap gap-2 items-center">
               <label class="text-sm flex items-center gap-2"><input id="chk-all" type="checkbox" /> 전체 선택</label>
-              <select id="bulk-status" class="border rounded-lg px-2 py-2 text-sm">
-                ${ATTEND.map((a) => `<option>${a}</option>`).join("")}
-              </select>
-              <button id="bulk-apply" class="text-sm bg-indigo-600 text-white rounded-lg px-3 py-2">선택 학생 동일 적용</button>
-              <button id="fill-attend" class="text-sm bg-emerald-600 text-white rounded-lg px-3 py-2">전원 출석(입실)</button>
-              <button id="clear-attend" class="text-sm bg-slate-200 text-slate-800 rounded-lg px-3 py-2">전원 출석 해제</button>
+              <select id="bulk-status" class="border rounded-lg px-2 py-2 text-sm">${ATTEND.map((a) => `<option>${a}</option>`).join("")}</select>
+              <button type="button" id="bulk-apply" class="text-sm bg-indigo-600 text-white rounded-lg px-3 py-2">선택 학생 동일 적용</button>
+              <button type="button" id="fill-attend" class="text-sm bg-emerald-600 text-white rounded-lg px-3 py-2">전원 출석(입실)</button>
+              <button type="button" id="clear-attend" class="text-sm bg-slate-200 text-slate-800 rounded-lg px-3 py-2">전원 출석 해제</button>
             </div>
-            <p class="text-xs text-slate-400">선택 학생 동일 적용 시 출석 유형만 넣고 시간은 비워 둡니다.</p>
+            <p class="text-xs text-slate-400">시간은 기록하지 않습니다. ←→·Tab은 요일 이동, ↑↓는 출석 유형 변경입니다.</p>
           </div>
           <div class="bg-white rounded-2xl border overflow-auto">
             <table class="min-w-max text-xs">
-              <thead class="bg-slate-50">
-                <tr>
-                  <th class="px-2 py-2 sticky-col">선택</th>
-                  <th class="px-3 py-2 sticky-col">학생</th>
-                  ${dates.map((d, i) => `<th class="px-3 py-2">${DAYS[i]} ${toISO(d).slice(5)}${toISO(d) === today ? " · 당일" : ""}</th>`).join("")}
-                </tr>
-              </thead>
+              <thead class="bg-slate-50"><tr>
+                <th class="px-2 py-2 sticky-col">선택</th><th class="px-3 py-2 sticky-col">학생</th>
+                ${dates.map((d, i) => `<th class="px-3 py-2">${DAYS[i]} ${toISO(d).slice(5)}${toISO(d) === today ? " · 당일" : ""}</th>`).join("")}
+              </tr></thead>
               <tbody>
-                ${seatedStudents().map((s) => `
-                  <tr class="border-t">
-                    <td class="px-2 py-2 sticky-col text-center"><input type="checkbox" class="stu-chk" data-sid="${s.id}" /></td>
-                    <td class="px-3 py-2 sticky-col font-semibold whitespace-nowrap">${escapeHtml(studentName(s.id))}<div class="text-[10px] text-slate-400 font-normal">${escapeHtml(s.grade || "")}</div></td>
-                    ${dates.map((d) => {
-                      const iso = toISO(d);
-                      const rec = (db.attendance[s.id] || {})[iso] || { status: "", time: "" };
-                      return `<td class="px-2 py-2">
-                        <select data-sid="${s.id}" data-date="${iso}" data-f="status" class="border rounded px-1 py-1 w-32">
-                          <option value="">미기록</option>
-                          ${ATTEND.map((a) => `<option value="${a}" ${rec.status === a ? "selected" : ""}>${a}</option>`).join("")}
-                        </select>
-                        <input type="time" data-sid="${s.id}" data-date="${iso}" data-f="time" value="${rec.time || ""}" class="border rounded px-1 py-1 w-32 mt-1 block" />
-                      </td>`;
-                    }).join("")}
-                  </tr>`).join("")}
+                ${students.map((s, ri) => `<tr class="border-t">
+                  <td class="px-2 py-2 sticky-col text-center"><input type="checkbox" class="stu-chk" data-sid="${s.id}" /></td>
+                  <td class="px-3 py-2 sticky-col font-semibold whitespace-nowrap">${escapeHtml(studentName(s.id))}<div class="text-[10px] text-slate-400 font-normal">${escapeHtml(s.grade || "")}</div></td>
+                  ${dates.map((d, ci) => {
+                    const iso = toISO(d);
+                    const rec = (db.attendance[s.id] || {})[iso] || { status: "" };
+                    return `<td class="px-2 py-2"><select data-sid="${s.id}" data-date="${iso}" data-row="${ri}" data-col="${ci}" data-maxrow="${maxR}" data-maxcol="6" class="att-cell border rounded px-1 py-1 w-32"><option value="">미기록</option>${ATTEND.map((a) => `<option value="${a}" ${rec.status === a ? "selected" : ""}>${a}</option>`).join("")}</select></td>`;
+                  }).join("")}
+                </tr>`).join("")}
               </tbody>
             </table>
           </div>`;
-        $("#view-attend").querySelectorAll("select[data-f], input[type=time]").forEach((el) => {
-          el.addEventListener("change", () => {
-            const rec = ensureAttend(el.dataset.sid, el.dataset.date);
-            rec[el.dataset.f] = el.value;
-            save();
-          });
+        $("#view-attend").querySelectorAll(".att-cell").forEach((el) => {
+          el.addEventListener("change", () => { ensureAttend(el.dataset.sid, el.dataset.date).status = el.value; save(); });
         });
-        $("#chk-all").addEventListener("change", (e) => {
-          $("#view-attend").querySelectorAll(".stu-chk").forEach((c) => { c.checked = e.target.checked; });
-        });
+        bindAttendGrid($("#view-attend"));
+        $("#chk-all").addEventListener("change", (e) => { $("#view-attend").querySelectorAll(".stu-chk").forEach((c) => { c.checked = e.target.checked; }); });
         $("#bulk-apply").addEventListener("click", () => {
           const ids = Array.from($("#view-attend").querySelectorAll(".stu-chk:checked")).map((c) => c.dataset.sid);
           if (!ids.length) { alert("적용할 학생을 체크하세요."); return; }
           const status = $("#bulk-status").value;
-          ids.forEach((sid) => {
-            const rec = ensureAttend(sid, today);
-            rec.status = status;
-            rec.time = ""; // 동일 적용은 유형만 넣고 시간은 비움
-          });
-          save();
-          renderAttend();
+          ids.forEach((sid) => { ensureAttend(sid, today).status = status; });
+          save(); renderAttend();
         });
         $("#fill-attend").addEventListener("click", () => {
-          seatedStudents().forEach((s) => {
-            const rec = ensureAttend(s.id, today);
-            rec.status = "입실";
-            rec.time = rec.time || nowTime();
-          });
-          save();
-          renderAttend();
+          seatedStudents().forEach((s) => { ensureAttend(s.id, today).status = "입실"; });
+          save(); renderAttend();
         });
         $("#clear-attend").addEventListener("click", () => {
           if (!confirm("당일(" + today + ") 전원 출석 기록을 해제할까요?")) return;
-          seatedStudents().forEach((s) => {
-            if (db.attendance[s.id]) db.attendance[s.id][today] = { status: "", time: "" };
-          });
-          save();
-          renderAttend();
+          seatedStudents().forEach((s) => { if (db.attendance[s.id]) db.attendance[s.id][today] = { status: "", time: "" }; });
+          save(); renderAttend();
         });
       }
 
+      function typeOptions(selected) {
+        const list = STUDY_TYPES.slice();
+        if (selected && !list.includes(selected)) list.push(selected);
+        return koSorted(list).map((s) => `<option value="${escapeHtml(s)}" ${selected === s ? "selected" : ""}>${escapeHtml(s)}</option>`).join("");
+      }
+      function isSundayISO(iso) {
+        const d = parseISO(iso);
+        return d.getDay() === 0;
+      }
+      function refreshStudyPanels(allLogs, counted) {
+        const total = counted.reduce((a, b) => a + (b.minutes || 0), 0);
+        const sun = allLogs.filter((l) => isSundayISO(l.date)).reduce((a, b) => a + (b.minutes || 0), 0);
+        const doneRate = counted.length ? Math.round(counted.filter((l) => normEval(l.eval) === "학습완료").length / counted.length * 100) : 0;
+        const set = (id, v) => { const n = document.getElementById(id); if (n) n.textContent = v; };
+        set("st-total", fmtMin(total));
+        set("st-count", counted.length + "건");
+        set("st-avg", fmtMin(Math.round(total / 6)));
+        set("st-rate", doneRate + "%");
+        const note = document.getElementById("st-sun-note");
+        if (note) note.textContent = sun ? ("일요일 기록 " + fmtMin(sun) + "은 목록에는 보이지만 주간 합계·평균에는 넣지 않습니다.") : "일요일에 저장한 기록도 목록에 표시됩니다. 주간 합계·평균은 월–토만 계산합니다.";
+        const sub = document.getElementById("st-sub-box");
+        const typ = document.getElementById("st-type-box");
+        if (sub) sub.innerHTML = subjectBars(counted);
+        if (typ) typ.innerHTML = typeBars(counted);
+      }
+      function bindStudyGrid(root) {
+        root.querySelectorAll(".st-cell").forEach((el) => {
+          el.addEventListener("keydown", (e) => {
+            if (e.isComposing || e.keyCode === 229) return;
+            const kind = el.dataset.kind || "";
+            if (kind === "select" || kind === "time" || kind === "date") { if (e.key !== "Tab") return; }
+            if (!["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown", "Tab", "Enter"].includes(e.key)) return;
+            if (moveGrid(el, e.key, e.shiftKey, root, "st-cell")) e.preventDefault();
+          });
+        });
+      }
       function renderStudy() {
-        const dates = weekDates(anchor);
-        const weekISO = dates.map(toISO);
+        const weekISO = weekDates(anchor).map(toISO);
+        const countedISO = studyWeekISO(anchor);
         if (!seatedStudents().find((s) => s.id === selectedStudentId)) selectedStudentId = (seatedStudents()[0] || {}).id || "";
-        const logs = db.studyLogs
-          .filter((l) => l.studentId === selectedStudentId && weekISO.includes(l.date))
-          .sort((a, b) => (a.date + a.start).localeCompare(b.date + b.start));
-        const total = logs.reduce((a, b) => a + (b.minutes || 0), 0);
-        const doneRate = logs.length ? Math.round(logs.filter((l) => normEval(l.eval) === "학습완료").length / logs.length * 100) : 0;
-
+        const logs = db.studyLogs.filter((l) => l.studentId === selectedStudentId && weekISO.includes(l.date)).sort((a, b) => (a.date + (a.start || "")).localeCompare(b.date + (b.start || "")));
+        const counted = logs.filter((l) => countedISO.includes(l.date));
+        const total = counted.reduce((a, b) => a + (b.minutes || 0), 0);
+        const doneRate = counted.length ? Math.round(counted.filter((l) => normEval(l.eval) === "학습완료").length / counted.length * 100) : 0;
+        const sunMin = logs.filter((l) => isSundayISO(l.date)).reduce((a, b) => a + (b.minutes || 0), 0);
+        const maxR = Math.max(0, logs.length - 1);
+        const cellAttr = (row, col, kind) => `data-row="${row}" data-col="${col}" data-maxrow="${maxR}" data-maxcol="6" data-kind="${kind}"`;
+        const inputCls = "st-cell border rounded px-1 py-1 w-full min-w-[96px]";
         $("#view-study").innerHTML = `
-          <div class="bg-white rounded-2xl border p-4 mb-4">
+          <div id="study-entry" class="bg-white rounded-2xl border p-4 mb-4">
             <div class="flex flex-wrap gap-3 items-end">
               <label class="text-sm">학생<div>${studentSelect("st-student", selectedStudentId)}</div></label>
               <label class="text-sm">날짜<input id="st-date" type="date" class="border rounded-lg px-2 py-2 block" value="${toISO(anchor)}" /></label>
-              <label class="text-sm">과목<select id="st-sub" class="border rounded-lg px-2 py-2 block">${SUBJECTS.map((s) => `<option>${s}</option>`).join("")}</select></label>
-              <label class="text-sm">학습유형<select id="st-type" class="border rounded-lg px-2 py-2 block">${STUDY_TYPES.map((s) => `<option>${s}</option>`).join("")}</select></label>
-              <label class="text-sm">완료평가<select id="st-eval" class="border rounded-lg px-2 py-2 block">${EVALS.map((s) => `<option>${s}</option>`).join("")}</select></label>
+              <label class="text-sm">과목<select id="st-sub" class="border rounded-lg px-2 py-2 block">${SUBJECTS.map((s) => `<option>${escapeHtml(s)}</option>`).join("")}</select></label>
+              <label class="text-sm">학습유형<select id="st-type" class="border rounded-lg px-2 py-2 block">${typeOptions("")}</select></label>
+              <label class="text-sm">완료평가<select id="st-eval" class="border rounded-lg px-2 py-2 block">${EVALS.map((s) => `<option>${escapeHtml(s)}</option>`).join("")}</select></label>
               <label class="text-sm">시작<input id="st-start" type="time" value="10:00" class="border rounded-lg px-2 py-2 block" /></label>
               <label class="text-sm">종료<input id="st-end" type="time" value="11:00" class="border rounded-lg px-2 py-2 block" /></label>
               <label class="text-sm flex-1 min-w-[160px]">메모<input id="st-note" maxlength="40" class="border rounded-lg px-2 py-2 w-full block" placeholder="선택" /></label>
-              <button id="st-add" class="bg-navy-900 text-white rounded-lg px-4 py-2 h-10"><i class="fa-solid fa-plus mr-1"></i>추가</button>
+              <button type="button" id="st-add" class="bg-navy-900 text-white rounded-lg px-4 py-2 h-10">추가</button>
             </div>
+            <p id="st-sun-note" class="text-xs text-slate-400 mt-2">${sunMin ? "일요일 기록 " + fmtMin(sunMin) + "은 목록에는 보이지만 주간 합계·평균에는 넣지 않습니다." : "일요일 입력도 목록에 표시됩니다. 주간 합계·평균은 월–토만 계산합니다. 드롭다운·시간은 방향키로 값을 바꾸고, Enter 또는 추가로 저장합니다."}</p>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-            ${kpi("이번 주 순수공부", fmtMin(total), "fa-clock", "bg-indigo-50 text-indigo-700")}
-            ${kpi("기록 건수", logs.length + "건", "fa-list", "bg-slate-50 text-slate-700")}
-            ${kpi("주간 평균(7일)", fmtMin(Math.round(total / 7)), "fa-chart-line", "bg-amber-50 text-amber-700")}
-            ${kpi("학습완료 비율", doneRate + "%", "fa-circle-check", "bg-emerald-50 text-emerald-700")}
+            <div class="bg-white rounded-2xl border p-4"><p class="text-xs text-slate-500">이번 주 순수공부 (월–토)</p><p id="st-total" class="text-lg font-bold">${fmtMin(total)}</p></div>
+            <div class="bg-white rounded-2xl border p-4"><p class="text-xs text-slate-500">월–토 기록</p><p id="st-count" class="text-lg font-bold">${counted.length}건</p></div>
+            <div class="bg-white rounded-2xl border p-4"><p class="text-xs text-slate-500">주간 평균(월–토 6일)</p><p id="st-avg" class="text-lg font-bold">${fmtMin(Math.round(total / 6))}</p></div>
+            <div class="bg-white rounded-2xl border p-4"><p class="text-xs text-slate-500">학습완료 비율</p><p id="st-rate" class="text-lg font-bold">${doneRate}%</p></div>
           </div>
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-            <div class="bg-white rounded-2xl border p-4"><h3 class="font-bold mb-3">과목별</h3>${subjectBars(logs)}</div>
-            <div class="bg-white rounded-2xl border p-4"><h3 class="font-bold mb-3">학습유형별</h3>${typeBars(logs)}</div>
+            <div class="bg-white rounded-2xl border p-4"><h3 class="font-bold mb-3">과목별 (월–토)</h3><div id="st-sub-box">${subjectBars(counted)}</div></div>
+            <div class="bg-white rounded-2xl border p-4"><h3 class="font-bold mb-3">학습유형별 (월–토)</h3><div id="st-type-box">${typeBars(counted)}</div></div>
           </div>
           <div class="bg-white rounded-2xl border overflow-auto">
-            <table class="min-w-full text-sm">
-              <thead class="bg-slate-50"><tr>
-                <th class="px-3 py-2 text-left">날짜</th><th class="px-3 py-2 text-left">시간대</th><th class="px-3 py-2 text-left">과목</th>
-                <th class="px-3 py-2 text-left">유형</th><th class="px-3 py-2 text-left">완료평가</th><th class="px-3 py-2 text-left">시간</th><th class="px-3 py-2 text-left">메모</th><th></th>
-              </tr></thead>
-              <tbody>
-                ${logs.length ? logs.map((l) => {
-                  const ev = normEval(l.eval);
-                  return `<tr class="border-t">
-                    <td class="px-3 py-2">${l.date}</td>
-                    <td class="px-3 py-2">${l.start}–${l.end}</td>
-                    <td class="px-3 py-2">${l.subject}</td>
-                    <td class="px-3 py-2">${l.type}</td>
-                    <td class="px-3 py-2 font-semibold" style="color:${EVAL_COLOR[ev] || "#64748b"}">${ev || "-"}</td>
-                    <td class="px-3 py-2">${fmtMin(l.minutes)}</td>
-                    <td class="px-3 py-2">${escapeHtml(l.note)}</td>
-                    <td class="px-3 py-2"><button data-del="${l.id}" class="text-rose-500 text-xs">삭제</button></td>
-                  </tr>`;
-                }).join("") : `<tr><td colspan="8" class="px-3 py-8 text-center text-slate-400">이번 주 학습 기록이 없습니다.</td></tr>`}
-              </tbody>
-            </table>
+            <table class="min-w-full text-sm"><thead class="bg-slate-50"><tr>
+              <th class="px-2 py-2 text-left">날짜</th><th class="px-2 py-2 text-left">시작</th><th class="px-2 py-2 text-left">종료</th><th class="px-2 py-2 text-left">과목</th>
+              <th class="px-2 py-2 text-left">유형</th><th class="px-2 py-2 text-left">완료평가</th><th class="px-2 py-2 text-left">메모</th><th class="px-2 py-2 text-left">시간</th><th></th>
+            </tr></thead><tbody>
+              ${logs.length ? logs.map((l, idx) => {
+                const ev = normEval(l.eval);
+                const sun = isSundayISO(l.date);
+                return `<tr class="border-t ${sun ? "bg-slate-50" : ""}">
+                  <td class="px-1 py-1"><input type="date" data-log="${l.id}" data-f="date" ${cellAttr(idx, 0, "date")} value="${l.date || ""}" class="${inputCls}" />${sun ? '<div class="text-[10px] text-slate-400">일요일 · 주간합계 제외</div>' : ""}</td>
+                  <td class="px-1 py-1"><input type="time" data-log="${l.id}" data-f="start" ${cellAttr(idx, 1, "time")} value="${l.start || ""}" class="${inputCls}" /></td>
+                  <td class="px-1 py-1"><input type="time" data-log="${l.id}" data-f="end" ${cellAttr(idx, 2, "time")} value="${l.end || ""}" class="${inputCls}" /></td>
+                  <td class="px-1 py-1"><select data-log="${l.id}" data-f="subject" ${cellAttr(idx, 3, "select")} class="${inputCls}">${SUBJECTS.map((s) => `<option ${l.subject === s ? "selected" : ""}>${escapeHtml(s)}</option>`).join("")}</select></td>
+                  <td class="px-1 py-1"><select data-log="${l.id}" data-f="type" ${cellAttr(idx, 4, "select")} class="${inputCls}">${typeOptions(l.type)}</select></td>
+                  <td class="px-1 py-1"><select data-log="${l.id}" data-f="eval" ${cellAttr(idx, 5, "select")} class="${inputCls}">${EVALS.map((s) => `<option ${ev === s ? "selected" : ""}>${escapeHtml(s)}</option>`).join("")}</select></td>
+                  <td class="px-1 py-1"><input maxlength="40" data-log="${l.id}" data-f="note" ${cellAttr(idx, 6, "text")} value="${escapeHtml(l.note || "")}" class="${inputCls}" /></td>
+                  <td class="px-2 py-1 whitespace-nowrap" data-min="${l.id}">${fmtMin(l.minutes)}</td>
+                  <td class="px-2 py-1"><button type="button" data-del="${l.id}" class="text-rose-500 text-xs">삭제</button></td>
+                </tr>`;
+              }).join("") : `<tr><td colspan="9" class="px-3 py-8 text-center text-slate-400">이번 주 학습 기록이 없습니다.</td></tr>`}
+            </tbody></table>
           </div>`;
-        $("#st-student").value = selectedStudentId;
-        $("#st-student").addEventListener("change", (e) => {
-          selectedStudentId = e.target.value;
-          reportStudentId = selectedStudentId;
-          renderStudy();
-        });
-        $("#st-add").addEventListener("click", () => {
+        const addStudyLog = () => {
           const start = $("#st-start").value;
           const end = $("#st-end").value;
           const minutes = minutesBetween(start, end);
+          if (!$("#st-student").value) { alert("학생을 선택하세요."); return; }
+          if (!$("#st-date").value) { alert("날짜를 선택하세요."); return; }
           if (!minutes) { alert("종료 시간이 시작 시간보다 뒤여야 합니다."); return; }
-          db.studyLogs.push({
-            id: uid("log"),
-            studentId: $("#st-student").value,
-            date: $("#st-date").value,
-            subject: $("#st-sub").value,
-            type: $("#st-type").value,
-            eval: $("#st-eval").value,
-            start, end, minutes,
-            note: $("#st-note").value.trim()
-          });
+          db.studyLogs.push({ id: uid("log"), studentId: $("#st-student").value, date: $("#st-date").value, subject: $("#st-sub").value, type: $("#st-type").value, eval: $("#st-eval").value, start, end, minutes, note: $("#st-note").value.trim() });
           save();
           selectedStudentId = $("#st-student").value;
           renderStudy();
+        };
+        $("#st-student").value = selectedStudentId;
+        $("#st-student").addEventListener("change", (e) => { selectedStudentId = e.target.value; reportStudentId = selectedStudentId; renderStudy(); });
+        $("#st-add").addEventListener("click", addStudyLog);
+        $("#study-entry").addEventListener("keydown", (e) => {
+          if (e.key !== "Enter" || e.shiftKey || e.isComposing || e.keyCode === 229) return;
+          if (e.target && (e.target.id === "st-student" || e.target.tagName === "SELECT")) return;
+          e.preventDefault();
+          addStudyLog();
         });
-        $("#view-study").querySelectorAll("[data-del]").forEach((btn) => {
-          btn.addEventListener("click", () => {
-            db.studyLogs = db.studyLogs.filter((l) => l.id !== btn.dataset.del);
-            save();
-            renderStudy();
-          });
+        const commitLog = (el) => {
+          const log = db.studyLogs.find((l) => l.id === el.dataset.log);
+          if (!log) return;
+          log[el.dataset.f] = el.dataset.f === "note" ? el.value.trim() : el.value;
+          if (el.dataset.f === "start" || el.dataset.f === "end") {
+            const minutes = minutesBetween(log.start, log.end);
+            if (!minutes) return;
+            log.minutes = minutes;
+            const cell = document.querySelector('[data-min="' + log.id + '"]');
+            if (cell) cell.textContent = fmtMin(minutes);
+          }
+          save();
+          const fresh = db.studyLogs.filter((l) => l.studentId === selectedStudentId && weekDates(anchor).map(toISO).includes(l.date));
+          refreshStudyPanels(fresh, fresh.filter((l) => studyWeekISO(anchor).includes(l.date)));
+          if (el.dataset.f === "date" && !weekDates(anchor).map(toISO).includes(log.date)) renderStudy();
+        };
+        $("#view-study").querySelectorAll(".st-cell[data-log]").forEach((el) => {
+          el.addEventListener("change", () => commitLog(el));
+          if (el.dataset.kind === "text") el.addEventListener("blur", () => commitLog(el));
         });
+        bindStudyGrid($("#view-study"));
+        $("#view-study").querySelectorAll("[data-del]").forEach((btn) => btn.addEventListener("click", () => {
+          db.studyLogs = db.studyLogs.filter((l) => l.id !== btn.dataset.del);
+          save(); renderStudy();
+        }));
       }
 
       function destroyCharts() {
@@ -1131,10 +1202,11 @@
         if (!rosterStudents().find((s) => s.id === reportStudentId)) reportStudentId = (seatedStudents()[0] || rosterStudents()[0] || {}).id || "";
         const dates = weekDates(anchor);
         const isoList = dates.map(toISO);
-        const logs = db.studyLogs.filter((l) => l.studentId === reportStudentId && isoList.includes(l.date));
+        const studyISO = studyWeekISO(anchor);
+        const logs = db.studyLogs.filter((l) => l.studentId === reportStudentId && studyISO.includes(l.date));
         const total = logs.reduce((a, b) => a + (b.minutes || 0), 0);
         const att = attendSummary(reportStudentId, isoList);
-        const daily = dailyMinutes(logs, isoList);
+        const daily = dailyMinutes(logs, studyISO);
         const opinions = db.counseling.filter((c) => c.studentId === reportStudentId && isoList.includes(c.date) && (c.scope || "week") === "week");
         const ev = evalBySubject(logs);
         const doneAll = logs.filter((l) => normEval(l.eval) === "학습완료").length;
@@ -1157,12 +1229,12 @@
               ${miniStat("학습완료 비율", doneRate + "%")}
               ${miniStat("학습 기록", logs.length + "건")}
             </div>
-            <p class="text-[10px] text-slate-400 -mt-3 mb-3">입실일 = 입실 + 지각 + 중도입실</p>
+            <p class="text-[10px] text-slate-400 -mt-3 mb-3">입실일 = 입실 + 지각 + 중도입실 · 순수공부는 월–토, 주간 평균 ${fmtMin(Math.round(total / 6))}</p>
             <div class="grid grid-cols-2 gap-3 mb-4">
               <div class="border rounded p-2"><p class="text-xs font-bold mb-1">과목별 공부시간 (분)</p><div class="chart-box"><canvas id="c-sub"></canvas></div></div>
               <div class="border rounded p-2"><p class="text-xs font-bold mb-1">학습유형별 공부시간 (분)</p><div class="chart-box"><canvas id="c-type"></canvas></div></div>
             </div>
-            <div class="border rounded p-2 mb-4"><p class="text-xs font-bold mb-1">요일별 순수공부시간 (분)</p><div class="chart-box sm"><canvas id="c-day"></canvas></div></div>
+            <div class="border rounded p-2 mb-4"><p class="text-xs font-bold mb-1">요일별 순수공부시간 (분) · 월–토</p><div class="chart-box sm"><canvas id="c-day"></canvas></div></div>
             <div class="border rounded p-2 mb-4">
               <div class="flex justify-between items-end mb-1">
                 <p class="text-xs font-bold">과목별 완료평가 (횟수 · 학습완료 비율)</p>
@@ -1206,7 +1278,7 @@
         });
         makeChart("c-day", {
           type: "bar",
-          data: { labels: DAYS.map((d, i) => d + " " + isoList[i].slice(5)), datasets: [{ data: daily, backgroundColor: "#1c2e54" }] },
+          data: { labels: DAYS.slice(0, 6).map((d, i) => d + " " + studyISO[i].slice(5)), datasets: [{ data: daily, backgroundColor: "#1c2e54" }] },
           options: { plugins: { legend: { display: false } }, scales: { y: yPlain(), x: { ticks: { maxRotation: 0, minRotation: 0, font: { size: 10 } } } } }
         });
         makeChart("c-eval", {
@@ -1274,14 +1346,14 @@
               ${miniStat("입실일", att.present + "일")}
               ${miniStat("학습완료 비율", doneRate + "%")}
             </div>
-            <p class="text-[10px] text-slate-400 -mt-3 mb-3">입실일 = 입실 + 지각 + 중도입실 · 주차 = 월~일 (해당 월에 포함된 날만 합산)</p>
+            <p class="text-[10px] text-slate-400 -mt-3 mb-3">입실일 = 입실 + 지각 + 중도입실 · 주차 합산은 월–토. 히트맵은 저장된 학습이 있는 날만 색이 들어갑니다.</p>
             <div class="grid grid-cols-2 gap-3 mb-4">
               <div class="border rounded p-2"><p class="text-xs font-bold mb-1">과목별 순수공부시간 (분)</p><div class="chart-box"><canvas id="m-sub"></canvas></div></div>
               <div class="border rounded p-2"><p class="text-xs font-bold mb-1">학습유형별 공부시간 (분)</p><div class="chart-box"><canvas id="m-type"></canvas></div></div>
             </div>
-            <div class="border rounded p-2 mb-4"><p class="text-xs font-bold mb-1">주차별 순수공부시간 (분) · 월~일 기준</p><div class="chart-box sm"><canvas id="m-week"></canvas></div></div>
+            <div class="border rounded p-2 mb-4"><p class="text-xs font-bold mb-1">주차별 순수공부시간 (분) · 월–토 기준</p><div class="chart-box sm"><canvas id="m-week"></canvas></div></div>
             <p class="text-xs font-bold mb-1">일별 공부 히트맵</p>
-            <p class="text-[10px] text-slate-500 mb-1">색이 진할수록 그날 순수공부시간이 많습니다. 연한 회색은 기록 없음(0분)입니다. 가장 진한 칸은 이번 달 최다 공부일입니다.</p>
+            <p class="text-[10px] text-slate-500 mb-1">색이 있는 칸만 학습 기록이 있습니다. 기록이 없는 날(일요일 포함)은 빈 칸이며, 학습 기록 화면에 없는 일요일을 칠하지 않습니다.</p>
             <div class="flex items-center gap-2 text-[10px] text-slate-500 mb-2">
               <span>적음</span>
               <span class="heat w-5" style="background:rgba(20,33,61,0.08)"></span>
@@ -1291,15 +1363,19 @@
               <span>많음</span>
             </div>
             <div class="grid grid-cols-7 gap-1 mb-4">
-              ${["월","화","수","목","금","토","일"].map((d) => `<div class="text-[9px] text-center text-slate-400">${d}</div>`).join("")}
+              ${["일","월","화","수","목","금","토"].map((d) => `<div class="text-[9px] text-center text-slate-400">${d}</div>`).join("")}
               ${(() => {
                 const first = new Date(yy, mm - 1, 1);
-                const padLeft = (first.getDay() + 6) % 7;
+                const padLeft = first.getDay();
                 let html = Array.from({ length: padLeft }, () => "<div></div>").join("");
                 isoList.forEach((iso, i) => {
-                  const m = daily[i];
-                  const alpha = m ? (0.18 + 0.82 * (m / maxDay)) : 0.07;
-                  html += `<div class="heat text-[9px] text-center leading-[18px] text-white" style="background:rgba(20,33,61,${alpha})" title="${iso} · ${m}분">${i + 1}</div>`;
+                  const m = daily[i] || 0;
+                  if (!m) {
+                    html += `<div class="heat text-[9px] text-center leading-[18px] text-slate-300 bg-slate-50" title="${iso} · 기록 없음">${i + 1}</div>`;
+                  } else {
+                    const alpha = 0.25 + 0.75 * (m / maxDay);
+                    html += `<div class="heat text-[9px] text-center leading-[18px] text-white" style="background:rgba(20,33,61,${alpha})" title="${iso} · ${m}분">${i + 1}</div>`;
+                  }
                 });
                 return html;
               })()}
@@ -1785,9 +1861,9 @@
           const isoList = Array.from({ length: last }, (_, i) => mk + "-" + pad(i + 1));
           return { isoList, label: yy + "년 " + mm + "월", weeks: monthWeeks(yy, mm) };
         }
-        const dates = weekDates(anchor);
+        const dates = studyWeekDates(anchor);
         const isoList = dates.map(toISO);
-        return { isoList, label: weekLabel(anchor) + " (월~일)", weeks: null };
+        return { isoList, label: studyWeekLabel(anchor), weeks: null };
       }
       function studentPeriodRow(sid, isoList) {
         const logs = db.studyLogs.filter((l) => l.studentId === sid && isoList.includes(l.date));
@@ -1899,7 +1975,7 @@
             </div>
           </div>
           <div class="bg-white rounded-2xl border p-4 mb-4">
-            <p class="text-xs font-bold mb-1">${weeks ? "주차별 순수공부시간 (분)" : "요일별 순수공부시간 (분)"}</p>
+            <p class="text-xs font-bold mb-1">${weeks ? "주차별 순수공부시간 (분) · 월–토" : "요일별 순수공부시간 (분) · 월–토"}</p>
             <div class="chart-box sm"><canvas id="s-trend"></canvas></div>
           </div>
         `;
@@ -1931,7 +2007,7 @@
         } else {
           makeChart("s-trend", {
             type: "bar",
-            data: { labels: DAYS, datasets: [{ data: daily, backgroundColor: "#1c2e54" }] },
+            data: { labels: DAYS.slice(0, 6), datasets: [{ data: daily, backgroundColor: "#1c2e54" }] },
             options: { plugins: { legend: { display: false } }, scales: { y: yPlain(), x: { ticks: { maxRotation: 0, minRotation: 0 } } } }
           });
         }
