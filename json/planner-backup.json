@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-10-29T08:44:48.493Z",
-  "updatedAt": 1793263488493,
+  "exportedAt": "2026-11-01T04:46:57.755Z",
+  "updatedAt": 1793508417755,
   "daily": {
     "categories": [
       {
@@ -237,7 +237,7 @@
         "title": "박우진- 전공문화학술제 대응하기 (완료시점 11/2발표)",
         "categoryId": "cat_1792046758202",
         "date": "2026-11-01",
-        "status": "TODO",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1793193513829
@@ -257,7 +257,7 @@
         "title": "박우진 - 세계문제와 미래사회 마감 대응 (완료시점 11/2발표)",
         "categoryId": "cat_1792046758202",
         "date": "2026-11-01",
-        "status": "TODO",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1793193685021
