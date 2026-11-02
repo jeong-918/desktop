@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-02T05:48:14.441Z",
-  "updatedAt": 1793598494441,
+  "exportedAt": "2026-11-02T09:53:01.822Z",
+  "updatedAt": 1793613181822,
   "daily": {
     "categories": [
       {
@@ -277,7 +277,7 @@
         "title": "우진_세계문제와 미래사회 본 보고서 작성 진행",
         "categoryId": "cat_1792046758202",
         "date": "2026-11-02",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1793546858880
