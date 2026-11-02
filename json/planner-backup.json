@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-01T15:38:12.572Z",
-  "updatedAt": 1793547492572,
+  "exportedAt": "2026-11-02T05:48:14.441Z",
+  "updatedAt": 1793598494441,
   "daily": {
     "categories": [
       {
@@ -287,7 +287,7 @@
         "title": "설명회 언급된 진학 차트 원장 편 전송",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-02",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1793547490526
