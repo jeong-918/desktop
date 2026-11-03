@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-03T16:20:18.590Z",
+  "exportedAt": "2026-11-03T16:21:19.973Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -8,8 +8,8 @@
       "url": "https://power-2028-admission-atlas.pages.dev/",
       "target": "newtab",
       "icon": "https://plus.unsplash.com/premium_photo-1792661405792-d2117e75e472?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 10.67,
-      "yPct": 46.35
+      "xPct": 78.12,
+      "yPct": 50.96
     },
     {
       "id": "app-1789710282082",
@@ -44,8 +44,8 @@
       "url": "https://yeopban.kr/#sharing",
       "target": "newtab",
       "icon": "⭐",
-      "xPct": 4.95,
-      "yPct": 45.11
+      "xPct": 84.84,
+      "yPct": 50.66
     },
     {
       "id": "app-1791885784710",
@@ -80,8 +80,8 @@
       "url": "https://jayu0422-blip.github.io/daol-timetable/admin.html",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 10.36,
-      "yPct": 59.5
+      "xPct": 29.99,
+      "yPct": 34.35
     },
     {
       "id": "app-1789811920576",
@@ -94,12 +94,12 @@
     },
     {
       "id": "app-1789725098714",
-      "name": "모교_학교정보",
+      "name": "[모교] 학교정보",
       "url": "https://mogyo.kr/",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 16.88,
-      "yPct": 1.25
+      "xPct": 6.1,
+      "yPct": 28.19
     },
     {
       "id": "app-1793706368626",
@@ -130,12 +130,12 @@
     },
     {
       "id": "app-1791878483202",
-      "name": "진로/학업 설계 지원",
+      "name": "[모두] 과목설계",
       "url": "https://geoguymin.github.io/Design-of-Curriculam/",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 87.29,
-      "yPct": 1.25
+      "xPct": 55.36,
+      "yPct": 50.33
     },
     {
       "id": "app-1792138990794",
@@ -170,17 +170,8 @@
       "url": "https://docs.google.com/spreadsheets/d/1VfebRB5vLlV-Ni7RT9cp8xWSwVL543DQOuJlzn-uZD4/edit?gid=15478959#gid=15478959",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 0.46,
-      "yPct": 27.48
-    },
-    {
-      "id": "app-1",
-      "name": "Google 검색",
-      "url": "https://www.google.com",
-      "icon": "🌐",
-      "target": "newtab",
-      "xPct": 49.38,
-      "yPct": 1.25
+      "xPct": 35.4,
+      "yPct": 34.72
     },
     {
       "id": "app-1789711180543",
