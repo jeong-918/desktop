@@ -266,15 +266,12 @@
       function weekDates(d) { return DAYS.map((_, i) => addDays(mondayOf(d), i)); }
       function studyWeekDates(d) { return weekDates(d).slice(0, 6); }
       function studyWeekISO(d) { return studyWeekDates(d).map(toISO); }
+      function studyWeekLabel(d) { const dates = studyWeekDates(d); return toISO(dates[0]) + " ~ " + toISO(dates[5]) + " (월–토)"; }
+      function koSorted(arr) { return arr.slice().sort((a, b) => String(a).localeCompare(String(b), "ko")); }
       function weekLabel(d) {
         const dates = weekDates(d);
         return toISO(dates[0]) + " ~ " + toISO(dates[6]);
       }
-      function studyWeekLabel(d) {
-        const dates = studyWeekDates(d);
-        return toISO(dates[0]) + " ~ " + toISO(dates[5]) + " (월–토)";
-      }
-      function koSorted(arr) { return arr.slice().sort((a, b) => String(a).localeCompare(String(b), "ko")); }
       function monthKey(d) {
         const x = new Date(d);
         return x.getFullYear() + "-" + pad(x.getMonth() + 1);
@@ -329,16 +326,17 @@
       function mixStats(logs) {
         const total = logs.reduce((a, b) => a + (b.minutes || 0), 0);
         const groups = [
-          { label: "인강(강의청취)", types: ["인강"], color: "#0284c7" },
-          { label: "과제·수행평가", types: ["과제", "수행평가"], color: "#d97706" },
-          { label: "복습·문제풀이·기타학습", types: ["복습", "문제풀이", "기타학습"], color: "#2563eb" }
+          { label: "강의수강(인강)", types: ["인강"], color: "#0284c7" },
+          { label: "과제(과제·수행)", types: ["과제", "수행평가"], color: "#d97706" },
+          { label: "학습(복습·문제풀이)", types: ["복습", "문제풀이", "복습+문풀", "인강+문풀"], color: "#2563eb" },
+          { label: "기타학습·오답정리·영단어", types: ["기타학습", "오답정리", "영단어"], color: "#0f766e" }
         ];
         const rows = groups.map((g) => {
           const minutes = logs.filter((l) => g.types.includes(l.type)).reduce((a, b) => a + (b.minutes || 0), 0);
           return { label: g.label, color: g.color, minutes, pct: total ? Math.round(minutes / total * 100) : 0 };
         });
         const other = total - rows.reduce((a, b) => a + b.minutes, 0);
-        if (other > 0) rows.push({ label: "그 외(예습·영단어·오답정리)", color: "#64748b", minutes: other, pct: total ? Math.round(other / total * 100) : 0 });
+        if (other > 0) rows.push({ label: "그 외(예습 등)", color: "#64748b", minutes: other, pct: total ? Math.round(other / total * 100) : 0 });
         if (total && rows.length) rows[rows.length - 1].pct = Math.max(0, 100 - rows.slice(0, -1).reduce((a, b) => a + b.pct, 0));
         return { total, rows };
       }
@@ -346,7 +344,7 @@
         const pack = mixStats(logs);
         return `<div class="border rounded p-2 mb-4">
           <p class="text-xs font-bold mb-1">학습유형 비율</p>
-          <p class="text-[10px] text-slate-500 mb-1">순수공부시간 기준 · 인강 / 과제·수행평가 / 복습·문제풀이·기타학습 · 합계 ${fmtMin(pack.total)}</p>
+          <p class="text-[10px] text-slate-500 mb-1">순수공부시간 기준 · 강의수강(인강) / 과제(과제·수행) / 학습(복습·문제풀이·복습+문풀·인강+문풀) / 기타학습·오답정리·영단어 · 합계 ${fmtMin(pack.total)}</p>
           <div class="chart-box sm"><canvas id="${canvasId}"></canvas></div>
           ${pack.rows.map((r) => `<div class="flex justify-between text-[11px] border-b py-0.5"><span>${r.label}</span><span>${fmtMin(r.minutes)} · ${r.pct}%</span></div>`).join("")}
         </div>`;
@@ -597,8 +595,7 @@
                     <p class="text-sm font-semibold truncate">${escapeHtml(studentName(s.id))}</p>
                     <p class="text-[11px] text-slate-400 truncate">${escapeHtml(s.school || "-")}</p>
                     <p class="mt-2 text-xs"><span class="px-2 py-0.5 rounded-full ${ATTEND_COLOR[rec?.status] || "bg-slate-100 text-slate-500"}">${rec?.status || "미기록"}</span></p>
-                    
-                  </div>`).join("")}
+                                      </div>`).join("")}
               </div>
             </div>
             <div class="bg-white rounded-2xl border p-5">
@@ -878,42 +875,30 @@
         return db.attendance[sid][date];
       }
 
-function moveGrid(inp, key, shift, root, cls) {
-        let r = Number(inp.dataset.row);
-        let c = Number(inp.dataset.col);
-        const maxR = Number(inp.dataset.maxrow);
-        const maxC = Number(inp.dataset.maxcol);
+      function moveGrid(inp, key, shift, root, cls) {
+        let r = Number(inp.dataset.row), c = Number(inp.dataset.col);
+        const maxR = Number(inp.dataset.maxrow), maxC = Number(inp.dataset.maxcol);
         const step = () => {
-          if (key === "ArrowRight" || (key === "Tab" && !shift)) {
-            if (c < maxC) c += 1;
-            else if (r < maxR) { c = 0; r += 1; }
-            else return false;
-          } else if (key === "ArrowLeft" || (key === "Tab" && shift)) {
-            if (c > 0) c -= 1;
-            else if (r > 0) { c = maxC; r -= 1; }
-            else return false;
-          } else if (key === "ArrowDown" || (key === "Enter" && !shift)) {
-            if (r < maxR) r += 1;
-            else return false;
-          } else if (key === "ArrowUp" || (key === "Enter" && shift)) {
-            if (r > 0) r -= 1;
-            else return false;
-          } else return false;
+          if (key === "ArrowRight" || (key === "Tab" && !shift)) { if (c < maxC) c += 1; else if (r < maxR) { c = 0; r += 1; } else return false; }
+          else if (key === "ArrowLeft" || (key === "Tab" && shift)) { if (c > 0) c -= 1; else if (r > 0) { c = maxC; r -= 1; } else return false; }
+          else if (key === "ArrowDown" || (key === "Enter" && !shift)) { if (r < maxR) r += 1; else return false; }
+          else if (key === "ArrowUp" || (key === "Enter" && shift)) { if (r > 0) r -= 1; else return false; }
+          else return false;
           return true;
         };
         for (let n = 0; n < (maxR + 1) * (maxC + 1) + 2; n++) {
           if (!step()) return false;
-          const next = root.querySelector("." + cls + '[data-row="' + r + '"][data-col="' + c + '"]:not(:disabled)');
+          const next = root.querySelector('.' + cls + '[data-row="' + r + '"][data-col="' + c + '"]:not(:disabled)');
           if (next) { next.focus(); return true; }
         }
         return false;
       }
       function bindAttendGrid(root) {
-        root.querySelectorAll(".att-cell").forEach((el) => {
-          el.addEventListener("keydown", (e) => {
+        root.querySelectorAll('.att-cell').forEach((el) => {
+          el.addEventListener('keydown', (e) => {
             if (e.isComposing || e.keyCode === 229) return;
-            if (!["ArrowRight", "ArrowLeft", "Tab"].includes(e.key)) return;
-            if (moveGrid(el, e.key, e.shiftKey, root, "att-cell")) e.preventDefault();
+            if (!['ArrowRight','ArrowLeft','Tab'].includes(e.key)) return;
+            if (moveGrid(el, e.key, e.shiftKey, root, 'att-cell')) e.preventDefault();
           });
         });
       }
@@ -922,59 +907,38 @@ function moveGrid(inp, key, shift, root, cls) {
         const today = toISO(new Date());
         const students = seatedStudents();
         const maxR = Math.max(0, students.length - 1);
-        $("#view-attend").innerHTML = `
+        $('#view-attend').innerHTML = `
           <div class="bg-white rounded-2xl border p-4 mb-4 space-y-3">
-            <div class="flex flex-wrap gap-3 items-center">
-              <span class="text-sm text-slate-500">${weekLabel(anchor)}</span>
-              <span class="text-xs bg-navy-900 text-white px-2 py-1 rounded">당일 일괄: ${today}</span>
-            </div>
+            <div class="flex flex-wrap gap-3 items-center"><span class="text-sm text-slate-500">${weekLabel(anchor)}</span><span class="text-xs bg-navy-900 text-white px-2 py-1 rounded">당일 일괄: ${today}</span></div>
             <div class="flex flex-wrap gap-2 items-center">
               <label class="text-sm flex items-center gap-2"><input id="chk-all" type="checkbox" /> 전체 선택</label>
-              <select id="bulk-status" class="border rounded-lg px-2 py-2 text-sm">${ATTEND.map((a) => `<option>${a}</option>`).join("")}</select>
+              <select id="bulk-status" class="border rounded-lg px-2 py-2 text-sm">${ATTEND.map((a) => `<option>${a}</option>`).join('')}</select>
               <button type="button" id="bulk-apply" class="text-sm bg-indigo-600 text-white rounded-lg px-3 py-2">선택 학생 동일 적용</button>
               <button type="button" id="fill-attend" class="text-sm bg-emerald-600 text-white rounded-lg px-3 py-2">전원 출석(입실)</button>
               <button type="button" id="clear-attend" class="text-sm bg-slate-200 text-slate-800 rounded-lg px-3 py-2">전원 출석 해제</button>
             </div>
             <p class="text-xs text-slate-400">시간은 기록하지 않습니다. ←→·Tab은 요일 이동, ↑↓는 출석 유형 변경입니다.</p>
           </div>
-          <div class="bg-white rounded-2xl border overflow-auto">
-            <table class="min-w-max text-xs">
-              <thead class="bg-slate-50"><tr>
-                <th class="px-2 py-2 sticky-col">선택</th><th class="px-3 py-2 sticky-col">학생</th>
-                ${dates.map((d, i) => `<th class="px-3 py-2">${DAYS[i]} ${toISO(d).slice(5)}${toISO(d) === today ? " · 당일" : ""}</th>`).join("")}
-              </tr></thead>
-              <tbody>
-                ${students.map((s, ri) => `<tr class="border-t">
-                  <td class="px-2 py-2 sticky-col text-center"><input type="checkbox" class="stu-chk" data-sid="${s.id}" /></td>
-                  <td class="px-3 py-2 sticky-col font-semibold whitespace-nowrap">${escapeHtml(studentName(s.id))}<div class="text-[10px] text-slate-400 font-normal">${escapeHtml(s.grade || "")}</div></td>
-                  ${dates.map((d, ci) => {
-                    const iso = toISO(d);
-                    const rec = (db.attendance[s.id] || {})[iso] || { status: "" };
-                    return `<td class="px-2 py-2"><select data-sid="${s.id}" data-date="${iso}" data-row="${ri}" data-col="${ci}" data-maxrow="${maxR}" data-maxcol="6" class="att-cell border rounded px-1 py-1 w-32"><option value="">미기록</option>${ATTEND.map((a) => `<option value="${a}" ${rec.status === a ? "selected" : ""}>${a}</option>`).join("")}</select></td>`;
-                  }).join("")}
-                </tr>`).join("")}
-              </tbody>
-            </table>
-          </div>`;
-        $("#view-attend").querySelectorAll(".att-cell").forEach((el) => {
-          el.addEventListener("change", () => { ensureAttend(el.dataset.sid, el.dataset.date).status = el.value; save(); });
-        });
-        bindAttendGrid($("#view-attend"));
-        $("#chk-all").addEventListener("change", (e) => { $("#view-attend").querySelectorAll(".stu-chk").forEach((c) => { c.checked = e.target.checked; }); });
-        $("#bulk-apply").addEventListener("click", () => {
-          const ids = Array.from($("#view-attend").querySelectorAll(".stu-chk:checked")).map((c) => c.dataset.sid);
-          if (!ids.length) { alert("적용할 학생을 체크하세요."); return; }
-          const status = $("#bulk-status").value;
+          <div class="bg-white rounded-2xl border overflow-auto"><table class="min-w-max text-xs"><thead class="bg-slate-50"><tr>
+            <th class="px-2 py-2 sticky-col">선택</th><th class="px-3 py-2 sticky-col">학생</th>
+            ${dates.map((d, i) => `<th class="px-3 py-2">${DAYS[i]} ${toISO(d).slice(5)}${toISO(d) === today ? ' · 당일' : ''}</th>`).join('')}
+          </tr></thead><tbody>
+            ${students.map((s, ri) => `<tr class="border-t"><td class="px-2 py-2 sticky-col text-center"><input type="checkbox" class="stu-chk" data-sid="${s.id}" /></td><td class="px-3 py-2 sticky-col font-semibold whitespace-nowrap">${escapeHtml(studentName(s.id))}<div class="text-[10px] text-slate-400 font-normal">${escapeHtml(s.grade || '')}</div></td>${dates.map((d, ci) => { const iso = toISO(d); const rec = (db.attendance[s.id] || {})[iso] || { status: '' }; return `<td class="px-2 py-2"><select data-sid="${s.id}" data-date="${iso}" data-row="${ri}" data-col="${ci}" data-maxrow="${maxR}" data-maxcol="6" class="att-cell border rounded px-1 py-1 w-32"><option value="">미기록</option>${ATTEND.map((a) => `<option value="${a}" ${rec.status === a ? 'selected' : ''}>${a}</option>`).join('')}</select></td>`; }).join('')}</tr>`).join('')}
+          </tbody></table></div>`;
+        $('#view-attend').querySelectorAll('.att-cell').forEach((el) => el.addEventListener('change', () => { ensureAttend(el.dataset.sid, el.dataset.date).status = el.value; save(); }));
+        bindAttendGrid($('#view-attend'));
+        $('#chk-all').addEventListener('change', (e) => { $('#view-attend').querySelectorAll('.stu-chk').forEach((c) => { c.checked = e.target.checked; }); });
+        $('#bulk-apply').addEventListener('click', () => {
+          const ids = Array.from($('#view-attend').querySelectorAll('.stu-chk:checked')).map((c) => c.dataset.sid);
+          if (!ids.length) { alert('적용할 학생을 체크하세요.'); return; }
+          const status = $('#bulk-status').value;
           ids.forEach((sid) => { ensureAttend(sid, today).status = status; });
           save(); renderAttend();
         });
-        $("#fill-attend").addEventListener("click", () => {
-          seatedStudents().forEach((s) => { ensureAttend(s.id, today).status = "입실"; });
-          save(); renderAttend();
-        });
-        $("#clear-attend").addEventListener("click", () => {
-          if (!confirm("당일(" + today + ") 전원 출석 기록을 해제할까요?")) return;
-          seatedStudents().forEach((s) => { if (db.attendance[s.id]) db.attendance[s.id][today] = { status: "", time: "" }; });
+        $('#fill-attend').addEventListener('click', () => { seatedStudents().forEach((s) => { ensureAttend(s.id, today).status = '입실'; }); save(); renderAttend(); });
+        $('#clear-attend').addEventListener('click', () => {
+          if (!confirm('당일(' + today + ') 전원 출석 기록을 해제할까요?')) return;
+          seatedStudents().forEach((s) => { if (db.attendance[s.id]) db.attendance[s.id][today] = { status: '', time: '' }; });
           save(); renderAttend();
         });
       }
@@ -982,65 +946,45 @@ function moveGrid(inp, key, shift, root, cls) {
       function typeOptions(selected) {
         const list = STUDY_TYPES.slice();
         if (selected && !list.includes(selected)) list.push(selected);
-        return koSorted(list).map((s) => `<option value="${escapeHtml(s)}" ${selected === s ? "selected" : ""}>${escapeHtml(s)}</option>`).join("");
+        return koSorted(list).map((s) => `<option value="${escapeHtml(s)}" ${selected === s ? 'selected' : ''}>${escapeHtml(s)}</option>`).join('');
       }
-      function isSundayISO(iso) {
-        const d = parseISO(iso);
-        return d.getDay() === 0;
-      }
-      function refreshStudyPanels(allLogs, counted) {
-        const total = counted.reduce((a, b) => a + (b.minutes || 0), 0);
-        const sun = allLogs.filter((l) => isSundayISO(l.date)).reduce((a, b) => a + (b.minutes || 0), 0);
-        const doneRate = counted.length ? Math.round(counted.filter((l) => normEval(l.eval) === "학습완료").length / counted.length * 100) : 0;
-        const set = (id, v) => { const n = document.getElementById(id); if (n) n.textContent = v; };
-        set("st-total", fmtMin(total));
-        set("st-count", counted.length + "건");
-        set("st-avg", fmtMin(Math.round(total / 6)));
-        set("st-rate", doneRate + "%");
-        const note = document.getElementById("st-sun-note");
-        if (note) note.textContent = sun ? ("일요일 기록 " + fmtMin(sun) + "은 목록에는 보이지만 주간 합계·평균에는 넣지 않습니다.") : "일요일에 저장한 기록도 목록에 표시됩니다. 주간 합계·평균은 월–토만 계산합니다.";
-        const sub = document.getElementById("st-sub-box");
-        const typ = document.getElementById("st-type-box");
-        if (sub) sub.innerHTML = subjectBars(counted);
-        if (typ) typ.innerHTML = typeBars(counted);
-      }
+      function isSundayISO(iso) { return parseISO(iso).getDay() === 0; }
       function bindStudyGrid(root) {
-        root.querySelectorAll(".st-cell").forEach((el) => {
-          el.addEventListener("keydown", (e) => {
+        root.querySelectorAll('.st-cell').forEach((el) => {
+          el.addEventListener('keydown', (e) => {
             if (e.isComposing || e.keyCode === 229) return;
-            const kind = el.dataset.kind || "";
-            if (kind === "select" || kind === "time" || kind === "date") { if (e.key !== "Tab") return; }
-            if (!["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown", "Tab", "Enter"].includes(e.key)) return;
-            if (moveGrid(el, e.key, e.shiftKey, root, "st-cell")) e.preventDefault();
+            const kind = el.dataset.kind || '';
+            if ((kind === 'select' || kind === 'time' || kind === 'date') && e.key !== 'Tab') return;
+            if (!['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','Tab','Enter'].includes(e.key)) return;
+            if (moveGrid(el, e.key, e.shiftKey, root, 'st-cell')) e.preventDefault();
           });
         });
       }
       function renderStudy() {
         const weekISO = weekDates(anchor).map(toISO);
         const countedISO = studyWeekISO(anchor);
-        if (!seatedStudents().find((s) => s.id === selectedStudentId)) selectedStudentId = (seatedStudents()[0] || {}).id || "";
-        const logs = db.studyLogs.filter((l) => l.studentId === selectedStudentId && weekISO.includes(l.date)).sort((a, b) => (a.date + (a.start || "")).localeCompare(b.date + (b.start || "")));
+        if (!seatedStudents().find((s) => s.id === selectedStudentId)) selectedStudentId = (seatedStudents()[0] || {}).id || '';
+        const logs = db.studyLogs.filter((l) => l.studentId === selectedStudentId && weekISO.includes(l.date)).sort((a, b) => (a.date + (a.start || '')).localeCompare(b.date + (b.start || '')));
         const counted = logs.filter((l) => countedISO.includes(l.date));
         const total = counted.reduce((a, b) => a + (b.minutes || 0), 0);
-        const doneRate = counted.length ? Math.round(counted.filter((l) => normEval(l.eval) === "학습완료").length / counted.length * 100) : 0;
-        const sunMin = logs.filter((l) => isSundayISO(l.date)).reduce((a, b) => a + (b.minutes || 0), 0);
+        const doneRate = counted.length ? Math.round(counted.filter((l) => normEval(l.eval) === '학습완료').length / counted.length * 100) : 0;
         const maxR = Math.max(0, logs.length - 1);
-        const cellAttr = (row, col, kind) => `data-row="${row}" data-col="${col}" data-maxrow="${maxR}" data-maxcol="6" data-kind="${kind}"`;
-        const inputCls = "st-cell border rounded px-1 py-1 w-full min-w-[96px]";
-        $("#view-study").innerHTML = `
+        const cell = (row, col, kind) => `data-row="${row}" data-col="${col}" data-maxrow="${maxR}" data-maxcol="6" data-kind="${kind}"`;
+        const cls = 'st-cell border rounded px-1 py-1 w-full min-w-[96px]';
+        $('#view-study').innerHTML = `
           <div id="study-entry" class="bg-white rounded-2xl border p-4 mb-4">
             <div class="flex flex-wrap gap-3 items-end">
-              <label class="text-sm">학생<div>${studentSelect("st-student", selectedStudentId)}</div></label>
+              <label class="text-sm">학생<div>${studentSelect('st-student', selectedStudentId)}</div></label>
               <label class="text-sm">날짜<input id="st-date" type="date" class="border rounded-lg px-2 py-2 block" value="${toISO(anchor)}" /></label>
-              <label class="text-sm">과목<select id="st-sub" class="border rounded-lg px-2 py-2 block">${SUBJECTS.map((s) => `<option>${escapeHtml(s)}</option>`).join("")}</select></label>
-              <label class="text-sm">학습유형<select id="st-type" class="border rounded-lg px-2 py-2 block">${typeOptions("")}</select></label>
-              <label class="text-sm">완료평가<select id="st-eval" class="border rounded-lg px-2 py-2 block">${EVALS.map((s) => `<option>${escapeHtml(s)}</option>`).join("")}</select></label>
+              <label class="text-sm">과목<select id="st-sub" class="border rounded-lg px-2 py-2 block">${SUBJECTS.map((s) => `<option>${escapeHtml(s)}</option>`).join('')}</select></label>
+              <label class="text-sm">학습유형<select id="st-type" class="border rounded-lg px-2 py-2 block">${typeOptions('')}</select></label>
+              <label class="text-sm">완료평가<select id="st-eval" class="border rounded-lg px-2 py-2 block">${EVALS.map((s) => `<option>${escapeHtml(s)}</option>`).join('')}</select></label>
               <label class="text-sm">시작<input id="st-start" type="time" value="10:00" class="border rounded-lg px-2 py-2 block" /></label>
               <label class="text-sm">종료<input id="st-end" type="time" value="11:00" class="border rounded-lg px-2 py-2 block" /></label>
               <label class="text-sm flex-1 min-w-[160px]">메모<input id="st-note" maxlength="40" class="border rounded-lg px-2 py-2 w-full block" placeholder="선택" /></label>
               <button type="button" id="st-add" class="bg-navy-900 text-white rounded-lg px-4 py-2 h-10">추가</button>
             </div>
-            <p id="st-sun-note" class="text-xs text-slate-400 mt-2">${sunMin ? "일요일 기록 " + fmtMin(sunMin) + "은 목록에는 보이지만 주간 합계·평균에는 넣지 않습니다." : "일요일 입력도 목록에 표시됩니다. 주간 합계·평균은 월–토만 계산합니다. 드롭다운·시간은 방향키로 값을 바꾸고, Enter 또는 추가로 저장합니다."}</p>
+            <p class="text-xs text-slate-400 mt-2">일요일 입력도 목록에 표시됩니다. 주간 합계·평균은 월–토만 계산합니다. 드롭다운·시간은 방향키로 값을 바꾸고, Enter 또는 추가로 저장합니다.</p>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
             <div class="bg-white rounded-2xl border p-4"><p class="text-xs text-slate-500">이번 주 순수공부 (월–토)</p><p id="st-total" class="text-lg font-bold">${fmtMin(total)}</p></div>
@@ -1049,77 +993,43 @@ function moveGrid(inp, key, shift, root, cls) {
             <div class="bg-white rounded-2xl border p-4"><p class="text-xs text-slate-500">학습완료 비율</p><p id="st-rate" class="text-lg font-bold">${doneRate}%</p></div>
           </div>
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-            <div class="bg-white rounded-2xl border p-4"><h3 class="font-bold mb-3">과목별 (월–토)</h3><div id="st-sub-box">${subjectBars(counted)}</div></div>
-            <div class="bg-white rounded-2xl border p-4"><h3 class="font-bold mb-3">학습유형별 (월–토)</h3><div id="st-type-box">${typeBars(counted)}</div></div>
+            <div class="bg-white rounded-2xl border p-4"><h3 class="font-bold mb-3">과목별 (월–토)</h3>${subjectBars(counted)}</div>
+            <div class="bg-white rounded-2xl border p-4"><h3 class="font-bold mb-3">학습유형별 (월–토)</h3>${typeBars(counted)}</div>
           </div>
-          <div class="bg-white rounded-2xl border overflow-auto">
-            <table class="min-w-full text-sm"><thead class="bg-slate-50"><tr>
-              <th class="px-2 py-2 text-left">날짜</th><th class="px-2 py-2 text-left">시작</th><th class="px-2 py-2 text-left">종료</th><th class="px-2 py-2 text-left">과목</th>
-              <th class="px-2 py-2 text-left">유형</th><th class="px-2 py-2 text-left">완료평가</th><th class="px-2 py-2 text-left">메모</th><th class="px-2 py-2 text-left">시간</th><th></th>
-            </tr></thead><tbody>
-              ${logs.length ? logs.map((l, idx) => {
-                const ev = normEval(l.eval);
-                const sun = isSundayISO(l.date);
-                return `<tr class="border-t ${sun ? "bg-slate-50" : ""}">
-                  <td class="px-1 py-1"><input type="date" data-log="${l.id}" data-f="date" ${cellAttr(idx, 0, "date")} value="${l.date || ""}" class="${inputCls}" />${sun ? '<div class="text-[10px] text-slate-400">일요일 · 주간합계 제외</div>' : ""}</td>
-                  <td class="px-1 py-1"><input type="time" data-log="${l.id}" data-f="start" ${cellAttr(idx, 1, "time")} value="${l.start || ""}" class="${inputCls}" /></td>
-                  <td class="px-1 py-1"><input type="time" data-log="${l.id}" data-f="end" ${cellAttr(idx, 2, "time")} value="${l.end || ""}" class="${inputCls}" /></td>
-                  <td class="px-1 py-1"><select data-log="${l.id}" data-f="subject" ${cellAttr(idx, 3, "select")} class="${inputCls}">${SUBJECTS.map((s) => `<option ${l.subject === s ? "selected" : ""}>${escapeHtml(s)}</option>`).join("")}</select></td>
-                  <td class="px-1 py-1"><select data-log="${l.id}" data-f="type" ${cellAttr(idx, 4, "select")} class="${inputCls}">${typeOptions(l.type)}</select></td>
-                  <td class="px-1 py-1"><select data-log="${l.id}" data-f="eval" ${cellAttr(idx, 5, "select")} class="${inputCls}">${EVALS.map((s) => `<option ${ev === s ? "selected" : ""}>${escapeHtml(s)}</option>`).join("")}</select></td>
-                  <td class="px-1 py-1"><input maxlength="40" data-log="${l.id}" data-f="note" ${cellAttr(idx, 6, "text")} value="${escapeHtml(l.note || "")}" class="${inputCls}" /></td>
-                  <td class="px-2 py-1 whitespace-nowrap" data-min="${l.id}">${fmtMin(l.minutes)}</td>
-                  <td class="px-2 py-1"><button type="button" data-del="${l.id}" class="text-rose-500 text-xs">삭제</button></td>
-                </tr>`;
-              }).join("") : `<tr><td colspan="9" class="px-3 py-8 text-center text-slate-400">이번 주 학습 기록이 없습니다.</td></tr>`}
-            </tbody></table>
-          </div>`;
+          <div class="bg-white rounded-2xl border overflow-auto"><table class="min-w-full text-sm"><thead class="bg-slate-50"><tr>
+            <th class="px-2 py-2 text-left">날짜</th><th class="px-2 py-2 text-left">시작</th><th class="px-2 py-2 text-left">종료</th><th class="px-2 py-2 text-left">과목</th><th class="px-2 py-2 text-left">유형</th><th class="px-2 py-2 text-left">완료평가</th><th class="px-2 py-2 text-left">메모</th><th class="px-2 py-2 text-left">시간</th><th></th>
+          </tr></thead><tbody>
+            ${logs.length ? logs.map((l, idx) => { const ev = normEval(l.eval); const sun = isSundayISO(l.date); return `<tr class="border-t ${sun ? 'bg-slate-50' : ''}"><td class="px-1 py-1"><input type="date" data-log="${l.id}" data-f="date" ${cell(idx,0,'date')} value="${l.date || ''}" class="${cls}" />${sun ? '<div class="text-[10px] text-slate-400">일요일 · 주간합계 제외</div>' : ''}</td><td class="px-1 py-1"><input type="time" data-log="${l.id}" data-f="start" ${cell(idx,1,'time')} value="${l.start || ''}" class="${cls}" /></td><td class="px-1 py-1"><input type="time" data-log="${l.id}" data-f="end" ${cell(idx,2,'time')} value="${l.end || ''}" class="${cls}" /></td><td class="px-1 py-1"><select data-log="${l.id}" data-f="subject" ${cell(idx,3,'select')} class="${cls}">${SUBJECTS.map((s) => `<option ${l.subject === s ? 'selected' : ''}>${escapeHtml(s)}</option>`).join('')}</select></td><td class="px-1 py-1"><select data-log="${l.id}" data-f="type" ${cell(idx,4,'select')} class="${cls}">${typeOptions(l.type)}</select></td><td class="px-1 py-1"><select data-log="${l.id}" data-f="eval" ${cell(idx,5,'select')} class="${cls}">${EVALS.map((s) => `<option ${ev === s ? 'selected' : ''}>${escapeHtml(s)}</option>`).join('')}</select></td><td class="px-1 py-1"><input maxlength="40" data-log="${l.id}" data-f="note" ${cell(idx,6,'text')} value="${escapeHtml(l.note || '')}" class="${cls}" /></td><td class="px-2 py-1 whitespace-nowrap" data-min="${l.id}">${fmtMin(l.minutes)}</td><td class="px-2 py-1"><button type="button" data-del="${l.id}" class="text-rose-500 text-xs">삭제</button></td></tr>`; }).join('') : '<tr><td colspan="9" class="px-3 py-8 text-center text-slate-400">이번 주 학습 기록이 없습니다.</td></tr>'}
+          </tbody></table></div>`;
         const addStudyLog = () => {
-          const start = $("#st-start").value;
-          const end = $("#st-end").value;
-          const minutes = minutesBetween(start, end);
-          if (!$("#st-student").value) { alert("학생을 선택하세요."); return; }
-          if (!$("#st-date").value) { alert("날짜를 선택하세요."); return; }
-          if (!minutes) { alert("종료 시간이 시작 시간보다 뒤여야 합니다."); return; }
-          db.studyLogs.push({ id: uid("log"), studentId: $("#st-student").value, date: $("#st-date").value, subject: $("#st-sub").value, type: $("#st-type").value, eval: $("#st-eval").value, start, end, minutes, note: $("#st-note").value.trim() });
-          save();
-          selectedStudentId = $("#st-student").value;
-          renderStudy();
+          const start = $('#st-start').value, end = $('#st-end').value, minutes = minutesBetween(start, end);
+          if (!$('#st-student').value) { alert('학생을 선택하세요.'); return; }
+          if (!$('#st-date').value) { alert('날짜를 선택하세요.'); return; }
+          if (!minutes) { alert('종료 시간이 시작 시간보다 뒤여야 합니다.'); return; }
+          db.studyLogs.push({ id: uid('log'), studentId: $('#st-student').value, date: $('#st-date').value, subject: $('#st-sub').value, type: $('#st-type').value, eval: $('#st-eval').value, start, end, minutes, note: $('#st-note').value.trim() });
+          save(); selectedStudentId = $('#st-student').value; renderStudy();
         };
-        $("#st-student").value = selectedStudentId;
-        $("#st-student").addEventListener("change", (e) => { selectedStudentId = e.target.value; reportStudentId = selectedStudentId; renderStudy(); });
-        $("#st-add").addEventListener("click", addStudyLog);
-        $("#study-entry").addEventListener("keydown", (e) => {
-          if (e.key !== "Enter" || e.shiftKey || e.isComposing || e.keyCode === 229) return;
-          if (e.target && (e.target.id === "st-student" || e.target.tagName === "SELECT")) return;
-          e.preventDefault();
-          addStudyLog();
+        $('#st-student').value = selectedStudentId;
+        $('#st-student').addEventListener('change', (e) => { selectedStudentId = e.target.value; reportStudentId = selectedStudentId; renderStudy(); });
+        $('#st-add').addEventListener('click', addStudyLog);
+        $('#study-entry').addEventListener('keydown', (e) => {
+          if (e.key !== 'Enter' || e.shiftKey || e.isComposing || e.keyCode === 229) return;
+          if (e.target && (e.target.id === 'st-student' || e.target.tagName === 'SELECT')) return;
+          e.preventDefault(); addStudyLog();
         });
         const commitLog = (el) => {
-          const log = db.studyLogs.find((l) => l.id === el.dataset.log);
-          if (!log) return;
-          log[el.dataset.f] = el.dataset.f === "note" ? el.value.trim() : el.value;
-          if (el.dataset.f === "start" || el.dataset.f === "end") {
-            const minutes = minutesBetween(log.start, log.end);
-            if (!minutes) return;
-            log.minutes = minutes;
-            const cell = document.querySelector('[data-min="' + log.id + '"]');
-            if (cell) cell.textContent = fmtMin(minutes);
+          const log = db.studyLogs.find((l) => l.id === el.dataset.log); if (!log) return;
+          log[el.dataset.f] = el.dataset.f === 'note' ? el.value.trim() : el.value;
+          if (el.dataset.f === 'start' || el.dataset.f === 'end') {
+            const minutes = minutesBetween(log.start, log.end); if (!minutes) return;
+            log.minutes = minutes; const cell = document.querySelector('[data-min="' + log.id + '"]'); if (cell) cell.textContent = fmtMin(minutes);
           }
           save();
-          const fresh = db.studyLogs.filter((l) => l.studentId === selectedStudentId && weekDates(anchor).map(toISO).includes(l.date));
-          refreshStudyPanels(fresh, fresh.filter((l) => studyWeekISO(anchor).includes(l.date)));
-          if (el.dataset.f === "date" && !weekDates(anchor).map(toISO).includes(log.date)) renderStudy();
+          if (el.dataset.f === 'date' && !weekDates(anchor).map(toISO).includes(log.date)) renderStudy();
         };
-        $("#view-study").querySelectorAll(".st-cell[data-log]").forEach((el) => {
-          el.addEventListener("change", () => commitLog(el));
-          if (el.dataset.kind === "text") el.addEventListener("blur", () => commitLog(el));
-        });
-        bindStudyGrid($("#view-study"));
-        $("#view-study").querySelectorAll("[data-del]").forEach((btn) => btn.addEventListener("click", () => {
-          db.studyLogs = db.studyLogs.filter((l) => l.id !== btn.dataset.del);
-          save(); renderStudy();
-        }));
+        $('#view-study').querySelectorAll('.st-cell[data-log]').forEach((el) => { el.addEventListener('change', () => commitLog(el)); if (el.dataset.kind === 'text') el.addEventListener('blur', () => commitLog(el)); });
+        bindStudyGrid($('#view-study'));
+        $('#view-study').querySelectorAll('[data-del]').forEach((btn) => btn.addEventListener('click', () => { db.studyLogs = db.studyLogs.filter((l) => l.id !== btn.dataset.del); save(); renderStudy(); }));
       }
 
       function destroyCharts() {
@@ -1229,12 +1139,12 @@ function moveGrid(inp, key, shift, root, cls) {
               ${miniStat("학습완료 비율", doneRate + "%")}
               ${miniStat("학습 기록", logs.length + "건")}
             </div>
-            <p class="text-[10px] text-slate-400 -mt-3 mb-3">입실일 = 입실 + 지각 + 중도입실 · 순수공부는 월–토, 주간 평균 ${fmtMin(Math.round(total / 6))}</p>
+            <p class="text-[10px] text-slate-400 -mt-3 mb-3">입실일 = 입실 + 지각 + 중도입실</p>
             <div class="grid grid-cols-2 gap-3 mb-4">
               <div class="border rounded p-2"><p class="text-xs font-bold mb-1">과목별 공부시간 (분)</p><div class="chart-box"><canvas id="c-sub"></canvas></div></div>
               <div class="border rounded p-2"><p class="text-xs font-bold mb-1">학습유형별 공부시간 (분)</p><div class="chart-box"><canvas id="c-type"></canvas></div></div>
             </div>
-            <div class="border rounded p-2 mb-4"><p class="text-xs font-bold mb-1">요일별 순수공부시간 (분) · 월–토</p><div class="chart-box sm"><canvas id="c-day"></canvas></div></div>
+            <div class="border rounded p-2 mb-4"><p class="text-xs font-bold mb-1">요일별 순수공부시간 (분)</p><div class="chart-box sm"><canvas id="c-day"></canvas></div></div>
             <div class="border rounded p-2 mb-4">
               <div class="flex justify-between items-end mb-1">
                 <p class="text-xs font-bold">과목별 완료평가 (횟수 · 학습완료 비율)</p>
@@ -1353,7 +1263,7 @@ function moveGrid(inp, key, shift, root, cls) {
             </div>
             <div class="border rounded p-2 mb-4"><p class="text-xs font-bold mb-1">주차별 순수공부시간 (분) · 월–토 기준</p><div class="chart-box sm"><canvas id="m-week"></canvas></div></div>
             <p class="text-xs font-bold mb-1">일별 공부 히트맵</p>
-            <p class="text-[10px] text-slate-500 mb-1">색이 있는 칸만 학습 기록이 있습니다. 기록이 없는 날(일요일 포함)은 빈 칸이며, 학습 기록 화면에 없는 일요일을 칠하지 않습니다.</p>
+            <p class="text-[10px] text-slate-500 mb-1">색이 진할수록 그날 순수공부시간이 많습니다. 연한 회색은 기록 없음(0분)입니다. 가장 진한 칸은 이번 달 최다 공부일입니다.</p>
             <div class="flex items-center gap-2 text-[10px] text-slate-500 mb-2">
               <span>적음</span>
               <span class="heat w-5" style="background:rgba(20,33,61,0.08)"></span>
@@ -1370,12 +1280,8 @@ function moveGrid(inp, key, shift, root, cls) {
                 let html = Array.from({ length: padLeft }, () => "<div></div>").join("");
                 isoList.forEach((iso, i) => {
                   const m = daily[i] || 0;
-                  if (!m) {
-                    html += `<div class="heat text-[9px] text-center leading-[18px] text-slate-300 bg-slate-50" title="${iso} · 기록 없음">${i + 1}</div>`;
-                  } else {
-                    const alpha = 0.25 + 0.75 * (m / maxDay);
-                    html += `<div class="heat text-[9px] text-center leading-[18px] text-white" style="background:rgba(20,33,61,${alpha})" title="${iso} · ${m}분">${i + 1}</div>`;
-                  }
+                  if (!m) html += `<div class="heat text-[9px] text-center leading-[18px] text-slate-300 bg-slate-50" title="${iso} · 기록 없음">${i + 1}</div>`;
+                  else html += `<div class="heat text-[9px] text-center leading-[18px] text-white" style="background:rgba(20,33,61,${0.25 + 0.75 * (m / maxDay)})" title="${iso} · ${m}분">${i + 1}</div>`;
                 });
                 return html;
               })()}
@@ -1975,7 +1881,7 @@ function moveGrid(inp, key, shift, root, cls) {
             </div>
           </div>
           <div class="bg-white rounded-2xl border p-4 mb-4">
-            <p class="text-xs font-bold mb-1">${weeks ? "주차별 순수공부시간 (분) · 월–토" : "요일별 순수공부시간 (분) · 월–토"}</p>
+            <p class="text-xs font-bold mb-1">${weeks ? "주차별 순수공부시간 (분)" : "요일별 순수공부시간 (분)"}</p>
             <div class="chart-box sm"><canvas id="s-trend"></canvas></div>
           </div>
         `;
