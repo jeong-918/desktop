@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-03T16:16:46.036Z",
+  "exportedAt": "2026-11-03T16:18:15.924Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -148,12 +148,12 @@
     },
     {
       "id": "app-1791447467073",
-      "name": "파인만컨설팅_학생관리",
+      "name": "파인만컨설팅_업무",
       "url": "https://jeong-918.github.io/desktop/app/fineman2-1.html",
       "target": "newtab",
-      "icon": "📅",
-      "xPct": 33.13,
-      "yPct": 1.25
+      "icon": "https://images.unsplash.com/photo-1781246435700-afec19012b45?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+      "xPct": 0,
+      "yPct": 59.52
     },
     {
       "id": "app-1789710337914",
@@ -161,8 +161,8 @@
       "url": "https://docs.google.com/spreadsheets/d/1EX73Oq9iVTGMll7SY2ZJbQaoG7ATY5ifB7GdyLBER_0/edit?usp=drive_web&ouid=103047718856130833554",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 38.54,
-      "yPct": 1.25
+      "xPct": 5.26,
+      "yPct": 59.73
     },
     {
       "id": "app-1789710318170",
