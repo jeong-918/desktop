@@ -1,6 +1,6 @@
 {
   "app": "mogo",
-  "exportedAt": "2026-11-03T11:55:01.070Z",
+  "exportedAt": "2026-11-03T12:28:14.680Z",
   "students": [
     {
       "id": "DOH",
@@ -174,9 +174,9 @@
       "studentId": "TESTID",
       "date": "2026-11-01",
       "examType": "교육청",
-      "examTitle": "테스트 1차",
+      "examTitle": "11월 교육청 모의고사",
       "subject": "국어",
-      "score": 67,
+      "score": 100,
       "memo": ""
     },
     {
@@ -184,9 +184,9 @@
       "studentId": "TESTID",
       "date": "2026-11-01",
       "examType": "교육청",
-      "examTitle": "테스트 1차",
+      "examTitle": "11월 교육청 모의고사",
       "subject": "수학",
-      "score": 55,
+      "score": 100,
       "memo": ""
     },
     {
@@ -194,9 +194,9 @@
       "studentId": "TESTID",
       "date": "2026-11-01",
       "examType": "교육청",
-      "examTitle": "테스트 1차",
+      "examTitle": "11월 교육청 모의고사",
       "subject": "영어",
-      "score": 60,
+      "score": 100,
       "memo": ""
     },
     {
@@ -204,9 +204,19 @@
       "studentId": "TESTID",
       "date": "2026-11-01",
       "examType": "교육청",
-      "examTitle": "테스트 1차",
+      "examTitle": "11월 교육청 모의고사",
       "subject": "통합사회",
-      "score": 75,
+      "score": 48,
+      "memo": ""
+    },
+    {
+      "id": "REC-1793708889363-623",
+      "studentId": "TESTID",
+      "date": "2026-11-01",
+      "examType": "교육청",
+      "examTitle": "11월 교육청 모의고사",
+      "subject": "통합과학",
+      "score": 48,
       "memo": ""
     }
   ]
