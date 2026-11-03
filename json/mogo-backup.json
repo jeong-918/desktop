@@ -1,6 +1,6 @@
 {
   "app": "mogo",
-  "exportedAt": "2026-11-03T12:32:01.746Z",
+  "exportedAt": "2026-11-03T12:44:37.851Z",
   "students": [
     {
       "id": "DOH",
@@ -168,56 +168,5 @@
       "comment": "정영주 학생의 신규 모의고사 성적 관리가 시작되었습니다."
     }
   ],
-  "scoreRecords": [
-    {
-      "id": "REC-1793706895636-554",
-      "studentId": "TESTID",
-      "date": "2026-11-01",
-      "examType": "교육청",
-      "examTitle": "11월 교육청 모의고사",
-      "subject": "국어",
-      "score": 100,
-      "memo": ""
-    },
-    {
-      "id": "REC-1793706895636-93",
-      "studentId": "TESTID",
-      "date": "2026-11-01",
-      "examType": "교육청",
-      "examTitle": "11월 교육청 모의고사",
-      "subject": "수학",
-      "score": 100,
-      "memo": ""
-    },
-    {
-      "id": "REC-1793706895636-972",
-      "studentId": "TESTID",
-      "date": "2026-11-01",
-      "examType": "교육청",
-      "examTitle": "11월 교육청 모의고사",
-      "subject": "영어",
-      "score": 100,
-      "memo": ""
-    },
-    {
-      "id": "REC-1793706895636-447",
-      "studentId": "TESTID",
-      "date": "2026-11-01",
-      "examType": "교육청",
-      "examTitle": "11월 교육청 모의고사",
-      "subject": "통합사회",
-      "score": 48,
-      "memo": ""
-    },
-    {
-      "id": "REC-1793708889363-623",
-      "studentId": "TESTID",
-      "date": "2026-11-01",
-      "examType": "교육청",
-      "examTitle": "11월 교육청 모의고사",
-      "subject": "통합과학",
-      "score": 48,
-      "memo": ""
-    }
-  ]
+  "scoreRecords": []
 }
