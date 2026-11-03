@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-03T12:56:34.179Z",
+  "exportedAt": "2026-11-03T12:58:57.278Z",
   "version": 3,
   "data": {
     "students": [
@@ -3170,6 +3170,30 @@
         "studentId": "stu_mvxa0yyv2w6o",
         "date": "2026-11-03",
         "subject": "사회",
+        "type": "수행평가",
+        "eval": "학습완료",
+        "start": "21:00",
+        "end": "22:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mw0ozlihmceb",
+        "studentId": "stu_mvxa0h8n6ert",
+        "date": "2026-11-03",
+        "subject": "수학",
+        "type": "수행평가",
+        "eval": "미완료",
+        "start": "21:20",
+        "end": "22:00",
+        "minutes": 40,
+        "note": ""
+      },
+      {
+        "id": "log_mw0p00rlk9aw",
+        "studentId": "stu_mvxa1ckuj8o0",
+        "date": "2026-11-03",
+        "subject": "기타",
         "type": "수행평가",
         "eval": "학습완료",
         "start": "21:00",
