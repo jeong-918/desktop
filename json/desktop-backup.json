@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-03T15:54:36.736Z",
+  "exportedAt": "2026-11-03T15:55:56.165Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -8,8 +8,8 @@
       "url": "https://power-2028-admission-atlas.pages.dev/",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 0.63,
-      "yPct": 1.25
+      "xPct": 60.21,
+      "yPct": 41.34
     },
     {
       "id": "app-1789710282082",
@@ -26,8 +26,8 @@
       "url": "https://dh.mirae-academy.co.kr/custom-page/260721/dh-spqb",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 11.46,
-      "yPct": 1.25
+      "xPct": 65.63,
+      "yPct": 41.34
     },
     {
       "id": "app-2",
@@ -44,8 +44,8 @@
       "url": "https://yeopban.kr/#sharing",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 22.29,
-      "yPct": 1.25
+      "xPct": 81.82,
+      "yPct": 41.07
     },
     {
       "id": "app-1791885784710",
@@ -53,8 +53,8 @@
       "url": "https://script.google.com/macros/s/AKfycbxvrCiB6_fc2A3QkXMHrCv4gX8twpLqJY8y2GmdFYLusGnwIIORSs9JNf_PWAJax54lFw/exec",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 27.71,
-      "yPct": 1.25
+      "xPct": 71.04,
+      "yPct": 41.34
     },
     {
       "id": "app-1791885806756",
@@ -125,8 +125,8 @@
       "url": "https://jeong-918.github.io/explan/index.html",
       "target": "newtab",
       "icon": "📝",
-      "xPct": 71.04,
-      "yPct": 1.25
+      "xPct": 1.97,
+      "yPct": 41.86
     },
     {
       "id": "app-1791878483202",
@@ -135,7 +135,7 @@
       "target": "newtab",
       "icon": "🧮",
       "xPct": 76.46,
-      "yPct": 1.25
+      "yPct": 41.34
     },
     {
       "id": "app-1792138990794",
@@ -197,8 +197,8 @@
       "url": "https://jeong-918.github.io/docu-ev/",
       "target": "newtab",
       "icon": "📊",
-      "xPct": 16.88,
-      "yPct": 14.61
+      "xPct": 7.66,
+      "yPct": 42.69
     }
   ],
   "settings": {
