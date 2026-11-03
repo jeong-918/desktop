@@ -1,15 +1,15 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-03T16:14:11.919Z",
+  "exportedAt": "2026-11-03T16:15:20.990Z",
   "apps": [
     {
       "id": "app-1792745646001",
-      "name": "2028대입분석",
+      "name": "[모두] 28대입분석",
       "url": "https://power-2028-admission-atlas.pages.dev/",
       "target": "newtab",
-      "icon": "🧮",
-      "xPct": 71.04,
-      "yPct": 1.25
+      "icon": "https://plus.unsplash.com/premium_photo-1792661405792-d2117e75e472?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+      "xPct": 10.67,
+      "yPct": 46.35
     },
     {
       "id": "app-1789710282082",
@@ -40,12 +40,12 @@
     },
     {
       "id": "app-1793265158909",
-      "name": "고등학교 교사 업무지원 (옆반)",
+      "name": "[옆반] 교사업무지원",
       "url": "https://yeopban.kr/#sharing",
       "target": "newtab",
-      "icon": "🧮",
-      "xPct": 65.63,
-      "yPct": 1.25
+      "icon": "⭐",
+      "xPct": 4.95,
+      "yPct": 45.11
     },
     {
       "id": "app-1791885784710",
