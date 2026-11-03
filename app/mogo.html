@@ -250,12 +250,12 @@
                         <input type="number" min="0" max="100" id="goal-input-영어" required class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm font-bold text-right">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">통합사회 목표 (100점)</label>
-                        <input type="number" min="0" max="100" id="goal-input-통합사회" required class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm font-bold text-right">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">통합사회 목표 (50점 만점)</label>
+                        <input type="number" min="0" max="50" id="goal-input-통합사회" required class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm font-bold text-right">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">통합과학 목표 (100점)</label>
-                        <input type="number" min="0" max="100" id="goal-input-통합과학" required class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm font-bold text-right">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">통합과학 목표 (50점 만점)</label>
+                        <input type="number" min="0" max="50" id="goal-input-통합과학" required class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm font-bold text-right">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">한국사 목표 (50점 만점)</label>
@@ -616,7 +616,7 @@
                             <div class="bg-slate-50/60 rounded-2xl p-4 border border-slate-100 flex flex-col justify-between">
                                 <div class="mb-2">
                                     <h4 class="text-sm font-bold text-slate-700">6개 과목 누적 밸런스 (학생 vs 전체평균)</h4>
-                                    <p class="text-[11px] text-slate-400">한국사(50점 만점)는 100점 기준으로 환산하여 비교합니다.</p>
+                                    <p class="text-[11px] text-slate-400">통합사회·통합과학·한국사(50점 만점)는 100점 기준으로 환산(x2)하여 비교합니다.</p>
                                 </div>
                                 <div class="relative h-64 sm:h-72 w-full flex items-center justify-center">
                                     <canvas id="radarBalanceChart"></canvas>
@@ -789,7 +789,7 @@
                             <div id="multi-subject-box" class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
                                 <div class="flex items-center justify-between">
                                     <label class="text-xs font-bold text-slate-700">5. 과목별 원점수 입력 (응시한 과목만 입력, 미응시 과목은 공란)</label>
-                                    <span class="text-[11px] text-indigo-600 font-semibold">한국사는 50점 만점, 외 과목 100점 만점</span>
+                                    <span class="text-[11px] text-indigo-600 font-semibold">국·수·영 100점 만점 / 통사·통과·한국사 50점 만점</span>
                                 </div>
 
                                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -816,17 +816,17 @@
                                     </div>
                                     <div class="bg-white p-3 rounded-xl border border-slate-200/80">
                                         <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
-                                            <span>통합사회</span>
-                                            <span class="text-slate-400 font-normal">/ 100점</span>
+                                            <span>통합사회 <span class="text-[10px] text-emerald-600">(50점만점)</span></span>
+                                            <span class="text-slate-400 font-normal">/ 50점</span>
                                         </div>
-                                        <input type="number" min="0" max="100" id="score-통합사회" placeholder="미응시(공란)" class="multi-score-input w-full px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-bold text-right focus:border-indigo-600 outline-none">
+                                        <input type="number" min="0" max="50" id="score-통합사회" placeholder="미응시(공란)" class="multi-score-input w-full px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-bold text-right focus:border-indigo-600 outline-none">
                                     </div>
                                     <div class="bg-white p-3 rounded-xl border border-slate-200/80">
                                         <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
-                                            <span>통합과학</span>
-                                            <span class="text-slate-400 font-normal">/ 100점</span>
+                                            <span>통합과학 <span class="text-[10px] text-violet-600">(50점만점)</span></span>
+                                            <span class="text-slate-400 font-normal">/ 50점</span>
                                         </div>
-                                        <input type="number" min="0" max="100" id="score-통합과학" placeholder="미응시(공란)" class="multi-score-input w-full px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-bold text-right focus:border-indigo-600 outline-none">
+                                        <input type="number" min="0" max="50" id="score-통합과학" placeholder="미응시(공란)" class="multi-score-input w-full px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-bold text-right focus:border-indigo-600 outline-none">
                                     </div>
                                     <div class="bg-white p-3 rounded-xl border border-slate-200/80">
                                         <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
@@ -847,13 +847,13 @@
                                             <option value="국어">국어 (100점 만점)</option>
                                             <option value="수학">수학 (100점 만점)</option>
                                             <option value="영어">영어 (100점 만점)</option>
-                                            <option value="통합사회">통합사회 (100점 만점)</option>
-                                            <option value="통합과학">통합과학 (100점 만점)</option>
+                                            <option value="통합사회">통합사회 (50점 만점)</option>
+                                            <option value="통합과학">통합과학 (50점 만점)</option>
                                             <option value="한국사">한국사 (50점 만점)</option>
                                         </select>
                                     </div>
                                     <div>
-                                        <input type="number" min="0" max="100" id="single-subject-score" placeholder="원점수 입력 (예: 88)" 
+                                        <input type="number" min="0" max="100" id="single-subject-score" placeholder="원점수 입력 (국수영 100 / 탐·한 50)" 
                                             class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white font-bold text-slate-800 text-sm focus:border-indigo-600 outline-none">
                                     </div>
                                 </div>
@@ -1109,6 +1109,11 @@
          * 1. 상수 및 초기 샘플 데이터베이스 구성 (과목별 목표점수 포함)
          ********************************************************************/
         const SUBJECTS = ['국어', '수학', '영어', '통합사회', '통합과학', '한국사'];
+        const SUBJECTS_50PT = ['통합사회', '통합과학', '한국사'];
+        function is50PtSubject(subj) {
+            return SUBJECTS_50PT.includes(subj);
+        }
+
         const SUBJECT_COLORS = {
             '국어': '#ef4444',     // Rose/Red
             '수학': '#3b82f6',     // Blue
@@ -1118,13 +1123,13 @@
             '한국사': '#64748b'    // Slate
         };
 
-        // 기본 목표 원점수
+        // 기본 목표 원점수 (통합사회·통합과학·한국사는 50점 만점 기준)
         const DEFAULT_GOALS = {
             '국어': 90,
             '수학': 92,
             '영어': 90,
-            '통합사회': 90,
-            '통합과학': 92,
+            '통합사회': 45,
+            '통합과학': 46,
             '한국사': 45
         };
 
@@ -1132,23 +1137,23 @@
         let students = [
             {
                 id: 'STU-101', name: '김민준', grade: '고2', track: '이과',
-                goals: { '국어': 88, '수학': 94, '영어': 92, '통합사회': 88, '통합과학': 95, '한국사': 45 },
-                comment: '수학과 통합과학에서 목표 점수를 돌파하며 최상위권 성취도를 유지 중입니다. 비문학 독해 시간 안배 훈련을 병행하면 국어 역시 목표선(88점)을 안정적으로 넘어설 수 있습니다.'
+                goals: { '국어': 88, '수학': 94, '영어': 92, '통합사회': 44, '통합과학': 48, '한국사': 45 },
+                comment: '수학과 통합과학(50점 만점 중 48점 목표 돌파)에서 최상위권 성취도를 유지 중입니다. 비문학 독해 시간 안배 훈련을 병행하면 국어 역시 목표선(88점)을 안정적으로 넘어설 수 있습니다.'
             },
             {
                 id: 'STU-102', name: '이서연', grade: '고2', track: '문과',
-                goals: { '국어': 94, '수학': 82, '영어': 95, '통합사회': 94, '통합과학': 82, '한국사': 45 },
-                comment: '국어·영어·통합사회 모두 개인 목표 점수를 초과 달성했습니다. 사설 모의고사에서도 흔들리지 않는 수학 준킬러 문항 대비가 하반기 핵심 과제입니다.'
+                goals: { '국어': 94, '수학': 82, '영어': 95, '통합사회': 47, '통합과학': 42, '한국사': 45 },
+                comment: '국어·영어·통합사회(47점 목표) 모두 개인 목표 점수를 초과 달성했습니다. 사설 모의고사에서도 흔들리지 않는 수학 준킬러 문항 대비가 하반기 핵심 과제입니다.'
             },
             {
                 id: 'STU-103', name: '박도현', grade: '고3', track: '이과',
-                goals: { '국어': 84, '수학': 90, '영어': 90, '통합사회': 82, '통합과학': 92, '한국사': 42 },
-                comment: '회차를 거듭할수록 수학 원점수가 가파르게 상승하여 최근 시험에서 목표 점수(90점)를 돌파했습니다. 탐구 영역 기출 복습 주기를 단축하세요.'
+                goals: { '국어': 84, '수학': 90, '영어': 90, '통합사회': 42, '통합과학': 46, '한국사': 42 },
+                comment: '회차를 거듭할수록 수학과 통합과학 원점수가 가파르게 상승하여 최근 시험에서 목표 점수를 돌파했습니다. 탐구 영역 기출 복습 주기를 단축하세요.'
             },
             {
                 id: 'STU-104', name: '최지우', grade: '고1', track: '문과',
-                goals: { '국어': 90, '수학': 78, '영어': 90, '통합사회': 90, '통합과학': 78, '한국사': 45 },
-                comment: '첫 학력평가 대비 최근 사설 모의고사에서 국어 원점수가 12점 상승하여 목표선을 달성했습니다. 꾸준한 오답 노트 작성이 돋보입니다.'
+                goals: { '국어': 90, '수학': 78, '영어': 90, '통합사회': 45, '통합과학': 40, '한국사': 45 },
+                comment: '첫 학력평가 대비 최근 사설 모의고사에서 국어와 통합사회 원점수가 크게 상승하여 목표선을 달성했습니다. 꾸준한 오답 노트 작성이 돋보입니다.'
             }
         ];
 
@@ -1165,38 +1170,38 @@
                 { date: '2025-08-22', type: '사설', title: '8월 시대인재 서바이벌', memo: '방학 특강 후 실전 점검' }
             ];
 
-            // 학생별 기준 점수 프로파일 (김민준, 이서연, 박도현, 최지우)
+            // 학생별 기준 점수 프로파일 (통합사회·통합과학·한국사는 50점 만점)
             const studentProfiles = {
                 'STU-101': {
                     '국어': [78, 81, 84, 85, 88, 91],
                     '수학': [88, 85, 92, 94, 92, 96],
                     '영어': [91, 89, 93, 94, 95, 97],
-                    '통합사회': [82, 84, 85, 88, 86, 90],
-                    '통합과학': [90, 88, 94, 95, 93, 98],
+                    '통합사회': [41, 42, 43, 44, 43, 45],
+                    '통합과학': [45, 44, 47, 48, 47, 49],
                     '한국사': [45, 44, 48, 48, 47, 50]
                 },
                 'STU-102': {
                     '국어': [92, 89, 94, 95, 93, 96],
                     '수학': [72, 70, 76, 78, 81, 84],
                     '영어': [95, 92, 96, 97, 96, 98],
-                    '통합사회': [90, 92, 94, 96, 95, 97],
-                    '통합과학': [76, 75, 79, 80, 82, 85],
+                    '통합사회': [45, 46, 47, 48, 48, 49],
+                    '통합과학': [38, 37, 40, 40, 41, 43],
                     '한국사': [48, 46, 49, 50, 48, 50]
                 },
                 'STU-103': {
                     '국어': [74, 72, 77, 80, 79, 83],
                     '수학': [80, 84, 85, 88, 90, 92],
                     '영어': [82, 79, 85, 86, 88, 91],
-                    '통합사회': [75, 74, 78, 80, 81, 82],
-                    '통합과학': [84, 82, 86, 89, 91, 93],
+                    '통합사회': [38, 37, 39, 40, 41, 42],
+                    '통합과학': [42, 41, 43, 45, 46, 47],
                     '한국사': [40, 38, 42, 45, 44, 46]
                 },
                 'STU-104': {
                     '국어': [80, 83, 85, 88, 90, 92],
                     '수학': [68, 65, 72, 74, 75, 79],
                     '영어': [86, 84, 88, 91, 89, 93],
-                    '통합사회': [85, 84, 88, 90, 92, 91],
-                    '통합과학': [72, 70, 74, 76, 78, 80],
+                    '통합사회': [42, 42, 44, 45, 46, 46],
+                    '통합과학': [36, 35, 37, 38, 39, 41],
                     '한국사': [42, 41, 45, 46, 47, 48]
                 }
             };
@@ -1842,20 +1847,22 @@
             const hisRecs = targetRecords.filter(r => r.subject === '한국사');
             const engAvgGrade = engRecs.length ? (engRecs.reduce((a, b) => a + getEnglishGrade(Number(b.score)), 0) / engRecs.length).toFixed(1) : '-';
             const hisAvgGrade = hisRecs.length ? (hisRecs.reduce((a, b) => a + getHistoryGrade(Number(b.score)), 0) / hisRecs.length).toFixed(1) : '-';
-            document.getElementById('kpi-abs-grade').innerHTML = `영 ${engAvgGrade}등급 <span class="text-slate-300 font-light">|</span> 한 ${hisAvgGrade}등급`;
+            document.getElementById('kpi-abs-grade').innerHTML = `영 ${engAvgGrade} <span class="text-slate-300 font-light">|</span> 한 ${hisAvgGrade}`;
 
-            // 강점 과목 / 보완 과목 (한국사 제외 5과목 중 최고/최저)
+            // 강점 과목 / 보완 과목 (한국사 제외 5과목 중 100점 환산 기준 최고/최저 비교)
             const mainSubjects = ['국어', '수학', '영어', '통합사회', '통합과학'];
             const subjAvgs = mainSubjects.map(subj => {
                 const recs = targetRecords.filter(r => r.subject === subj);
+                const rawAvg = recs.length ? +(recs.reduce((a, b) => a + Number(b.score), 0) / recs.length).toFixed(1) : null;
                 return {
                     subj,
-                    avg: recs.length ? +(recs.reduce((a, b) => a + Number(b.score), 0) / recs.length).toFixed(1) : null
+                    avg: rawAvg,
+                    normAvg: rawAvg !== null ? (is50PtSubject(subj) ? rawAvg * 2 : rawAvg) : null
                 };
             }).filter(x => x.avg !== null);
 
             if (subjAvgs.length > 0) {
-                subjAvgs.sort((a, b) => b.avg - a.avg);
+                subjAvgs.sort((a, b) => b.normAvg - a.normAvg);
                 const best = subjAvgs[0];
                 const weak = subjAvgs[subjAvgs.length - 1];
                 document.getElementById('kpi-best-weak').textContent = `강점: ${best.subj}(${best.avg}) / 보완: ${weak.subj}(${weak.avg})`;
@@ -1982,7 +1989,7 @@
                 mainChartInstance = new Chart(ctx, {
                     type: 'line',
                     data: { labels, datasets },
-                    options: getCommonChartOptions(currentChartSubject === '한국사' ? 50 : 100)
+                    options: getCommonChartOptions(is50PtSubject(currentChartSubject) ? 50 : 100)
                 });
             }
 
@@ -2103,7 +2110,7 @@
 
                 mainChartInstance = new Chart(ctx, {
                     data: { labels, datasets },
-                    options: getCommonChartOptions(100)
+                    options: getCommonChartOptions(is50PtSubject(currentChartSubject) ? 50 : 100)
                 });
             }
 
@@ -2155,13 +2162,13 @@
                 radarChartInstance.destroy();
             }
 
-            // 한국사는 50점 만점이므로 *2 하여 100점 기준으로 정규화
+            // 통합사회·통합과학·한국사는 50점 만점이므로 *2 하여 100점 기준으로 정규화
             const calcNormalizedAvg = (records) => {
                 return SUBJECTS.map(subj => {
                     const sRecs = records.filter(r => r.subject === subj);
                     if (!sRecs.length) return 0;
                     const avg = sRecs.reduce((a, b) => a + Number(b.score), 0) / sRecs.length;
-                    return subj === '한국사' ? +(avg * 2).toFixed(1) : +avg.toFixed(1);
+                    return is50PtSubject(subj) ? +(avg * 2).toFixed(1) : +avg.toFixed(1);
                 });
             };
 
@@ -2169,7 +2176,7 @@
             const cohortNorm = calcNormalizedAvg(allRecords);
             const goalNorm = SUBJECTS.map(subj => {
                 const g = getStudentGoalScore(student, subj);
-                return subj === '한국사' ? g * 2 : g;
+                return is50PtSubject(subj) ? g * 2 : g;
             });
 
             const datasets = [{
@@ -2208,7 +2215,7 @@
             radarChartInstance = new Chart(ctx, {
                 type: 'radar',
                 data: {
-                    labels: ['국어', '수학', '영어', '통합사회', '통합과학', '한국사(x2)'],
+                    labels: ['국어', '수학', '영어', '통합사회(x2)', '통합과학(x2)', '한국사(x2)'],
                     datasets
                 },
                 options: {
@@ -2237,7 +2244,7 @@
                 scales: {
                     y: {
                         beginAtZero: false,
-                        suggestedMin: 40,
+                        suggestedMin: suggestedMax === 50 ? 20 : 40,
                         suggestedMax: suggestedMax,
                         grid: { color: '#f1f5f9' }
                     },
@@ -2320,7 +2327,7 @@
                         <td class="py-3 px-4 font-bold text-slate-800 flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full" style="background-color:${SUBJECT_COLORS[subj]}"></span>
                             <span>${subj}</span>
-                            ${subj === '한국사' ? '<span class="text-[10px] text-slate-400 font-normal">(50점만점)</span>' : ''}
+                            ${is50PtSubject(subj) ? '<span class="text-[10px] text-slate-400 font-normal">(50점만점)</span>' : ''}
                         </td>
                         <td class="py-3 px-4 text-center font-medium text-slate-600">${count}회</td>
                         <td class="py-3 px-4 text-right font-black text-slate-900">${stuAvg !== null ? stuAvg + '점' : '-'}${extraGradeInfo}</td>
@@ -2548,7 +2555,7 @@
                     const val = document.getElementById(`score-${subj}`).value.trim();
                     if (val !== '') {
                         const num = Number(val);
-                        const maxLimit = subj === '한국사' ? 50 : 100;
+                        const maxLimit = is50PtSubject(subj) ? 50 : 100;
                         if (num >= 0 && num <= maxLimit) {
                             entriesToSave.push({ subj, score: num });
                         }
@@ -2558,7 +2565,13 @@
                 const subj = document.getElementById('single-subject-select').value;
                 const val = document.getElementById('single-subject-score').value.trim();
                 if (val !== '') {
-                    entriesToSave.push({ subj, score: Number(val) });
+                    const num = Number(val);
+                    const maxLimit = is50PtSubject(subj) ? 50 : 100;
+                    if (num < 0 || num > maxLimit) {
+                        showToast(`${subj} 과목은 ${maxLimit}점 만점입니다. 0~${maxLimit} 사이의 점수를 입력해주세요.`, 'error');
+                        return;
+                    }
+                    entriesToSave.push({ subj, score: num });
                 }
             }
 
@@ -3055,13 +3068,13 @@
                         },
                         (error) => {
                             console.error('Firestore listener error:', error);
-                            if (dotEl) dotEl.className = 'w-2 h-2 rounded-full bg-rose-500';
-                            if (textEl) textEl.textContent = '동기화 대기중';
+                            if (dotEl) dotEl.className = 'w-2 h-2 rounded-full bg-amber-500';
+                            if (textEl) textEl.textContent = '로컬 세션 모드';
                         }
                     );
                 });
             } catch (e) {
-                console.warn('Cloud initialization skipped or waiting for config:', e);
+                console.error('Cloud init skipped:', e);
             }
         }
 
