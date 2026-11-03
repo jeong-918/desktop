@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-03T16:31:53.018Z",
+  "exportedAt": "2026-11-03T16:32:51.703Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -17,8 +17,8 @@
       "url": "https://jeong-918.github.io/desktop/app/5to9.html",
       "target": "newtab",
       "icon": "⭐",
-      "xPct": 0.63,
-      "yPct": 27.97
+      "xPct": 6.15,
+      "yPct": 1.26
     },
     {
       "id": "app-1792750973122",
@@ -26,8 +26,8 @@
       "url": "https://dh.mirae-academy.co.kr/custom-page/260721/dh-spqb",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1775142967376-fbe93099b6a0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 6.04,
-      "yPct": 1.25
+      "xPct": 29.84,
+      "yPct": 26.62
     },
     {
       "id": "app-2",
@@ -44,8 +44,8 @@
       "url": "https://yeopban.kr/#sharing",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 6.04,
-      "yPct": 14.61
+      "xPct": 56.4,
+      "yPct": 50.54
     },
     {
       "id": "app-1791885784710",
@@ -107,8 +107,8 @@
       "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1610050731641-f855ccdaf3f6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 33.59,
-      "yPct": 3.36
+      "xPct": 0.36,
+      "yPct": 14.05
     },
     {
       "id": "app-1793720974712",
@@ -143,8 +143,8 @@
       "url": "https://jeong-918.github.io/desktop/app/fineman2-1.html",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1781246435700-afec19012b45?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 6.04,
-      "yPct": 81.42
+      "xPct": 5.83,
+      "yPct": 14.95
     },
     {
       "id": "app-1789710337914",
@@ -152,8 +152,8 @@
       "url": "https://docs.google.com/spreadsheets/d/1EX73Oq9iVTGMll7SY2ZJbQaoG7ATY5ifB7GdyLBER_0/edit?usp=drive_web&ouid=103047718856130833554",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 11.46,
-      "yPct": 14.61
+      "xPct": 53.49,
+      "yPct": 40.29
     },
     {
       "id": "app-1789710318170",
@@ -170,8 +170,8 @@
       "url": "https://system.daol105.co.kr",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 0.63,
-      "yPct": 14.61
+      "xPct": 52.66,
+      "yPct": 19
     },
     {
       "id": "app-1793721258238",
@@ -179,8 +179,8 @@
       "url": "https://jeong-918.github.io/docu-ev/",
       "target": "newtab",
       "icon": "https://plus.unsplash.com/premium_photo-1682309504951-43bae484e04d?q=80&w=1567&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 11.46,
-      "yPct": 27.97
+      "xPct": 11.61,
+      "yPct": 15.26
     }
   ],
   "settings": {
@@ -188,7 +188,7 @@
     "overlayColor": "#0f172a",
     "bgOpacity": 0.2,
     "bgBlur": "39",
-    "bgImage": "https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+    "bgImage": "https://images.unsplash.com/photo-1422207134147-65fb81f59e38?q=80&w=1064&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
     "themePreset": "slate",
     "snapOnDrop": false
   }
