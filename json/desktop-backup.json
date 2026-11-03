@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-03T16:19:18.602Z",
+  "exportedAt": "2026-11-03T16:20:18.590Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -49,12 +49,12 @@
     },
     {
       "id": "app-1791885784710",
-      "name": "교과탐구 기반활동",
+      "name": "[모두]교과탐구",
       "url": "https://script.google.com/macros/s/AKfycbxvrCiB6_fc2A3QkXMHrCv4gX8twpLqJY8y2GmdFYLusGnwIIORSs9JNf_PWAJax54lFw/exec",
       "target": "newtab",
-      "icon": "🧮",
-      "xPct": 16.41,
-      "yPct": 46.89
+      "icon": "https://plus.unsplash.com/premium_photo-1661311950994-d263ea9681a1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+      "xPct": 61.98,
+      "yPct": 50.76
     },
     {
       "id": "app-1791885806756",
@@ -76,12 +76,12 @@
     },
     {
       "id": "app-1793265195604",
-      "name": "다올대시보드",
+      "name": "[다올]대시보드",
       "url": "https://jayu0422-blip.github.io/daol-timetable/admin.html",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 60.21,
-      "yPct": 1.25
+      "xPct": 10.36,
+      "yPct": 59.5
     },
     {
       "id": "app-1789811920576",
