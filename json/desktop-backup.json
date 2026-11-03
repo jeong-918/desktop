@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-03T16:29:22.225Z",
+  "exportedAt": "2026-11-03T16:30:45.843Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -43,7 +43,7 @@
       "name": "[옆반] 교사업무지원",
       "url": "https://yeopban.kr/#sharing",
       "target": "newtab",
-      "icon": "⭐",
+      "icon": "🌐",
       "xPct": 76.46,
       "yPct": 1.25
     },
@@ -143,8 +143,8 @@
       "url": "https://jeong-918.github.io/desktop/app/planner.html",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1603804449564-2ad32f24d17e?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 16.88,
-      "yPct": 1.25
+      "xPct": 6.57,
+      "yPct": 27.58
     },
     {
       "id": "app-1791447467073",
@@ -175,7 +175,7 @@
     },
     {
       "id": "app-1789711180543",
-      "name": "SYSTEM-DAOL",
+      "name": "[다올] 시스템로그인",
       "url": "https://system.daol105.co.kr",
       "target": "newtab",
       "icon": "📊",
@@ -184,12 +184,12 @@
     },
     {
       "id": "app-1793721258238",
-      "name": "세특평가",
+      "name": "Web Work_세특평가",
       "url": "https://jeong-918.github.io/docu-ev/",
       "target": "newtab",
-      "icon": "📊",
-      "xPct": 38.54,
-      "yPct": 1.25
+      "icon": "https://plus.unsplash.com/premium_photo-1682309504951-43bae484e04d?q=80&w=1567&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+      "xPct": 13.33,
+      "yPct": 26.72
     }
   ],
   "settings": {
