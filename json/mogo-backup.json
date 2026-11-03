@@ -1,6 +1,6 @@
 {
   "app": "mogo",
-  "exportedAt": "2026-11-03T11:52:21.435Z",
+  "exportedAt": "2026-11-03T11:55:01.070Z",
   "students": [
     {
       "id": "DOH",
@@ -168,5 +168,46 @@
       "comment": "정영주 학생의 신규 모의고사 성적 관리가 시작되었습니다."
     }
   ],
-  "scoreRecords": []
+  "scoreRecords": [
+    {
+      "id": "REC-1793706895636-554",
+      "studentId": "TESTID",
+      "date": "2026-11-01",
+      "examType": "교육청",
+      "examTitle": "테스트 1차",
+      "subject": "국어",
+      "score": 67,
+      "memo": ""
+    },
+    {
+      "id": "REC-1793706895636-93",
+      "studentId": "TESTID",
+      "date": "2026-11-01",
+      "examType": "교육청",
+      "examTitle": "테스트 1차",
+      "subject": "수학",
+      "score": 55,
+      "memo": ""
+    },
+    {
+      "id": "REC-1793706895636-972",
+      "studentId": "TESTID",
+      "date": "2026-11-01",
+      "examType": "교육청",
+      "examTitle": "테스트 1차",
+      "subject": "영어",
+      "score": 60,
+      "memo": ""
+    },
+    {
+      "id": "REC-1793706895636-447",
+      "studentId": "TESTID",
+      "date": "2026-11-01",
+      "examType": "교육청",
+      "examTitle": "테스트 1차",
+      "subject": "통합사회",
+      "score": 75,
+      "memo": ""
+    }
+  ]
 }
