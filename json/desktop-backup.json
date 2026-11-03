@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-03T16:26:02.898Z",
+  "exportedAt": "2026-11-03T16:27:17.821Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -112,7 +112,7 @@
     },
     {
       "id": "app-1789982418218",
-      "name": "[다올] web work",
+      "name": "Web Work_다올",
       "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1610050731641-f855ccdaf3f6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
@@ -148,7 +148,7 @@
     },
     {
       "id": "app-1791447467073",
-      "name": "[파인만] web work",
+      "name": "Web Work_파인만",
       "url": "https://jeong-918.github.io/desktop/app/fineman2-1.html",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1781246435700-afec19012b45?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
@@ -175,7 +175,7 @@
     },
     {
       "id": "app-1789711180543",
-      "name": "자습관 로그인",
+      "name": "SYSTEM-DAOL",
       "url": "https://system.daol105.co.kr",
       "target": "newtab",
       "icon": "📊",
