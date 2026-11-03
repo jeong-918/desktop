@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-03T16:32:51.703Z",
+  "exportedAt": "2026-11-03T16:34:13.995Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -9,7 +9,7 @@
       "target": "newtab",
       "icon": "https://plus.unsplash.com/premium_photo-1792661405792-d2117e75e472?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
       "xPct": 6.04,
-      "yPct": 41.34
+      "yPct": 54.7
     },
     {
       "id": "app-1789710282082",
@@ -17,8 +17,8 @@
       "url": "https://jeong-918.github.io/desktop/app/5to9.html",
       "target": "newtab",
       "icon": "⭐",
-      "xPct": 6.15,
-      "yPct": 1.26
+      "xPct": 6.04,
+      "yPct": 1.25
     },
     {
       "id": "app-1792750973122",
@@ -26,8 +26,8 @@
       "url": "https://dh.mirae-academy.co.kr/custom-page/260721/dh-spqb",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1775142967376-fbe93099b6a0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 29.84,
-      "yPct": 26.62
+      "xPct": 11.46,
+      "yPct": 54.7
     },
     {
       "id": "app-2",
@@ -36,7 +36,7 @@
       "icon": "🧮",
       "target": "window",
       "xPct": 6.04,
-      "yPct": 68.06
+      "yPct": 81.42
     },
     {
       "id": "app-1793265158909",
@@ -44,8 +44,8 @@
       "url": "https://yeopban.kr/#sharing",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 56.4,
-      "yPct": 50.54
+      "xPct": 11.46,
+      "yPct": 81.42
     },
     {
       "id": "app-1791885784710",
@@ -53,8 +53,8 @@
       "url": "https://script.google.com/macros/s/AKfycbxvrCiB6_fc2A3QkXMHrCv4gX8twpLqJY8y2GmdFYLusGnwIIORSs9JNf_PWAJax54lFw/exec",
       "target": "newtab",
       "icon": "https://plus.unsplash.com/premium_photo-1661311950994-d263ea9681a1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 6.04,
-      "yPct": 27.97
+      "xPct": 0.63,
+      "yPct": 41.34
     },
     {
       "id": "app-1791885806756",
@@ -62,8 +62,8 @@
       "url": "https://script.google.com/macros/s/AKfycbzIa3I98g3cQ-HN1xa7HmvvMNzwTUM_G-3JeekRg4OjuzyD4f1CQKKDHgvcKqfbtb_Bdw/exec",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1727648764473-21eef54cb24d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 0.63,
-      "yPct": 81.42
+      "xPct": 6.04,
+      "yPct": 41.34
     },
     {
       "id": "app-4",
@@ -81,7 +81,7 @@
       "target": "newtab",
       "icon": "🧮",
       "xPct": 0.63,
-      "yPct": 54.7
+      "yPct": 81.42
     },
     {
       "id": "app-1789725098714",
@@ -89,8 +89,8 @@
       "url": "https://mogyo.kr/",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 0.63,
-      "yPct": 41.34
+      "xPct": 11.46,
+      "yPct": 1.25
     },
     {
       "id": "app-1793706368626",
@@ -98,7 +98,7 @@
       "url": "https://jeong-918.github.io/desktop/app/mogo.html",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 11.46,
+      "xPct": 0.63,
       "yPct": 68.06
     },
     {
@@ -107,8 +107,8 @@
       "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1610050731641-f855ccdaf3f6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 0.36,
-      "yPct": 14.05
+      "xPct": 0.63,
+      "yPct": 14.61
     },
     {
       "id": "app-1793720974712",
@@ -117,7 +117,7 @@
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1682685795463-0674c065f315?q=80&w=1026&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
       "xPct": 11.46,
-      "yPct": 54.7
+      "yPct": 41.34
     },
     {
       "id": "app-1791878483202",
@@ -125,7 +125,7 @@
       "url": "https://geoguymin.github.io/Design-of-Curriculam/",
       "target": "newtab",
       "icon": "https://plus.unsplash.com/premium_photo-1706191097326-cd317671d1fb?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 6.04,
+      "xPct": 0.63,
       "yPct": 54.7
     },
     {
@@ -134,8 +134,8 @@
       "url": "https://jeong-918.github.io/desktop/app/planner.html",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1603804449564-2ad32f24d17e?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 11.46,
-      "yPct": 41.34
+      "xPct": 16.88,
+      "yPct": 14.61
     },
     {
       "id": "app-1791447467073",
@@ -143,8 +143,8 @@
       "url": "https://jeong-918.github.io/desktop/app/fineman2-1.html",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1781246435700-afec19012b45?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 5.83,
-      "yPct": 14.95
+      "xPct": 11.46,
+      "yPct": 14.61
     },
     {
       "id": "app-1789710337914",
@@ -152,8 +152,8 @@
       "url": "https://docs.google.com/spreadsheets/d/1EX73Oq9iVTGMll7SY2ZJbQaoG7ATY5ifB7GdyLBER_0/edit?usp=drive_web&ouid=103047718856130833554",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 53.49,
-      "yPct": 40.29
+      "xPct": 22.29,
+      "yPct": 1.25
     },
     {
       "id": "app-1789710318170",
@@ -161,8 +161,8 @@
       "url": "https://docs.google.com/spreadsheets/d/1VfebRB5vLlV-Ni7RT9cp8xWSwVL543DQOuJlzn-uZD4/edit?gid=15478959#gid=15478959",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 0.63,
-      "yPct": 68.06
+      "xPct": 16.88,
+      "yPct": 1.25
     },
     {
       "id": "app-1789711180543",
@@ -170,8 +170,8 @@
       "url": "https://system.daol105.co.kr",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 52.66,
-      "yPct": 19
+      "xPct": 6.04,
+      "yPct": 14.61
     },
     {
       "id": "app-1793721258238",
@@ -179,8 +179,8 @@
       "url": "https://jeong-918.github.io/docu-ev/",
       "target": "newtab",
       "icon": "https://plus.unsplash.com/premium_photo-1682309504951-43bae484e04d?q=80&w=1567&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 11.61,
-      "yPct": 15.26
+      "xPct": 16.88,
+      "yPct": 41.34
     }
   ],
   "settings": {
