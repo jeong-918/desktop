@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-10-29T11:01:14.211Z",
+  "exportedAt": "2026-11-03T11:46:19.126Z",
   "apps": [
     {
       "id": "app-1",
@@ -172,6 +172,15 @@
       "icon": "🧮",
       "xPct": 34.68,
       "yPct": 1.64
+    },
+    {
+      "id": "app-1793706368626",
+      "name": "모의고사관리",
+      "url": "https://jeong-918.github.io/desktop/app/mogo.html",
+      "target": "newtab",
+      "icon": "📊",
+      "xPct": 21.32,
+      "yPct": 37.27
     }
   ],
   "settings": {
