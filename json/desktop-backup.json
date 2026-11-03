@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-03T16:27:17.821Z",
+  "exportedAt": "2026-11-03T16:28:17.389Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -121,12 +121,12 @@
     },
     {
       "id": "app-1793720974712",
-      "name": "주제탐구설계ST",
+      "name": "Web Work_주제탐구",
       "url": "https://jeong-918.github.io/explan/index.html",
       "target": "newtab",
-      "icon": "📝",
-      "xPct": 27.71,
-      "yPct": 1.25
+      "icon": "https://images.unsplash.com/photo-1682685795463-0674c065f315?q=80&w=1026&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+      "xPct": 0,
+      "yPct": 28.02
     },
     {
       "id": "app-1791878483202",
