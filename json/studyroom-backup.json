@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-03T06:05:12.309Z",
+  "exportedAt": "2026-11-03T06:06:41.080Z",
   "version": 3,
   "data": {
     "students": [
@@ -2946,6 +2946,18 @@
         "eval": "학습완료",
         "start": "21:00",
         "end": "22:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mw0abvt0deaq",
+        "studentId": "stu_16",
+        "date": "2026-11-02",
+        "subject": "국어",
+        "type": "인강+문풀",
+        "eval": "학습완료",
+        "start": "10:00",
+        "end": "11:00",
         "minutes": 60,
         "note": ""
       }
