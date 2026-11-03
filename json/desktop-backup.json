@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-03T16:15:20.990Z",
+  "exportedAt": "2026-11-03T16:16:46.036Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -25,9 +25,9 @@
       "name": "강남권 고교편제",
       "url": "https://dh.mirae-academy.co.kr/custom-page/260721/dh-spqb",
       "target": "newtab",
-      "icon": "🧮",
-      "xPct": 76.46,
-      "yPct": 1.25
+      "icon": "https://images.unsplash.com/photo-1775142967376-fbe93099b6a0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+      "xPct": 17.13,
+      "yPct": 46.78
     },
     {
       "id": "app-2",
@@ -61,7 +61,7 @@
       "name": "[모두] 탐구-기사검색",
       "url": "https://script.google.com/macros/s/AKfycbzIa3I98g3cQ-HN1xa7HmvvMNzwTUM_G-3JeekRg4OjuzyD4f1CQKKDHgvcKqfbtb_Bdw/exec",
       "target": "newtab",
-      "icon": "⭐",
+      "icon": "https://images.unsplash.com/photo-1727648764473-21eef54cb24d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
       "xPct": 0.05,
       "yPct": 44.59
     },
