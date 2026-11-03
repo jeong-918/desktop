@@ -1,33 +1,15 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-03T15:53:35.823Z",
+  "exportedAt": "2026-11-03T15:54:36.736Z",
   "apps": [
     {
-      "id": "app-1",
-      "name": "Google 검색",
-      "url": "https://www.google.com",
-      "icon": "🌐",
+      "id": "app-1792745646001",
+      "name": "2028대입분석",
+      "url": "https://power-2028-admission-atlas.pages.dev/",
       "target": "newtab",
-      "xPct": 0.79,
-      "yPct": 1.65
-    },
-    {
-      "id": "app-2",
-      "name": "계산기",
-      "url": "https://www.desmos.com/scientific?lang=ko",
       "icon": "🧮",
-      "target": "window",
-      "xPct": 0.78,
-      "yPct": 54.25
-    },
-    {
-      "id": "app-4",
-      "name": "글자수체크",
-      "url": "https://hjh010501.github.io/neis-counter/",
-      "icon": "⭐",
-      "target": "window",
-      "xPct": 0.79,
-      "yPct": 19.28
+      "xPct": 0.63,
+      "yPct": 1.25
     },
     {
       "id": "app-1789710282082",
@@ -35,116 +17,8 @@
       "url": "https://jeong-918.github.io/desktop/app/5to9.html",
       "target": "newtab",
       "icon": "⭐",
-      "xPct": 7.6,
-      "yPct": 19.28
-    },
-    {
-      "id": "app-1789710318170",
-      "name": "학생관리센터",
-      "url": "https://docs.google.com/spreadsheets/d/1VfebRB5vLlV-Ni7RT9cp8xWSwVL543DQOuJlzn-uZD4/edit?gid=15478959#gid=15478959",
-      "target": "newtab",
-      "icon": "🌐",
-      "xPct": 21.22,
-      "yPct": 1.65
-    },
-    {
-      "id": "app-1789710337914",
-      "name": "파인만컨설팅[26-2]",
-      "url": "https://docs.google.com/spreadsheets/d/1EX73Oq9iVTGMll7SY2ZJbQaoG7ATY5ifB7GdyLBER_0/edit?usp=drive_web&ouid=103047718856130833554",
-      "target": "newtab",
-      "icon": "🌐",
-      "xPct": 14.41,
-      "yPct": 1.65
-    },
-    {
-      "id": "app-1789711180543",
-      "name": "SYSTEM-daol",
-      "url": "https://system.daol105.co.kr",
-      "target": "newtab",
-      "icon": "🌐",
-      "xPct": 7.6,
-      "yPct": 1.65
-    },
-    {
-      "id": "app-1789725098714",
-      "name": "모교_학교정보",
-      "url": "https://mogyo.kr/",
-      "target": "newtab",
-      "icon": "🌐",
-      "xPct": 28.03,
-      "yPct": 1.65
-    },
-    {
-      "id": "app-1789811920576",
-      "name": "대입 면접 활동지",
-      "url": "https://ppakangna-svg.github.io/interview-record/",
-      "target": "newtab",
-      "icon": "🧮",
-      "xPct": 75.7,
-      "yPct": 19.28
-    },
-    {
-      "id": "app-1789982418218",
-      "name": "입시자습관",
-      "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
-      "target": "newtab",
-      "icon": "📊",
-      "xPct": 7.58,
-      "yPct": 36.71
-    },
-    {
-      "id": "app-1791447467073",
-      "name": "파인만컨설팅_학생관리",
-      "url": "https://jeong-918.github.io/desktop/app/fineman2-1.html",
-      "target": "newtab",
-      "icon": "📅",
-      "xPct": 14.41,
-      "yPct": 36.91
-    },
-    {
-      "id": "app-1791878483202",
-      "name": "진로/학업 설계 지원",
-      "url": "https://geoguymin.github.io/Design-of-Curriculam/",
-      "target": "newtab",
-      "icon": "🧮",
-      "xPct": 75.7,
-      "yPct": 1.65
-    },
-    {
-      "id": "app-1791885784710",
-      "name": "교과탐구 기반활동",
-      "url": "https://script.google.com/macros/s/AKfycbxvrCiB6_fc2A3QkXMHrCv4gX8twpLqJY8y2GmdFYLusGnwIIORSs9JNf_PWAJax54lFw/exec",
-      "target": "newtab",
-      "icon": "🧮",
-      "xPct": 75.7,
-      "yPct": 36.91
-    },
-    {
-      "id": "app-1791885806756",
-      "name": "교과탐구를 위한 기사검색",
-      "url": "https://script.google.com/macros/s/AKfycbzIa3I98g3cQ-HN1xa7HmvvMNzwTUM_G-3JeekRg4OjuzyD4f1CQKKDHgvcKqfbtb_Bdw/exec",
-      "target": "newtab",
-      "icon": "🧮",
-      "xPct": 75.7,
-      "yPct": 54.55
-    },
-    {
-      "id": "app-1792138990794",
-      "name": "통합일정관리",
-      "url": "https://jeong-918.github.io/desktop/app/planner.html",
-      "target": "newtab",
-      "icon": "📝",
-      "xPct": 0.78,
-      "yPct": 36.71
-    },
-    {
-      "id": "app-1792745646001",
-      "name": "2028대입분석",
-      "url": "https://power-2028-admission-atlas.pages.dev/",
-      "target": "newtab",
-      "icon": "🧮",
-      "xPct": 68.89,
-      "yPct": 1.65
+      "xPct": 6.04,
+      "yPct": 1.25
     },
     {
       "id": "app-1792750973122",
@@ -152,8 +26,17 @@
       "url": "https://dh.mirae-academy.co.kr/custom-page/260721/dh-spqb",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 68.89,
-      "yPct": 19.28
+      "xPct": 11.46,
+      "yPct": 1.25
+    },
+    {
+      "id": "app-2",
+      "name": "계산기",
+      "url": "https://www.desmos.com/scientific?lang=ko",
+      "icon": "🧮",
+      "target": "window",
+      "xPct": 16.88,
+      "yPct": 1.25
     },
     {
       "id": "app-1793265158909",
@@ -161,8 +44,35 @@
       "url": "https://yeopban.kr/#sharing",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 68.58,
-      "yPct": 36.66
+      "xPct": 22.29,
+      "yPct": 1.25
+    },
+    {
+      "id": "app-1791885784710",
+      "name": "교과탐구 기반활동",
+      "url": "https://script.google.com/macros/s/AKfycbxvrCiB6_fc2A3QkXMHrCv4gX8twpLqJY8y2GmdFYLusGnwIIORSs9JNf_PWAJax54lFw/exec",
+      "target": "newtab",
+      "icon": "🧮",
+      "xPct": 27.71,
+      "yPct": 1.25
+    },
+    {
+      "id": "app-1791885806756",
+      "name": "교과탐구를 위한 기사검색",
+      "url": "https://script.google.com/macros/s/AKfycbzIa3I98g3cQ-HN1xa7HmvvMNzwTUM_G-3JeekRg4OjuzyD4f1CQKKDHgvcKqfbtb_Bdw/exec",
+      "target": "newtab",
+      "icon": "🧮",
+      "xPct": 33.13,
+      "yPct": 1.25
+    },
+    {
+      "id": "app-4",
+      "name": "글자수체크",
+      "url": "https://hjh010501.github.io/neis-counter/",
+      "icon": "⭐",
+      "target": "window",
+      "xPct": 38.54,
+      "yPct": 1.25
     },
     {
       "id": "app-1793265195604",
@@ -170,8 +80,26 @@
       "url": "https://jayu0422-blip.github.io/daol-timetable/admin.html",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 34.68,
-      "yPct": 1.64
+      "xPct": 43.96,
+      "yPct": 1.25
+    },
+    {
+      "id": "app-1789811920576",
+      "name": "대입 면접 활동지",
+      "url": "https://ppakangna-svg.github.io/interview-record/",
+      "target": "newtab",
+      "icon": "🧮",
+      "xPct": 49.38,
+      "yPct": 1.25
+    },
+    {
+      "id": "app-1789725098714",
+      "name": "모교_학교정보",
+      "url": "https://mogyo.kr/",
+      "target": "newtab",
+      "icon": "🌐",
+      "xPct": 54.79,
+      "yPct": 1.25
     },
     {
       "id": "app-1793706368626",
@@ -179,8 +107,17 @@
       "url": "https://jeong-918.github.io/desktop/app/mogo.html",
       "target": "newtab",
       "icon": "📊",
-      "xPct": 21.32,
-      "yPct": 37.27
+      "xPct": 60.21,
+      "yPct": 1.25
+    },
+    {
+      "id": "app-1789982418218",
+      "name": "입시자습관",
+      "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
+      "target": "newtab",
+      "icon": "📊",
+      "xPct": 65.63,
+      "yPct": 1.25
     },
     {
       "id": "app-1793720974712",
@@ -188,8 +125,80 @@
       "url": "https://jeong-918.github.io/explan/index.html",
       "target": "newtab",
       "icon": "📝",
-      "xPct": 27.71,
-      "yPct": 41.34
+      "xPct": 71.04,
+      "yPct": 1.25
+    },
+    {
+      "id": "app-1791878483202",
+      "name": "진로/학업 설계 지원",
+      "url": "https://geoguymin.github.io/Design-of-Curriculam/",
+      "target": "newtab",
+      "icon": "🧮",
+      "xPct": 76.46,
+      "yPct": 1.25
+    },
+    {
+      "id": "app-1792138990794",
+      "name": "통합일정관리",
+      "url": "https://jeong-918.github.io/desktop/app/planner.html",
+      "target": "newtab",
+      "icon": "📝",
+      "xPct": 81.88,
+      "yPct": 1.25
+    },
+    {
+      "id": "app-1791447467073",
+      "name": "파인만컨설팅_학생관리",
+      "url": "https://jeong-918.github.io/desktop/app/fineman2-1.html",
+      "target": "newtab",
+      "icon": "📅",
+      "xPct": 87.29,
+      "yPct": 1.25
+    },
+    {
+      "id": "app-1789710337914",
+      "name": "파인만컨설팅[26-2]",
+      "url": "https://docs.google.com/spreadsheets/d/1EX73Oq9iVTGMll7SY2ZJbQaoG7ATY5ifB7GdyLBER_0/edit?usp=drive_web&ouid=103047718856130833554",
+      "target": "newtab",
+      "icon": "🌐",
+      "xPct": 92.71,
+      "yPct": 1.25
+    },
+    {
+      "id": "app-1789710318170",
+      "name": "학생관리센터",
+      "url": "https://docs.google.com/spreadsheets/d/1VfebRB5vLlV-Ni7RT9cp8xWSwVL543DQOuJlzn-uZD4/edit?gid=15478959#gid=15478959",
+      "target": "newtab",
+      "icon": "🌐",
+      "xPct": 0.63,
+      "yPct": 14.61
+    },
+    {
+      "id": "app-1",
+      "name": "Google 검색",
+      "url": "https://www.google.com",
+      "icon": "🌐",
+      "target": "newtab",
+      "xPct": 6.04,
+      "yPct": 14.61
+    },
+    {
+      "id": "app-1789711180543",
+      "name": "SYSTEM-daol",
+      "url": "https://system.daol105.co.kr",
+      "target": "newtab",
+      "icon": "🌐",
+      "xPct": 11.46,
+      "yPct": 14.61
+    },
+    {
+      "id": "app-1793721258238",
+      "name": "세특평가",
+      "url": "https://jeong-918.github.io/docu-ev/",
+      "target": "newtab",
+      "icon": "📊",
+      "xPct": 16.88,
+      "yPct": 14.61
     }
   ],
   "settings": {
@@ -199,6 +208,6 @@
     "bgBlur": "39",
     "bgImage": "https://images.unsplash.com/photo-1734116194305-183329509b94?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "themePreset": "slate",
-    "snapOnDrop": true
+    "snapOnDrop": false
   }
 }
