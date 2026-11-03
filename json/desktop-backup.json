@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-03T11:46:19.126Z",
+  "exportedAt": "2026-11-03T15:49:40.316Z",
   "apps": [
     {
       "id": "app-1",
@@ -181,6 +181,15 @@
       "icon": "📊",
       "xPct": 21.32,
       "yPct": 37.27
+    },
+    {
+      "id": "app-1793720974712",
+      "name": "주제탐구설계ST",
+      "url": "https://jeong-918.github.io/explan/index.html",
+      "target": "newtab",
+      "icon": "📝",
+      "xPct": 27.71,
+      "yPct": 41.34
     }
   ],
   "settings": {
