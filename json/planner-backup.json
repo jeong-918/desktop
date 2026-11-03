@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-02T09:53:01.822Z",
-  "updatedAt": 1793613181822,
+  "exportedAt": "2026-11-03T06:54:07.862Z",
+  "updatedAt": 1793688847862,
   "daily": {
     "categories": [
       {
@@ -291,6 +291,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1793547490526
+      },
+      {
+        "id": "todo_1793688847861_1j6w6",
+        "title": "수능종료 : 민서 일정 잡을 것. (남은 3회)",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-11-19",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1793688847861
       }
     ]
   },
