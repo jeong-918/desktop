@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-03T06:54:07.862Z",
-  "updatedAt": 1793688847862,
+  "exportedAt": "2026-11-03T12:39:07.868Z",
+  "updatedAt": 1793709547868,
   "daily": {
     "categories": [
       {
@@ -301,6 +301,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1793688847861
+      },
+      {
+        "id": "todo_1793709547868_y79k4",
+        "title": "윤지원 미디어영어 체크 및 수행 진행 (목요일까지)",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-11-05",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1793709547868
       }
     ]
   },
