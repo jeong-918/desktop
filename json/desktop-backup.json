@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-03T16:39:05.096Z",
+  "exportedAt": "2026-11-03T16:50:41.697Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -112,7 +112,7 @@
     },
     {
       "id": "app-1793720974712",
-      "name": "Web Work_주제탐구설계 스튜디오",
+      "name": "Web Work_탐구설계 스튜디오",
       "url": "https://jeong-918.github.io/explan/index.html",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1682685795463-0674c065f315?q=80&w=1026&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
@@ -175,7 +175,7 @@
     },
     {
       "id": "app-1793721258238",
-      "name": "Web Work_세특평가",
+      "name": "Web Work_세특진단평가",
       "url": "https://jeong-918.github.io/docu-ev/",
       "target": "newtab",
       "icon": "https://plus.unsplash.com/premium_photo-1682309504951-43bae484e04d?q=80&w=1567&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
