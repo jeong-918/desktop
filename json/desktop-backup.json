@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-03T16:18:15.924Z",
+  "exportedAt": "2026-11-03T16:19:18.602Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -22,12 +22,12 @@
     },
     {
       "id": "app-1792750973122",
-      "name": "강남권 고교편제",
+      "name": "[강남]고교편제",
       "url": "https://dh.mirae-academy.co.kr/custom-page/260721/dh-spqb",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1775142967376-fbe93099b6a0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 17.13,
-      "yPct": 46.78
+      "xPct": 68.17,
+      "yPct": 50.35
     },
     {
       "id": "app-2",
@@ -53,8 +53,8 @@
       "url": "https://script.google.com/macros/s/AKfycbxvrCiB6_fc2A3QkXMHrCv4gX8twpLqJY8y2GmdFYLusGnwIIORSs9JNf_PWAJax54lFw/exec",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 81.88,
-      "yPct": 1.25
+      "xPct": 16.41,
+      "yPct": 46.89
     },
     {
       "id": "app-1791885806756",
@@ -62,8 +62,8 @@
       "url": "https://script.google.com/macros/s/AKfycbzIa3I98g3cQ-HN1xa7HmvvMNzwTUM_G-3JeekRg4OjuzyD4f1CQKKDHgvcKqfbtb_Bdw/exec",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1727648764473-21eef54cb24d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 0.05,
-      "yPct": 44.59
+      "xPct": 73.12,
+      "yPct": 49.94
     },
     {
       "id": "app-4",
@@ -157,7 +157,7 @@
     },
     {
       "id": "app-1789710337914",
-      "name": "파인만컨설팅[26-2]",
+      "name": "[파인만] 26-2",
       "url": "https://docs.google.com/spreadsheets/d/1EX73Oq9iVTGMll7SY2ZJbQaoG7ATY5ifB7GdyLBER_0/edit?usp=drive_web&ouid=103047718856130833554",
       "target": "newtab",
       "icon": "🌐",
@@ -166,12 +166,12 @@
     },
     {
       "id": "app-1789710318170",
-      "name": "학생관리센터",
+      "name": "[다올] 드라이브 허브",
       "url": "https://docs.google.com/spreadsheets/d/1VfebRB5vLlV-Ni7RT9cp8xWSwVL543DQOuJlzn-uZD4/edit?gid=15478959#gid=15478959",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 43.96,
-      "yPct": 1.25
+      "xPct": 0.46,
+      "yPct": 27.48
     },
     {
       "id": "app-1",
