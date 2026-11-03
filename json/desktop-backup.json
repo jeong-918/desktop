@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-03T16:13:10.435Z",
+  "exportedAt": "2026-11-03T16:14:11.919Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -8,8 +8,8 @@
       "url": "https://power-2028-admission-atlas.pages.dev/",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 60.21,
-      "yPct": 41.34
+      "xPct": 71.04,
+      "yPct": 1.25
     },
     {
       "id": "app-1789710282082",
@@ -17,8 +17,8 @@
       "url": "https://jeong-918.github.io/desktop/app/5to9.html",
       "target": "newtab",
       "icon": "⭐",
-      "xPct": 0,
-      "yPct": 57
+      "xPct": 16.88,
+      "yPct": 14.61
     },
     {
       "id": "app-1792750973122",
@@ -26,8 +26,8 @@
       "url": "https://dh.mirae-academy.co.kr/custom-page/260721/dh-spqb",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 65.63,
-      "yPct": 41.34
+      "xPct": 76.46,
+      "yPct": 1.25
     },
     {
       "id": "app-2",
@@ -35,8 +35,8 @@
       "url": "https://www.desmos.com/scientific?lang=ko",
       "icon": "🧮",
       "target": "window",
-      "xPct": 16.56,
-      "yPct": 15.04
+      "xPct": 54.79,
+      "yPct": 1.25
     },
     {
       "id": "app-1793265158909",
@@ -44,8 +44,8 @@
       "url": "https://yeopban.kr/#sharing",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 81.82,
-      "yPct": 41.07
+      "xPct": 65.63,
+      "yPct": 1.25
     },
     {
       "id": "app-1791885784710",
@@ -53,17 +53,17 @@
       "url": "https://script.google.com/macros/s/AKfycbxvrCiB6_fc2A3QkXMHrCv4gX8twpLqJY8y2GmdFYLusGnwIIORSs9JNf_PWAJax54lFw/exec",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 71.04,
-      "yPct": 41.34
+      "xPct": 81.88,
+      "yPct": 1.25
     },
     {
       "id": "app-1791885806756",
-      "name": "교과탐구를 위한 기사검색",
+      "name": "[모두] 탐구-기사검색",
       "url": "https://script.google.com/macros/s/AKfycbzIa3I98g3cQ-HN1xa7HmvvMNzwTUM_G-3JeekRg4OjuzyD4f1CQKKDHgvcKqfbtb_Bdw/exec",
       "target": "newtab",
-      "icon": "🧮",
-      "xPct": 33.13,
-      "yPct": 1.25
+      "icon": "⭐",
+      "xPct": 0.05,
+      "yPct": 44.59
     },
     {
       "id": "app-4",
@@ -71,7 +71,7 @@
       "url": "https://hjh010501.github.io/neis-counter/",
       "icon": "⭐",
       "target": "window",
-      "xPct": 38.54,
+      "xPct": 6.04,
       "yPct": 1.25
     },
     {
@@ -80,8 +80,8 @@
       "url": "https://jayu0422-blip.github.io/daol-timetable/admin.html",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 34.9,
-      "yPct": 20.36
+      "xPct": 60.21,
+      "yPct": 1.25
     },
     {
       "id": "app-1789811920576",
@@ -89,7 +89,7 @@
       "url": "https://ppakangna-svg.github.io/interview-record/",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 49.38,
+      "xPct": 11.46,
       "yPct": 1.25
     },
     {
@@ -98,7 +98,7 @@
       "url": "https://mogyo.kr/",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 54.79,
+      "xPct": 16.88,
       "yPct": 1.25
     },
     {
@@ -107,7 +107,7 @@
       "url": "https://jeong-918.github.io/desktop/app/mogo.html",
       "target": "newtab",
       "icon": "📊",
-      "xPct": 60.21,
+      "xPct": 22.29,
       "yPct": 1.25
     },
     {
@@ -116,7 +116,7 @@
       "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
       "target": "newtab",
       "icon": "📊",
-      "xPct": 65.63,
+      "xPct": 92.71,
       "yPct": 1.25
     },
     {
@@ -125,8 +125,8 @@
       "url": "https://jeong-918.github.io/explan/index.html",
       "target": "newtab",
       "icon": "📝",
-      "xPct": 0,
-      "yPct": 43.01
+      "xPct": 0.63,
+      "yPct": 14.61
     },
     {
       "id": "app-1791878483202",
@@ -134,8 +134,8 @@
       "url": "https://geoguymin.github.io/Design-of-Curriculam/",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 76.46,
-      "yPct": 41.34
+      "xPct": 87.29,
+      "yPct": 1.25
     },
     {
       "id": "app-1792138990794",
@@ -143,7 +143,7 @@
       "url": "https://jeong-918.github.io/desktop/app/planner.html",
       "target": "newtab",
       "icon": "📝",
-      "xPct": 81.88,
+      "xPct": 27.71,
       "yPct": 1.25
     },
     {
@@ -152,7 +152,7 @@
       "url": "https://jeong-918.github.io/desktop/app/fineman2-1.html",
       "target": "newtab",
       "icon": "📅",
-      "xPct": 87.29,
+      "xPct": 33.13,
       "yPct": 1.25
     },
     {
@@ -161,7 +161,7 @@
       "url": "https://docs.google.com/spreadsheets/d/1EX73Oq9iVTGMll7SY2ZJbQaoG7ATY5ifB7GdyLBER_0/edit?usp=drive_web&ouid=103047718856130833554",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 92.71,
+      "xPct": 38.54,
       "yPct": 1.25
     },
     {
@@ -170,8 +170,8 @@
       "url": "https://docs.google.com/spreadsheets/d/1VfebRB5vLlV-Ni7RT9cp8xWSwVL543DQOuJlzn-uZD4/edit?gid=15478959#gid=15478959",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 0.63,
-      "yPct": 14.61
+      "xPct": 43.96,
+      "yPct": 1.25
     },
     {
       "id": "app-1",
@@ -179,16 +179,16 @@
       "url": "https://www.google.com",
       "icon": "🌐",
       "target": "newtab",
-      "xPct": 6.04,
-      "yPct": 14.61
+      "xPct": 49.38,
+      "yPct": 1.25
     },
     {
       "id": "app-1789711180543",
-      "name": "SYSTEM-daol",
+      "name": "자습관 로그인",
       "url": "https://system.daol105.co.kr",
       "target": "newtab",
-      "icon": "🌐",
-      "xPct": 11.46,
+      "icon": "📊",
+      "xPct": 6.04,
       "yPct": 14.61
     },
     {
@@ -197,8 +197,8 @@
       "url": "https://jeong-918.github.io/docu-ev/",
       "target": "newtab",
       "icon": "📊",
-      "xPct": 4.74,
-      "yPct": 43.12
+      "xPct": 11.46,
+      "yPct": 14.61
     }
   ],
   "settings": {
