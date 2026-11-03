@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-03T16:25:03.094Z",
+  "exportedAt": "2026-11-03T16:26:02.898Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -8,8 +8,8 @@
       "url": "https://power-2028-admission-atlas.pages.dev/",
       "target": "newtab",
       "icon": "https://plus.unsplash.com/premium_photo-1792661405792-d2117e75e472?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 78.12,
-      "yPct": 50.96
+      "xPct": 87.29,
+      "yPct": 1.25
     },
     {
       "id": "app-1789710282082",
@@ -17,8 +17,8 @@
       "url": "https://jeong-918.github.io/desktop/app/5to9.html",
       "target": "newtab",
       "icon": "⭐",
-      "xPct": 16.88,
-      "yPct": 14.61
+      "xPct": 43.96,
+      "yPct": 1.25
     },
     {
       "id": "app-1792750973122",
@@ -26,8 +26,8 @@
       "url": "https://dh.mirae-academy.co.kr/custom-page/260721/dh-spqb",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1775142967376-fbe93099b6a0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 68.17,
-      "yPct": 50.35
+      "xPct": 71.04,
+      "yPct": 1.25
     },
     {
       "id": "app-2",
@@ -35,7 +35,7 @@
       "url": "https://www.desmos.com/scientific?lang=ko",
       "icon": "🧮",
       "target": "window",
-      "xPct": 54.79,
+      "xPct": 22.29,
       "yPct": 1.25
     },
     {
@@ -44,8 +44,8 @@
       "url": "https://yeopban.kr/#sharing",
       "target": "newtab",
       "icon": "⭐",
-      "xPct": 84.84,
-      "yPct": 50.66
+      "xPct": 76.46,
+      "yPct": 1.25
     },
     {
       "id": "app-1791885784710",
@@ -53,8 +53,8 @@
       "url": "https://script.google.com/macros/s/AKfycbxvrCiB6_fc2A3QkXMHrCv4gX8twpLqJY8y2GmdFYLusGnwIIORSs9JNf_PWAJax54lFw/exec",
       "target": "newtab",
       "icon": "https://plus.unsplash.com/premium_photo-1661311950994-d263ea9681a1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 61.98,
-      "yPct": 50.76
+      "xPct": 81.88,
+      "yPct": 1.25
     },
     {
       "id": "app-1791885806756",
@@ -62,8 +62,8 @@
       "url": "https://script.google.com/macros/s/AKfycbzIa3I98g3cQ-HN1xa7HmvvMNzwTUM_G-3JeekRg4OjuzyD4f1CQKKDHgvcKqfbtb_Bdw/exec",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1727648764473-21eef54cb24d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 73.12,
-      "yPct": 49.94
+      "xPct": 65.63,
+      "yPct": 1.25
     },
     {
       "id": "app-4",
@@ -71,7 +71,7 @@
       "url": "https://hjh010501.github.io/neis-counter/",
       "icon": "⭐",
       "target": "window",
-      "xPct": 6.04,
+      "xPct": 0.63,
       "yPct": 1.25
     },
     {
@@ -80,8 +80,8 @@
       "url": "https://jayu0422-blip.github.io/daol-timetable/admin.html",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 29.99,
-      "yPct": 34.35
+      "xPct": 54.79,
+      "yPct": 1.25
     },
     {
       "id": "app-1789811920576",
@@ -89,7 +89,7 @@
       "url": "https://ppakangna-svg.github.io/interview-record/",
       "target": "newtab",
       "icon": "🧮",
-      "xPct": 11.46,
+      "xPct": 6.04,
       "yPct": 1.25
     },
     {
@@ -98,17 +98,17 @@
       "url": "https://mogyo.kr/",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 6.1,
-      "yPct": 28.19
+      "xPct": 49.38,
+      "yPct": 1.25
     },
     {
       "id": "app-1793706368626",
-      "name": "모의고사관리",
+      "name": "[다올]모고관리",
       "url": "https://jeong-918.github.io/desktop/app/mogo.html",
       "target": "newtab",
-      "icon": "📊",
-      "xPct": 22.29,
-      "yPct": 1.25
+      "icon": "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+      "xPct": 17.24,
+      "yPct": 44.47
     },
     {
       "id": "app-1789982418218",
@@ -116,8 +116,8 @@
       "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1610050731641-f855ccdaf3f6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 4.37,
-      "yPct": 59.63
+      "xPct": 6.04,
+      "yPct": 14.61
     },
     {
       "id": "app-1793720974712",
@@ -125,8 +125,8 @@
       "url": "https://jeong-918.github.io/explan/index.html",
       "target": "newtab",
       "icon": "📝",
-      "xPct": 0.63,
-      "yPct": 14.61
+      "xPct": 27.71,
+      "yPct": 1.25
     },
     {
       "id": "app-1791878483202",
@@ -134,8 +134,8 @@
       "url": "https://geoguymin.github.io/Design-of-Curriculam/",
       "target": "newtab",
       "icon": "https://plus.unsplash.com/premium_photo-1706191097326-cd317671d1fb?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 56.45,
-      "yPct": 52.32
+      "xPct": 92.71,
+      "yPct": 1.25
     },
     {
       "id": "app-1792138990794",
@@ -143,7 +143,7 @@
       "url": "https://jeong-918.github.io/desktop/app/planner.html",
       "target": "newtab",
       "icon": "📝",
-      "xPct": 27.71,
+      "xPct": 16.88,
       "yPct": 1.25
     },
     {
@@ -152,8 +152,8 @@
       "url": "https://jeong-918.github.io/desktop/app/fineman2-1.html",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1781246435700-afec19012b45?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 0,
-      "yPct": 59.52
+      "xPct": 0.63,
+      "yPct": 14.61
     },
     {
       "id": "app-1789710337914",
@@ -161,8 +161,8 @@
       "url": "https://docs.google.com/spreadsheets/d/1EX73Oq9iVTGMll7SY2ZJbQaoG7ATY5ifB7GdyLBER_0/edit?usp=drive_web&ouid=103047718856130833554",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 18.28,
-      "yPct": 60.78
+      "xPct": 11.46,
+      "yPct": 14.61
     },
     {
       "id": "app-1789710318170",
@@ -170,8 +170,8 @@
       "url": "https://docs.google.com/spreadsheets/d/1VfebRB5vLlV-Ni7RT9cp8xWSwVL543DQOuJlzn-uZD4/edit?gid=15478959#gid=15478959",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 35.4,
-      "yPct": 34.72
+      "xPct": 60.21,
+      "yPct": 1.25
     },
     {
       "id": "app-1789711180543",
@@ -179,8 +179,8 @@
       "url": "https://system.daol105.co.kr",
       "target": "newtab",
       "icon": "📊",
-      "xPct": 6.04,
-      "yPct": 14.61
+      "xPct": 33.13,
+      "yPct": 1.25
     },
     {
       "id": "app-1793721258238",
@@ -188,8 +188,8 @@
       "url": "https://jeong-918.github.io/docu-ev/",
       "target": "newtab",
       "icon": "📊",
-      "xPct": 11.46,
-      "yPct": 14.61
+      "xPct": 38.54,
+      "yPct": 1.25
     }
   ],
   "settings": {
