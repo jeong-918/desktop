@@ -1,172 +1,1508 @@
 {
   "app": "mogo",
-  "exportedAt": "2026-11-03T12:51:47.129Z",
+  "exportedAt": "2026-11-04T08:09:15.593Z",
   "students": [
     {
-      "id": "DOH",
-      "name": "서도훈",
+      "id": "STU-101",
+      "name": "김민준",
+      "grade": "고2",
+      "track": "이과",
+      "goals": {
+        "국어": 88,
+        "수학": 94,
+        "영어": 92,
+        "통합사회": 44,
+        "통합과학": 48,
+        "한국사": 45
+      },
+      "comment": "수학과 통합과학(50점 만점 중 48점 목표 돌파)에서 최상위권 성취도를 유지 중입니다. 비문학 독해 시간 안배 훈련을 병행하면 국어 역시 목표선(88점)을 안정적으로 넘어설 수 있습니다."
+    },
+    {
+      "id": "STU-102",
+      "name": "이서연",
+      "grade": "고2",
+      "track": "문과",
+      "goals": {
+        "국어": 94,
+        "수학": 82,
+        "영어": 95,
+        "통합사회": 47,
+        "통합과학": 42,
+        "한국사": 45
+      },
+      "comment": "국어·영어·통합사회(47점 목표) 모두 개인 목표 점수를 초과 달성했습니다. 사설 모의고사에서도 흔들리지 않는 수학 준킬러 문항 대비가 하반기 핵심 과제입니다."
+    },
+    {
+      "id": "STU-103",
+      "name": "박도현",
       "grade": "고3",
       "track": "이과",
       "goals": {
+        "국어": 84,
+        "수학": 90,
+        "영어": 90,
+        "통합사회": 42,
+        "통합과학": 46,
+        "한국사": 42
+      },
+      "comment": "회차를 거듭할수록 수학과 통합과학 원점수가 가파르게 상승하여 최근 시험에서 목표 점수를 돌파했습니다. 탐구 영역 기출 복습 주기를 단축하세요."
+    },
+    {
+      "id": "STU-104",
+      "name": "최지우",
+      "grade": "고1",
+      "track": "문과",
+      "goals": {
         "국어": 90,
-        "수학": 92,
+        "수학": 78,
         "영어": 90,
         "통합사회": 45,
-        "통합과학": 45,
+        "통합과학": 40,
         "한국사": 45
       },
-      "comment": "서도훈 학생의 신규 모의고사 성적 관리가 시작되었습니다."
-    },
-    {
-      "id": "JIHOO",
-      "name": "장지후",
-      "grade": "고3",
-      "track": "이과",
-      "goals": {
-        "국어": 90,
-        "수학": 92,
-        "영어": 90,
-        "통합사회": 90,
-        "통합과학": 92,
-        "한국사": 45
-      },
-      "comment": "장지후 학생의 신규 모의고사 성적 관리가 시작되었습니다."
-    },
-    {
-      "id": "HJUN",
-      "name": "이현준",
-      "grade": "고3",
-      "track": "이과",
-      "goals": {
-        "국어": 90,
-        "수학": 92,
-        "영어": 90,
-        "통합사회": 90,
-        "통합과학": 92,
-        "한국사": 45
-      },
-      "comment": "이현준 학생의 신규 모의고사 성적 관리가 시작되었습니다."
-    },
-    {
-      "id": "HYO",
-      "name": "이효준",
-      "grade": "고3",
-      "track": "이과",
-      "goals": {
-        "국어": 90,
-        "수학": 92,
-        "영어": 90,
-        "통합사회": 90,
-        "통합과학": 92,
-        "한국사": 45
-      },
-      "comment": "이효준 학생의 신규 모의고사 성적 관리가 시작되었습니다."
-    },
-    {
-      "id": "JHYEON",
-      "name": "이재현",
-      "grade": "고3",
-      "track": "이과",
-      "goals": {
-        "국어": 90,
-        "수학": 92,
-        "영어": 90,
-        "통합사회": 90,
-        "통합과학": 92,
-        "한국사": 45
-      },
-      "comment": "이재현 학생의 신규 모의고사 성적 관리가 시작되었습니다."
-    },
-    {
-      "id": "YELIN",
-      "name": "임예린",
-      "grade": "고3",
-      "track": "문과",
-      "goals": {
-        "국어": 90,
-        "수학": 92,
-        "영어": 90,
-        "통합사회": 90,
-        "통합과학": 92,
-        "한국사": 45
-      },
-      "comment": "임예린 학생의 신규 모의고사 성적 관리가 시작되었습니다."
-    },
-    {
-      "id": "MIN",
-      "name": "양민경",
-      "grade": "고3",
-      "track": "문과",
-      "goals": {
-        "국어": 90,
-        "수학": 92,
-        "영어": 90,
-        "통합사회": 90,
-        "통합과학": 92,
-        "한국사": 45
-      },
-      "comment": "양민경 학생의 신규 모의고사 성적 관리가 시작되었습니다."
-    },
-    {
-      "id": "WOO",
-      "name": "장우정",
-      "grade": "고3",
-      "track": "문과",
-      "goals": {
-        "국어": 90,
-        "수학": 92,
-        "영어": 90,
-        "통합사회": 90,
-        "통합과학": 92,
-        "한국사": 45
-      },
-      "comment": "장우정 학생의 신규 모의고사 성적 관리가 시작되었습니다."
-    },
-    {
-      "id": "YSEO",
-      "name": "이윤서",
-      "grade": "고3",
-      "track": "이과",
-      "goals": {
-        "국어": 90,
-        "수학": 92,
-        "영어": 90,
-        "통합사회": 90,
-        "통합과학": 92,
-        "한국사": 45
-      },
-      "comment": "이윤서 학생의 신규 모의고사 성적 관리가 시작되었습니다."
-    },
-    {
-      "id": "JWOO",
-      "name": "최정우",
-      "grade": "고3",
-      "track": "문과",
-      "goals": {
-        "국어": 90,
-        "수학": 92,
-        "영어": 90,
-        "통합사회": 90,
-        "통합과학": 92,
-        "한국사": 45
-      },
-      "comment": "최정우 학생의 신규 모의고사 성적 관리가 시작되었습니다."
-    },
-    {
-      "id": "TESTID",
-      "name": "정영주",
-      "grade": "고3",
-      "track": "문과",
-      "goals": {
-        "국어": 90,
-        "수학": 92,
-        "영어": 90,
-        "통합사회": 45,
-        "통합과학": 45,
-        "한국사": 45
-      },
-      "comment": "정영주 학생의 신규 모의고사 성적 관리가 시작되었습니다."
+      "comment": "첫 학력평가 대비 최근 사설 모의고사에서 국어와 통합사회 원점수가 크게 상승하여 목표선을 달성했습니다. 꾸준한 오답 노트 작성이 돋보입니다."
     }
   ],
-  "scoreRecords": []
+  "scoreRecords": [
+    {
+      "id": "REC-1",
+      "studentId": "STU-101",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "국어",
+      "score": 78,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-2",
+      "studentId": "STU-101",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "수학",
+      "score": 88,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-3",
+      "studentId": "STU-101",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "영어",
+      "score": 91,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-4",
+      "studentId": "STU-101",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "통합사회",
+      "score": 41,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-5",
+      "studentId": "STU-101",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "통합과학",
+      "score": 45,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-6",
+      "studentId": "STU-101",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "한국사",
+      "score": 45,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-7",
+      "studentId": "STU-102",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "국어",
+      "score": 92,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-8",
+      "studentId": "STU-102",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "수학",
+      "score": 72,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-9",
+      "studentId": "STU-102",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "영어",
+      "score": 95,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-10",
+      "studentId": "STU-102",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "통합사회",
+      "score": 45,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-11",
+      "studentId": "STU-102",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "통합과학",
+      "score": 38,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-12",
+      "studentId": "STU-102",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "한국사",
+      "score": 48,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-13",
+      "studentId": "STU-103",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "국어",
+      "score": 74,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-14",
+      "studentId": "STU-103",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "수학",
+      "score": 80,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-15",
+      "studentId": "STU-103",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "영어",
+      "score": 82,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-16",
+      "studentId": "STU-103",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "통합사회",
+      "score": 38,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-17",
+      "studentId": "STU-103",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "통합과학",
+      "score": 42,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-18",
+      "studentId": "STU-103",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "한국사",
+      "score": 40,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-19",
+      "studentId": "STU-104",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "국어",
+      "score": 80,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-20",
+      "studentId": "STU-104",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "수학",
+      "score": 68,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-21",
+      "studentId": "STU-104",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "영어",
+      "score": 86,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-22",
+      "studentId": "STU-104",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "통합사회",
+      "score": 42,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-23",
+      "studentId": "STU-104",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "통합과학",
+      "score": 36,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-24",
+      "studentId": "STU-104",
+      "date": "2025-03-26",
+      "examType": "교육청",
+      "examTitle": "3월 전국연합학력평가",
+      "subject": "한국사",
+      "score": 42,
+      "memo": "신학기 첫 정기 평가 (1컷 국88 수84)"
+    },
+    {
+      "id": "REC-25",
+      "studentId": "STU-101",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "국어",
+      "score": 81,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-26",
+      "studentId": "STU-101",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "수학",
+      "score": 85,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-27",
+      "studentId": "STU-101",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "영어",
+      "score": 89,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-28",
+      "studentId": "STU-101",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "통합사회",
+      "score": 42,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-29",
+      "studentId": "STU-101",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "통합과학",
+      "score": 44,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-30",
+      "studentId": "STU-101",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "한국사",
+      "score": 44,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-31",
+      "studentId": "STU-102",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "국어",
+      "score": 89,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-32",
+      "studentId": "STU-102",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "수학",
+      "score": 70,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-33",
+      "studentId": "STU-102",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "영어",
+      "score": 92,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-34",
+      "studentId": "STU-102",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "통합사회",
+      "score": 46,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-35",
+      "studentId": "STU-102",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "통합과학",
+      "score": 37,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-36",
+      "studentId": "STU-102",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "한국사",
+      "score": 46,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-37",
+      "studentId": "STU-103",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "국어",
+      "score": 72,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-38",
+      "studentId": "STU-103",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "수학",
+      "score": 84,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-39",
+      "studentId": "STU-103",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "영어",
+      "score": 79,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-40",
+      "studentId": "STU-103",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "통합사회",
+      "score": 37,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-41",
+      "studentId": "STU-103",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "통합과학",
+      "score": 41,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-42",
+      "studentId": "STU-103",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "한국사",
+      "score": 38,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-43",
+      "studentId": "STU-104",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "국어",
+      "score": 83,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-44",
+      "studentId": "STU-104",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "수학",
+      "score": 65,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-45",
+      "studentId": "STU-104",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "영어",
+      "score": 84,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-46",
+      "studentId": "STU-104",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "통합사회",
+      "score": 42,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-47",
+      "studentId": "STU-104",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "통합과학",
+      "score": 35,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-48",
+      "studentId": "STU-104",
+      "date": "2025-04-14",
+      "examType": "사설",
+      "examTitle": "4월 더프리미엄 사설모의",
+      "subject": "한국사",
+      "score": 41,
+      "memo": "고난도 문항 적응 훈련"
+    },
+    {
+      "id": "REC-49",
+      "studentId": "STU-101",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "국어",
+      "score": 84,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-50",
+      "studentId": "STU-101",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "수학",
+      "score": 92,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-51",
+      "studentId": "STU-101",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "영어",
+      "score": 93,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-52",
+      "studentId": "STU-101",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "통합사회",
+      "score": 43,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-53",
+      "studentId": "STU-101",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "통합과학",
+      "score": 47,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-54",
+      "studentId": "STU-101",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "한국사",
+      "score": 48,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-55",
+      "studentId": "STU-102",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "국어",
+      "score": 94,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-56",
+      "studentId": "STU-102",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "수학",
+      "score": 76,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-57",
+      "studentId": "STU-102",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "영어",
+      "score": 96,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-58",
+      "studentId": "STU-102",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "통합사회",
+      "score": 47,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-59",
+      "studentId": "STU-102",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "통합과학",
+      "score": 40,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-60",
+      "studentId": "STU-102",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "한국사",
+      "score": 49,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-61",
+      "studentId": "STU-103",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "국어",
+      "score": 77,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-62",
+      "studentId": "STU-103",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "수학",
+      "score": 85,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-63",
+      "studentId": "STU-103",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "영어",
+      "score": 85,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-64",
+      "studentId": "STU-103",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "통합사회",
+      "score": 39,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-65",
+      "studentId": "STU-103",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "통합과학",
+      "score": 43,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-66",
+      "studentId": "STU-103",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "한국사",
+      "score": 42,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-67",
+      "studentId": "STU-104",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "국어",
+      "score": 85,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-68",
+      "studentId": "STU-104",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "수학",
+      "score": 72,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-69",
+      "studentId": "STU-104",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "영어",
+      "score": 88,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-70",
+      "studentId": "STU-104",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "통합사회",
+      "score": 44,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-71",
+      "studentId": "STU-104",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "통합과학",
+      "score": 37,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-72",
+      "studentId": "STU-104",
+      "date": "2025-05-08",
+      "examType": "기타",
+      "examTitle": "5월 학원 자체 미니모의",
+      "subject": "한국사",
+      "score": 45,
+      "memo": "취약 단원 집중 점검"
+    },
+    {
+      "id": "REC-73",
+      "studentId": "STU-101",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "국어",
+      "score": 85,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-74",
+      "studentId": "STU-101",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "수학",
+      "score": 94,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-75",
+      "studentId": "STU-101",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "영어",
+      "score": 94,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-76",
+      "studentId": "STU-101",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "통합사회",
+      "score": 44,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-77",
+      "studentId": "STU-101",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "통합과학",
+      "score": 48,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-78",
+      "studentId": "STU-101",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "한국사",
+      "score": 48,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-79",
+      "studentId": "STU-102",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "국어",
+      "score": 95,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-80",
+      "studentId": "STU-102",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "수학",
+      "score": 78,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-81",
+      "studentId": "STU-102",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "영어",
+      "score": 97,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-82",
+      "studentId": "STU-102",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "통합사회",
+      "score": 48,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-83",
+      "studentId": "STU-102",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "통합과학",
+      "score": 40,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-84",
+      "studentId": "STU-102",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "한국사",
+      "score": 50,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-85",
+      "studentId": "STU-103",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "국어",
+      "score": 80,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-86",
+      "studentId": "STU-103",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "수학",
+      "score": 88,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-87",
+      "studentId": "STU-103",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "영어",
+      "score": 86,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-88",
+      "studentId": "STU-103",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "통합사회",
+      "score": 40,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-89",
+      "studentId": "STU-103",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "통합과학",
+      "score": 45,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-90",
+      "studentId": "STU-103",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "한국사",
+      "score": 45,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-91",
+      "studentId": "STU-104",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "국어",
+      "score": 88,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-92",
+      "studentId": "STU-104",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "수학",
+      "score": 74,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-93",
+      "studentId": "STU-104",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "영어",
+      "score": 91,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-94",
+      "studentId": "STU-104",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "통합사회",
+      "score": 45,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-95",
+      "studentId": "STU-104",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "통합과학",
+      "score": 38,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-96",
+      "studentId": "STU-104",
+      "date": "2025-06-04",
+      "examType": "평가원",
+      "examTitle": "6월 평가원 모의평가",
+      "subject": "한국사",
+      "score": 46,
+      "memo": "상반기 핵심 기준 시험 (표점 국136 수141)"
+    },
+    {
+      "id": "REC-97",
+      "studentId": "STU-101",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "국어",
+      "score": 88,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-98",
+      "studentId": "STU-101",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "수학",
+      "score": 92,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-99",
+      "studentId": "STU-101",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "영어",
+      "score": 95,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-100",
+      "studentId": "STU-101",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "통합사회",
+      "score": 43,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-101",
+      "studentId": "STU-101",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "통합과학",
+      "score": 47,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-102",
+      "studentId": "STU-101",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "한국사",
+      "score": 47,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-103",
+      "studentId": "STU-102",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "국어",
+      "score": 93,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-104",
+      "studentId": "STU-102",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "수학",
+      "score": 81,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-105",
+      "studentId": "STU-102",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "영어",
+      "score": 96,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-106",
+      "studentId": "STU-102",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "통합사회",
+      "score": 48,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-107",
+      "studentId": "STU-102",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "통합과학",
+      "score": 41,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-108",
+      "studentId": "STU-102",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "한국사",
+      "score": 48,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-109",
+      "studentId": "STU-103",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "국어",
+      "score": 79,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-110",
+      "studentId": "STU-103",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "수학",
+      "score": 90,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-111",
+      "studentId": "STU-103",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "영어",
+      "score": 88,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-112",
+      "studentId": "STU-103",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "통합사회",
+      "score": 41,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-113",
+      "studentId": "STU-103",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "통합과학",
+      "score": 46,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-114",
+      "studentId": "STU-103",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "한국사",
+      "score": 44,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-115",
+      "studentId": "STU-104",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "국어",
+      "score": 90,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-116",
+      "studentId": "STU-104",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "수학",
+      "score": 75,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-117",
+      "studentId": "STU-104",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "영어",
+      "score": 89,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-118",
+      "studentId": "STU-104",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "통합사회",
+      "score": 46,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-119",
+      "studentId": "STU-104",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "통합과학",
+      "score": 39,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-120",
+      "studentId": "STU-104",
+      "date": "2025-07-10",
+      "examType": "교육청",
+      "examTitle": "7월 전국연합학력평가",
+      "subject": "한국사",
+      "score": 47,
+      "memo": "여름방학 직전 성취도 점검"
+    },
+    {
+      "id": "REC-121",
+      "studentId": "STU-101",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "국어",
+      "score": 91,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-122",
+      "studentId": "STU-101",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "수학",
+      "score": 96,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-123",
+      "studentId": "STU-101",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "영어",
+      "score": 97,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-124",
+      "studentId": "STU-101",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "통합사회",
+      "score": 45,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-125",
+      "studentId": "STU-101",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "통합과학",
+      "score": 49,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-126",
+      "studentId": "STU-101",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "한국사",
+      "score": 50,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-127",
+      "studentId": "STU-102",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "국어",
+      "score": 96,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-128",
+      "studentId": "STU-102",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "수학",
+      "score": 84,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-129",
+      "studentId": "STU-102",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "영어",
+      "score": 98,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-130",
+      "studentId": "STU-102",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "통합사회",
+      "score": 49,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-131",
+      "studentId": "STU-102",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "통합과학",
+      "score": 43,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-132",
+      "studentId": "STU-102",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "한국사",
+      "score": 50,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-133",
+      "studentId": "STU-103",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "국어",
+      "score": 83,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-134",
+      "studentId": "STU-103",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "수학",
+      "score": 92,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-135",
+      "studentId": "STU-103",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "영어",
+      "score": 91,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-136",
+      "studentId": "STU-103",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "통합사회",
+      "score": 42,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-137",
+      "studentId": "STU-103",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "통합과학",
+      "score": 47,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-138",
+      "studentId": "STU-103",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "한국사",
+      "score": 46,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-139",
+      "studentId": "STU-104",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "국어",
+      "score": 92,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-140",
+      "studentId": "STU-104",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "수학",
+      "score": 79,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-141",
+      "studentId": "STU-104",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "영어",
+      "score": 93,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-142",
+      "studentId": "STU-104",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "통합사회",
+      "score": 46,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-143",
+      "studentId": "STU-104",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "통합과학",
+      "score": 41,
+      "memo": "방학 특강 후 실전 점검"
+    },
+    {
+      "id": "REC-144",
+      "studentId": "STU-104",
+      "date": "2025-08-22",
+      "examType": "사설",
+      "examTitle": "8월 시대인재 서바이벌",
+      "subject": "한국사",
+      "score": 48,
+      "memo": "방학 특강 후 실전 점검"
+    }
+  ]
 }
