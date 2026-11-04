@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-04T07:23:57.143Z",
-  "updatedAt": 1793777037143,
+  "exportedAt": "2026-11-04T10:21:32.929Z",
+  "updatedAt": 1793787692929,
   "daily": {
     "categories": [
       {
@@ -307,7 +307,7 @@
         "title": "윤지원 미디어영어 체크 및 수행 진행 (목요일까지)",
         "categoryId": "cat_1792046758202",
         "date": "2026-11-05",
-        "status": "TODO",
+        "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
         "createdAt": 1793709547868
@@ -317,7 +317,7 @@
         "title": "정인아 법과 사회 주제 선정된 내용 기반 본 보고서 작성해서 전달 (역사드라마와 인물 간 문제)",
         "categoryId": "cat_1792046758202",
         "date": "2026-11-05",
-        "status": "TODO",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1793723893163
