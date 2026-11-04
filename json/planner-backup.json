@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-04T07:23:43.392Z",
-  "updatedAt": 1793777023392,
+  "exportedAt": "2026-11-04T07:23:57.143Z",
+  "updatedAt": 1793777037143,
   "daily": {
     "categories": [
       {
@@ -331,6 +331,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1793777023392
+      },
+      {
+        "id": "todo_1793777037143_0ydsv",
+        "title": "윤지원 사문 컨텐츠 작성 완료 단계",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-11-06",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1793777037143
       }
     ]
   },
