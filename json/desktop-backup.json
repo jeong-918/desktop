@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-05T08:14:14.173Z",
+  "exportedAt": "2026-11-05T08:15:21.809Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -103,7 +103,7 @@
     },
     {
       "id": "app-1789982418218",
-      "name": "Web Work_다올",
+      "name": "Work_자습관",
       "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1610050731641-f855ccdaf3f6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
@@ -133,13 +133,13 @@
       "name": "Web Work_Todo",
       "url": "https://jeong-918.github.io/desktop/app/planner.html",
       "target": "newtab",
-      "icon": "https://images.unsplash.com/photo-1603804449564-2ad32f24d17e?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+      "icon": "https://images.unsplash.com/photo-1712000155290-ee65c0a82eda?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
       "xPct": 21.09,
       "yPct": 19.07
     },
     {
       "id": "app-1791447467073",
-      "name": "Web Work_파인만",
+      "name": "Work_파인만",
       "url": "https://jeong-918.github.io/desktop/app/fineman2-1.html",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1781246435700-afec19012b45?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
