@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-05T07:55:21.347Z",
+  "exportedAt": "2026-11-05T07:56:27.365Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -189,6 +189,15 @@
       "target": "newtab",
       "icon": "📁",
       "xPct": 27.86,
+      "yPct": 1.63
+    },
+    {
+      "id": "app-1793865382025",
+      "name": "탐구질문생성",
+      "url": "https://jeong-918.github.io/ipsi/tamgu2.html",
+      "target": "newtab",
+      "icon": "📁",
+      "xPct": 34.64,
       "yPct": 1.63
     }
   ],
