@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-04T07:33:42.734Z",
+  "exportedAt": "2026-11-05T05:35:57.351Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -107,8 +107,8 @@
       "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1610050731641-f855ccdaf3f6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 0.63,
-      "yPct": 14.61
+      "xPct": 5.96,
+      "yPct": 15.26
     },
     {
       "id": "app-1793720974712",
@@ -170,8 +170,8 @@
       "url": "https://system.daol105.co.kr",
       "target": "newtab",
       "icon": "🌐",
-      "xPct": 6.04,
-      "yPct": 14.61
+      "xPct": 0.58,
+      "yPct": 15.19
     },
     {
       "id": "app-1793721258238",
