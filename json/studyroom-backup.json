@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-06T05:23:42.812Z",
+  "exportedAt": "2026-11-06T05:38:29.380Z",
   "version": 3,
   "data": {
     "students": [
@@ -687,7 +687,7 @@
           "time": ""
         },
         "2026-11-06": {
-          "status": "미입실(학원)",
+          "status": "미입실(기타)",
           "time": ""
         }
       },
@@ -3572,6 +3572,18 @@
         "end": "20:00",
         "minutes": 30,
         "note": ""
+      },
+      {
+        "id": "log_mw4jn6oe6khh",
+        "studentId": "stu_18",
+        "date": "2026-11-05",
+        "subject": "영어",
+        "type": "과제",
+        "eval": "보완필요",
+        "start": "18:00",
+        "end": "20:00",
+        "minutes": 120,
+        "note": ""
       }
     ],
     "counseling": [
@@ -3643,6 +3655,13 @@
         "studentId": "stu_muuvk470gwfd",
         "date": "2026-10-27",
         "content": "고입설명회 참여로 미입실 (27,28,30)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mw4j56r82nbm",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-11-06",
+        "content": "학부모 요청에 따른 미입실 (사유X)",
         "scope": "week"
       }
     ],
