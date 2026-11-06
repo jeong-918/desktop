@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-06T05:40:32.445Z",
+  "exportedAt": "2026-11-06T05:41:33.362Z",
   "version": 3,
   "data": {
     "students": [
@@ -3628,6 +3628,42 @@
         "subject": "영어",
         "type": "과제",
         "eval": "미완료",
+        "start": "19:00",
+        "end": "20:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mw4jq3fyld0w",
+        "studentId": "stu_mvx9zro0kvqx",
+        "date": "2026-11-05",
+        "subject": "국어",
+        "type": "기타학습",
+        "eval": "보완필요",
+        "start": "20:00",
+        "end": "22:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mw4jqurqhryt",
+        "studentId": "stu_mvxa04ymfwd2",
+        "date": "2026-11-05",
+        "subject": "사회",
+        "type": "수행평가",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "19:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mw4jr4hi9sbo",
+        "studentId": "stu_mvxa04ymfwd2",
+        "date": "2026-11-05",
+        "subject": "지학",
+        "type": "수행평가",
+        "eval": "학습완료",
         "start": "19:00",
         "end": "20:00",
         "minutes": 60,
