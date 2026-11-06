@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-06T05:46:37.539Z",
+  "exportedAt": "2026-11-06T05:48:00.159Z",
   "version": 3,
   "data": {
     "students": [
@@ -3811,6 +3811,42 @@
         "start": "21:00",
         "end": "22:00",
         "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mw4jydniwljn",
+        "studentId": "stu_mvxa16hosf8g",
+        "date": "2026-11-05",
+        "subject": "기타",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "19:30",
+        "minutes": 90,
+        "note": ""
+      },
+      {
+        "id": "log_mw4jytxajkly",
+        "studentId": "stu_mvxa16hosf8g",
+        "date": "2026-11-05",
+        "subject": "국어",
+        "type": "과제",
+        "eval": "보완필요",
+        "start": "19:30",
+        "end": "20:10",
+        "minutes": 40,
+        "note": ""
+      },
+      {
+        "id": "log_mw4jzf3ycn7t",
+        "studentId": "stu_mvxa16hosf8g",
+        "date": "2026-11-05",
+        "subject": "영어",
+        "type": "영단어",
+        "eval": "학습완료",
+        "start": "20:10",
+        "end": "20:20",
+        "minutes": 10,
         "note": ""
       }
     ],
