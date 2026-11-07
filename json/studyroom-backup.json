@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-07T05:15:38.853Z",
+  "exportedAt": "2026-11-07T05:17:42.971Z",
   "version": 3,
   "data": {
     "students": [
@@ -4014,6 +4014,13 @@
         "studentId": "stu_muuvk470gwfd",
         "date": "2026-11-07",
         "content": "12시 30분 - 4시 외출 (전날 학부모님 요청에 따른 외출 허가)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mw5ycbn43sr0",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-11-06",
+        "content": "미입실 / 학부모님 요청 (개인사유 확인. 단, 일정 협의는 하루 전날까지 전달해야함을 학생편으로 규칙 재전달 예정)",
         "scope": "week"
       }
     ],
