@@ -1,6 +1,6 @@
 {
   "app": "fineman2-1",
-  "exportedAt": "2026-11-05T06:26:41.151Z",
+  "exportedAt": "2026-11-07T08:46:35.221Z",
   "version": 5,
   "data": {
     "students": [
@@ -87,7 +87,7 @@
         "followUp": {
           "task": "사회문화-사회불평등문제 해결을 위한 맞춤형 복지정책 콘텐츠 준비",
           "date": "2026-11-06",
-          "done": false
+          "done": true
         },
         "createdAt": "2026-11-04T07:29:27.741Z"
       },
@@ -602,7 +602,7 @@
         "followUp": {
           "task": "가례재현 이후 관련 내용 인터뷰 들어보고자 함",
           "date": "2026-10-26",
-          "done": false
+          "done": true
         },
         "createdAt": "2026-10-11T02:43:44.747Z"
       },
