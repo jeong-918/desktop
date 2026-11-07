@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-07T07:22:27.483Z",
+  "exportedAt": "2026-11-07T07:24:06.292Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -185,7 +185,7 @@
     {
       "id": "app-1793865315794",
       "name": "그들의탐구",
-      "url": "https://jeong-918.github.io/ipsi/tamgu1.html",
+      "url": "https://jeong-918.github.io/ipsi/explorer/tamgu1.html",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1776057441344-38e0587ad1e6?q=80&w=1339&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
       "xPct": 34.64,
@@ -203,7 +203,7 @@
     {
       "id": "app-1793866372386",
       "name": "핵심역량강화",
-      "url": "https://jeong-918.github.io/ipsi/yeokryang1.html",
+      "url": "https://jeong-918.github.io/ipsi/explorer/yeokryang1.html",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1776057441567-ac16f7b9dd6f?q=80&w=1339&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
       "xPct": 41.41,
@@ -214,9 +214,9 @@
       "name": "2028입시진단",
       "url": "https://jeong-918.github.io/ipsi/2028check/28diagnose.html",
       "target": "newtab",
-      "icon": "🌐",
-      "xPct": 34.93,
-      "yPct": 1.66
+      "icon": "https://images.unsplash.com/photo-1655913197692-012897652d13?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+      "xPct": 48.28,
+      "yPct": 36.15
     }
   ],
   "settings": {
