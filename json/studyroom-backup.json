@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-08T02:15:53.869Z",
+  "exportedAt": "2026-11-08T02:32:21.550Z",
   "version": 3,
   "data": {
     "students": [
@@ -4696,6 +4696,13 @@
         "studentId": "stu_muuvk470gwfd",
         "date": "2026-11-06",
         "content": "미입실 / 학부모님 요청 (개인사유 확인. 단, 일정 협의는 하루 전날까지 전달해야함을 학생편으로 규칙 재전달 예정)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mw77vitizyty",
+        "studentId": "stu_mvxa1ckuj8o0",
+        "date": "2026-11-08",
+        "content": "11/8 일요일 등원 (시험 및 과제 정리 목적 11시-17시)",
         "scope": "week"
       }
     ],
