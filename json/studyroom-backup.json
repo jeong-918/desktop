@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-08T02:32:21.550Z",
+  "exportedAt": "2026-11-08T02:33:23.444Z",
   "version": 3,
   "data": {
     "students": [
@@ -1533,6 +1533,10 @@
         },
         "2026-11-07": {
           "status": "중도입실",
+          "time": ""
+        },
+        "2026-11-08": {
+          "status": "입실",
           "time": ""
         }
       },
@@ -4699,10 +4703,10 @@
         "scope": "week"
       },
       {
-        "id": "cn_mw77vitizyty",
+        "id": "cn_mw77wubek456",
         "studentId": "stu_mvxa1ckuj8o0",
-        "date": "2026-11-08",
-        "content": "11/8 일요일 등원 (시험 및 과제 정리 목적 11시-17시)",
+        "date": "2026-11-07",
+        "content": "11/8 일요일 등원 (시험 및 과제 정리 목적 11시-17시 : 합산 주간 참여 시간 12시간)",
         "scope": "week"
       }
     ],
