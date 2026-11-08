@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-08T02:43:10.848Z",
+  "exportedAt": "2026-11-08T02:46:30.676Z",
   "version": 3,
   "data": {
     "students": [
@@ -4879,6 +4879,18 @@
         "end": "18:30",
         "minutes": 105,
         "note": ""
+      },
+      {
+        "id": "log_mw78a438wudz",
+        "studentId": "stu_mvxa0b80pl0k",
+        "date": "2026-11-07",
+        "subject": "영어",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "21:30",
+        "end": "22:00",
+        "minutes": 30,
+        "note": ""
       }
     ],
     "counseling": [
@@ -4971,6 +4983,13 @@
         "studentId": "stu_mvxa1ckuj8o0",
         "date": "2026-11-07",
         "content": "11/8 일요일 등원 (시험 및 과제 정리 목적 11시-17시 : 합산 주간 참여 시간 12시간)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mw78dpz8ooj3",
+        "studentId": "stu_mvxa0b80pl0k",
+        "date": "2026-11-08",
+        "content": "지난주 벌점 2점 (11/7 토요일 오전 지각, 11/8 일요일 오전 지각)이 있습니다. \n이제 한창 시험대비를 시작하는만큼 주말 오전 참여 간 출결에만 조금 더 신경쓰면 좋겠습니다.",
         "scope": "week"
       }
     ],
