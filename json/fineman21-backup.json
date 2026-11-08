@@ -1,6 +1,6 @@
 {
   "app": "fineman2-1",
-  "exportedAt": "2026-11-07T17:38:48.448Z",
+  "exportedAt": "2026-11-08T07:19:50.108Z",
   "version": 5,
   "data": {
     "students": [
@@ -102,7 +102,7 @@
         "followUp": {
           "task": "전공문화학술제 :  중국 호구부 관련 사회적 계층화 제도적 차별 문제에 관해 공존 방법",
           "date": "2026-11-09",
-          "done": false
+          "done": true
         },
         "createdAt": "2026-11-07T16:32:20.577Z"
       },
