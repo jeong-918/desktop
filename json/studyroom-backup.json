@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-08T03:10:02.706Z",
+  "exportedAt": "2026-11-08T03:12:11.305Z",
   "version": 3,
   "data": {
     "students": [
@@ -5213,6 +5213,30 @@
         "eval": "보완필요",
         "start": "10:00",
         "end": "11:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mw798zmtdvx9",
+        "studentId": "stu_mvx9zk6negj6",
+        "date": "2026-11-07",
+        "subject": "사회",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "11:00",
+        "end": "12:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mw79aq7dn6qh",
+        "studentId": "stu_mvx9zk6negj6",
+        "date": "2026-11-07",
+        "subject": "한국사",
+        "type": "복습+문풀",
+        "eval": "학습완료",
+        "start": "13:00",
+        "end": "14:00",
         "minutes": 60,
         "note": ""
       }
