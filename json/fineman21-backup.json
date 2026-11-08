@@ -1,6 +1,6 @@
 {
   "app": "fineman2-1",
-  "exportedAt": "2026-11-08T07:29:36.569Z",
+  "exportedAt": "2026-11-08T18:40:30.402Z",
   "version": 5,
   "data": {
     "students": [
@@ -87,7 +87,7 @@
         "followUp": {
           "task": "중국 문학 입문 : 수행평가 (루쉰의 \"고향\" 소재로 한중문학 큐레이션 프로젝트)",
           "date": "2026-11-09",
-          "done": false
+          "done": true
         },
         "createdAt": "2026-11-07T16:33:19.089Z"
       },
