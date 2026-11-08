@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-08T18:38:12.002Z",
-  "updatedAt": 1794163092002,
+  "exportedAt": "2026-11-08T18:39:19.270Z",
+  "updatedAt": 1794163159270,
   "daily": {
     "categories": [
       {
@@ -336,11 +336,21 @@
         "id": "todo_1793777037143_0ydsv",
         "title": "윤지원 사문 컨텐츠 작성 완료 단계",
         "categoryId": "cat_1792046758202",
-        "date": "2026-11-06",
+        "date": "2026-11-04",
         "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1793777037143
+      },
+      {
+        "id": "todo_1794163156071_noqk9",
+        "title": "박우진 전공문화학술제 본 주제 진행 (경계와 공존 + 상하이 거주민 소재)",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-11-07",
+        "status": "IN_PROGRESS",
+        "memo": "",
+        "time": "",
+        "createdAt": 1794163156071
       }
     ]
   },
