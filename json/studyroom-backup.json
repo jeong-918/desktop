@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-07T13:12:46.247Z",
+  "exportedAt": "2026-11-08T02:15:53.869Z",
   "version": 3,
   "data": {
     "students": [
@@ -4598,6 +4598,18 @@
         "start": "18:00",
         "end": "19:40",
         "minutes": 100,
+        "note": ""
+      },
+      {
+        "id": "log_mw77acj376gi",
+        "studentId": "stu_mvxa1ckuj8o0",
+        "date": "2026-11-07",
+        "subject": "생명",
+        "type": "인강+문풀",
+        "eval": "학습완료",
+        "start": "15:00",
+        "end": "17:00",
+        "minutes": 120,
         "note": ""
       }
     ],
