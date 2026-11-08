@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-08T02:55:50.642Z",
+  "exportedAt": "2026-11-08T02:56:59.565Z",
   "version": 3,
   "data": {
     "students": [
@@ -4998,6 +4998,30 @@
         "start": "19:30",
         "end": "21:00",
         "minutes": 90,
+        "note": ""
+      },
+      {
+        "id": "log_mw78qc7bmaf1",
+        "studentId": "stu_mvxa0yyv2w6o",
+        "date": "2026-11-07",
+        "subject": "기타",
+        "type": "수행평가",
+        "eval": "보완필요",
+        "start": "21:00",
+        "end": "22:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mw78r79yxi7e",
+        "studentId": "stu_mvx9zcrv16m5",
+        "date": "2026-11-07",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "10:00",
+        "end": "12:00",
+        "minutes": 120,
         "note": ""
       }
     ],
