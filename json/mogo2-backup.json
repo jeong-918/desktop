@@ -1,6 +1,6 @@
 {
   "app": "mogo2",
-  "exportedAt": "2026-11-09T08:58:16.423Z",
+  "exportedAt": "2026-11-09T11:02:19.806Z",
   "students": [
     {
       "id": "STU-54319",
@@ -326,6 +326,16 @@
       "examTitle": "테스트 2차",
       "subject": "한국사",
       "score": 50,
+      "memo": ""
+    },
+    {
+      "id": "REC-1794222134186-1",
+      "studentId": "STU-44726",
+      "date": "2026-11-09",
+      "examType": "평가원",
+      "examTitle": "11월 평가원 모의고사",
+      "subject": "수학",
+      "score": 73,
       "memo": ""
     }
   ]
