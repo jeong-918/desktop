@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-09T06:55:31.522Z",
+  "exportedAt": "2026-11-09T16:32:04.024Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -35,8 +35,8 @@
       "url": "https://www.desmos.com/scientific?lang=ko",
       "icon": "🧮",
       "target": "window",
-      "xPct": 7.55,
-      "yPct": 83.38
+      "xPct": 6.97,
+      "yPct": 83.07
     },
     {
       "id": "app-1793265158909",
