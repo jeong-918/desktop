@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-09T05:59:40.466Z",
+  "exportedAt": "2026-11-09T06:01:39.365Z",
   "version": 3,
   "data": {
     "students": [
@@ -1307,6 +1307,10 @@
         },
         "2026-11-07": {
           "status": "입실",
+          "time": ""
+        },
+        "2026-11-08": {
+          "status": "중도입실",
           "time": ""
         }
       },
@@ -5551,6 +5555,13 @@
         "studentId": "stu_mvxa0b80pl0k",
         "date": "2026-11-08",
         "content": "일요일 등원 (시험 대비 간 과목별 복습 목적  / 지각 등원)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mw8usj82qtrd",
+        "studentId": "stu_mvx9zk6negj6",
+        "date": "2026-11-07",
+        "content": "학생요청으로 11/8 일요일 자습관 학습 참여 (교회 마치고 입실 : 1시 30분~2시 사이 / 주간 누적 학습량 16시간)",
         "scope": "week"
       }
     ],
