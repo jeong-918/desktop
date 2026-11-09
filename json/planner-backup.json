@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-08T18:39:19.270Z",
-  "updatedAt": 1794163159270,
+  "exportedAt": "2026-11-08T18:39:56.606Z",
+  "updatedAt": 1794163196606,
   "daily": {
     "categories": [
       {
@@ -346,11 +346,21 @@
         "id": "todo_1794163156071_noqk9",
         "title": "박우진 전공문화학술제 본 주제 진행 (경계와 공존 + 상하이 거주민 소재)",
         "categoryId": "cat_1792046758202",
-        "date": "2026-11-07",
-        "status": "IN_PROGRESS",
+        "date": "2026-11-08",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1794163156071
+      },
+      {
+        "id": "todo_1794163194743_nwtbz",
+        "title": "박우진 중국문학입문 (도록 수행평가 진행) -> 루쉰 X 마오둔",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-11-09",
+        "status": "DONE",
+        "memo": "",
+        "time": "",
+        "createdAt": 1794163194743
       }
     ]
   },
