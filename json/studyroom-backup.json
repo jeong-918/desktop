@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-09T05:58:16.646Z",
+  "exportedAt": "2026-11-09T05:59:40.466Z",
   "version": 3,
   "data": {
     "students": [
@@ -1410,6 +1410,10 @@
           "time": ""
         },
         "2026-11-07": {
+          "status": "지각",
+          "time": ""
+        },
+        "2026-11-08": {
           "status": "지각",
           "time": ""
         }
@@ -5540,6 +5544,13 @@
         "studentId": "stu_mvxa16hosf8g",
         "date": "2026-11-07",
         "content": "11/8 일요일 등원 (시험 대비 간 과목별 복습 목적  / 9시 등원)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mw8uooialrio",
+        "studentId": "stu_mvxa0b80pl0k",
+        "date": "2026-11-08",
+        "content": "일요일 등원 (시험 대비 간 과목별 복습 목적  / 지각 등원)",
         "scope": "week"
       }
     ],
