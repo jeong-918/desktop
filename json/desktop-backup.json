@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-07T07:24:06.292Z",
+  "exportedAt": "2026-11-09T06:55:31.522Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -14,7 +14,7 @@
     {
       "id": "app-1789710282082",
       "name": "5등급제환산",
-      "url": "https://jeong-918.github.io/desktop/app/5to9.html",
+      "url": "https://jeong-918.github.io/ipsi/app/5to9.html",
       "target": "newtab",
       "icon": "⭐",
       "xPct": 7.55,
