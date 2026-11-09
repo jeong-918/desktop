@@ -1,6 +1,6 @@
 {
   "app": "mogo2",
-  "exportedAt": "2026-11-09T08:55:09.828Z",
+  "exportedAt": "2026-11-09T08:58:16.423Z",
   "students": [
     {
       "id": "STU-54319",
@@ -207,5 +207,126 @@
       "comment": "정영주(테스트) 학생 등록 완료 (최초 성적 기준: 2026 10월). 누적 모의고사 대비 성장 추적을 시작합니다."
     }
   ],
-  "scoreRecords": []
+  "scoreRecords": [
+    {
+      "id": "REC-1794214539589-721",
+      "studentId": "STU-44726",
+      "date": "2026-11-09",
+      "examType": "기타",
+      "examTitle": "테스트 입력 ver1",
+      "subject": "국어",
+      "score": 67,
+      "memo": ""
+    },
+    {
+      "id": "REC-1794214539589-908",
+      "studentId": "STU-44726",
+      "date": "2026-11-09",
+      "examType": "기타",
+      "examTitle": "테스트 입력 ver1",
+      "subject": "수학",
+      "score": 44,
+      "memo": ""
+    },
+    {
+      "id": "REC-1794214539589-271",
+      "studentId": "STU-44726",
+      "date": "2026-11-09",
+      "examType": "기타",
+      "examTitle": "테스트 입력 ver1",
+      "subject": "영어",
+      "score": 72,
+      "memo": ""
+    },
+    {
+      "id": "REC-1794214539589-388",
+      "studentId": "STU-44726",
+      "date": "2026-11-09",
+      "examType": "기타",
+      "examTitle": "테스트 입력 ver1",
+      "subject": "통합사회",
+      "score": 20,
+      "memo": ""
+    },
+    {
+      "id": "REC-1794214539589-571",
+      "studentId": "STU-44726",
+      "date": "2026-11-09",
+      "examType": "기타",
+      "examTitle": "테스트 입력 ver1",
+      "subject": "통합과학",
+      "score": 25,
+      "memo": ""
+    },
+    {
+      "id": "REC-1794214539589-961",
+      "studentId": "STU-44726",
+      "date": "2026-11-09",
+      "examType": "기타",
+      "examTitle": "테스트 입력 ver1",
+      "subject": "한국사",
+      "score": 30,
+      "memo": ""
+    },
+    {
+      "id": "REC-1794214691061-764",
+      "studentId": "STU-44726",
+      "date": "2026-11-09",
+      "examType": "사설",
+      "examTitle": "테스트 2차",
+      "subject": "국어",
+      "score": 70,
+      "memo": ""
+    },
+    {
+      "id": "REC-1794214691061-113",
+      "studentId": "STU-44726",
+      "date": "2026-11-09",
+      "examType": "사설",
+      "examTitle": "테스트 2차",
+      "subject": "수학",
+      "score": 75,
+      "memo": ""
+    },
+    {
+      "id": "REC-1794214691061-501",
+      "studentId": "STU-44726",
+      "date": "2026-11-09",
+      "examType": "사설",
+      "examTitle": "테스트 2차",
+      "subject": "영어",
+      "score": 75,
+      "memo": ""
+    },
+    {
+      "id": "REC-1794214691061-514",
+      "studentId": "STU-44726",
+      "date": "2026-11-09",
+      "examType": "사설",
+      "examTitle": "테스트 2차",
+      "subject": "통합사회",
+      "score": 50,
+      "memo": ""
+    },
+    {
+      "id": "REC-1794214691061-935",
+      "studentId": "STU-44726",
+      "date": "2026-11-09",
+      "examType": "사설",
+      "examTitle": "테스트 2차",
+      "subject": "통합과학",
+      "score": 50,
+      "memo": ""
+    },
+    {
+      "id": "REC-1794214691061-431",
+      "studentId": "STU-44726",
+      "date": "2026-11-09",
+      "examType": "사설",
+      "examTitle": "테스트 2차",
+      "subject": "한국사",
+      "score": 50,
+      "memo": ""
+    }
+  ]
 }
