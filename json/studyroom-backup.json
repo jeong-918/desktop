@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-09T05:57:09.105Z",
+  "exportedAt": "2026-11-09T05:58:16.646Z",
   "version": 3,
   "data": {
     "students": [
@@ -5533,6 +5533,13 @@
         "studentId": "stu_mvxa0yyv2w6o",
         "date": "2026-11-07",
         "content": "11/8 일요일 등원 (시험 대비 간 과목별 복습 목적  10시-22시 : 합산 주간 참여 시간 23시간)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mw8uo6sygr0l",
+        "studentId": "stu_mvxa16hosf8g",
+        "date": "2026-11-07",
+        "content": "11/8 일요일 등원 (시험 대비 간 과목별 복습 목적  / 9시 등원)",
         "scope": "week"
       }
     ],
