@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-09T05:55:17.013Z",
+  "exportedAt": "2026-11-09T05:57:09.105Z",
   "version": 3,
   "data": {
     "students": [
@@ -5526,6 +5526,13 @@
         "studentId": "stu_18",
         "date": "2026-11-08",
         "content": "역사/사회 학습 부족을 이유로 국어 수업 마친 후 2시간 안쪽으로 추가 학습 진행할 것을 제안 및 이행",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mw8umqgyhq1p",
+        "studentId": "stu_mvxa0yyv2w6o",
+        "date": "2026-11-07",
+        "content": "11/8 일요일 등원 (시험 대비 간 과목별 복습 목적  10시-22시 : 합산 주간 참여 시간 23시간)",
         "scope": "week"
       }
     ],
