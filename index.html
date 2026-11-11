@@ -179,12 +179,7 @@
       <!-- 좌측: 5대 카테고리 필터 탭 (JS로 동적 렌더링 + 인라인 수정 가능) -->
       <div id="top-category-tabs" class="flex items-center gap-1.5 shrink-0"></div>
 
-      <!-- 우측: 보기 레이아웃 전환 (섹션 전체 나열 vs 선택 카테고리만 크게 보기) & 학습계획허브 바로가기 -->
-      <div class="flex items-center gap-1.5 shrink-0">
-        <button onclick="openStudyHubNewWindow()" class="px-2.5 py-1 rounded-lg bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 text-[11px] font-bold flex items-center gap-1 transition">
-          <i class="fa-solid fa-calendar-check"></i>
-          <span data-ui-text="studyHubQuickBtn">주간 학습계획 실천허브 ↗</span>
-        </button>
+      <!-- 우측: 보기 레이아웃 전환 (섹션 전체 나열 vs 선택 카테고리만 크게 보기) -->
         <div class="flex items-center bg-slate-950 p-0.5 rounded-lg border border-slate-800 text-[11px]">
           <button onclick="setBoardLayout('sections')" id="layout-btn-sections" class="px-2 py-0.5 rounded-md font-bold bg-indigo-600 text-white">전체 섹션뷰</button>
           <button onclick="setBoardLayout('grid')" id="layout-btn-grid" class="px-2 py-0.5 rounded-md font-semibold text-slate-400 hover:text-white">통합 그리드뷰</button>
