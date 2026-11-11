@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-11T14:31:10.654Z",
+  "updatedAt": "2026-11-11T14:46:17.223Z",
   "apps": [
     {
       "id": "m_daol",
       "name": "다올105입시자습관",
       "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
       "icon": "🏫",
-      "desc": "월화목금토",
+      "desc": "월화목금토 학습관리센터 출결, 학습관리, 개별 상담기록, 리포트 등 관리",
       "catId": "cat_work",
       "badge": "다올105",
       "openMode": "newtab",
@@ -18,7 +18,7 @@
       "name": "파인만입시컨설팅",
       "url": "https://jeong-918.github.io/desktop/app/fineman2-1.html",
       "icon": "🏛️",
-      "desc": "월화수목금토+온라인",
+      "desc": "월화수목금토 / 온라인 : 학생들의 학생부관리 과정 누적 기록",
       "catId": "cat_work",
       "badge": "파인만",
       "openMode": "newtab",
@@ -66,7 +66,7 @@
       "name": "등급환산툴",
       "url": "https://jeong-918.github.io/ipsi/app/5to9.html",
       "icon": "⭐",
-      "desc": "5등급제 내신 성적을 슬라이더로 입력하면 9등급제 변환 및 2026 대학 입결 리스트업",
+      "desc": "5등급제 내신 등급을 슬라이더를 통해 9등급제 변환 및 2026 대학 입결 리스트업",
       "catId": "cat_ipsi",
       "badge": "5→9등급 변환",
       "openMode": "newtab",
@@ -78,7 +78,7 @@
       "name": "2028대입설계",
       "url": "https://jeong-918.github.io/ipsi/2028check/28diagnose.html",
       "icon": "🧭",
-      "desc": "고2~3 대상 내신 슬라이더 기반 입시 방향성 진단, 목표내신 역산 및 61개교 세부 DB",
+      "desc": "고3 대상 내신 슬라이더 기반 입시 방향성 진단, 목표내신 역산 및 61개교 세부 DB",
       "catId": "cat_ipsi",
       "badge": "수시6장·역산",
       "openMode": "newtab",
@@ -234,7 +234,7 @@
       "name": "학습계획설계",
       "url": "https://jeong-918.github.io/desktop/app/studyplanhub.html",
       "icon": "🚀",
-      "desc": "사용자 설정 메뉴",
+      "desc": "시간표 기반 학습계획 설계 및 이행여부 관리",
       "catId": "cat_ipsi",
       "badge": "Studyplan",
       "openMode": "newtab",
@@ -250,7 +250,7 @@
     "uiTexts": {
       "sidebarToggleBtn": "실무 툴박스",
       "appMainTitle": "영주님 업무 런처",
-      "appSubBadge": "퇴근하고싶다. 놀고싶다. 이래도 되나 싶을정도로 놀고 싶다.",
+      "appSubBadge": "편하게 살려고 만든건데, 그것보다 퇴근하고싶다. 놀고싶다. 이래도 되나 싶을 정도로 듸지게 놀고 싶다.",
       "briefingToggleLabel": "투데이 브리핑 펼치기",
       "catMgrBtnLabel": "카테고리 관리",
       "addMenuBtnLabel": "메뉴·링크 등록",
@@ -322,7 +322,7 @@
         "icon": "🏫",
         "badge": "다올105",
         "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
-        "desc": "월화목금토"
+        "desc": "월화목금토 학습관리센터 출결, 학습관리, 개별 상담기록, 리포트 등 관리"
       },
       {
         "id": "m_fineman",
@@ -331,7 +331,7 @@
         "icon": "🏛️",
         "badge": "파인만",
         "url": "https://jeong-918.github.io/desktop/app/fineman2-1.html",
-        "desc": "월화수목금토+온라인"
+        "desc": "월화수목금토 / 온라인 : 학생들의 학생부관리 과정 누적 기록"
       },
       {
         "id": "m_gdrive",
@@ -367,7 +367,7 @@
         "icon": "⭐",
         "badge": "5→9등급 변환",
         "url": "https://jeong-918.github.io/ipsi/app/5to9.html",
-        "desc": "5등급제 내신 성적을 슬라이더로 입력하면 9등급제 변환 및 2026 대학 입결 리스트업"
+        "desc": "5등급제 내신 등급을 슬라이더를 통해 9등급제 변환 및 2026 대학 입결 리스트업"
       },
       {
         "id": "m_2028",
@@ -376,7 +376,7 @@
         "icon": "🧭",
         "badge": "수시6장·역산",
         "url": "https://jeong-918.github.io/ipsi/2028check/28diagnose.html",
-        "desc": "고2~3 대상 내신 슬라이더 기반 입시 방향성 진단, 목표내신 역산 및 61개교 세부 DB"
+        "desc": "고3 대상 내신 슬라이더 기반 입시 방향성 진단, 목표내신 역산 및 61개교 세부 DB"
       },
       {
         "id": "m_docuev",
@@ -493,7 +493,7 @@
         "icon": "🚀",
         "badge": "Studyplan",
         "url": "https://jeong-918.github.io/desktop/app/studyplanhub.html",
-        "desc": "사용자 설정 메뉴"
+        "desc": "시간표 기반 학습계획 설계 및 이행여부 관리"
       }
     ]
   }
