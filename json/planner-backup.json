@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-08T18:39:56.606Z",
-  "updatedAt": 1794163196606,
+  "exportedAt": "2026-11-11T01:48:19.399Z",
+  "updatedAt": 1794361699399,
   "daily": {
     "categories": [
       {
@@ -361,6 +361,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1794163194743
+      },
+      {
+        "id": "todo_1794361697105_c5awz",
+        "title": "윤지원 사문 컨텐츠 보내기",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-11-07",
+        "status": "DONE",
+        "memo": "",
+        "time": "",
+        "createdAt": 1794361697105
       }
     ]
   },
