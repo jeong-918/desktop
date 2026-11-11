@@ -1,231 +1,500 @@
 {
-  "version": "1.0",
-  "exportedAt": "2026-11-11T01:01:57.383Z",
+  "updatedAt": "2026-11-11T12:26:11.793Z",
   "apps": [
     {
-      "id": "app-1792745646001",
-      "name": "[모두] 28대입분석",
-      "url": "https://power-2028-admission-atlas.pages.dev/",
-      "target": "newtab",
-      "icon": "https://plus.unsplash.com/premium_photo-1792661405792-d2117e75e472?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 7.55,
-      "yPct": 53.95
+      "id": "m_daol",
+      "name": "다올105입시자습관",
+      "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
+      "icon": "🏫",
+      "desc": "월화목금토",
+      "catId": "cat_work",
+      "badge": "다올105",
+      "openMode": "newtab",
+      "xPct": 4,
+      "yPct": 5
     },
     {
-      "id": "app-1789710282082",
-      "name": "5등급제환산",
-      "url": "https://jeong-918.github.io/ipsi/app/5to9.html",
-      "target": "newtab",
-      "icon": "⭐",
-      "xPct": 7.55,
-      "yPct": 1.63
+      "id": "m_fineman",
+      "name": "파인만입시컨설팅",
+      "url": "https://jeong-918.github.io/desktop/app/fineman2-1.html",
+      "icon": "🏛️",
+      "desc": "월화수목금토+온라인",
+      "catId": "cat_work",
+      "badge": "파인만",
+      "openMode": "newtab",
+      "xPct": 19,
+      "yPct": 5
     },
     {
-      "id": "app-1792750973122",
-      "name": "[강남]고교편제",
-      "url": "https://dh.mirae-academy.co.kr/custom-page/260721/dh-spqb",
-      "target": "newtab",
-      "icon": "https://images.unsplash.com/photo-1775142967376-fbe93099b6a0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 14.32,
-      "yPct": 53.95
+      "id": "m_gdrive",
+      "name": "구글드라이브",
+      "url": "https://drive.google.com/drive/u/0/home",
+      "icon": "📂",
+      "desc": "학원 운영 및 학생 관리 통합 구글 드라이브 / 스프레드시트 허브",
+      "catId": "cat_work",
+      "badge": "둘다 관리",
+      "openMode": "newtab",
+      "xPct": 34,
+      "yPct": 5
     },
     {
-      "id": "app-2",
-      "name": "계산기",
-      "url": "https://www.desmos.com/scientific?lang=ko",
-      "icon": "🧮",
-      "target": "window",
-      "xPct": 6.97,
-      "yPct": 83.07
+      "id": "m_todo",
+      "name": "TO-DO",
+      "url": "https://jeong-918.github.io/desktop/app/planner.html",
+      "icon": "✅",
+      "desc": "하루 일정(Daily 보드) 및 학생·학부모·교사 상대방별 이행 기록(Action 보드) 관리",
+      "catId": "cat_personal",
+      "badge": "개인 일정·이행",
+      "openMode": "newtab",
+      "xPct": 49,
+      "yPct": 5
     },
     {
-      "id": "app-1793265158909",
-      "name": "[옆반] 교사업무지원",
-      "url": "https://yeopban.kr/#sharing",
-      "target": "newtab",
-      "icon": "🌐",
-      "xPct": 14.32,
-      "yPct": 83.38
-    },
-    {
-      "id": "app-1791885784710",
-      "name": "[모두]교과탐구",
-      "url": "https://script.google.com/macros/s/AKfycbxvrCiB6_fc2A3QkXMHrCv4gX8twpLqJY8y2GmdFYLusGnwIIORSs9JNf_PWAJax54lFw/exec",
-      "target": "newtab",
-      "icon": "https://plus.unsplash.com/premium_photo-1661311950994-d263ea9681a1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 0.78,
-      "yPct": 36.51
-    },
-    {
-      "id": "app-1791885806756",
-      "name": "[모두] 탐구-기사검색",
-      "url": "https://script.google.com/macros/s/AKfycbzIa3I98g3cQ-HN1xa7HmvvMNzwTUM_G-3JeekRg4OjuzyD4f1CQKKDHgvcKqfbtb_Bdw/exec",
-      "target": "newtab",
-      "icon": "https://images.unsplash.com/photo-1727648764473-21eef54cb24d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 7.55,
-      "yPct": 36.51
-    },
-    {
-      "id": "app-4",
+      "id": "m_neis",
       "name": "글자수체크",
       "url": "https://hjh010501.github.io/neis-counter/",
+      "icon": "✍️",
+      "desc": "학교생활기록부 세특·행특·자율·진로 영역 글자수 및 NEIS 바이트 계산기",
+      "catId": "cat_personal",
+      "badge": "NEIS 바이트",
+      "openMode": "newtab",
+      "xPct": 64,
+      "yPct": 5
+    },
+    {
+      "id": "m_5to9",
+      "name": "등급환산툴",
+      "url": "https://jeong-918.github.io/ipsi/app/5to9.html",
       "icon": "⭐",
-      "target": "window",
-      "xPct": 0.78,
-      "yPct": 1.63
+      "desc": "5등급제 내신 성적을 슬라이더로 입력하면 9등급제 변환 및 2026 대학 입결 리스트업",
+      "catId": "cat_ipsi",
+      "badge": "5→9등급 변환",
+      "openMode": "newtab",
+      "xPct": 79,
+      "yPct": 5
     },
     {
-      "id": "app-1793265195604",
-      "name": "[다올]대시보드",
-      "url": "https://jayu0422-blip.github.io/daol-timetable/admin.html",
-      "target": "newtab",
-      "icon": "🧮",
-      "xPct": 0.78,
-      "yPct": 83.38
+      "id": "m_2028",
+      "name": "2028대입설계",
+      "url": "https://jeong-918.github.io/ipsi/2028check/28diagnose.html",
+      "icon": "🧭",
+      "desc": "고2~3 대상 내신 슬라이더 기반 입시 방향성 진단, 목표내신 역산 및 61개교 세부 DB",
+      "catId": "cat_ipsi",
+      "badge": "수시6장·역산",
+      "openMode": "newtab",
+      "xPct": 4,
+      "yPct": 23
     },
     {
-      "id": "app-1789725098714",
-      "name": "[모교] 학교정보",
-      "url": "https://mogyo.kr/",
-      "target": "newtab",
-      "icon": "🌐",
-      "xPct": 14.32,
-      "yPct": 1.63
-    },
-    {
-      "id": "app-1793706368626",
-      "name": "Web Work_모고",
-      "url": "https://jeong-918.github.io/desktop/app/mogo.html",
-      "target": "newtab",
-      "icon": "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 0.78,
-      "yPct": 71.39
-    },
-    {
-      "id": "app-1789982418218",
-      "name": "Work_자습관",
-      "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
-      "target": "newtab",
-      "icon": "https://images.unsplash.com/photo-1610050731641-f855ccdaf3f6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 8.21,
-      "yPct": 17.97
-    },
-    {
-      "id": "app-1793720974712",
-      "name": "Web Work_탐구설계 스튜디오",
-      "url": "https://jeong-918.github.io/explan/index.html",
-      "target": "newtab",
-      "icon": "https://images.unsplash.com/photo-1682685795463-0674c065f315?q=80&w=1026&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 14.32,
-      "yPct": 36.51
-    },
-    {
-      "id": "app-1791878483202",
-      "name": "[모두] 과목설계",
-      "url": "https://geoguymin.github.io/Design-of-Curriculam/",
-      "target": "newtab",
-      "icon": "https://plus.unsplash.com/premium_photo-1706191097326-cd317671d1fb?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 0.78,
-      "yPct": 53.95
-    },
-    {
-      "id": "app-1792138990794",
-      "name": "Web Work_Todo",
-      "url": "https://jeong-918.github.io/desktop/app/planner.html",
-      "target": "newtab",
-      "icon": "https://images.unsplash.com/photo-1712000155290-ee65c0a82eda?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 21.09,
-      "yPct": 19.07
-    },
-    {
-      "id": "app-1791447467073",
-      "name": "Work_파인만",
-      "url": "https://jeong-918.github.io/desktop/app/fineman2-1.html",
-      "target": "newtab",
-      "icon": "https://images.unsplash.com/photo-1781246435700-afec19012b45?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 14.32,
-      "yPct": 19.07
-    },
-    {
-      "id": "app-1789710337914",
-      "name": "[파인만] 26-2",
-      "url": "https://docs.google.com/spreadsheets/d/1EX73Oq9iVTGMll7SY2ZJbQaoG7ATY5ifB7GdyLBER_0/edit?usp=drive_web&ouid=103047718856130833554",
-      "target": "newtab",
-      "icon": "🌐",
-      "xPct": 27.86,
-      "yPct": 1.63
-    },
-    {
-      "id": "app-1789710318170",
-      "name": "[다올] 드라이브 허브",
-      "url": "https://docs.google.com/spreadsheets/d/1VfebRB5vLlV-Ni7RT9cp8xWSwVL543DQOuJlzn-uZD4/edit?gid=15478959#gid=15478959",
-      "target": "newtab",
-      "icon": "🌐",
-      "xPct": 21.09,
-      "yPct": 1.63
-    },
-    {
-      "id": "app-1789711180543",
-      "name": "[다올]시스템",
-      "url": "https://system.daol105.co.kr",
-      "target": "newtab",
-      "icon": "🌐",
-      "xPct": 0.78,
-      "yPct": 19.07
-    },
-    {
-      "id": "app-1793721258238",
-      "name": "Web Work_세특진단평가",
+      "id": "m_docuev",
+      "name": "학생부세특진단",
       "url": "https://jeong-918.github.io/docu-ev/",
-      "target": "newtab",
-      "icon": "https://plus.unsplash.com/premium_photo-1682309504951-43bae484e04d?q=80&w=1567&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 21.09,
-      "yPct": 36.51
+      "icon": "📑",
+      "desc": "학교생활기록부 세부능력 및 특기사항 기록 수준 정밀 진단 및 피드백 도구",
+      "catId": "cat_ipsi",
+      "badge": "세특 평가",
+      "openMode": "newtab",
+      "xPct": 19,
+      "yPct": 23
     },
     {
-      "id": "app-1793865315794",
+      "id": "m_explan",
+      "name": "탐구설계스튜디오",
+      "url": "https://jeong-918.github.io/explan/index.html",
+      "icon": "🧪",
+      "desc": "학생 맞춤형 심화 탐구 주제 발굴 및 단계별 탐구 보고서 설계 스튜디오",
+      "catId": "cat_ipsi",
+      "badge": "탐구 구조화",
+      "openMode": "newtab",
+      "xPct": 34,
+      "yPct": 23
+    },
+    {
+      "id": "m_mogo",
+      "name": "모의고사관리센터",
+      "url": "https://jeong-918.github.io/desktop/app/mogo.html",
+      "icon": "📊",
+      "desc": "국·수·영·탐·한국사 모의고사 성적 입력, 초기 기준점 대비 성장폭 및 레이더 분석",
+      "catId": "cat_ipsi",
+      "badge": "EduMetrics",
+      "openMode": "newtab",
+      "xPct": 49,
+      "yPct": 23
+    },
+    {
+      "id": "m_tamgu1",
       "name": "그들의탐구",
       "url": "https://jeong-918.github.io/ipsi/explorer/tamgu1.html",
-      "target": "newtab",
-      "icon": "https://images.unsplash.com/photo-1776057441344-38e0587ad1e6?q=80&w=1339&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 34.64,
-      "yPct": 36.51
+      "icon": "📘",
+      "desc": "합격생 및 우수 심화 탐구 주제 레퍼런스 탐색 프로그램",
+      "catId": "cat_ext1",
+      "badge": "우수 탐구사례",
+      "openMode": "newtab",
+      "xPct": 64,
+      "yPct": 23
     },
     {
-      "id": "app-1793865382025",
+      "id": "m_tamgu2",
       "name": "탐구질문생성",
       "url": "https://jeong-918.github.io/ipsi/explorer/tamgu2.html",
-      "target": "newtab",
-      "icon": "https://plus.unsplash.com/premium_photo-1678216286021-e81f66761751?q=80&w=1223&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 27.86,
-      "yPct": 36.51
+      "icon": "💡",
+      "desc": "교과 단원 및 희망 전공 키워드 기반 맞춤형 심화 탐구 질문 생성기",
+      "catId": "cat_ext1",
+      "badge": "질문 빌더",
+      "openMode": "newtab",
+      "xPct": 79,
+      "yPct": 23
     },
     {
-      "id": "app-1793866372386",
+      "id": "m_yeokryang",
       "name": "핵심역량강화",
       "url": "https://jeong-918.github.io/ipsi/explorer/yeokryang1.html",
-      "target": "newtab",
-      "icon": "https://images.unsplash.com/photo-1776057441567-ac16f7b9dd6f?q=80&w=1339&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 41.41,
-      "yPct": 36.51
+      "icon": "⚡",
+      "desc": "학업역량·진로역량·공동체역량 핵심 평가 요소 점검 및 강화 솔루션",
+      "catId": "cat_ext1",
+      "badge": "학생부 역량",
+      "openMode": "newtab",
+      "xPct": 4,
+      "yPct": 41
     },
     {
-      "id": "app-1794035788165",
-      "name": "2028입시진단",
-      "url": "https://jeong-918.github.io/ipsi/2028check/28diagnose.html",
-      "target": "newtab",
-      "icon": "https://images.unsplash.com/photo-1655913197692-012897652d13?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 48.28,
-      "yPct": 36.15
+      "id": "m_gyogwa",
+      "name": "모두의교과기반탐구",
+      "url": "https://script.google.com/macros/s/AKfycbxvrCiB6_fc2A3QkXMHrCv4gX8twpLqJY8y2GmdFYLusGnwIIORSs9JNf_PWAJax54lFw/exec",
+      "icon": "🔍",
+      "desc": "과목별·단원별 연계 심화 탐구 주제 탐색 웹 애플리케이션",
+      "catId": "cat_ext2",
+      "badge": "교과연계 앱",
+      "openMode": "newtab",
+      "xPct": 19,
+      "yPct": 41
+    },
+    {
+      "id": "m_news",
+      "name": "모두의기사검색",
+      "url": "https://script.google.com/macros/s/AKfycbzIa3I98g3cQ-HN1xa7HmvvMNzwTUM_G-3JeekRg4OjuzyD4f1CQKKDHgvcKqfbtb_Bdw/exec",
+      "icon": "📰",
+      "desc": "탐구 보고서 및 세특 작성용 맞춤형 최신 기사 검색 도구",
+      "catId": "cat_ext2",
+      "badge": "시사·학술기사",
+      "openMode": "newtab",
+      "xPct": 34,
+      "yPct": 41
+    },
+    {
+      "id": "m_curri",
+      "name": "모두의과목설계",
+      "url": "https://geoguymin.github.io/Design-of-Curriculam/",
+      "icon": "📐",
+      "desc": "고교학점제 대비 전공 계열별 권장 선택과목 설계 시스템",
+      "catId": "cat_ext2",
+      "badge": "선택과목 가이드",
+      "openMode": "newtab",
+      "xPct": 49,
+      "yPct": 41
+    },
+    {
+      "id": "m_atlas",
+      "name": "2028대입아틀라스",
+      "url": "https://power-2028-admission-atlas.pages.dev/",
+      "icon": "🗺️",
+      "desc": "2028학년도 대학입학전형 시행계획 및 대학별 전형 변화 종합 분석",
+      "catId": "cat_ext2",
+      "badge": "2028 전형분석",
+      "openMode": "newtab",
+      "xPct": 64,
+      "yPct": 41
+    },
+    {
+      "id": "m_gangnam",
+      "name": "강남권고교편제",
+      "url": "https://dh.mirae-academy.co.kr/custom-page/260721/dh-spqb",
+      "icon": "🏫",
+      "desc": "주요 고등학교 교육과정 편제표 및 진학 데이터 종합 분석",
+      "catId": "cat_ext2",
+      "badge": "고교 교육과정",
+      "openMode": "newtab",
+      "xPct": 79,
+      "yPct": 41
+    },
+    {
+      "id": "m_yeopban",
+      "name": "옆반",
+      "url": "https://yeopban.kr/#sharing",
+      "icon": "🤝",
+      "desc": "교사 업무 지원 및 교육 자료 공유 커뮤니티 포털",
+      "catId": "cat_ext2",
+      "badge": "교업무지원",
+      "openMode": "newtab",
+      "xPct": 4,
+      "yPct": 59
+    },
+    {
+      "id": "m_1794361905929",
+      "name": "학습계획설계",
+      "url": "https://jeong-918.github.io/desktop/app/studyplanhub.html",
+      "icon": "🚀",
+      "desc": "사용자 설정 메뉴",
+      "catId": "cat_ipsi",
+      "badge": "Studyplan",
+      "openMode": "newtab",
+      "xPct": 19,
+      "yPct": 59
     }
   ],
-  "settings": {
-    "bgColor": "#1e293b",
-    "overlayColor": "#0f172a",
-    "bgOpacity": 0.2,
-    "bgBlur": "39",
-    "bgImage": "https://images.unsplash.com/photo-1422207134147-65fb81f59e38?q=80&w=1064&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-    "themePreset": "slate",
-    "snapOnDrop": false
+  "eduosConfigV4": {
+    "boardLayout": "sections",
+    "activeCategoryId": "ALL",
+    "briefingOpen": false,
+    "sidebarOpen": false,
+    "uiTexts": {
+      "sidebarToggleBtn": "실무 툴박스",
+      "appMainTitle": "영주님 업무 런처",
+      "appSubBadge": "퇴근하고싶다. 놀고싶다. 이래도 되나 싶을정도로 놀고 싶다.",
+      "briefingToggleLabel": "투데이 브리핑 펼치기",
+      "catMgrBtnLabel": "카테고리 관리",
+      "addMenuBtnLabel": "메뉴·링크 등록",
+      "syncBtnLabel": "동기화",
+      "studyHubQuickBtn": "학습 계획 설계 허브↗",
+      "briefPanelHeader": "오늘의 실시간 연동 브리핑 (동일 도메인 localStorage & JSON 백업 요약)",
+      "briefCard1Title": "다올105입시자습관 현황",
+      "briefCard1Sub": "studyroom-backup.json 연동",
+      "briefCard2Title": "파인만입시컨설팅 현황",
+      "briefCard2Sub": "fineman21-backup.json 연동",
+      "briefCard3Title": "개인 TO-DO & 이행기록",
+      "briefCard3Sub": "planner-backup.json 연동",
+      "briefCard4Title": "주간 학습계획 실천허브",
+      "briefCard4Sub": "주간 시간표 O/△/X & 일요보충",
+      "sidebarMainTitle": "선생님 실무 보조 툴박스",
+      "sidebarSubDesc": "상단 런처 메뉴와 겹치지 않는 상담·세특 작성용 즉석 계산/메모 도구함입니다.",
+      "toolNeisTitle": "NEIS 글자수·바이트 즉석 체크",
+      "toolNeisLbl1": "공백포함",
+      "toolNeisLbl2": "공백제외",
+      "toolNeisLbl3": "NEIS 바이트",
+      "toolConvTitle": "5등급 → 9등급 즉석 간이환산",
+      "toolMemoTitle": "상담 퀵 메모장 (자동저장)",
+      "toolMemoSub": "로컬/백업 연동",
+      "footerLeftNote": "💡 팁: 모든 메뉴 카드는 클릭 시 화면이 작아지지 않도록 새 브라우저 탭(풀스크린)으로 즉시 열립니다.",
+      "footerRightNote": "우측 상단 [전체 편집모드] 또는 각 카드의 [✏️] 버튼을 눌러 언제든 링크 주소와 명칭을 변경하세요."
+    },
+    "categories": [
+      {
+        "id": "cat_work",
+        "name": "출근 업무",
+        "icon": "💼",
+        "color": "blue",
+        "desc": "학원별 학생 관리 센터 및 통합 드라이브 허브"
+      },
+      {
+        "id": "cat_personal",
+        "name": "개인 도구",
+        "icon": "📌",
+        "color": "amber",
+        "desc": "선생님 개인 일정(TO-DO) 및 글자수/바이트 점검 도구"
+      },
+      {
+        "id": "cat_ipsi",
+        "name": "입시 도구",
+        "icon": "🧭",
+        "color": "indigo",
+        "desc": "등급환산, 2028 대입설계, 세특진단, 탐구설계, 모의고사 및 주간 실천 허브"
+      },
+      {
+        "id": "cat_ext1",
+        "name": "외부입시도구1",
+        "icon": "🔬",
+        "color": "purple",
+        "desc": "그들의탐구, 탐구질문생성, 핵심역량강화 시리즈"
+      },
+      {
+        "id": "cat_ext2",
+        "name": "외부입시도구2 (링크)",
+        "icon": "🌐",
+        "color": "emerald",
+        "desc": "교과탐구, 기사검색, 과목설계, 2028 아틀라스, 고교편제, 옆반 외부 연동 링크"
+      }
+    ],
+    "items": [
+      {
+        "id": "m_daol",
+        "catId": "cat_work",
+        "name": "다올105입시자습관",
+        "icon": "🏫",
+        "badge": "다올105",
+        "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
+        "desc": "월화목금토"
+      },
+      {
+        "id": "m_fineman",
+        "catId": "cat_work",
+        "name": "파인만입시컨설팅",
+        "icon": "🏛️",
+        "badge": "파인만",
+        "url": "https://jeong-918.github.io/desktop/app/fineman2-1.html",
+        "desc": "월화수목금토+온라인"
+      },
+      {
+        "id": "m_gdrive",
+        "catId": "cat_work",
+        "name": "구글드라이브",
+        "icon": "📂",
+        "badge": "둘다 관리",
+        "url": "https://drive.google.com/drive/u/0/home",
+        "desc": "학원 운영 및 학생 관리 통합 구글 드라이브 / 스프레드시트 허브"
+      },
+      {
+        "id": "m_todo",
+        "catId": "cat_personal",
+        "name": "TO-DO",
+        "icon": "✅",
+        "badge": "개인 일정·이행",
+        "url": "https://jeong-918.github.io/desktop/app/planner.html",
+        "desc": "하루 일정(Daily 보드) 및 학생·학부모·교사 상대방별 이행 기록(Action 보드) 관리"
+      },
+      {
+        "id": "m_neis",
+        "catId": "cat_personal",
+        "name": "글자수체크",
+        "icon": "✍️",
+        "badge": "NEIS 바이트",
+        "url": "https://hjh010501.github.io/neis-counter/",
+        "desc": "학교생활기록부 세특·행특·자율·진로 영역 글자수 및 NEIS 바이트 계산기"
+      },
+      {
+        "id": "m_5to9",
+        "catId": "cat_ipsi",
+        "name": "등급환산툴",
+        "icon": "⭐",
+        "badge": "5→9등급 변환",
+        "url": "https://jeong-918.github.io/ipsi/app/5to9.html",
+        "desc": "5등급제 내신 성적을 슬라이더로 입력하면 9등급제 변환 및 2026 대학 입결 리스트업"
+      },
+      {
+        "id": "m_2028",
+        "catId": "cat_ipsi",
+        "name": "2028대입설계",
+        "icon": "🧭",
+        "badge": "수시6장·역산",
+        "url": "https://jeong-918.github.io/ipsi/2028check/28diagnose.html",
+        "desc": "고2~3 대상 내신 슬라이더 기반 입시 방향성 진단, 목표내신 역산 및 61개교 세부 DB"
+      },
+      {
+        "id": "m_docuev",
+        "catId": "cat_ipsi",
+        "name": "학생부세특진단",
+        "icon": "📑",
+        "badge": "세특 평가",
+        "url": "https://jeong-918.github.io/docu-ev/",
+        "desc": "학교생활기록부 세부능력 및 특기사항 기록 수준 정밀 진단 및 피드백 도구"
+      },
+      {
+        "id": "m_explan",
+        "catId": "cat_ipsi",
+        "name": "탐구설계스튜디오",
+        "icon": "🧪",
+        "badge": "탐구 구조화",
+        "url": "https://jeong-918.github.io/explan/index.html",
+        "desc": "학생 맞춤형 심화 탐구 주제 발굴 및 단계별 탐구 보고서 설계 스튜디오"
+      },
+      {
+        "id": "m_mogo",
+        "catId": "cat_ipsi",
+        "name": "모의고사관리센터",
+        "icon": "📊",
+        "badge": "EduMetrics",
+        "url": "https://jeong-918.github.io/desktop/app/mogo.html",
+        "desc": "국·수·영·탐·한국사 모의고사 성적 입력, 초기 기준점 대비 성장폭 및 레이더 분석"
+      },
+      {
+        "id": "m_tamgu1",
+        "catId": "cat_ext1",
+        "name": "그들의탐구",
+        "icon": "📘",
+        "badge": "우수 탐구사례",
+        "url": "https://jeong-918.github.io/ipsi/explorer/tamgu1.html",
+        "desc": "합격생 및 우수 심화 탐구 주제 레퍼런스 탐색 프로그램"
+      },
+      {
+        "id": "m_tamgu2",
+        "catId": "cat_ext1",
+        "name": "탐구질문생성",
+        "icon": "💡",
+        "badge": "질문 빌더",
+        "url": "https://jeong-918.github.io/ipsi/explorer/tamgu2.html",
+        "desc": "교과 단원 및 희망 전공 키워드 기반 맞춤형 심화 탐구 질문 생성기"
+      },
+      {
+        "id": "m_yeokryang",
+        "catId": "cat_ext1",
+        "name": "핵심역량강화",
+        "icon": "⚡",
+        "badge": "학생부 역량",
+        "url": "https://jeong-918.github.io/ipsi/explorer/yeokryang1.html",
+        "desc": "학업역량·진로역량·공동체역량 핵심 평가 요소 점검 및 강화 솔루션"
+      },
+      {
+        "id": "m_gyogwa",
+        "catId": "cat_ext2",
+        "name": "모두의교과기반탐구",
+        "icon": "🔍",
+        "badge": "교과연계 앱",
+        "url": "https://script.google.com/macros/s/AKfycbxvrCiB6_fc2A3QkXMHrCv4gX8twpLqJY8y2GmdFYLusGnwIIORSs9JNf_PWAJax54lFw/exec",
+        "desc": "과목별·단원별 연계 심화 탐구 주제 탐색 웹 애플리케이션"
+      },
+      {
+        "id": "m_news",
+        "catId": "cat_ext2",
+        "name": "모두의기사검색",
+        "icon": "📰",
+        "badge": "시사·학술기사",
+        "url": "https://script.google.com/macros/s/AKfycbzIa3I98g3cQ-HN1xa7HmvvMNzwTUM_G-3JeekRg4OjuzyD4f1CQKKDHgvcKqfbtb_Bdw/exec",
+        "desc": "탐구 보고서 및 세특 작성용 맞춤형 최신 기사 검색 도구"
+      },
+      {
+        "id": "m_curri",
+        "catId": "cat_ext2",
+        "name": "모두의과목설계",
+        "icon": "📐",
+        "badge": "선택과목 가이드",
+        "url": "https://geoguymin.github.io/Design-of-Curriculam/",
+        "desc": "고교학점제 대비 전공 계열별 권장 선택과목 설계 시스템"
+      },
+      {
+        "id": "m_atlas",
+        "catId": "cat_ext2",
+        "name": "2028대입아틀라스",
+        "icon": "🗺️",
+        "badge": "2028 전형분석",
+        "url": "https://power-2028-admission-atlas.pages.dev/",
+        "desc": "2028학년도 대학입학전형 시행계획 및 대학별 전형 변화 종합 분석"
+      },
+      {
+        "id": "m_gangnam",
+        "catId": "cat_ext2",
+        "name": "강남권고교편제",
+        "icon": "🏫",
+        "badge": "고교 교육과정",
+        "url": "https://dh.mirae-academy.co.kr/custom-page/260721/dh-spqb",
+        "desc": "주요 고등학교 교육과정 편제표 및 진학 데이터 종합 분석"
+      },
+      {
+        "id": "m_yeopban",
+        "catId": "cat_ext2",
+        "name": "옆반",
+        "icon": "🤝",
+        "badge": "교업무지원",
+        "url": "https://yeopban.kr/#sharing",
+        "desc": "교사 업무 지원 및 교육 자료 공유 커뮤니티 포털"
+      },
+      {
+        "id": "m_1794361905929",
+        "catId": "cat_ipsi",
+        "name": "학습계획설계",
+        "icon": "🚀",
+        "badge": "Studyplan",
+        "url": "https://jeong-918.github.io/desktop/app/studyplanhub.html",
+        "desc": "사용자 설정 메뉴"
+      }
+    ]
   }
 }
