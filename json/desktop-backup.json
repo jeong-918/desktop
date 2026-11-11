@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "exportedAt": "2026-11-10T14:16:49.961Z",
+  "exportedAt": "2026-11-11T01:01:57.383Z",
   "apps": [
     {
       "id": "app-1792745646001",
@@ -107,8 +107,8 @@
       "url": "https://jeong-918.github.io/desktop/app/studyroom.html",
       "target": "newtab",
       "icon": "https://images.unsplash.com/photo-1610050731641-f855ccdaf3f6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-      "xPct": 7.55,
-      "yPct": 19.07
+      "xPct": 8.21,
+      "yPct": 17.97
     },
     {
       "id": "app-1793720974712",
