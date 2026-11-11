@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-11T01:48:19.399Z",
-  "updatedAt": 1794361699399,
+  "exportedAt": "2026-11-11T14:31:33.986Z",
+  "updatedAt": 1794407493986,
   "daily": {
     "categories": [
       {
@@ -371,6 +371,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1794361697105
+      },
+      {
+        "id": "todo_1794407493986_n21c8",
+        "title": "인아_화법과언어 수행평가 체크",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-11-12",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1794407493986
       }
     ]
   },
