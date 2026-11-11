@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T12:27:16.339Z",
+  "updatedAt": "2026-11-11T14:31:10.654Z",
   "apps": [
     {
       "id": "m_daol",
@@ -255,7 +255,7 @@
       "catMgrBtnLabel": "카테고리 관리",
       "addMenuBtnLabel": "메뉴·링크 등록",
       "syncBtnLabel": "동기화",
-      "studyHubQuickBtn": "학습 계획 설계 허브↗",
+      "studyHubQuickBtn": "학습브↗",
       "briefPanelHeader": "오늘의 실시간 연동 브리핑 (동일 도메인 localStorage & JSON 백업 요약)",
       "briefCard1Title": "다올105입시자습관 현황",
       "briefCard1Sub": "studyroom-backup.json 연동",
