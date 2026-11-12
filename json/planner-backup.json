@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-12T06:11:37.819Z",
-  "updatedAt": 1794463897819,
+  "exportedAt": "2026-11-12T10:56:38.423Z",
+  "updatedAt": 1794480998423,
   "daily": {
     "categories": [
       {
@@ -387,10 +387,30 @@
         "title": "인아_세계문화와 영어 수행평가 체크",
         "categoryId": "cat_1792046758202",
         "date": "2026-11-12",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1794407508370
+      },
+      {
+        "id": "todo_1794463925961_y1kgp",
+        "title": "인아_역사 수행평가 체크 내용 마무리",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-11-14",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1794463925961
+      },
+      {
+        "id": "todo_1794463940704_exhcd",
+        "title": "인아_진로 진로연계 발표 가이드라인",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-11-14",
+        "status": "DONE",
+        "memo": "",
+        "time": "",
+        "createdAt": 1794463940704
       }
     ]
   },
