@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-12T06:00:25.590Z",
+  "exportedAt": "2026-11-12T06:01:39.370Z",
   "version": 3,
   "data": {
     "students": [
@@ -5874,6 +5874,30 @@
         "start": "18:00",
         "end": "19:50",
         "minutes": 110,
+        "note": ""
+      },
+      {
+        "id": "log_mwd53kz5lytd",
+        "studentId": "stu_mvx9zro0kvqx",
+        "date": "2026-11-10",
+        "subject": "기타",
+        "type": "기타학습",
+        "eval": "학습완료",
+        "start": "20:20",
+        "end": "22:00",
+        "minutes": 100,
+        "note": ""
+      },
+      {
+        "id": "log_mwd54388xti6",
+        "studentId": "stu_mvx9zcrv16m5",
+        "date": "2026-11-10",
+        "subject": "기타",
+        "type": "기타학습",
+        "eval": "학습완료",
+        "start": "20:20",
+        "end": "21:30",
+        "minutes": 70,
         "note": ""
       }
     ],
