@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-12T10:56:38.423Z",
-  "updatedAt": 1794480998423,
+  "exportedAt": "2026-11-12T12:54:30.546Z",
+  "updatedAt": 1794488070546,
   "daily": {
     "categories": [
       {
@@ -377,7 +377,7 @@
         "title": "인아_독서페스티벌 내용 체크",
         "categoryId": "cat_1792046758202",
         "date": "2026-11-12",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1794407493986
