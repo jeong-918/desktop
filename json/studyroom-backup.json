@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-12T06:07:14.585Z",
+  "exportedAt": "2026-11-12T10:58:56.520Z",
   "version": 3,
   "data": {
     "students": [
@@ -1329,6 +1329,10 @@
         },
         "2026-11-11": {
           "status": "미입실(학원)",
+          "time": ""
+        },
+        "2026-11-12": {
+          "status": "중도입실",
           "time": ""
         }
       },
@@ -6054,6 +6058,30 @@
         "start": "20:30",
         "end": "22:00",
         "minutes": 90,
+        "note": ""
+      },
+      {
+        "id": "log_mwd5busw2mbg",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-11-11",
+        "subject": "한국사",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "16:10",
+        "end": "17:00",
+        "minutes": 50,
+        "note": ""
+      },
+      {
+        "id": "log_mwd5c248tfp0",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-11-11",
+        "subject": "한국사",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "20:00",
+        "minutes": 120,
         "note": ""
       }
     ],
