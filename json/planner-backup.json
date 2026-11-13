@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-13T08:03:43.054Z",
-  "updatedAt": 1794557023054,
+  "exportedAt": "2026-11-13T08:04:43.046Z",
+  "updatedAt": 1794557083046,
   "daily": {
     "categories": [
       {
@@ -431,6 +431,36 @@
         "memo": "",
         "time": "",
         "createdAt": 1794557023054
+      },
+      {
+        "id": "todo_1794557047757_ezz7n",
+        "title": "11월 경남외고 모임 (압구정)",
+        "categoryId": "cat_1792046741546",
+        "date": "2026-11-25",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1794557047757
+      },
+      {
+        "id": "todo_1794557067693_0kibi",
+        "title": "윤희/현숙 장소 브리핑 및 확정시 기차표 예매 등 전달",
+        "categoryId": "cat_1792046741546",
+        "date": "2026-11-15",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1794557067693
+      },
+      {
+        "id": "todo_1794557083046_txio4",
+        "title": "민서 시립대 발표일",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-11-20",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1794557083046
       }
     ]
   },
