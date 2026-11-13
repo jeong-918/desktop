@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-12T16:01:11.620Z",
+  "exportedAt": "2026-11-13T06:57:57.315Z",
   "version": 3,
   "data": {
     "students": [
@@ -6134,6 +6134,18 @@
         "date": "2026-11-11",
         "subject": "한국사",
         "type": "복습",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "20:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mwemkc2ng97q",
+        "studentId": "stu_mvxa0h8n6ert",
+        "date": "2026-11-12",
+        "subject": "수학",
+        "type": "과제",
         "eval": "학습완료",
         "start": "18:00",
         "end": "20:00",
