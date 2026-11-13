@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T14:46:17.223Z",
+  "updatedAt": "2026-11-13T08:16:40.777Z",
   "apps": [
     {
       "id": "m_daol",
@@ -245,7 +245,7 @@
   "eduosConfigV4": {
     "boardLayout": "sections",
     "activeCategoryId": "ALL",
-    "briefingOpen": false,
+    "briefingOpen": true,
     "sidebarOpen": false,
     "uiTexts": {
       "sidebarToggleBtn": "실무 툴박스",
