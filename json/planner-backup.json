@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-13T10:31:18.747Z",
-  "updatedAt": 1794565878747,
+  "exportedAt": "2026-11-13T16:03:41.114Z",
+  "updatedAt": 1794585821114,
   "daily": {
     "categories": [
       {
@@ -481,6 +481,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1794558002357
+      },
+      {
+        "id": "todo_1794585821113_5vocm",
+        "title": "11/21 토요일 근무자 편성 상태 원장편으로 확인 (오후에 필수 확인)",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-11-12",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1794585821113
       }
     ]
   },
