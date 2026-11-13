@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-13T08:04:49.430Z",
-  "updatedAt": 1794557089430,
+  "exportedAt": "2026-11-13T08:20:04.310Z",
+  "updatedAt": 1794558004310,
   "daily": {
     "categories": [
       {
@@ -471,6 +471,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1794557089430
+      },
+      {
+        "id": "todo_1794558002357_cu1rq",
+        "title": "창원대 방문 (김기환 교수 식사 건)",
+        "categoryId": "cat_1792046741546",
+        "date": "2026-11-11",
+        "status": "DONE",
+        "memo": "",
+        "time": "",
+        "createdAt": 1794558002357
       }
     ]
   },
