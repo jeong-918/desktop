@@ -1,6 +1,6 @@
 {
   "app": "fineman2-1",
-  "exportedAt": "2026-11-13T11:39:09.754Z",
+  "exportedAt": "2026-11-13T11:51:42.933Z",
   "version": 5,
   "data": {
     "students": [
@@ -117,7 +117,7 @@
         "followUp": {
           "task": "역사 :  대중소비사회의 역사적성찰과 기후행동 제안서 수행진행",
           "date": "2026-11-14",
-          "done": false
+          "done": true
         },
         "createdAt": "2026-11-12T05:50:43.569Z"
       },
