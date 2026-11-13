@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-13T08:04:43.046Z",
-  "updatedAt": 1794557083046,
+  "exportedAt": "2026-11-13T08:04:49.430Z",
+  "updatedAt": 1794557089430,
   "daily": {
     "categories": [
       {
@@ -461,6 +461,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1794557083046
+      },
+      {
+        "id": "todo_1794557089430_iqrs9",
+        "title": "민서 중앙대 발표일",
+        "categoryId": "cat_1792046741546",
+        "date": "2026-11-26",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1794557089430
       }
     ]
   },
