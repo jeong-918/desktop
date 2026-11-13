@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-13T08:20:04.310Z",
-  "updatedAt": 1794558004310,
+  "exportedAt": "2026-11-13T10:29:56.874Z",
+  "updatedAt": 1794565796874,
   "daily": {
     "categories": [
       {
@@ -397,7 +397,7 @@
         "title": "인아_역사 수행평가 체크 내용 마무리",
         "categoryId": "cat_1792046758202",
         "date": "2026-11-14",
-        "status": "TODO",
+        "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
         "createdAt": 1794463925961
