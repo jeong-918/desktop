@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-12T12:54:30.546Z",
-  "updatedAt": 1794488070546,
+  "exportedAt": "2026-11-13T06:53:45.886Z",
+  "updatedAt": 1794552825886,
   "daily": {
     "categories": [
       {
@@ -411,6 +411,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1794463940704
+      },
+      {
+        "id": "todo_1794552823429_egut9",
+        "title": "지원_융합연구 카톡 내용 점검 후 수정안 제시",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-11-14",
+        "status": "DONE",
+        "memo": "",
+        "time": "",
+        "createdAt": 1794552823429
       }
     ]
   },
