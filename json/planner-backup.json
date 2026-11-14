@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-14T08:41:49.283Z",
-  "updatedAt": 1794645709283,
+  "exportedAt": "2026-11-14T08:42:21.137Z",
+  "updatedAt": 1794645741137,
   "daily": {
     "categories": [
       {
@@ -501,6 +501,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1794645709282
+      },
+      {
+        "id": "todo_1794645727988_xswh3",
+        "title": "테스트",
+        "categoryId": "cat_1792046741546",
+        "date": "2026-11-13",
+        "status": "IN_PROGRESS",
+        "memo": "",
+        "time": "",
+        "createdAt": 1794645727988
       }
     ]
   },
