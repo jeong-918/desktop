@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-13T16:05:04.325Z",
-  "updatedAt": 1794585904325,
+  "exportedAt": "2026-11-14T08:41:49.283Z",
+  "updatedAt": 1794645709283,
   "daily": {
     "categories": [
       {
@@ -491,6 +491,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1794585821113
+      },
+      {
+        "id": "todo_1794645709282_xmnl0",
+        "title": "11/18-20 수능전후 2시 운영 가동 문자 보내기",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-11-15",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1794645709282
       }
     ]
   },
