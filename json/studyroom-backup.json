@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-14T05:46:34.058Z",
+  "exportedAt": "2026-11-14T06:35:27.648Z",
   "version": 3,
   "data": {
     "students": [
@@ -6829,6 +6829,13 @@
         "studentId": "stu_mvxa1j4qx0kd",
         "date": "2026-11-14",
         "content": "오전 등원 지각 (벌점1)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwg179gtccyo",
+        "studentId": "stu_mvxa1ckuj8o0",
+        "date": "2026-11-14",
+        "content": "4시 이전 개인상담 이슈로 조퇴 (어머님 요청)",
         "scope": "week"
       }
     ],
