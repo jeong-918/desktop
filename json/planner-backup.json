@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-14T08:42:21.137Z",
-  "updatedAt": 1794645741137,
+  "exportedAt": "2026-11-14T10:11:25.689Z",
+  "updatedAt": 1794651085689,
   "daily": {
     "categories": [
       {
@@ -503,14 +503,14 @@
         "createdAt": 1794645709282
       },
       {
-        "id": "todo_1794645727988_xswh3",
-        "title": "테스트",
-        "categoryId": "cat_1792046741546",
-        "date": "2026-11-13",
-        "status": "IN_PROGRESS",
+        "id": "todo_1794651085689_1swnw",
+        "title": "자습관 전 인원 문자 발송 (15명 : 수목금 일정)",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-11-16",
+        "status": "TODO",
         "memo": "",
         "time": "",
-        "createdAt": 1794645727988
+        "createdAt": 1794651085689
       }
     ]
   },
