@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-15T03:20:32.803Z",
+  "exportedAt": "2026-11-15T03:21:40.636Z",
   "version": 3,
   "data": {
     "students": [
@@ -6910,13 +6910,6 @@
         "scope": "week"
       },
       {
-        "id": "cn_mwdfqs2o9htn",
-        "studentId": "stu_mvx9zcrv16m5",
-        "date": "2026-11-11",
-        "content": "병원다녀옴 (중도입실)",
-        "scope": "week"
-      },
-      {
         "id": "cn_mwfzfj9y4yf5",
         "studentId": "stu_muuvk470gwfd",
         "date": "2026-11-14",
@@ -6977,6 +6970,20 @@
         "studentId": "stu_18",
         "date": "2026-11-14",
         "content": "오전 등원 지각 (벌점1)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwh9pi5xqj43",
+        "studentId": "stu_mvx9zcrv16m5",
+        "date": "2026-11-14",
+        "content": "오후 안과 건으로 외출 (2시-5시)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwh9ptevllqt",
+        "studentId": "stu_mvx9zcrv16m5",
+        "date": "2026-11-11",
+        "content": "안과 건으로 중도 입실",
         "scope": "week"
       }
     ],
