@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-15T03:07:38.897Z",
-  "updatedAt": 1794712058897,
+  "exportedAt": "2026-11-15T05:21:26.979Z",
+  "updatedAt": 1794720086979,
   "daily": {
     "categories": [
       {
@@ -521,6 +521,16 @@
         "memo": "",
         "time": "20:00",
         "createdAt": 1794681402309
+      },
+      {
+        "id": "todo_1794720086978_a4pw8",
+        "title": "엔진오일 교환일",
+        "categoryId": "cat_1792046741546",
+        "date": "2026-11-26",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1794720086978
       }
     ]
   },
