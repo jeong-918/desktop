@@ -1,0 +1,230 @@
+{
+  "trackingMode": "B",
+  "currentWeek": "2026-W45",
+  "adminPass": "1234",
+  "subjects": [
+    {
+      "id": "kor",
+      "name": "국어",
+      "color": "#fee2e2"
+    },
+    {
+      "id": "math",
+      "name": "수학",
+      "color": "#dbeafe"
+    },
+    {
+      "id": "eng",
+      "name": "영어",
+      "color": "#fef3c7"
+    },
+    {
+      "id": "sci",
+      "name": "탐구",
+      "color": "#dcfce7"
+    },
+    {
+      "id": "clinic",
+      "name": "일요보충",
+      "color": "#f3e8ff"
+    }
+  ],
+  "studyTypes": [
+    "인강",
+    "자습/문제풀이",
+    "학원수업",
+    "오답정리",
+    "클리닉보충"
+  ],
+  "students": [
+    {
+      "id": "T1",
+      "name": "테스트",
+      "pw": "1111",
+      "grade": "고1 공통"
+    }
+  ],
+  "schedules": {
+    "std1": {
+      "1-9": {
+        "subject": "국어",
+        "type": "인강",
+        "goal": "문학 개념 3강",
+        "color": "#fee2e2"
+      },
+      "1-15": {
+        "subject": "수학",
+        "type": "자습",
+        "goal": "쎈 수학 60제",
+        "color": "#dbeafe"
+      },
+      "3-14": {
+        "subject": "탐구",
+        "type": "인강",
+        "goal": "물리1 역학 특강",
+        "color": "#dcfce7"
+      },
+      "5-14": {
+        "subject": "탐구",
+        "type": "자습",
+        "goal": "화학1 양적관계",
+        "color": "#dcfce7"
+      },
+      "0-9": {
+        "subject": "국어",
+        "type": "일요보충",
+        "goal": "[보충] 문학 개념 3강",
+        "color": "#f3e8ff"
+      },
+      "0-10": {
+        "subject": "수학",
+        "type": "일요보충",
+        "goal": "[보충] 쎈 수학 60제",
+        "color": "#f3e8ff"
+      },
+      "0-11": {
+        "subject": "탐구",
+        "type": "일요보충",
+        "goal": "[보충] 물리1 역학 특강",
+        "color": "#f3e8ff"
+      },
+      "0-12": {
+        "subject": "탐구",
+        "type": "일요보충",
+        "goal": "[보충] 화학1 양적관계",
+        "color": "#f3e8ff"
+      },
+      "0-13": {
+        "subject": "국어",
+        "type": "일요보충",
+        "goal": "[보충] 문학 개념 3강",
+        "color": "#f3e8ff"
+      },
+      "0-14": {
+        "subject": "수학",
+        "type": "일요보충",
+        "goal": "[보충] 쎈 수학 60제",
+        "color": "#f3e8ff"
+      },
+      "0-15": {
+        "subject": "탐구",
+        "type": "일요보충",
+        "goal": "[보충] 물리1 역학 특강",
+        "color": "#f3e8ff"
+      },
+      "0-16": {
+        "subject": "탐구",
+        "type": "일요보충",
+        "goal": "[보충] 화학1 양적관계",
+        "color": "#f3e8ff"
+      },
+      "0-17": {
+        "subject": "국어",
+        "type": "일요보충",
+        "goal": "[보충] 문학 개념 3강",
+        "color": "#f3e8ff"
+      },
+      "0-18": {
+        "subject": "수학",
+        "type": "일요보충",
+        "goal": "[보충] 쎈 수학 60제",
+        "color": "#f3e8ff"
+      },
+      "0-19": {
+        "subject": "탐구",
+        "type": "일요보충",
+        "goal": "[보충] 물리1 역학 특강",
+        "color": "#f3e8ff"
+      },
+      "0-20": {
+        "subject": "탐구",
+        "type": "일요보충",
+        "goal": "[보충] 화학1 양적관계",
+        "color": "#f3e8ff"
+      }
+    },
+    "T1": {}
+  },
+  "checks": {
+    "std1": {
+      "2026-W45": {
+        "1-15": {
+          "status": "D"
+        },
+        "3-14": {
+          "status": "X"
+        },
+        "5-14": {
+          "status": "D"
+        },
+        "1-9": {
+          "status": "X"
+        }
+      },
+      "SINGLE_BOARD": {
+        "1-15": {
+          "status": "D"
+        },
+        "3-14": {
+          "status": "X"
+        },
+        "5-14": {
+          "status": "D"
+        },
+        "1-9": {
+          "status": "X"
+        }
+      }
+    }
+  },
+  "historyLogs": [
+    {
+      "id": "log1",
+      "studentId": "std1",
+      "week": "2026-W45",
+      "dayIdx": 1,
+      "hour": 9,
+      "subject": "국어",
+      "type": "인강",
+      "status": "O",
+      "memo": "완강 및 필기 완료",
+      "timestamp": "2026-11-02 10:05"
+    },
+    {
+      "id": "log2",
+      "studentId": "std1",
+      "week": "2026-W45",
+      "dayIdx": 1,
+      "hour": 15,
+      "subject": "수학",
+      "type": "자습/문제풀이",
+      "status": "D",
+      "memo": "60문제 중 35문제만 풂 (25문제 미완)",
+      "timestamp": "2026-11-02 16:10"
+    },
+    {
+      "id": "log3",
+      "studentId": "std1",
+      "week": "2026-W45",
+      "dayIdx": 3,
+      "hour": 14,
+      "subject": "탐구",
+      "type": "인강",
+      "status": "X",
+      "memo": "학교 행사 피로로 졸아서 못 들음",
+      "timestamp": "2026-11-04 15:10"
+    },
+    {
+      "id": "log4",
+      "studentId": "std1",
+      "week": "2026-W45",
+      "dayIdx": 5,
+      "hour": 14,
+      "subject": "탐구",
+      "type": "자습/문제풀이",
+      "status": "D",
+      "memo": "양적관계 킬러 6문제 못 풀고 막힘",
+      "timestamp": "2026-11-06 15:20"
+    }
+  ]
+}
