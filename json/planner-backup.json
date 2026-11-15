@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-15T05:21:35.272Z",
-  "updatedAt": 1794720095272,
+  "exportedAt": "2026-11-15T17:53:25.789Z",
+  "updatedAt": 1794765205789,
   "daily": {
     "categories": [
       {
@@ -447,7 +447,7 @@
         "title": "윤희/현숙 장소 브리핑 (8시 이후)",
         "categoryId": "cat_1792046741546",
         "date": "2026-11-15",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "웹앱으로 작성된 내용 재검토해서 간결하게 전달 (대전 + 용인 + 천안 + 아산 + 평택)",
         "time": "20:00",
         "createdAt": 1794557067693
@@ -517,7 +517,7 @@
         "title": "우진 심화영어독해 심화탐구 자료 요청",
         "categoryId": "cat_1792046758202",
         "date": "2026-11-15",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "20:00",
         "createdAt": 1794681402309
