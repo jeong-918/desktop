@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-15T03:00:50.565Z",
-  "updatedAt": 1794711650565,
+  "exportedAt": "2026-11-15T03:07:38.897Z",
+  "updatedAt": 1794712058897,
   "daily": {
     "categories": [
       {
@@ -447,7 +447,7 @@
         "title": "윤희/현숙 장소 브리핑 (8시 이후)",
         "categoryId": "cat_1792046741546",
         "date": "2026-11-15",
-        "status": "TODO",
+        "status": "IN_PROGRESS",
         "memo": "웹앱으로 작성된 내용 재검토해서 간결하게 전달 (대전 + 용인 + 천안 + 아산 + 평택)",
         "time": "20:00",
         "createdAt": 1794557067693
@@ -497,7 +497,7 @@
         "title": "학원에서 보낼 문자메시지 구성 (오전 10시부터 우선순위)",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-15",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "문자1) 고1.2 : 수목금 일정 안내 \n문자2) 중3 : 시험일정 안내",
         "time": "",
         "createdAt": 1794645709282
