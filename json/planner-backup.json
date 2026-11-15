@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-14T18:37:43.053Z",
-  "updatedAt": 1794681463053,
+  "exportedAt": "2026-11-15T02:59:18.351Z",
+  "updatedAt": 1794711558351,
   "daily": {
     "categories": [
       {
@@ -497,7 +497,7 @@
         "title": "학원에서 보낼 문자메시지 구성 (오전 10시부터 우선순위)",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-15",
-        "status": "TODO",
+        "status": "IN_PROGRESS",
         "memo": "문자1) 고1.2 : 수목금 일정 안내 \n문자2) 중3 : 시험일정 안내",
         "time": "",
         "createdAt": 1794645709282
