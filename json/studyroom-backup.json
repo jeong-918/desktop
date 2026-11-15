@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-15T03:21:40.636Z",
+  "exportedAt": "2026-11-15T03:23:03.680Z",
   "version": 3,
   "data": {
     "students": [
@@ -6703,6 +6703,30 @@
         "end": "18:30",
         "minutes": 30,
         "note": ""
+      },
+      {
+        "id": "log_mwh9qmc7gp5j",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-11-14",
+        "subject": "과학",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "14:00",
+        "end": "17:00",
+        "minutes": 180,
+        "note": ""
+      },
+      {
+        "id": "log_mwh9qtbl4cd2",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-11-14",
+        "subject": "과학",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "20:00",
+        "end": "22:00",
+        "minutes": 120,
+        "note": ""
       }
     ],
     "counseling": [
@@ -6910,13 +6934,6 @@
         "scope": "week"
       },
       {
-        "id": "cn_mwfzfj9y4yf5",
-        "studentId": "stu_muuvk470gwfd",
-        "date": "2026-11-14",
-        "content": "설명회 참여로 오후 입실 (2시이후)",
-        "scope": "week"
-      },
-      {
         "id": "cn_mwfzg42mmfl9",
         "studentId": "stu_16",
         "date": "2026-11-14",
@@ -6984,6 +7001,13 @@
         "studentId": "stu_mvx9zcrv16m5",
         "date": "2026-11-11",
         "content": "안과 건으로 중도 입실",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwh9roshp2kd",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-11-14",
+        "content": "오전 설명회 참여 -> 오후 입실 (2시)",
         "scope": "week"
       }
     ],
