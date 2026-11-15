@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-14T06:35:27.648Z",
+  "exportedAt": "2026-11-15T03:10:44.353Z",
   "version": 3,
   "data": {
     "students": [
@@ -6582,6 +6582,18 @@
         "start": "18:00",
         "end": "20:00",
         "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mwh9btt3nz1m",
+        "studentId": "stu_mvxa0qh4w0xv",
+        "date": "2026-11-14",
+        "subject": "한국사",
+        "type": "수행평가",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "22:00",
+        "minutes": 240,
         "note": ""
       }
     ],
