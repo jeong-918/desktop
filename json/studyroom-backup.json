@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-15T03:33:12.517Z",
+  "exportedAt": "2026-11-15T03:34:29.417Z",
   "version": 3,
   "data": {
     "students": [
@@ -6919,6 +6919,18 @@
         "end": "16:00",
         "minutes": 75,
         "note": ""
+      },
+      {
+        "id": "log_mwha6dtguaha",
+        "studentId": "stu_18",
+        "date": "2026-11-14",
+        "subject": "과학",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "10:00",
+        "end": "12:00",
+        "minutes": 120,
+        "note": ""
       }
     ],
     "counseling": [
@@ -7233,6 +7245,13 @@
       {
         "id": "cn_mwha4ora57fo",
         "studentId": "stu_18",
+        "date": "2026-11-15",
+        "content": "일요일 등원 (시험 대비 간 과목별 복습 목적 / 주간 리포트(월-토)기재된 학습량 외 일요일 학습 진행)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwha507iba5v",
+        "studentId": "stu_mvxa0b80pl0k",
         "date": "2026-11-15",
         "content": "일요일 등원 (시험 대비 간 과목별 복습 목적 / 주간 리포트(월-토)기재된 학습량 외 일요일 학습 진행)",
         "scope": "week"
