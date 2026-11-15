@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-15T03:19:13.733Z",
+  "exportedAt": "2026-11-15T03:20:32.803Z",
   "version": 3,
   "data": {
     "students": [
@@ -6924,13 +6924,6 @@
         "scope": "week"
       },
       {
-        "id": "cn_mwfzg0nqskri",
-        "studentId": "stu_16",
-        "date": "2026-11-14",
-        "content": "오전 등원 지각 (벌점1)",
-        "scope": "week"
-      },
-      {
         "id": "cn_mwfzg42mmfl9",
         "studentId": "stu_16",
         "date": "2026-11-14",
@@ -6977,6 +6970,13 @@
         "studentId": "stu_mvxa1j4qx0kd",
         "date": "2026-11-14",
         "content": "개별 인터뷰 : 학습 과정에서 과목 간 부족하게 표시된 과목들은 현재 자습관 외 스터디 카페 등 참여를 통해 채워나가고 있음을 전달받았습니다.",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwh9okiswdch",
+        "studentId": "stu_18",
+        "date": "2026-11-14",
+        "content": "오전 등원 지각 (벌점1)",
         "scope": "week"
       }
     ],
