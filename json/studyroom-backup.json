@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-15T03:17:15.701Z",
+  "exportedAt": "2026-11-15T03:19:13.733Z",
   "version": 3,
   "data": {
     "students": [
@@ -6655,6 +6655,54 @@
         "end": "12:00",
         "minutes": 120,
         "note": ""
+      },
+      {
+        "id": "log_mwh9kfjtf8pg",
+        "studentId": "stu_mvxa1j4qx0kd",
+        "date": "2026-11-14",
+        "subject": "수학",
+        "type": "인강+문풀",
+        "eval": "학습완료",
+        "start": "13:00",
+        "end": "15:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mwh9krkrqg3f",
+        "studentId": "stu_mvxa1j4qx0kd",
+        "date": "2026-11-14",
+        "subject": "국어",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "15:00",
+        "end": "16:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwh9l5gjmupj",
+        "studentId": "stu_mvxa1j4qx0kd",
+        "date": "2026-11-14",
+        "subject": "사회",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "16:00",
+        "end": "17:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwh9lfgp978q",
+        "studentId": "stu_mvxa1j4qx0kd",
+        "date": "2026-11-14",
+        "subject": "사회",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "18:30",
+        "minutes": 30,
+        "note": ""
       }
     ],
     "counseling": [
@@ -6922,6 +6970,13 @@
         "studentId": "stu_mvx9zk6negj6",
         "date": "2026-11-14",
         "content": "한국사 수행평가 대비 관련 교과서 정리자료 전달 O",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwh9mre6qad5",
+        "studentId": "stu_mvxa1j4qx0kd",
+        "date": "2026-11-14",
+        "content": "개별 인터뷰 : 학습 과정에서 과목 간 부족하게 표시된 과목들은 현재 자습관 외 스터디 카페 등 참여를 통해 채워나가고 있음을 전달받았습니다.",
         "scope": "week"
       }
     ],
