@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T11:52:33.930Z",
+  "updatedAt": "2026-11-15T04:53:27.584Z",
   "apps": [
     {
       "id": "m_daol",
@@ -240,6 +240,18 @@
       "openMode": "newtab",
       "xPct": 19,
       "yPct": 59
+    },
+    {
+      "id": "m_1794718199868",
+      "name": "통사통과 학습진단",
+      "url": "https://jeong-918.github.io/desktop/app/saga-hub.html",
+      "icon": "🚀",
+      "desc": "통합사회/통합과학 모의고사 진단->학습 유불리 및 방향성 진단",
+      "catId": "cat_1794717586211",
+      "badge": "통사/통과",
+      "openMode": "newtab",
+      "xPct": 34,
+      "yPct": 59
     }
   ],
   "eduosConfigV4": {
@@ -298,6 +310,13 @@
         "icon": "🧭",
         "color": "indigo",
         "desc": "등급환산, 2028 대입설계, 세특진단, 탐구설계, 모의고사 및 주간 실천 허브"
+      },
+      {
+        "id": "cat_1794717586211",
+        "name": "교과 학습 진단",
+        "icon": "📁",
+        "color": "indigo",
+        "desc": "교과 학습 관련 진단 도구"
       },
       {
         "id": "cat_ext1",
@@ -494,6 +513,15 @@
         "badge": "Studyplan",
         "url": "https://jeong-918.github.io/desktop/app/studyplanhub.html",
         "desc": "시간표 기반 학습계획 설계 및 이행여부 관리"
+      },
+      {
+        "id": "m_1794718199868",
+        "catId": "cat_1794717586211",
+        "name": "통사통과 학습진단",
+        "icon": "🚀",
+        "badge": "통사/통과",
+        "url": "https://jeong-918.github.io/desktop/app/saga-hub.html",
+        "desc": "통합사회/통합과학 모의고사 진단->학습 유불리 및 방향성 진단"
       }
     ]
   }
