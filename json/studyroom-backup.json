@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-15T03:31:04.653Z",
+  "exportedAt": "2026-11-15T03:32:09.621Z",
   "version": 3,
   "data": {
     "students": [
@@ -7203,17 +7203,24 @@
         "scope": "week"
       },
       {
-        "id": "cn_mwha15qz6hzv",
-        "studentId": "stu_16",
-        "date": "2026-11-14",
-        "content": "주간 리포트 기재된 학습량 외 일요일 자율 등원 및 학습 참여 (일요일 세부내용은 리포트 미반영)",
+        "id": "cn_mwha2ygqm1ba",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-11-15",
+        "content": "일요일 등원 (시험 대비 간 과목별 복습 목적 / 주간 리포트(월-토)기재된 학습량 외 일요일 학습 진행)",
         "scope": "week"
       },
       {
-        "id": "cn_mwha18w2my72",
+        "id": "cn_mwha3790sq0f",
+        "studentId": "stu_16",
+        "date": "2026-11-14",
+        "content": "일요일 등원 (시험 대비 간 과목별 복습 목적 / 주간 리포트(월-토)기재된 학습량 외 일요일 학습 진행)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwha3e22xief",
         "studentId": "stu_18",
         "date": "2026-11-14",
-        "content": "주간 리포트 기재된 학습량 외 일요일 자율 등원 및 학습 참여 (일요일 세부내용은 리포트 미반영)",
+        "content": "일요일 등원 (시험 대비 간 과목별 복습 목적 / 주간 리포트(월-토)기재된 학습량 외 일요일 학습 진행)",
         "scope": "week"
       }
     ],
