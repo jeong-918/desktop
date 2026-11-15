@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-15T03:10:44.353Z",
+  "exportedAt": "2026-11-15T03:12:02.145Z",
   "version": 3,
   "data": {
     "students": [
@@ -6595,6 +6595,18 @@
         "end": "22:00",
         "minutes": 240,
         "note": ""
+      },
+      {
+        "id": "log_mwh9di4zm9ws",
+        "studentId": "stu_mvxa0h8n6ert",
+        "date": "2026-11-14",
+        "subject": "국어",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "15:00",
+        "end": "17:00",
+        "minutes": 120,
+        "note": ""
       }
     ],
     "counseling": [
@@ -6848,6 +6860,20 @@
         "studentId": "stu_mvxa1ckuj8o0",
         "date": "2026-11-14",
         "content": "4시 이전 개인상담 이슈로 조퇴 (어머님 요청)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwh9cgnxizrb",
+        "studentId": "stu_mvxa0qh4w0xv",
+        "date": "2026-11-14",
+        "content": "한국사 수행평가 대비 관련 교과서 정리자료 전달 O",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwh9cmqrky6v",
+        "studentId": "stu_mvx9zk6negj6",
+        "date": "2026-11-14",
+        "content": "한국사 수행평가 대비 관련 교과서 정리자료 전달 O",
         "scope": "week"
       }
     ],
