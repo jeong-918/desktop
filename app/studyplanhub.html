@@ -771,19 +771,18 @@
 
         <!-- 옵션 2: GitHub Fine-grained Token 연동 -->
         <div id="sync-panel-github" class="hidden space-y-2.5 bg-slate-50 p-4 rounded-xl border border-slate-200">
-          <div class="font-bold text-slate-800">GitHub Repository JSON 동기화 (Fine-grained PAT)</div>
-          <div class="grid grid-cols-2 gap-2">
-            <input type="text" id="gh-owner" placeholder="GitHub 계정명 (Owner)" class="px-2.5 py-1.5 border rounded-lg bg-white" />
-            <input type="text" id="gh-repo" placeholder="저장소 이름 (Repo)" class="px-2.5 py-1.5 border rounded-lg bg-white" />
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <input type="text" id="gh-path" value="study-hub-data.json" placeholder="파일 경로 (study-hub-data.json)" class="px-2.5 py-1.5 border rounded-lg bg-white" />
-            <input type="password" id="gh-token" placeholder="github_pat_..." class="px-2.5 py-1.5 border rounded-lg bg-white" />
-          </div>
-          <div class="flex gap-2 pt-1">
-            <button onclick="saveGithubConfig()" class="px-3 py-2 bg-slate-900 text-white font-bold rounded-lg">토큰 설정 저장</button>
-            <button onclick="cloudPull()" class="px-3 py-2 bg-white border border-slate-300 font-bold rounded-lg">GitHub에서 불러오기</button>
-            <button onclick="cloudPush()" class="px-3 py-2 bg-emerald-600 text-white font-bold rounded-lg">GitHub에 커밋(저장)</button>
+          <div class="font-bold text-slate-800">GitHub 자동 동기화 (기기 간 데이터 이동)</div>
+          <p class="text-xs text-slate-500 leading-relaxed">저장 위치: jeong-918/desktop 저장소의 <b>json/studyhub-backup.json</b>. 기존에 발급받은 토큰을 그대로 사용하세요. 자동 백업을 켜면 수정 후 5초 뒤 자동 업로드되고, 다른 기기에서 페이지를 열 때 최신 데이터를 자동으로 가져옵니다.</p>
+          <input type="password" id="gh-token" placeholder="github_pat_... (기존 desktop 저장소용 토큰)" class="w-full px-2.5 py-1.5 border rounded-lg bg-white" />
+          <label class="flex items-center gap-2 bg-white border border-slate-200 rounded-lg px-3 py-2 cursor-pointer">
+            <input type="checkbox" id="gh-auto-sync" class="w-4 h-4 accent-indigo-600" />
+            <span class="text-xs font-semibold text-slate-700">자동 백업 켜기 (수정 후 5초 뒤 자동 업로드)</span>
+          </label>
+          <p id="gh-last-sync-text" class="text-xs text-slate-500 bg-white border border-slate-200 rounded-lg px-3 py-2">마지막 업로드: 기록 없음</p>
+          <div class="flex flex-wrap gap-2 pt-1">
+            <button onclick="saveGithubConfig()" class="px-3 py-2 bg-slate-900 text-white font-bold rounded-lg">설정 저장</button>
+            <button onclick="cloudPull()" class="px-3 py-2 bg-white border border-slate-300 font-bold rounded-lg">서버 동기화 (불러오기)</button>
+            <button onclick="cloudPush()" class="px-3 py-2 bg-emerald-600 text-white font-bold rounded-lg">서버 업로드 (저장)</button>
           </div>
         </div>
 
@@ -906,6 +905,7 @@
 
     function saveState() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      localStorage.setItem('sync_studyhub_local_updated', String(Date.now()));
       autoCloudPushIfConfigured();
     }
 
@@ -918,6 +918,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       initBulkSelectors();
       loadSyncConfigToInputs();
+      autoSyncOnStart(); // 페이지 열 때 서버/로컬 데이터 비교 후 자동 동기화
 
       document.getElementById('login-form').addEventListener('submit', (e) => {
         e.preventDefault();
@@ -1929,6 +1930,146 @@
       closeExportModal();
     }
 
+    // ================= GitHub 자동 동기화 (표준 패턴) =================
+    // 대상: jeong-918.github.io/desktop 저장소의 json/studyhub-backup.json
+    // 기존 동기화 기능(Firebase/수동 백업)은 그대로 유지되며, GitHub 탭만 아래 표준 방식으로 교체됨
+    const GITHUB_SYNC = { owner: 'jeong-918', repo: 'desktop', branch: 'main', path: 'json/studyhub-backup.json' };
+    const SERVER_JSON_URL = 'https://jeong-918.github.io/desktop/json/studyhub-backup.json';
+    const SYNC_KEY_TOKEN = 'sync_github_token';               // 토큰 (공용, 기기별 브라우저에 저장)
+    const SYNC_KEY_AUTO = 'sync_studyhub_auto';              // 자동 백업 사용 여부 (이 앱 전용)
+    const SYNC_KEY_LAST = 'sync_studyhub_last_upload';       // 마지막 업로드 시각 (이 앱 전용)
+    const SYNC_KEY_LOCAL = 'sync_studyhub_local_updated';    // 로컬 마지막 수정 시각 (이 앱 전용)
+
+    function getSyncToken() { return localStorage.getItem(SYNC_KEY_TOKEN) || ''; }
+    function isAutoUpload() { return localStorage.getItem(SYNC_KEY_AUTO) === 'true'; }
+
+    // UTF-8 안전 Base64 인코딩
+    function utf8ToBase64(str) {
+      const bytes = new TextEncoder().encode(str);
+      let binary = '';
+      for (let i = 0; i < bytes.length; i += 0x8000) binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+      return btoa(binary);
+    }
+
+    // [GitHub 업로드] 현재 state를 json/studyhub-backup.json으로 커밋
+    async function pushToGitHub(silent) {
+      const token = getSyncToken();
+      if (!token) { if (!silent) setSyncLog('먼저 GitHub 토큰을 입력하고 설정을 저장해 주세요.'); return; }
+      const apiUrl = `https://api.github.com/repos/${GITHUB_SYNC.owner}/${GITHUB_SYNC.repo}/contents/${GITHUB_SYNC.path}`;
+      const headers = { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' };
+      try {
+        if (!silent) setSyncLog('GitHub에 업로드 중...');
+        let sha = null;
+        const getRes = await fetch(`${apiUrl}?ref=${GITHUB_SYNC.branch}`, { headers });
+        if (getRes.ok) sha = (await getRes.json()).sha;
+
+        const putRes = await fetch(apiUrl, {
+          method: 'PUT',
+          headers,
+          body: JSON.stringify({
+            message: `Study Hub 자동 동기화 - ${new Date().toLocaleString('ko-KR')}`,
+            content: utf8ToBase64(JSON.stringify({ app: 'studyhub', exportedAt: new Date().toISOString(), state }, null, 2)),
+            branch: GITHUB_SYNC.branch,
+            ...(sha && { sha })
+          })
+        });
+
+        if (putRes.ok) {
+          localStorage.setItem(SYNC_KEY_LAST, String(Date.now()));
+          updateSyncStatusText();
+          if (!silent) setSyncLog('GitHub 저장소에 데이터를 저장했습니다.');
+        } else if (putRes.status === 401 || putRes.status === 403) {
+          if (!silent) setSyncLog('토큰 오류: 권한이 없거나 만료되었습니다.');
+        } else if (putRes.status === 409) {
+          if (!silent) setSyncLog('충돌: 서버 파일이 변경되었습니다. 불러오기 후 다시 시도하세요.');
+        } else {
+          if (!silent) setSyncLog('업로드 실패 (' + putRes.status + ')');
+        }
+      } catch (err) {
+        console.error('업로드 오류:', err);
+        if (!silent) setSyncLog('업로드 실패: 인터넷 연결을 확인하세요.');
+      }
+    }
+
+    // [자동 업로드 예약] 데이터가 바뀐 뒤 5초간 추가 변경이 없을 때 업로드 실행
+    let autoPushTimer = null;
+    let suppressAutoPush = false; // 서버 데이터 적용 시 재업로드 방지
+    function scheduleAutoPush() {
+      if (suppressAutoPush) return;
+      if (!isAutoUpload()) return;
+      if (autoPushTimer) clearTimeout(autoPushTimer);
+      autoPushTimer = setTimeout(() => pushToGitHub(true), 5000);
+    }
+
+    // [서버에서 가져오기] 퍼블릭 백업 URL로 이 기기 데이터 교체 (토큰 불필요)
+    async function pullFromServer(silent) {
+      try {
+        const res = await fetch(`${SERVER_JSON_URL}?t=${Date.now()}`); // 캐시 우회
+        if (!res.ok) { if (!silent) setSyncLog('백업 파일을 찾을 수 없습니다. json 폴더의 studyhub-backup.json을 확인하세요.'); return false; }
+        const parsed = await res.json();
+        if (!parsed || typeof parsed.state !== 'object') { if (!silent) setSyncLog('백업 파일 형식이 올바르지 않습니다.'); return false; }
+        const when = parsed.exportedAt ? new Date(parsed.exportedAt).toLocaleString('ko-KR') : '시점 미상';
+        if (silent || confirm(`서버 백업(${when})으로 이 기기의 데이터를 교체할까요?`)) {
+          suppressAutoPush = true;
+          try {
+            state = Object.assign(getDefaultState(), parsed.state);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            localStorage.setItem(SYNC_KEY_LOCAL, String(parsed.exportedAt ? new Date(parsed.exportedAt).getTime() : Date.now()));
+            refreshAllUI();
+          } finally {
+            suppressAutoPush = false;
+          }
+          if (!silent) setSyncLog('서버 데이터 동기화를 완료했습니다.');
+          return true;
+        }
+        return false;
+      } catch (err) {
+        console.error('서버 동기화 오류:', err);
+        if (!silent) setSyncLog('동기화 실패: 인터넷 연결을 확인하세요.');
+        return false;
+      }
+    }
+
+    // [시작 시 자동 동기화] 페이지를 열 때 서버/로컬 중 더 최신 데이터를 자동 반영
+    async function autoSyncOnStart() {
+      if (!getSyncToken()) return; // 토큰이 없으면 수동 모드 유지
+      try {
+        const res = await fetch(`${SERVER_JSON_URL}?t=${Date.now()}`);
+        if (!res.ok) return;
+        const parsed = await res.json();
+        if (!parsed || typeof parsed.state !== 'object') return;
+        const serverTime = parsed.exportedAt ? new Date(parsed.exportedAt).getTime() : 0;
+        const localTime = Number(localStorage.getItem(SYNC_KEY_LOCAL) || 0);
+        if (serverTime > localTime) {
+          if (confirm('서버에 더 최신 학습 계획 데이터가 있습니다. 이 기기로 가져올까요?')) {
+            await pullFromServer(true);
+          }
+        } else if (localTime > serverTime && isAutoUpload()) {
+          pushToGitHub(true);
+        }
+      } catch (err) {
+        console.error('시작 동기화 오류:', err);
+      }
+    }
+
+    // ---------- 동기화 설정 저장 및 상태 갱신 ----------
+    function saveSyncSettings() {
+      localStorage.setItem(SYNC_KEY_TOKEN, document.getElementById('gh-token').value.trim());
+      localStorage.setItem(SYNC_KEY_AUTO, String(document.getElementById('gh-auto-sync').checked));
+      updateSyncBadge('github');
+      updateSyncStatusText();
+      setSyncLog('GitHub 동기화 설정을 저장했습니다.');
+      if (getSyncToken() && isAutoUpload()) pushToGitHub(false);
+    }
+
+    function updateSyncStatusText() {
+      const el = document.getElementById('gh-last-sync-text');
+      if (el) {
+        const last = Number(localStorage.getItem(SYNC_KEY_LAST) || 0);
+        el.textContent = last ? `마지막 업로드: ${new Date(last).toLocaleString('ko-KR')}` : '마지막 업로드: 기록 없음';
+      }
+    }
+
     // ================= 클라우드 동기화 (Firebase / GitHub PAT / JSON 백업) =================
     function openSyncModal() {
       document.getElementById('sync-modal').classList.remove('hidden');
@@ -1957,11 +2098,12 @@
     function loadSyncConfigToInputs() {
       const cfg = getSyncConfig();
       if (cfg.fbUrl) document.getElementById('fb-db-url').value = cfg.fbUrl;
-      if (cfg.ghOwner) document.getElementById('gh-owner').value = cfg.ghOwner;
-      if (cfg.ghRepo) document.getElementById('gh-repo').value = cfg.ghRepo;
-      if (cfg.ghPath) document.getElementById('gh-path').value = cfg.ghPath;
-      if (cfg.ghToken) document.getElementById('gh-token').value = cfg.ghToken;
-      updateSyncBadge(cfg.provider);
+      const tok = document.getElementById('gh-token');
+      if (tok && !tok.value) tok.value = getSyncToken();
+      const auto = document.getElementById('gh-auto-sync');
+      if (auto) auto.checked = isAutoUpload();
+      updateSyncBadge(getSyncToken() ? 'github' : cfg.provider);
+      updateSyncStatusText();
     }
 
     function updateSyncBadge(provider) {
@@ -1985,14 +2127,8 @@
     }
 
     function saveGithubConfig() {
-      const ghOwner = document.getElementById('gh-owner').value.trim();
-      const ghRepo = document.getElementById('gh-repo').value.trim();
-      const ghPath = document.getElementById('gh-path').value.trim() || 'study-hub-data.json';
-      const ghToken = document.getElementById('gh-token').value.trim();
-      const cfg = { provider: 'github', ghOwner, ghRepo, ghPath, ghToken };
-      localStorage.setItem(SYNC_CFG_KEY, JSON.stringify(cfg));
-      updateSyncBadge('github');
-      setSyncLog('GitHub Fine-grained Token 설정이 저장되었습니다.');
+      // 표준 패턴: owner/repo/path는 jeong-918/desktop/json/studyhub-backup.json으로 고정, 토큰만 공용 키에 저장
+      saveSyncSettings();
     }
 
     async function cloudPush() {
@@ -2006,29 +2142,9 @@
           });
           if (!res.ok) throw new Error('Firebase 쓰기 실패');
           setSyncLog('Firebase DB에 최신 데이터를 저장했습니다.');
-        } else if (cfg.provider === 'github' && cfg.ghToken) {
-          const apiUrl = `https://api.github.com/repos/${cfg.ghOwner}/${cfg.ghRepo}/contents/${cfg.ghPath}`;
-          let sha = null;
-          const getRes = await fetch(apiUrl, { headers: { Authorization: `Bearer ${cfg.ghToken}` } });
-          if (getRes.ok) {
-            const getJson = await getRes.json();
-            sha = getJson.sha;
-          }
-          const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(state, null, 2))));
-          const putRes = await fetch(apiUrl, {
-            method: 'PUT',
-            headers: {
-              Authorization: `Bearer ${cfg.ghToken}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              message: `Sync study hub data (${new Date().toISOString()})`,
-              content: contentBase64,
-              ...(sha ? { sha } : {})
-            })
-          });
-          if (!putRes.ok) throw new Error('GitHub API 커밋 실패');
-          setSyncLog('GitHub 저장소에 최신 데이터를 커밋했습니다.');
+        } else if (cfg.provider === 'github' || getSyncToken()) {
+          // 표준 패턴 업로드 (json/studyhub-backup.json, 자동백업 상태 기록)
+          await pushToGitHub(false);
         } else {
           setSyncLog('먼저 Firebase URL 또는 GitHub 토큰을 설정해 주세요.');
         }
@@ -2049,16 +2165,9 @@
             refreshAllUI();
             setSyncLog('Firebase DB에서 최신 데이터를 불러왔습니다.');
           }
-        } else if (cfg.provider === 'github' && cfg.ghToken) {
-          const apiUrl = `https://api.github.com/repos/${cfg.ghOwner}/${cfg.ghRepo}/contents/${cfg.ghPath}`;
-          const res = await fetch(apiUrl, { headers: { Authorization: `Bearer ${cfg.ghToken}` } });
-          if (!res.ok) throw new Error('GitHub 파일 조회 실패');
-          const json = await res.json();
-          const decoded = decodeURIComponent(escape(atob(json.content.replace(/\n/g, ''))));
-          state = Object.assign(getDefaultState(), JSON.parse(decoded));
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-          refreshAllUI();
-          setSyncLog('GitHub 저장소에서 최신 데이터를 불러왔습니다.');
+        } else if (cfg.provider === 'github' || getSyncToken()) {
+          // 표준 패턴 다운로드 (퍼블릭 백업 URL, 토큰 불필요)
+          await pullFromServer(false);
         }
       } catch (err) {
         setSyncLog('불러오기 오류: ' + err.message);
@@ -2066,8 +2175,10 @@
     }
 
     function autoCloudPushIfConfigured() {
+      // 표준 패턴: GitHub는 5초 디바운스 + 자동 백업 켜짐 + 토큰 필요, Firebase는 기존대로 즉시
+      if (getSyncToken()) { scheduleAutoPush(); return; }
       const cfg = getSyncConfig();
-      if (cfg.provider === 'firebase' || cfg.provider === 'github') {
+      if (cfg.provider === 'firebase') {
         cloudPush();
       }
     }
