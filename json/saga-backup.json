@@ -1,6 +1,6 @@
 {
   "app": "saga",
-  "exportedAt": "2026-11-16T04:52:28.804Z",
+  "exportedAt": "2026-11-16T04:53:46.601Z",
   "students": [
     {
       "id": "stu-1794804675148",
@@ -45,6 +45,60 @@
       "track": "자연",
       "targetScore": 50,
       "memo": "",
+      "isSample": false
+    },
+    {
+      "id": "stu-1794804754148",
+      "name": "최정우",
+      "grade": "고3",
+      "track": "자연",
+      "targetScore": 50,
+      "memo": "",
+      "isSample": false
+    },
+    {
+      "id": "stu-1794804767932",
+      "name": "양민경",
+      "grade": "고3",
+      "track": "인문",
+      "targetScore": 50,
+      "memo": "",
+      "isSample": false
+    },
+    {
+      "id": "stu-1794804782452",
+      "name": "장우정",
+      "grade": "고3",
+      "track": "인문",
+      "targetScore": 50,
+      "memo": "",
+      "isSample": false
+    },
+    {
+      "id": "stu-1794804791860",
+      "name": "이윤서",
+      "grade": "고3",
+      "track": "자연",
+      "targetScore": 50,
+      "memo": "",
+      "isSample": false
+    },
+    {
+      "id": "stu-1794804799780",
+      "name": "임예린",
+      "grade": "고3",
+      "track": "인문",
+      "targetScore": 50,
+      "memo": "",
+      "isSample": false
+    },
+    {
+      "id": "stu-1794804821341",
+      "name": "정영주(테스트)",
+      "grade": "고3",
+      "track": "인문",
+      "targetScore": 50,
+      "memo": "테스트 데이터 목적",
       "isSample": false
     }
   ],
