@@ -1,6 +1,6 @@
 {
   "app": "saga",
-  "exportedAt": "2026-11-16T04:53:46.601Z",
+  "exportedAt": "2026-11-16T04:54:50.622Z",
   "students": [
     {
       "id": "stu-1794804675148",
@@ -102,7 +102,282 @@
       "isSample": false
     }
   ],
-  "records": [],
+  "records": [
+    {
+      "id": "rec-1794804854108",
+      "studentId": "stu-1794804821341",
+      "subject": "통합사회",
+      "examCode": "2025-G1-06",
+      "date": "2026-11-10",
+      "mode": "choice",
+      "answers": {
+        "1": {
+          "selectedChoice": 5,
+          "isCorrect": true,
+          "wrongReason": ""
+        },
+        "2": {
+          "selectedChoice": 4,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "3": {
+          "selectedChoice": 3,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "4": {
+          "selectedChoice": 3,
+          "isCorrect": true,
+          "wrongReason": ""
+        },
+        "5": {
+          "selectedChoice": 3,
+          "isCorrect": true,
+          "wrongReason": ""
+        },
+        "6": {
+          "selectedChoice": 3,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "7": {
+          "selectedChoice": 2,
+          "isCorrect": true,
+          "wrongReason": ""
+        },
+        "8": {
+          "selectedChoice": 3,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "9": {
+          "selectedChoice": 3,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "10": {
+          "selectedChoice": 3,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "11": {
+          "selectedChoice": 3,
+          "isCorrect": true,
+          "wrongReason": ""
+        },
+        "12": {
+          "selectedChoice": 3,
+          "isCorrect": true,
+          "wrongReason": ""
+        },
+        "13": {
+          "selectedChoice": 3,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "14": {
+          "selectedChoice": 2,
+          "isCorrect": true,
+          "wrongReason": ""
+        },
+        "15": {
+          "selectedChoice": 1,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "16": {
+          "selectedChoice": 3,
+          "isCorrect": true,
+          "wrongReason": ""
+        },
+        "17": {
+          "selectedChoice": 3,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "18": {
+          "selectedChoice": 4,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "19": {
+          "selectedChoice": 4,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "20": {
+          "selectedChoice": 4,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "21": {
+          "selectedChoice": 4,
+          "isCorrect": true,
+          "wrongReason": ""
+        },
+        "22": {
+          "selectedChoice": 3,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "23": {
+          "selectedChoice": 3,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "24": {
+          "selectedChoice": 3,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "25": {
+          "selectedChoice": 2,
+          "isCorrect": false,
+          "wrongReason": ""
+        }
+      },
+      "totalScore": 16.5,
+      "correctCount": 9
+    },
+    {
+      "id": "rec-1794804885332",
+      "studentId": "stu-1794804821341",
+      "subject": "통합과학",
+      "examCode": "2025-G1-06",
+      "date": "2026-11-10",
+      "mode": "choice",
+      "answers": {
+        "1": {
+          "selectedChoice": 1,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "2": {
+          "selectedChoice": 2,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "3": {
+          "selectedChoice": 3,
+          "isCorrect": true,
+          "wrongReason": ""
+        },
+        "4": {
+          "selectedChoice": 3,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "5": {
+          "selectedChoice": 3,
+          "isCorrect": true,
+          "wrongReason": ""
+        },
+        "6": {
+          "selectedChoice": 3,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "7": {
+          "selectedChoice": 3,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "8": {
+          "selectedChoice": 3,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "9": {
+          "selectedChoice": 2,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "10": {
+          "selectedChoice": 3,
+          "isCorrect": true,
+          "wrongReason": ""
+        },
+        "11": {
+          "selectedChoice": 3,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "12": {
+          "selectedChoice": 3,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "13": {
+          "selectedChoice": 3,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "14": {
+          "selectedChoice": 3,
+          "isCorrect": true,
+          "wrongReason": ""
+        },
+        "15": {
+          "selectedChoice": 2,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "16": {
+          "selectedChoice": 2,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "17": {
+          "selectedChoice": 2,
+          "isCorrect": true,
+          "wrongReason": ""
+        },
+        "18": {
+          "selectedChoice": 2,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "19": {
+          "selectedChoice": 3,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "20": {
+          "selectedChoice": 3,
+          "isCorrect": true,
+          "wrongReason": ""
+        },
+        "21": {
+          "selectedChoice": 4,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "22": {
+          "selectedChoice": 5,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "23": {
+          "selectedChoice": 5,
+          "isCorrect": true,
+          "wrongReason": ""
+        },
+        "24": {
+          "selectedChoice": 5,
+          "isCorrect": false,
+          "wrongReason": ""
+        },
+        "25": {
+          "selectedChoice": 5,
+          "isCorrect": true,
+          "wrongReason": ""
+        }
+      },
+      "totalScore": 16.5,
+      "correctCount": 8
+    }
+  ],
   "customExams": [],
   "customQuestions": [],
   "counselorNotes": {}
