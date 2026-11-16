@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-16T06:00:25.570Z",
-  "updatedAt": 1794808825570,
+  "exportedAt": "2026-11-16T10:20:44.534Z",
+  "updatedAt": 1794824444534,
   "daily": {
     "categories": [
       {
@@ -541,6 +541,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1794808819651
+      },
+      {
+        "id": "todo_1794824442423_l90ad",
+        "title": "우진_심화영어독해 작성 진행 (피그말리온, 허클베리핀)",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-11-16",
+        "status": "IN_PROGRESS",
+        "memo": "",
+        "time": "",
+        "createdAt": 1794824442423
       }
     ]
   },
