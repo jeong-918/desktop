@@ -1,6 +1,6 @@
 {
   "app": "fineman2-1",
-  "exportedAt": "2026-11-13T11:51:42.933Z",
+  "exportedAt": "2026-11-16T06:24:03.059Z",
   "version": 5,
   "data": {
     "students": [
@@ -314,7 +314,7 @@
         "followUp": {
           "task": "심영독 : 세부자료 미확인 : 일단 일정 여유가 있으니까) 차차 논의",
           "date": "2026-12-08",
-          "done": false
+          "done": true
         },
         "createdAt": "2026-10-29T09:44:54.190Z"
       },
