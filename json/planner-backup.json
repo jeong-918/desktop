@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-16T10:20:44.534Z",
-  "updatedAt": 1794824444534,
+  "exportedAt": "2026-11-16T18:22:35.576Z",
+  "updatedAt": 1794853355576,
   "daily": {
     "categories": [
       {
@@ -536,7 +536,7 @@
         "id": "todo_1794808819651_3tpbm",
         "title": "규영선배 귤 입금 건 관련 계좌번호 요청",
         "categoryId": "cat_1792046741546",
-        "date": "2026-11-16",
+        "date": "2026-11-17",
         "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
@@ -544,9 +544,9 @@
       },
       {
         "id": "todo_1794824442423_l90ad",
-        "title": "우진_심화영어독해 작성 진행 (피그말리온, 허클베리핀)",
+        "title": "우진_심화영어독해 (피그말리온, 허클베리핀) -> 전송하기",
         "categoryId": "cat_1792046758202",
-        "date": "2026-11-16",
+        "date": "2026-11-17",
         "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
