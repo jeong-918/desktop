@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-15T17:53:25.789Z",
-  "updatedAt": 1794765205789,
+  "exportedAt": "2026-11-16T06:00:25.570Z",
+  "updatedAt": 1794808825570,
   "daily": {
     "categories": [
       {
@@ -531,6 +531,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1794720086978
+      },
+      {
+        "id": "todo_1794808819651_3tpbm",
+        "title": "규영선배 귤 입금 건 관련 계좌번호 요청",
+        "categoryId": "cat_1792046741546",
+        "date": "2026-11-16",
+        "status": "IN_PROGRESS",
+        "memo": "",
+        "time": "",
+        "createdAt": 1794808819651
       }
     ]
   },
