@@ -1,6 +1,6 @@
 {
   "app": "saga",
-  "exportedAt": "2026-11-15T11:39:37.178Z",
+  "exportedAt": "2026-11-16T04:51:20.697Z",
   "students": [
     {
       "id": "stu-sample-01",
@@ -10,6 +10,15 @@
       "targetScore": 44,
       "memo": "체험용 샘플 학생입니다. 실제 학생을 등록하거나 초기화할 수 있습니다.",
       "isSample": true
+    },
+    {
+      "id": "stu-1794804675148",
+      "name": "서도훈",
+      "grade": "고3",
+      "track": "자연",
+      "targetScore": 50,
+      "memo": "초기 인터뷰시 통합과학보다 통합사회가 다소 걱정",
+      "isSample": false
     }
   ],
   "records": [
