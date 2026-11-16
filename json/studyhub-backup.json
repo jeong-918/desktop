@@ -1,8 +1,8 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-16T07:41:01.381Z",
+  "exportedAt": "2026-11-16T07:51:15.829Z",
   "state": {
-    "trackingMode": "B",
+    "trackingMode": "A",
     "currentWeek": "2026-W45",
     "adminPass": "1234",
     "subjects": [
@@ -147,7 +147,20 @@
         }
       },
       "T1": {},
-      "test": {}
+      "test": {
+        "0-9": {
+          "subject": "영어",
+          "type": "오답정리",
+          "goal": "",
+          "color": "#fef3c7"
+        },
+        "0-10": {
+          "subject": "영어",
+          "type": "자습/문제풀이",
+          "goal": "",
+          "color": "#fef3c7"
+        }
+      }
     },
     "checks": {
       "std1": {
