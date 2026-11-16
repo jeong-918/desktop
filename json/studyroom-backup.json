@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-16T08:40:55.867Z",
+  "exportedAt": "2026-11-16T09:07:01.441Z",
   "version": 3,
   "data": {
     "students": [
@@ -1350,7 +1350,7 @@
           "time": ""
         },
         "2026-11-16": {
-          "status": "미입실(학원)",
+          "status": "입실",
           "time": ""
         }
       },
@@ -1462,7 +1462,7 @@
           "time": ""
         },
         "2026-11-16": {
-          "status": "미입실(학원)",
+          "status": "입실",
           "time": ""
         }
       },
@@ -1918,7 +1918,7 @@
           "time": ""
         },
         "2026-11-16": {
-          "status": "미입실(학원)",
+          "status": "입실",
           "time": ""
         }
       },
@@ -7804,6 +7804,27 @@
         "studentId": "stu_mvxa0yyv2w6o",
         "date": "2026-11-14",
         "content": "일요일 등원 (시험 대비 간 과목별 복습 목적 / 주간 리포트(월-토)기재된 학습량 외 일요일 학습 진행)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwj0l85km30k",
+        "studentId": "stu_16",
+        "date": "2026-11-16",
+        "content": "시험기간 직전보강으로 학습플래너 미작성",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwj0ldwo3xai",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-11-16",
+        "content": "시험기간 직전보강으로 학습플래너 미작성",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwj0liegjfgy",
+        "studentId": "stu_18",
+        "date": "2026-11-16",
+        "content": "시험기간 직전보강으로 학습플래너 미작성",
         "scope": "week"
       }
     ],
