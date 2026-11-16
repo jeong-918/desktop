@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-15T03:52:51.620Z",
+  "exportedAt": "2026-11-16T05:30:33.182Z",
   "version": 3,
   "data": {
     "students": [
@@ -7702,6 +7702,13 @@
         "studentId": "stu_mvxa0b80pl0k",
         "date": "2026-11-15",
         "content": "일요일 등원 (시험 대비 간 과목별 복습 목적 / 주간 리포트(월-토)기재된 학습량 외 일요일 학습 진행)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwitrhm33vk3",
+        "studentId": "stu_mvx9zk6negj6",
+        "date": "2026-11-14",
+        "content": "대체로 과목 간 학습 빈도가 꾸준합니댜. 지난주는 국어 학습이 없던만큼 이번주는 국어 학습도 이뤄지면 좋겠습니다.",
         "scope": "week"
       }
     ],
