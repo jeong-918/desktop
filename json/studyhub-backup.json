@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-15T11:39:18.214Z",
+  "exportedAt": "2026-11-16T07:41:01.381Z",
   "state": {
     "trackingMode": "B",
     "currentWeek": "2026-W45",
@@ -41,10 +41,10 @@
     ],
     "students": [
       {
-        "id": "T1",
-        "name": "테스트",
-        "pw": "1111",
-        "grade": "고1 공통"
+        "id": "test",
+        "name": "정영주(테스트)",
+        "pw": "0000",
+        "grade": "고3 문과"
       }
     ],
     "schedules": {
@@ -146,7 +146,8 @@
           "color": "#f3e8ff"
         }
       },
-      "T1": {}
+      "T1": {},
+      "test": {}
     },
     "checks": {
       "std1": {
