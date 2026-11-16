@@ -1,6 +1,6 @@
 {
   "app": "fineman2-1",
-  "exportedAt": "2026-11-16T06:25:04.641Z",
+  "exportedAt": "2026-11-16T10:07:02.255Z",
   "version": 5,
   "data": {
     "students": [
@@ -87,7 +87,7 @@
         "followUp": {
           "task": "심화영어독해 작품 분석 및 전달 (이블린, 허클베리핀, 수어, 점자, 피그말리온, 제임스)",
           "date": "2026-11-17",
-          "done": false
+          "done": true
         },
         "createdAt": "2026-11-16T06:24:59.067Z"
       },
