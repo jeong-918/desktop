@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-17T08:57:36.116Z",
-  "updatedAt": 1794905856116,
+  "exportedAt": "2026-11-17T18:33:05.683Z",
+  "updatedAt": 1794940385683,
   "daily": {
     "categories": [
       {
@@ -547,7 +547,7 @@
         "title": "우진_심화영어독해 (피그말리온, 허클베리핀) -> 전송하기",
         "categoryId": "cat_1792046758202",
         "date": "2026-11-17",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1794824442423
