@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-17T17:29:04.400Z",
+  "exportedAt": "2026-11-17T17:30:58.411Z",
   "state": {
     "trackingMode": "A",
     "currentWeek": "2026-W45",
@@ -148,18 +148,6 @@
       },
       "T1": {},
       "test": {
-        "0-9": {
-          "subject": "영어",
-          "type": "오답정리",
-          "goal": "",
-          "color": "#fef3c7"
-        },
-        "0-10": {
-          "subject": "영어",
-          "type": "자습/문제풀이",
-          "goal": "",
-          "color": "#fef3c7"
-        },
         "1-9": {
           "subject": "영어",
           "type": "오답정리",
@@ -201,6 +189,66 @@
           "type": "오답정리",
           "goal": "",
           "color": "#fef3c7"
+        },
+        "2-12": {
+          "subject": "탐구",
+          "type": "오답정리",
+          "goal": "",
+          "color": "#dcfce7"
+        },
+        "2-13": {
+          "subject": "탐구",
+          "type": "오답정리",
+          "goal": "",
+          "color": "#dcfce7"
+        },
+        "2-14": {
+          "subject": "탐구",
+          "type": "오답정리",
+          "goal": "",
+          "color": "#dcfce7"
+        },
+        "2-15": {
+          "subject": "탐구",
+          "type": "오답정리",
+          "goal": "",
+          "color": "#dcfce7"
+        },
+        "3-12": {
+          "subject": "국어",
+          "type": "오답정리",
+          "goal": "",
+          "color": "#fee2e2"
+        },
+        "3-13": {
+          "subject": "국어",
+          "type": "오답정리",
+          "goal": "",
+          "color": "#fee2e2"
+        },
+        "3-14": {
+          "subject": "국어",
+          "type": "오답정리",
+          "goal": "",
+          "color": "#fee2e2"
+        },
+        "3-15": {
+          "subject": "국어",
+          "type": "오답정리",
+          "goal": "",
+          "color": "#fee2e2"
+        },
+        "3-17": {
+          "subject": "수학",
+          "type": "인강",
+          "goal": "",
+          "color": "#dbeafe"
+        },
+        "3-18": {
+          "subject": "수학",
+          "type": "인강",
+          "goal": "",
+          "color": "#dbeafe"
         }
       }
     },
