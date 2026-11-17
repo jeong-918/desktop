@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-16T07:51:15.829Z",
+  "exportedAt": "2026-11-17T17:29:04.400Z",
   "state": {
     "trackingMode": "A",
     "currentWeek": "2026-W45",
@@ -157,6 +157,48 @@
         "0-10": {
           "subject": "영어",
           "type": "자습/문제풀이",
+          "goal": "",
+          "color": "#fef3c7"
+        },
+        "1-9": {
+          "subject": "영어",
+          "type": "오답정리",
+          "goal": "",
+          "color": "#fef3c7"
+        },
+        "1-10": {
+          "subject": "영어",
+          "type": "오답정리",
+          "goal": "",
+          "color": "#fef3c7"
+        },
+        "1-11": {
+          "subject": "영어",
+          "type": "오답정리",
+          "goal": "",
+          "color": "#fef3c7"
+        },
+        "1-12": {
+          "subject": "영어",
+          "type": "오답정리",
+          "goal": "",
+          "color": "#fef3c7"
+        },
+        "1-13": {
+          "subject": "영어",
+          "type": "오답정리",
+          "goal": "",
+          "color": "#fef3c7"
+        },
+        "1-14": {
+          "subject": "영어",
+          "type": "오답정리",
+          "goal": "",
+          "color": "#fef3c7"
+        },
+        "1-15": {
+          "subject": "영어",
+          "type": "오답정리",
           "goal": "",
           "color": "#fef3c7"
         }
