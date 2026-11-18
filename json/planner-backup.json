@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-18T07:21:57.370Z",
-  "updatedAt": 1794986517370,
+  "exportedAt": "2026-11-18T09:05:54.043Z",
+  "updatedAt": 1794992754043,
   "daily": {
     "categories": [
       {
@@ -507,7 +507,7 @@
         "title": "토요일 근무자 상황 확인 최종 픽스할 것.",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-18",
-        "status": "TODO",
+        "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
         "createdAt": 1794657220758
@@ -536,8 +536,8 @@
         "id": "todo_1794808819651_3tpbm",
         "title": "규영선배 귤 입금 건 관련 계좌번호 요청",
         "categoryId": "cat_1792046741546",
-        "date": "2026-11-17",
-        "status": "IN_PROGRESS",
+        "date": "2026-11-18",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1794808819651
@@ -557,7 +557,7 @@
         "title": "선우선생님_연대 활우 면접 1,2회차 면접지 완성",
         "categoryId": "cat_1792046741546",
         "date": "2026-11-18",
-        "status": "TODO",
+        "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
         "createdAt": 1794905856115
