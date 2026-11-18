@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-17T18:33:05.683Z",
-  "updatedAt": 1794940385683,
+  "exportedAt": "2026-11-18T07:21:57.370Z",
+  "updatedAt": 1794986517370,
   "daily": {
     "categories": [
       {
@@ -427,7 +427,7 @@
         "title": "헤어바이주 11시 30분 예약",
         "categoryId": "cat_1792046741546",
         "date": "2026-11-18",
-        "status": "TODO",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1794557023054
