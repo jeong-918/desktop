@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-18T09:05:54.043Z",
-  "updatedAt": 1794992754043,
+  "exportedAt": "2026-11-18T10:03:12.041Z",
+  "updatedAt": 1794996192041,
   "daily": {
     "categories": [
       {
@@ -557,7 +557,7 @@
         "title": "선우선생님_연대 활우 면접 1,2회차 면접지 완성",
         "categoryId": "cat_1792046741546",
         "date": "2026-11-18",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1794905856115
