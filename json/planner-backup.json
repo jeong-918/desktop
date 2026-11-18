@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-18T14:44:40.732Z",
-  "updatedAt": 1795013080732,
+  "exportedAt": "2026-11-18T18:29:46.978Z",
+  "updatedAt": 1795026586978,
   "daily": {
     "categories": [
       {
@@ -601,6 +601,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1795013080731
+      },
+      {
+        "id": "todo_1795026586978_pdoka",
+        "title": "민서 수업 진행",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-11-20",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1795026586978
       }
     ]
   },
