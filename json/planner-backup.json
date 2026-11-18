@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-18T10:03:12.041Z",
-  "updatedAt": 1794996192041,
+  "exportedAt": "2026-11-18T10:07:17.570Z",
+  "updatedAt": 1794996437570,
   "daily": {
     "categories": [
       {
@@ -506,7 +506,7 @@
         "id": "todo_1794657220758_qx1gt",
         "title": "토요일 근무자 상황 확인 최종 픽스할 것.",
         "categoryId": "cat_1792046767402",
-        "date": "2026-11-18",
+        "date": "2026-11-20",
         "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
