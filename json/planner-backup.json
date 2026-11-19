@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-19T05:42:08.335Z",
-  "updatedAt": 1795066928335,
+  "exportedAt": "2026-11-19T05:46:21.307Z",
+  "updatedAt": 1795067181307,
   "daily": {
     "categories": [
       {
@@ -611,6 +611,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1795026586978
+      },
+      {
+        "id": "todo_1795067181307_dteux",
+        "title": "연세대학교 활우 면접 2차 설계 완료",
+        "categoryId": "cat_1792046741546",
+        "date": "2026-11-20",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1795067181307
       }
     ]
   },
