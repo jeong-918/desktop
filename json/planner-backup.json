@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-19T09:42:53.415Z",
-  "updatedAt": 1795081373415,
+  "exportedAt": "2026-11-19T12:09:11.299Z",
+  "updatedAt": 1795090151299,
   "daily": {
     "categories": [
       {
@@ -297,7 +297,7 @@
         "title": "수능종료 : 민서 일정 잡을 것. (남은 3회)",
         "categoryId": "cat_1792046758202",
         "date": "2026-11-19",
-        "status": "DONE",
+        "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
         "createdAt": 1793688847861
@@ -606,7 +606,7 @@
         "id": "todo_1795026586978_pdoka",
         "title": "민서 수업 진행",
         "categoryId": "cat_1792046758202",
-        "date": "2026-11-20",
+        "date": "2026-11-21",
         "status": "TODO",
         "memo": "",
         "time": "",
