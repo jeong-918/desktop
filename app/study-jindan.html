@@ -1,0 +1,3408 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>학습관리센터 전용 학습 역량 진단 & 과목별 학습 방향성 진단 시스템</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    :root {
+      --bg-page: #f1f5f9;
+      --bg-card: #ffffff;
+      --bg-subtle: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border-color: #e2e8f0;
+    }
+    body.dark-theme {
+      --bg-page: #0b1120;
+      --bg-card: #1e293b;
+      --bg-subtle: #0f172a;
+      --text-main: #f8fafc;
+      --text-muted: #cbd5e1;
+      --border-color: #334155;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+    }
+    body.dark-theme .bg-white {
+      background-color: #1e293b !important;
+      color: #f8fafc !important;
+    }
+    body.dark-theme .bg-slate-50,
+    body.dark-theme .bg-slate-50\/70 {
+      background-color: #0f172a !important;
+      color: #e2e8f0 !important;
+    }
+    body.dark-theme .bg-slate-100 {
+      background-color: #334155 !important;
+      color: #f1f5f9 !important;
+    }
+    body.dark-theme .text-slate-900,
+    body.dark-theme .text-slate-800 {
+      color: #f8fafc !important;
+    }
+    body.dark-theme .text-slate-700,
+    body.dark-theme .text-slate-600,
+    body.dark-theme .text-slate-500 {
+      color: #cbd5e1 !important;
+    }
+    body.dark-theme .border-slate-200,
+    body.dark-theme .border-slate-300,
+    body.dark-theme .border-slate-100 {
+      border-color: #334155 !important;
+    }
+    body {
+      font-family: 'Noto Sans KR', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      overflow-x: hidden;
+      overflow-wrap: break-word;
+      word-break: keep-all;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .likert-btn {
+      transition: all 0.15s ease-in-out;
+    }
+    .likert-btn.selected-risk {
+      background-color: #e11d48 !important;
+      color: #ffffff !important;
+      border-color: #e11d48 !important;
+      font-weight: 700;
+      box-shadow: 0 4px 10px rgba(225, 29, 72, 0.25);
+    }
+    .likert-btn.selected-skill {
+      background-color: #2563eb !important;
+      color: #ffffff !important;
+      border-color: #2563eb !important;
+      font-weight: 700;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+    }
+    .likert-btn.selected-style {
+      background-color: #4f46e5 !important;
+      color: #ffffff !important;
+      border-color: #4f46e5 !important;
+      font-weight: 700;
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.25);
+    }
+    .unanswered-highlight {
+      ring: 2px solid #e11d48 !important;
+      border-color: #e11d48 !important;
+      background-color: #fff1f2 !important;
+    }
+    @media print {
+      body, body.dark-theme {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+      }
+      body.dark-theme .bg-white {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-full {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+      }
+      .print-break-inside-avoid {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .print-border {
+        border: 1px solid #cbd5e1 !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- 상단 글로벌 헤더 -->
+  <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-40 no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center shadow-md shrink-0">
+          <i class="fa-solid fa-chart-pie text-white text-lg"></i>
+        </div>
+        <div>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">MLST-II · U&I · SLT 하이브리드</span>
+            <span class="text-[11px] font-semibold text-emerald-400">2022 개정 교육과정 · 코어 엔진 QA 검증</span>
+          </div>
+          <h1 class="text-base sm:text-xl font-extrabold tracking-tight text-white">학습관리센터 학습 역량 진단 & 과목별 학습 방향성 설계 시스템</h1>
+        </div>
+      </div>
+
+      <!-- 메인 네비게이션 탭 & 테마 토글 -->
+      <div class="flex flex-wrap items-center gap-2">
+        <nav class="flex flex-wrap items-center gap-1 bg-slate-800 p-1 rounded-xl border border-slate-700">
+          <button id="nav-tab-report" type="button" class="nav-tab-btn px-3 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-indigo-600 text-white shadow">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>분석 리포트 & 과목 가이드</span>
+          </button>
+          <button id="nav-tab-survey" type="button" class="nav-tab-btn px-3 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-slate-300 hover:text-white hover:bg-slate-700/60">
+            <i class="fa-solid fa-tablet-screen-button"></i>
+            <span>현장 직접 검사 (설문)</span>
+          </button>
+          <button id="nav-tab-sync" type="button" class="nav-tab-btn px-3 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-slate-300 hover:text-white hover:bg-slate-700/60">
+            <i class="fa-brands fa-google-drive"></i>
+            <span>구글폼·시트 연동 / DB관리</span>
+          </button>
+          <button id="nav-tab-engine" type="button" class="nav-tab-btn px-3 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-slate-300 hover:text-white hover:bg-slate-700/60">
+            <i class="fa-solid fa-microchip"></i>
+            <span>코어 엔진 · QA 디버거</span>
+          </button>
+        </nav>
+
+        <button id="btn-toggle-theme" type="button" class="px-3 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-200 hover:bg-slate-700 border border-slate-700 transition flex items-center gap-1.5" title="라이트/다크 테마 전환">
+          <i id="theme-icon" class="fa-solid fa-moon text-amber-300"></i>
+          <span id="theme-label" class="hidden sm:inline">다크 모드</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 토스트 알림 컨테이너 -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 no-print pointer-events-none max-w-sm"></div>
+
+  <!-- 메인 워크스페이스 -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 print-full">
+
+    <!-- ==========================================
+         VIEW 1: 분석 리포트 & 과목별 학습 방향성 설계 가이드
+         ========================================== -->
+    <section id="view-report" class="space-y-6">
+
+      <!-- 학생 선택 & 빠른 도구 컨트롤 바 (인쇄 시 숨김) -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 no-print">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div class="flex flex-wrap items-center gap-3 flex-1">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wider"><i class="fa-solid fa-user-graduate mr-1 text-indigo-600"></i>진단 학생 선택</span>
+              <span id="student-count-badge" class="px-2 py-0.5 text-xs font-bold rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">4명</span>
+            </div>
+            <div class="relative flex-1 min-w-[220px] max-w-md">
+              <select id="student-select" class="w-full pl-3.5 pr-9 py-2 text-sm font-bold bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-800">
+              </select>
+            </div>
+            <div class="relative min-w-[160px]">
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+              <input id="student-search-input" type="text" placeholder="이름 또는 학년 검색..." class="w-full pl-8 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button id="btn-go-new-survey" type="button" class="px-3 py-2 rounded-xl text-xs font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 transition flex items-center gap-1.5">
+              <i class="fa-solid fa-plus"></i>
+              <span>신규 학생 바로 검사</span>
+            </button>
+            <button id="btn-edit-current-student" type="button" class="px-3 py-2 rounded-xl text-xs font-bold bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200 transition flex items-center gap-1.5" title="현재 학생의 설문 응답을 불러와 수정하거나 2차 재진단 점수로 갱신합니다">
+              <i class="fa-solid fa-pen-to-square"></i>
+              <span>응답 수정 / 재진단</span>
+            </button>
+            <button id="btn-copy-kakao-summary" type="button" class="px-3 py-2 rounded-xl text-xs font-bold bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200 transition flex items-center gap-1.5" title="학부모님 카카오톡/문자 발송용 상담 요약본을 클립보드에 복사합니다">
+              <i class="fa-solid fa-comment-sms"></i>
+              <span>학부모 카톡 요약 복사</span>
+            </button>
+            <button id="btn-delete-student" type="button" class="px-2.5 py-2 rounded-xl text-xs font-semibold bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 transition flex items-center gap-1">
+              <i class="fa-solid fa-trash-can"></i>
+              <span>현재 기록 삭제</span>
+            </button>
+            <button id="btn-print-report" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-white hover:bg-slate-800 shadow-sm transition flex items-center gap-1.5">
+              <i class="fa-solid fa-print"></i>
+              <span>A4 상담 리포트 인쇄 / PDF</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 빠른 학생 전환 알약 버튼 리스트 -->
+        <div id="student-quick-pills" class="mt-3 pt-3 border-t border-slate-100 flex flex-wrap items-center gap-2">
+        </div>
+      </div>
+
+      <!-- 리포트 본문 컨테이너 -->
+      <div id="report-paper" class="space-y-6">
+
+        <!-- 1. 리포트 헤더 & 학생 프로파일 요약 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden print-border print-break-inside-avoid">
+          <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/30 border border-indigo-400/40 text-indigo-200">학습 성향 & 전략 종합 진단표</span>
+                <span id="rep-date" class="text-xs text-slate-300">진단일: 2026-11-18</span>
+                <span id="rep-secondary-badge" class="hidden px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-400/20 border border-amber-300/40 text-amber-200"></span>
+              </div>
+              <h2 class="text-2xl font-extrabold tracking-tight flex flex-wrap items-center gap-2.5">
+                <span id="rep-name">김민준</span>
+                <span id="rep-grade-badge" class="text-sm font-bold px-3 py-0.5 rounded-lg bg-white/15 text-white">고1</span>
+                <span id="rep-school" class="text-sm font-normal text-slate-300">다올고등학교</span>
+              </h2>
+              <p id="rep-goal" class="text-xs text-slate-300 mt-1">목표/중점 과목: 수학·과학 내신 1등급 도약 및 비문학 독해 구조화</p>
+            </div>
+
+            <!-- 종합 트랙 배지 (Red / Yellow A / Yellow B / Green) -->
+            <div id="rep-zone-card" class="px-5 py-3.5 rounded-2xl border flex items-center gap-3.5 min-w-[260px]">
+              <div id="rep-zone-icon" class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl font-black shrink-0">
+              </div>
+              <div>
+                <div class="text-[11px] font-bold uppercase tracking-wider opacity-85">센터 설계 트랙 판정 (Triage)</div>
+                <div id="rep-zone-title" class="text-base font-extrabold leading-snug">Yellow Zone (고군분투형)</div>
+                <div id="rep-zone-sub" class="text-xs opacity-90 mt-0.5">의지는 높으나 메타인지·조직화 전략 부재</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4대 핵심 지표 & 타고난 학습 성향 캐릭터 요약 -->
+          <div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 bg-slate-50/70">
+            <!-- 지표 1: 타고난 학습 성향 캐릭터 (U&I + EBSi) -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-bold text-slate-500">타고난 학습 성향 (U&I·EBSi)</span>
+                <i class="fa-solid fa-compass text-indigo-600"></i>
+              </div>
+              <div id="rep-style-title" class="text-base font-extrabold text-indigo-950">탐구형 · 숲(전체) 선호</div>
+              <p id="rep-style-desc" class="text-xs text-slate-600 mt-1 leading-relaxed">원리를 이해해야 직성이 풀리며 전체 맥락을 먼저 볼 때 효율이 극대화되는 유형</p>
+              <div id="rep-style-tags" class="mt-2.5 flex flex-wrap gap-1"></div>
+            </div>
+
+            <!-- 지표 2: Part 1 심리 리스크 지수 -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-bold text-slate-500">Part 1. 학습 심리 리스크</span>
+                <span id="rep-risk-status-pill" class="px-2 py-0.5 rounded text-[11px] font-bold">양호</span>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span id="rep-risk-score" class="text-2xl font-extrabold text-slate-900">11</span>
+                <span class="text-xs text-slate-500">/ 25점 (고위험 문항 <strong id="rep-risk-high-cnt">0</strong>개)</span>
+              </div>
+              <p id="rep-risk-summary" class="text-xs text-slate-600 mt-1.5 leading-relaxed">심리적 저항이나 불안 장벽이 낮아 즉각적인 학습 전략 코칭 투입이 가능합니다.</p>
+            </div>
+
+            <!-- 지표 3: Part 2 학습 전략 역량 점수 -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-bold text-slate-500">Part 2. 학습 전략 수행력</span>
+                <span id="rep-skill-status-pill" class="px-2 py-0.5 rounded text-[11px] font-bold">교정 시급</span>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span id="rep-skill-score" class="text-2xl font-extrabold text-blue-700">52</span>
+                <span class="text-xs text-slate-500">/ 100점 환산 (평균 <strong id="rep-skill-avg">2.6</strong>/5.0)</span>
+              </div>
+              <p id="rep-skill-summary" class="text-xs text-slate-600 mt-1.5 leading-relaxed">시간관리·환경통제는 양호하나 메타인지와 구조화 필기 기술이 집중 보완 대상입니다.</p>
+            </div>
+
+            <!-- 지표 4: 최우선 교정 타겟 (Top Priority) -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-bold text-slate-500">최우선 교정 타겟 역량</span>
+                <i class="fa-solid fa-bullseye text-rose-600"></i>
+              </div>
+              <div id="rep-weakest-list" class="flex flex-wrap gap-1.5 my-1"></div>
+              <p id="rep-weakest-guide" class="text-xs text-slate-600 mt-1.5 leading-relaxed">해설지 의존도를 낮추는 오답 원인 1줄 기록 및 단원 구조도 훈련을 1순위로 배치합니다.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. 데이터 시각화 차트 영역 (Part 1 심리 리스크 & Part 2 9대 학습 전략) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 print-break-inside-avoid">
+          <!-- 좌측: Part 1 심리 및 정서 리스크 바 차트 (5칸) -->
+          <div class="lg:col-span-5 bg-white rounded-2xl shadow-sm border border-slate-200 p-5 print-border flex flex-col justify-between">
+            <div>
+              <div class="flex flex-wrap items-center justify-between gap-1 mb-1">
+                <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                  <span>Part 1. 학습 심리 및 정서 장벽 (Risk 점검)</span>
+                </h3>
+                <span class="text-[11px] font-semibold text-rose-600 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">4~5점 위험 (2개↑ Red Zone)</span>
+              </div>
+              <p class="text-xs text-slate-500 mb-4">공부를 방해하는 내면의 불안, 무기력, 반항심 등 심리적 브레이크 요인을 진단합니다.</p>
+              <div class="relative h-64 w-full">
+                <canvas id="chart-risk-bar"></canvas>
+              </div>
+            </div>
+            <div id="risk-detail-badges" class="mt-4 pt-3 border-t border-slate-100 grid grid-cols-1 gap-1.5 text-xs">
+            </div>
+          </div>
+
+          <!-- 우측: Part 2 9대 학습 전략 프로파일 레이더 차트 (7칸) -->
+          <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-slate-200 p-5 print-border flex flex-col justify-between">
+            <div>
+              <div class="flex flex-wrap items-center justify-between gap-1 mb-1">
+                <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                  <span>Part 2. 9대 핵심 학습 전략 밸런스 (Skill 점검)</span>
+                </h3>
+                <span class="text-[11px] font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">낮을수록 코칭 시급 (권장 3.8점)</span>
+              </div>
+              <p class="text-xs text-slate-500 mb-3">실제 성적을 올리는 인지·행동 조절 기술(시간관리, 환경통제, 메타인지, 조직화, 과제집착력 등)을 측정합니다.</p>
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                <div class="md:col-span-7 relative h-72 w-full">
+                  <canvas id="chart-skill-radar"></canvas>
+                </div>
+                <div id="skill-score-table" class="md:col-span-5 space-y-1.5 text-xs">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. 진단 결과 해석 및 원장/매니저 현장 상담 가이드 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 print-border print-break-inside-avoid">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <div>
+              <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">STEP 1 & STEP 2 Consultation Guide</span>
+              <h3 class="text-lg font-extrabold text-slate-900 mt-0.5">진단 결과 정밀 해석 및 현장 학습 방향성 설계 스크립트</h3>
+            </div>
+            <span class="text-xs text-slate-500 bg-slate-100 px-3 py-1 rounded-full font-medium">학생 1:1 팩트 체크 및 학부모 상담 브리핑용</span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <!-- 박스 1: 심리 & 학습 행동 패턴 종합 분석 -->
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+              <div class="flex items-center gap-2 text-sm font-extrabold text-slate-900 mb-2">
+                <i class="fa-solid fa-magnifying-glass-chart text-indigo-600"></i>
+                <span>현재 학습 상태 정밀 진단</span>
+              </div>
+              <p id="script-status-analysis" class="text-xs text-slate-700 leading-relaxed space-y-2"></p>
+            </div>
+
+            <!-- 박스 2: 학생 1:1 대면 상담 화법 (팩트 체크 & 동기부여) -->
+            <div class="bg-indigo-50/60 rounded-xl p-4 border border-indigo-200">
+              <div class="flex items-center gap-2 text-sm font-extrabold text-indigo-950 mb-2">
+                <i class="fa-solid fa-comments text-indigo-600"></i>
+                <span>학생 1:1 상담 팩트체크 화법</span>
+              </div>
+              <blockquote id="script-student-talk" class="text-xs text-indigo-950 leading-relaxed italic bg-white/80 p-3 rounded-lg border border-indigo-100"></blockquote>
+            </div>
+
+            <!-- 박스 3: 학부모 상담 브리핑 & 센터 관리 처방 -->
+            <div class="bg-emerald-50/60 rounded-xl p-4 border border-emerald-200">
+              <div class="flex items-center gap-2 text-sm font-extrabold text-emerald-950 mb-2">
+                <i class="fa-solid fa-user-check text-emerald-600"></i>
+                <span>학부모 브리핑 & 센터 관리 솔루션</span>
+              </div>
+              <p id="script-parent-brief" class="text-xs text-emerald-950 leading-relaxed"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. 2022 개정 교육과정 기준 학년별·과목별 세부 학습 방향성 가이드 (전체 과목 탭 조회) -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 print-border">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-indigo-100 text-indigo-800">2022 개정 교육과정 전 학년·전 과목 매트릭스</span>
+                <span class="text-xs font-semibold text-rose-600"><i class="fa-solid fa-fire mr-1"></i>학생 취약 역량과 직결된 과목은 자동 하이라이트됩니다</span>
+              </div>
+              <h3 class="text-lg font-extrabold text-slate-900 mt-1">학년별 · 6대 교과군별 세부 학습 방향성 및 코칭 매뉴얼</h3>
+              <p class="text-xs text-slate-500 mt-0.5">상단 탭을 클릭하여 중3부터 고3(일반선택·진로선택)까지 모든 과목의 학습 전략 가이드를 자유롭게 조회할 수 있습니다.</p>
+            </div>
+
+            <!-- 현재 학생 학년 자동 동기화 토글 버튼 -->
+            <div class="flex flex-wrap items-center gap-2 no-print">
+              <button id="btn-sync-student-grade" type="button" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 transition flex items-center gap-1.5">
+                <i class="fa-solid fa-crosshairs"></i>
+                <span id="sync-grade-label">현재 학생 학년(고1)만 보기</span>
+              </button>
+              <button id="btn-show-all-subjects" type="button" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300 transition">
+                전체 학년·과목 펼치기
+              </button>
+            </div>
+          </div>
+
+          <!-- 2단 탭 바: 1단(학년/과정 탭) & 2단(6대 교과군 탭) -->
+          <div class="space-y-2.5 mb-6 no-print">
+            <!-- 1단: 학년/교육과정 구분 탭 -->
+            <div class="flex flex-wrap items-center gap-1.5 bg-slate-100 p-1.5 rounded-xl">
+              <span class="text-[11px] font-bold text-slate-500 px-2.5 py-1">학년·과정</span>
+              <button type="button" data-grade-tab="all" class="grade-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold transition bg-slate-900 text-white shadow-sm">전체 학년 보기</button>
+              <button type="button" data-grade-tab="m3" class="grade-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:bg-white">중3 (기반·습관 형성기)</button>
+              <button type="button" data-grade-tab="h1" class="grade-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:bg-white">고1 (2022 공통·통합사고기)</button>
+              <button type="button" data-grade-tab="h23_gen" class="grade-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:bg-white">고2·3 일반선택 (수능 코어)</button>
+              <button type="button" data-grade-tab="h23_car" class="grade-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:bg-white">고2·3 진로선택 (심화 탐구)</button>
+            </div>
+
+            <!-- 2단: 6대 교과군 탭 -->
+            <div class="flex flex-wrap items-center gap-1.5 bg-slate-100 p-1.5 rounded-xl">
+              <span class="text-[11px] font-bold text-slate-500 px-2.5 py-1">교과 영역</span>
+              <button type="button" data-subj-tab="all" class="subj-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold transition bg-indigo-600 text-white shadow-sm">전체 교과 (6대 영역)</button>
+              <button type="button" data-subj-tab="math" class="subj-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:bg-white"><i class="fa-solid fa-square-root-variable mr-1 text-blue-600"></i>수학</button>
+              <button type="button" data-subj-tab="korean" class="subj-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:bg-white"><i class="fa-solid fa-book-open mr-1 text-emerald-600"></i>국어</button>
+              <button type="button" data-subj-tab="english" class="subj-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:bg-white"><i class="fa-solid fa-language mr-1 text-purple-600"></i>영어</button>
+              <button type="button" data-subj-tab="science" class="subj-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:bg-white"><i class="fa-solid fa-flask mr-1 text-cyan-600"></i>과학</button>
+              <button type="button" data-subj-tab="social" class="subj-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:bg-white"><i class="fa-solid fa-earth-asia mr-1 text-amber-600"></i>사회·역사</button>
+              <button type="button" data-subj-tab="history" class="subj-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:bg-white"><i class="fa-solid fa-landmark mr-1 text-rose-600"></i>한국사</button>
+            </div>
+          </div>
+
+          <!-- 과목별 가이드 카드 그리드 -->
+          <div id="subject-guide-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          </div>
+        </div>
+
+        <!-- 5. STEP 3. 이번 달 집중 행동 처방(Action Plan) & 원장님 종합 소견 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 print-border print-break-inside-avoid">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <div>
+              <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">STEP 3 Monitoring & Action Plan</span>
+              <h3 class="text-lg font-extrabold text-slate-900 mt-0.5">이번 달 집중 교정 행동 목표 & 담당 컨설턴트 종합 소견</h3>
+            </div>
+            <button id="btn-reset-prescription" type="button" class="no-print px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300 transition flex items-center gap-1.5">
+              <i class="fa-solid fa-wand-magic-sparkles text-indigo-600"></i>
+              <span>학생 데이터 기반 추천 처방 자동 생성</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- 좌측: 이번 달 집중 행동 목표 리스트 (6칸) -->
+            <div class="lg:col-span-6 space-y-3">
+              <div class="flex items-center justify-between">
+                <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wider">
+                  <i class="fa-solid fa-list-check text-indigo-600 mr-1"></i>이번 달 핵심 행동 교정 목표 (센터 매일/매주 점검 항목)
+                </label>
+                <span class="text-[11px] text-slate-500">권장: 1~3가지 집중 실천</span>
+              </div>
+
+              <!-- 선택된 액션 플랜 리스트 -->
+              <ul id="action-plan-list" class="space-y-2">
+              </ul>
+
+              <!-- 직접 액션 플랜 추가 입력창 (인쇄 시 숨김) -->
+              <div class="flex gap-2 no-print pt-1">
+                <input id="custom-action-input" type="text" placeholder="직접 추가할 행동 목표 입력 (예: 매일 수학 오답 원인 1줄 작성 검사)" class="flex-1 px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                <button id="btn-add-action" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition shrink-0">
+                  + 목표 추가
+                </button>
+              </div>
+
+              <!-- 원클릭 추천 처방 칩 (인쇄 시 숨김) -->
+              <div class="no-print pt-2">
+                <div class="text-[11px] font-bold text-slate-500 mb-1.5">원클릭 추천 행동 처방 태그 (클릭 시 위 목록에 추가):</div>
+                <div id="recommended-action-chips" class="flex flex-wrap gap-1.5">
+                </div>
+              </div>
+            </div>
+
+            <!-- 우측: 담당 원장님 / 매니저 종합 코멘트 및 재진단 스케줄 (6칸) -->
+            <div class="lg:col-span-6 flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <label for="counselor-comment-textarea" class="text-xs font-extrabold text-slate-700 uppercase tracking-wider">
+                    <i class="fa-solid fa-pen-nib text-indigo-600 mr-1"></i>담당 원장 / 학습 매니저 종합 상담 소견
+                  </label>
+                  <span id="comment-save-indicator" class="text-[11px] font-semibold text-emerald-600">자동 저장됨</span>
+                </div>
+                <textarea id="counselor-comment-textarea" rows="5" class="w-full p-3.5 text-xs leading-relaxed text-slate-800 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="학생 및 학부모 상담 시 전달할 맞춤 소견과 관리 방향을 입력하세요."></textarea>
+              </div>
+
+              <!-- 3~6개월 주기 재진단 & 서명 박스 -->
+              <div class="bg-slate-50 rounded-xl p-3.5 border border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                <div>
+                  <span class="text-[11px] text-slate-500 block">1차 온보딩 진단일</span>
+                  <strong id="rep-footer-date" class="text-slate-900 font-bold">2026-11-18</strong>
+                </div>
+                <div>
+                  <span class="text-[11px] text-slate-500 block">2차 추적 재진단 예정</span>
+                  <strong id="rep-next-date" class="text-indigo-700 font-bold">2027-02-18 (12주 후)</strong>
+                </div>
+                <div>
+                  <span class="text-[11px] text-slate-500 block">진단 설계</span>
+                  <input id="counselor-name-input" type="text" value="정영주 입시컨설턴트" class="font-bold text-slate-900 bg-transparent border-b border-slate-300 focus:outline-none focus:border-indigo-600 w-full" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         VIEW 2: 현장 직접 검사 (학생용 태블릿/PC 설문)
+         ========================================== -->
+    <section id="view-survey" class="hidden space-y-6 no-print">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-gradient-to-r from-indigo-900 via-blue-900 to-slate-900 text-white p-6">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <span id="survey-mode-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-white/15 text-indigo-200">센터 자체 진단평가지 (소요 시간 5~7분)</span>
+              </div>
+              <h2 id="survey-header-title" class="text-xl sm:text-2xl font-extrabold mt-1">학생 학습 역량 및 성향 진단 검사</h2>
+              <p class="text-xs sm:text-sm text-indigo-100 mt-1">좋은 점수를 받기 위한 시험이 아닙니다. 나에게 가장 잘 맞는 공부 방법과 전략을 찾기 위해 솔직하게 답변해 주세요.</p>
+            </div>
+            <div class="bg-white/10 backdrop-blur px-4 py-3 rounded-xl border border-white/15 text-right">
+              <div class="text-xs text-indigo-200">응답 진행률</div>
+              <div id="survey-progress-text" class="text-xl font-black text-white">0 / 19 문항</div>
+            </div>
+          </div>
+          <div class="w-full bg-white/15 h-2 rounded-full mt-4 overflow-hidden">
+            <div id="survey-progress-bar" class="bg-emerald-400 h-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <form id="direct-survey-form" class="p-4 sm:p-6 space-y-8" novalidate>
+          <!-- Step 0: 학생 기본 정보 -->
+          <div class="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200 space-y-4">
+            <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-slate-900 text-white text-xs flex items-center justify-center font-bold">1</span>
+              <span>학생 기본 정보 입력</span>
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">학생 이름 <span class="text-rose-500">*</span></label>
+                <input id="sv-name" type="text" required placeholder="예: 홍길동" class="w-full px-3.5 py-2 text-sm bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">현재 학년 <span class="text-rose-500">*</span></label>
+                <select id="sv-grade" class="w-full px-3.5 py-2 text-sm bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 font-semibold">
+                  <option value="중3">중학교 3학년 (중3)</option>
+                  <option value="고1" selected>고등학교 1학년 (고1)</option>
+                  <option value="고2">고등학교 2학년 (고2)</option>
+                  <option value="고3">고등학교 3학년 (고3)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">학교명</label>
+                <input id="sv-school" type="text" placeholder="예: 안성고 / 다올중" class="w-full px-3.5 py-2 text-sm bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">고민 과목 또는 목표</label>
+                <input id="sv-goal" type="text" placeholder="예: 수학 모의고사, 국어 비문학 시간 부족" class="w-full px-3.5 py-2 text-sm bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Part 0: 타고난 학습 성향 및 인지 스타일 (U&I + EBSi 4문항) -->
+          <div class="space-y-4">
+            <div class="border-b border-slate-200 pb-2">
+              <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Part 0. Learning Personality & Cognitive Preference</span>
+              <h3 class="text-base font-extrabold text-slate-900 mt-0.5">기본 학습 성향 및 정보 처리 스타일 (4문항)</h3>
+              <p class="text-xs text-slate-500">내가 공부할 때 가장 편안하게 느끼는 방식과 두뇌 정보 처리 선호도를 선택해 주세요.</p>
+            </div>
+
+            <!-- 문항 S1: U&I 학습성격 4유형 -->
+            <div id="sv-card-ui-type" class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 transition">
+              <div class="text-sm font-bold text-slate-900 mb-3">
+                <span class="inline-block px-2 py-0.5 rounded bg-indigo-600 text-white text-xs mr-1.5">성향 1</span>
+                다음 4가지 공부 스타일 중 나에게 가장 가까운 모습은 무엇인가요? <span class="text-rose-500">*</span>
+              </div>
+              <div id="sv-ui-type-group" class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                <label class="cursor-pointer flex items-start gap-3 p-3 rounded-xl border border-slate-200 bg-white hover:border-indigo-400 transition">
+                  <input type="radio" name="sv_ui_type" value="규범형" class="mt-1 accent-indigo-600" />
+                  <div class="text-xs">
+                    <strong class="text-slate-900 block font-bold">① 규범형 (체계·계획 선호)</strong>
+                    <span class="text-slate-600">규칙과 계획표를 중시하며, 정돈된 좌석과 체계적인 강의·교재를 선호한다.</span>
+                  </div>
+                </label>
+                <label class="cursor-pointer flex items-start gap-3 p-3 rounded-xl border border-slate-200 bg-white hover:border-indigo-400 transition">
+                  <input type="radio" name="sv_ui_type" value="탐구형" class="mt-1 accent-indigo-600" />
+                  <div class="text-xs">
+                    <strong class="text-slate-900 block font-bold">② 탐구형 (원리·호기심 중심)</strong>
+                    <span class="text-slate-600">지적 호기심이 많고 왜 그런지 원리를 이해해야 직성이 풀리며 단순 반복을 지루해한다.</span>
+                  </div>
+                </label>
+                <label class="cursor-pointer flex items-start gap-3 p-3 rounded-xl border border-slate-200 bg-white hover:border-indigo-400 transition">
+                  <input type="radio" name="sv_ui_type" value="행동형" class="mt-1 accent-indigo-600" />
+                  <div class="text-xs">
+                    <strong class="text-slate-900 block font-bold">③ 행동형 (활동·단기성취 중심)</strong>
+                    <span class="text-slate-600">활동적이고 승부욕이 있으며, 지루함을 못 견뎌 단기 목표와 즉각적인 성취 보상이 필요하다.</span>
+                  </div>
+                </label>
+                <label class="cursor-pointer flex items-start gap-3 p-3 rounded-xl border border-slate-200 bg-white hover:border-indigo-400 transition">
+                  <input type="radio" name="sv_ui_type" value="이상형" class="mt-1 accent-indigo-600" />
+                  <div class="text-xs">
+                    <strong class="text-slate-900 block font-bold">④ 이상형 (의미·관계 중심)</strong>
+                    <span class="text-slate-600">공부의 의미와 가치를 중시하며, 선생님과의 유대감이나 학습 분위기가 성적에 큰 영향을 준다.</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- 문항 S2~S4: EBSi 양극단 선호도 척도 -->
+            <div id="survey-style-questions" class="space-y-3"></div>
+          </div>
+
+          <!-- Part 1: 학습 심리 및 정서 상태 (Risk 점검 1~5번) -->
+          <div class="space-y-4">
+            <div class="border-b border-slate-200 pb-2 flex flex-wrap items-end justify-between gap-2">
+              <div>
+                <span class="text-xs font-bold text-rose-600 uppercase tracking-wider">Part 1. Psychological Risk Check</span>
+                <h3 class="text-base font-extrabold text-slate-900 mt-0.5">학습 심리 및 정서 상태 점검 (문항 1 ~ 5번)</h3>
+                <p class="text-xs text-slate-500">점수가 높을수록 공부의 발목을 잡는 심리적 장벽이 큰 상태입니다. (1점: 전혀 아니다 ~ 5점: 매우 그렇다)</p>
+              </div>
+            </div>
+            <div id="survey-part1-questions" class="space-y-3"></div>
+          </div>
+
+          <!-- Part 2: 학습 전략 및 실천 역량 (Skill 점검 6~15번) -->
+          <div class="space-y-4">
+            <div class="border-b border-slate-200 pb-2 flex flex-wrap items-end justify-between gap-2">
+              <div>
+                <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Part 2. Learning Strategy & Skill Check</span>
+                <h3 class="text-base font-extrabold text-slate-900 mt-0.5">학습 전략 및 실천 역량 점검 (문항 6 ~ 15번)</h3>
+                <p class="text-xs text-slate-500">실제 성적을 만들어내는 공부 기술입니다. 평소 나의 실제 행동에 가장 가까운 번호를 선택하세요.</p>
+              </div>
+            </div>
+            <div id="survey-part2-questions" class="space-y-3"></div>
+          </div>
+
+          <!-- 제출 버튼 영역 -->
+          <div class="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+            <button id="btn-fill-sample-survey" type="button" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300 transition">
+              <i class="fa-solid fa-dice mr-1"></i>테스트용 응답 자동 채우기
+            </button>
+            <div class="flex flex-wrap items-center gap-3">
+              <button id="btn-reset-survey" type="button" class="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
+                초기화
+              </button>
+              <button id="btn-submit-survey" type="submit" class="px-6 py-3 rounded-xl text-sm font-extrabold bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-500/25 transition flex items-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span id="btn-submit-survey-label">진단 제출 및 분석 리포트 생성</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         VIEW 3: 구글폼·구글시트 연동 및 DB 관리 센터
+         ========================================== -->
+    <section id="view-sync" class="hidden space-y-6 no-print">
+
+      <!-- 상단 안내 배너 -->
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-6 shadow-sm">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">GitHub Pages + Google Forms 완벽 호환 아키텍처</span>
+            <h2 class="text-xl font-extrabold mt-1.5">구글폼 · 구글 스프레드시트 연동 & 데이터 백업 센터</h2>
+            <p class="text-xs sm:text-sm text-slate-300 mt-1">
+              구글폼으로 제출된 설문 결과는 구글 드라이브의 <strong>구글 스프레드시트</strong>에 저장됩니다. 아래 3가지 방법 중 원하시는 방식으로 이 HTML 웹앱과 즉시 연동할 수 있습니다.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 shrink-0">
+            <button id="btn-export-json" type="button" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-white text-slate-900 hover:bg-slate-100 transition flex items-center gap-1.5 shadow">
+              <i class="fa-solid fa-download text-indigo-600"></i>
+              <span>전체 학생 DB 백업 (JSON)</span>
+            </button>
+            <label class="cursor-pointer px-4 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-500 transition flex items-center gap-1.5 shadow">
+              <i class="fa-solid fa-upload"></i>
+              <span>JSON 백업 파일 복원</span>
+              <input id="input-import-json" type="file" accept=".json" class="hidden" />
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- GitHub 자동 동기화 (기기 간 데이터 이동) -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+            <i class="fa-brands fa-github"></i>
+            <span>GitHub 자동 동기화 (기기 간 데이터 이동)</span>
+          </h3>
+          <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-emerald-100 text-emerald-800">자동 백업 · 기기 동기화</span>
+        </div>
+        <p class="text-xs text-slate-600 leading-relaxed mt-2">
+          저장 위치: jeong-918/desktop 저장소의 <strong>json/studyjindan-backup.json</strong>. 기존에 발급받은 토큰을 그대로 사용하세요. 자동 백업을 켜면 진단 데이터 수정 후 5초 뒤 자동 업로드되고, 다른 기기에서 페이지를 열 때 최신 데이터를 자동으로 가져옵니다.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+          <div>
+            <label class="block text-[11px] font-bold text-slate-600 mb-1">Fine-grained PAT (기존 desktop 저장소용 토큰)</label>
+            <input id="gh-token" type="password" placeholder="github_pat_..." class="w-full px-3 py-2 border border-slate-300 rounded-xl text-sm" />
+          </div>
+          <div class="flex flex-col justify-center gap-2">
+            <label class="flex items-center gap-2.5 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 cursor-pointer">
+              <input id="gh-auto-sync" type="checkbox" class="w-4 h-4 accent-indigo-600" />
+              <span class="text-xs font-semibold text-slate-700">자동 백업 켜기 (수정 후 5초 뒤 자동 업로드)</span>
+            </label>
+            <p id="gh-last-sync-text" class="text-xs text-slate-500 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2">마지막 업로드: 기록 없음</p>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-2 mt-3">
+          <button id="btn-gh-save-cfg" type="button" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition">설정 저장</button>
+          <button id="btn-gh-pull" type="button" class="px-3.5 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 text-xs font-bold transition">
+            <i class="fa-solid fa-cloud-arrow-down mr-1"></i>서버 동기화 (불러오기)
+          </button>
+          <button id="btn-gh-push" type="button" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition">
+            <i class="fa-solid fa-cloud-arrow-up mr-1"></i>서버 업로드 (저장)
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- 좌측(6칸): STEP 1. 구글폼 & 연동 시트 1초 자동 생성 스크립트 -->
+        <div class="lg:col-span-6 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-indigo-100 text-indigo-800">연동 준비 1단계 (최초 1회)</span>
+              <button id="btn-copy-gas-code" type="button" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-white hover:bg-slate-800 transition flex items-center gap-1.5">
+                <i class="fa-regular fa-copy"></i>
+                <span>구글 앱스크립트 코드 복사</span>
+              </button>
+            </div>
+            <h3 class="text-base font-extrabold text-slate-900">구글폼(19문항) + 웹 연동 API 1초 자동 생성기</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              구글폼 문항을 일일이 손으로 만들 필요가 없습니다. 구글 드라이브에서 <strong>빈 구글 스프레드시트</strong>를 하나 열고 <code class="px-1.5 py-0.5 bg-slate-100 rounded font-mono text-indigo-700">확장 프로그램 &gt; Apps Script</code>에 아래 코드를 붙여넣고 <strong><code class="font-mono">setupLearningDiagnosticForm</code></strong> 함수를 1번 실행하면 <strong>구글폼 설문지 생성 + 시트 자동 연결 + HTML 앱 연동 API(`doGet`)</strong>가 한 번에 완성됩니다.
+            </p>
+            <div class="bg-slate-900 text-slate-100 rounded-xl p-3.5 text-[11px] font-mono overflow-x-auto max-h-72 custom-scrollbar">
+<pre id="gas-script-code">/**
+ * [다올105 학습관리센터] 학습 역량 진단 구글폼 자동 생성 및 HTML 웹앱 연동 스크립트
+ * 사용법:
+ * 1. 새 구글 스프레드시트 생성 -> [확장 프로그램] -> [Apps Script] 클릭
+ * 2. 본 코드를 붙여넣고 저장(Ctrl+S) 후 상단에서 'setupLearningDiagnosticForm' 실행
+ * 3. 우측 상단 [배포] -> [새 배포] -> 유형: [웹 앱], 액세스 권한: [모든 사용자]로 배포
+ * 4. 발급된 웹 앱 URL을 HTML 분석 프로그램에 붙여넣으면 실시간 연동 완료!
+ */
+
+function setupLearningDiagnosticForm() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var form = FormApp.create('[학습관리센터] 학생 학습 역량 및 공부 체질 진단검사');
+  form.setDescription('나에게 가장 잘 맞는 공부 방법과 과목별 전략을 찾기 위한 진단입니다. 솔직하게 답변해 주세요.');
+
+  form.addTextItem().setTitle('학생 이름').setRequired(true);
+  form.addListItem().setTitle('현재 학년').setChoiceValues(['중3', '고1', '고2', '고3']).setRequired(true);
+  form.addTextItem().setTitle('학교명').setRequired(false);
+  form.addTextItem().setTitle('고민 과목 또는 목표').setRequired(false);
+
+  // Part 0. 기본 학습 성향 (4문항)
+  form.addMultipleChoiceItem().setTitle('[성향1] 나에게 가장 가까운 공부 스타일은?')
+      .setChoiceValues(['규범형', '탐구형', '행동형', '이상형']).setRequired(true);
+  form.addScaleItem().setTitle('[성향2] 개념 이해 방식 (1: 세부 디테일/나무 중심 ~ 5: 전체 흐름/숲 중심)').setBounds(1, 5).setRequired(true);
+  form.addScaleItem().setTitle('[성향3] 학습 동기 방향 (1: 내적 흥미/자기지향 ~ 5: 인정·소속감/사회지향)').setBounds(1, 5).setRequired(true);
+  form.addScaleItem().setTitle('[성향4] 계획 실행 방식 (1: 기분·컨디션/감성적 ~ 5: 원칙·계획대로/이성적)').setBounds(1, 5).setRequired(true);
+
+  // Part 1. 심리 리스크 (5문항)
+  var p1 = [
+    '1. 공부를 왜 해야 하는지 뚜렷한 목표나 이유를 모르겠다. (동기 부족)',
+    '2. 시험을 볼 때 아는 문제도 틀릴까 봐 심하게 불안하거나 긴장한다. (시험 불안/완벽주의)',
+    '3. 계획을 세워도 어차피 다 못 지킬 것 같아 시작조차 하기 싫을 때가 많다. (무기력/회피)',
+    '4. 공부하다 모르는 게 나오면 내 능력이 부족해서라고 자책하며 금방 우울해진다. (낮은 효능감)',
+    '5. 부모님이나 선생님의 간섭이 심하게 느껴져 반항심에 더 공부하기가 싫다. (외적 통제 거부)'
+  ];
+  p1.forEach(function(q) { form.addScaleItem().setTitle(q).setBounds(1, 5).setRequired(true); });
+
+  // Part 2. 학습 전략 (10문항)
+  var p2 = [
+    '6. 책상에 앉기 전에 오늘 무슨 과목을, 언제까지 할지 구체적인 계획을 먼저 세운다. (시간관리)',
+    '7. 공부할 때 스마트폰이나 게임 등 방해 요소를 내 스스로 통제하고 차단할 수 있다. (환경통제)',
+    '8. 인강을 듣거나 해설지를 보고 이해한 것과 내가 직접 풀 수 있는 것을 명확히 구분한다. (메타인지)',
+    '9. 틀린 문제가 나오면 정답만 확인하지 않고, 내가 왜 틀렸는지 원인을 반드시 분석한다. (메타인지)',
+    '10. 공부를 시작하면 최소 40~50분 이상은 딴짓 없이 집중 상태를 유지한다. (집중력)',
+    '11. 수업(인강)을 들을 때 무작정 다 적지 않고, 핵심 내용과 부연 설명을 구분하여 필기한다. (조직화)',
+    '12. 새로운 단원을 공부할 때 세부 내용부터 보지 않고, 목차나 전체적인 흐름부터 파악한다. (총체적사고)',
+    '13. 암기해야 할 내용이 많을 때, 나만의 표나 마인드맵 등으로 묶어서 정리해 본다. (조직화/기억)',
+    '14. 모르는 문제가 생기면 바로 해설지를 보지 않고, 최소 10분 이상 스스로 고민해 본다. (과제집착력)',
+    '15. 끝까지 고민해도 모르는 내용은 선생님, 친구 등을 적극적으로 활용해 반드시 알아낸다. (자원활용)'
+  ];
+  p2.forEach(function(q) { form.addScaleItem().setTitle(q).setBounds(1, 5).setRequired(true); });
+
+  form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId());
+  Logger.log('구글폼 생성 완료! 설문 URL: ' + form.getPublishedUrl());
+}
+
+// HTML 웹앱에서 실시간으로 설문 응답을 불러오는 API 엔드포인트
+function doGet(e) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheets()[0];
+  var rows = sheet.getDataRange().getValues();
+  return ContentService.createTextOutput(JSON.stringify({ status: 'ok', rows: rows }))
+    .setMimeType(ContentService.MimeType.JSON);
+}</pre>
+            </div>
+          </div>
+          <div class="bg-indigo-50 p-3.5 rounded-xl border border-indigo-100 text-xs text-indigo-950">
+            <strong>💡 왜 이 방식이 가장 좋은가요?</strong> 구글 앱스크립트로 화면(UI)까지 만들면 보안 배너가 뜨고 A4 인쇄가 깨지지만, 위처럼 <strong>데이터 다리(`doGet`)만 앱스크립트</strong>로 두고 화면은 지금 보시는 <strong>GitHub HTML 웹앱</strong>을 쓰면 디자인·속도·구글폼 자동 연동을 모두 완벽하게 누릴 수 있습니다.
+          </div>
+        </div>
+
+        <!-- 우측(6칸): STEP 2. 실시간 URL 불러오기 & CSV/시트 붙여넣기 -->
+        <div class="lg:col-span-6 space-y-6">
+
+          <!-- 방법 A: 구글 앱스크립트 웹앱 URL 또는 구글시트 공개 CSV URL 연동 -->
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-4">
+            <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-emerald-100 text-emerald-800">실시간 클라우드 동기화</span>
+            <h3 class="text-base font-extrabold text-slate-900">구글시트 / Apps Script 웹앱 URL로 응답 불러오기</h3>
+            <p class="text-xs text-slate-600">
+              배포한 Google Apps Script 웹앱 URL(<code class="bg-slate-100 px-1 rounded">https://script.google.com/macros/s/.../exec</code>) 또는 구글시트 <strong>[파일 &gt; 공유 &gt; 웹에 게시 &gt; CSV]</strong> 링크를 입력하면 제출된 설문 결과를 즉시 가져옵니다.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-2">
+              <input id="gas-webapp-url" type="url" placeholder="https://script.google.com/macros/s/.../exec 또는 구글시트 CSV 게시 URL" class="flex-1 px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+              <button id="btn-fetch-google-sheet" type="button" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 text-white hover:bg-emerald-700 transition shrink-0 flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-cloud-arrow-down"></i>
+                <span>구글시트 데이터 불러오기</span>
+              </button>
+            </div>
+            <div id="sync-status-msg" class="text-xs text-slate-500"></div>
+          </div>
+
+          <!-- 방법 B: 구글시트 행 복사-붙여넣기 또는 CSV 파일 업로드 -->
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800">URL 설정 없이 3초 만에 가져오기 (RFC-4180 CSV 파서)</span>
+              <label class="cursor-pointer px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 transition">
+                <i class="fa-solid fa-file-csv mr-1"></i>CSV 파일 선택
+                <input id="input-import-csv" type="file" accept=".csv,.tsv,.txt" class="hidden" />
+              </label>
+            </div>
+            <h3 class="text-base font-extrabold text-slate-900">구글시트 응답 행(Row) 복사 & 붙여넣기 / CSV 업로드</h3>
+            <p class="text-xs text-slate-600">
+              구글폼 응답 스프레드시트에서 학생 응답 행을 드래그해 복사(<code class="bg-slate-100 px-1 rounded">Ctrl+C</code>)한 뒤 아래 칸에 그대로 붙여넣기(<code class="bg-slate-100 px-1 rounded">Ctrl+V</code>) 하면 15문항/19문항 형식을 자동 인식하여 분석 리포트를 생성합니다.
+            </p>
+            <textarea id="csv-paste-area" rows="4" class="w-full p-3 text-xs font-mono bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="예시: 2026-11-18, 박준형, 고2, 안성고, &quot;대수, 미적분I, 물리학&quot;, 탐구형, 4, 2, 3, 2, 4, 3, 2, 1, 3, 3, 2, 2, 4, 2, 3, 2, 2, 4"></textarea>
+            <div class="flex justify-between items-center">
+              <button id="btn-insert-sample-csv" type="button" class="text-xs font-bold text-indigo-600 hover:underline">
+                + 샘플 시트 데이터 넣어보기
+              </button>
+              <button id="btn-parse-csv" type="button" class="px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition">
+                붙여넣은 응답 데이터 등록 및 분석
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         VIEW 4: 코어 엔진 디버거 & 도메인 규칙 QA 검증 보드 (Webapp Architect Pipeline Stage 03 & 06)
+         ========================================== -->
+    <section id="view-engine" class="hidden space-y-6 no-print">
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-6 shadow-sm">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">Webapp Architect Pipeline · Stage 03 & Stage 06</span>
+            <h2 class="text-xl font-extrabold mt-1.5">도메인 판별 규칙 명세 & 코어 엔진 경계값(Edge Case) 디버거</h2>
+            <p class="text-xs sm:text-sm text-slate-300 mt-1">
+              UI 껍데기에 의존하거나 가짜(환각) 결과를 만들지 않도록, 『학습역량설계v2.pdf』 원문의 판별 수식과 6대 경계값 시나리오를 실시간 시뮬레이션하고 검증하는 엔지니어링 QA 보드입니다.
+            </p>
+          </div>
+          <button id="btn-apply-debug-to-student" type="button" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition shrink-0 shadow">
+            <i class="fa-solid fa-user-plus mr-1"></i>시뮬레이션 값을 신규 학생으로 등록해 리포트 보기
+          </button>
+        </div>
+      </div>
+
+      <!-- 6대 엣지케이스(경계값) 원클릭 시나리오 테스트 바 -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+            <i class="fa-solid fa-vial-circle-check text-indigo-600"></i>
+            <span>6대 경계값(Edge Case) 시나리오 원클릭 검증</span>
+          </h3>
+          <span class="text-xs text-slate-500">버튼을 클릭하면 아래 15개 문항 슬라이더와 우측 엔진 연산 트리가 즉시 갱신됩니다</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+          <button type="button" data-edge-case="red_complex" class="edge-case-btn p-3 rounded-xl border border-rose-200 bg-rose-50/60 hover:bg-rose-100 text-left transition">
+            <div class="text-xs font-extrabold text-rose-800">① 복합 위기형 (Red + 기저 고군분투형)</div>
+            <div class="text-[11px] text-slate-600 mt-0.5">Part 1 고위험 2개(시험불안5·무기력4) + Part 2(6,8,11,12번) 1~2점 동시 발생</div>
+          </button>
+          <button type="button" data-edge-case="yellow_a_boundary" class="edge-case-btn p-3 rounded-xl border border-amber-200 bg-amber-50/60 hover:bg-amber-100 text-left transition">
+            <div class="text-xs font-extrabold text-amber-900">② 고군분투형 경계값 (PDF p.10 기준)</div>
+            <div class="text-[11px] text-slate-600 mt-0.5">Part 1 안정(1~2점), 집중력·환경통제 4점이나 6·8·11·12번만 2점인 전형적 케이스</div>
+          </button>
+          <button type="button" data-edge-case="yellow_b_boundary" class="edge-case-btn p-3 rounded-xl border border-amber-200 bg-amber-50/60 hover:bg-amber-100 text-left transition">
+            <div class="text-xs font-extrabold text-amber-900">③ 전략 부재형 경계값 (PDF p.10 기준)</div>
+            <div class="text-[11px] text-slate-600 mt-0.5">머리(메타인지 4점)는 좋으나 6번(시간관리)·7번(환경통제)·10번(집중력)만 1~2점</div>
+          </button>
+          <button type="button" data-edge-case="spiky_outlier" class="edge-case-btn p-3 rounded-xl border border-indigo-200 bg-indigo-50/60 hover:bg-indigo-100 text-left transition">
+            <div class="text-xs font-extrabold text-indigo-900">④ 외골수 편차형 (Spiky Profile)</div>
+            <div class="text-[11px] text-slate-600 mt-0.5">전체 전략 평균은 3.7점으로 높으나 메타인지(8·9번)만 1점으로 무너진 착각 학습형</div>
+          </button>
+          <button type="button" data-edge-case="single_rebel" class="edge-case-btn p-3 rounded-xl border border-purple-200 bg-purple-50/60 hover:bg-purple-100 text-left transition">
+            <div class="text-xs font-extrabold text-purple-900">⑤ 단일 반항심 극단값 (5번 문항만 5점)</div>
+            <div class="text-[11px] text-slate-600 mt-0.5">4~5점 문항이 1개뿐이나 외적 통제 거부(5번)가 5점 만점인 간섭 거부 경계 케이스</div>
+          </button>
+          <button type="button" data-edge-case="green_top" class="edge-case-btn p-3 rounded-xl border border-emerald-200 bg-emerald-50/60 hover:bg-emerald-100 text-left transition">
+            <div class="text-xs font-extrabold text-emerald-900">⑥ 자기주도 최상위형 (Green Zone)</div>
+            <div class="text-[11px] text-slate-600 mt-0.5">Part 1 전 문항 1~2점, Part 2 평균 4.3점이나 14번(과제집착력)만 3점인 도약형</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- 좌우 분할: 좌측 실시간 슬라이더 입력기 (6칸) + 우측 엔진 연산 로그 & 판별 트리 (6칸) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- 좌측: 15문항 실시간 슬라이더 -->
+        <div class="lg:col-span-6 bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+            <h3 class="text-sm font-extrabold text-slate-900">입력 파라미터 조작 (문항 1 ~ 15번)</h3>
+            <span class="text-xs font-semibold text-slate-500">슬라이더 조작 시 우측 엔진 즉시 재계산</span>
+          </div>
+          <div id="engine-sliders-container" class="space-y-2.5 max-h-[540px] overflow-y-auto pr-1 custom-scrollbar">
+          </div>
+        </div>
+
+        <!-- 우측: 순수 도메인 엔진 연산 결과 및 규칙 검증 테이블 -->
+        <div class="lg:col-span-6 space-y-4">
+          <div class="bg-slate-900 text-slate-100 rounded-2xl p-5 shadow-sm space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <h3 class="text-sm font-extrabold text-white">코어 판별 엔진 실시간 연산 모니터</h3>
+              </div>
+              <span id="dbg-final-badge" class="px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-amber-400 text-slate-950">Yellow Zone</span>
+            </div>
+
+            <!-- 핵심 수식 검증 그리드 -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs">
+              <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">
+                <span class="text-slate-400 block text-[11px]">Part 1 고위험(4~5점) 개수</span>
+                <strong id="dbg-high-risk-cnt" class="text-base font-black text-rose-400">0개</strong>
+                <span class="text-[10px] text-slate-400 block mt-0.5">기준: ≥ 2개 시 Red Zone</span>
+              </div>
+              <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">
+                <span class="text-slate-400 block text-[11px]">고군분투 지수 (6·8·11·12번)</span>
+                <strong id="dbg-struggle-idx" class="text-base font-black text-amber-300">2.25점</strong>
+                <span class="text-[10px] text-slate-400 block mt-0.5">기준: ≤ 2.75점 시 고군분투형</span>
+              </div>
+              <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">
+                <span class="text-slate-400 block text-[11px]">행동통제 지수 (6·7·10번)</span>
+                <strong id="dbg-unstrat-idx" class="text-base font-black text-cyan-300">3.67점</strong>
+                <span class="text-[10px] text-slate-400 block mt-0.5">기준: ≤ 2.50점 시 전략부재형</span>
+              </div>
+              <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">
+                <span class="text-slate-400 block text-[11px]">Part 1 심리 리스크 총점</span>
+                <strong id="dbg-risk-total" class="text-base font-black text-white">11 / 25점</strong>
+                <span class="text-[10px] text-slate-400 block mt-0.5">5번(반항심) 5점 단독 경보 체크</span>
+              </div>
+              <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">
+                <span class="text-slate-400 block text-[11px]">Part 2 전략 100점 환산</span>
+                <strong id="dbg-skill-100" class="text-base font-black text-emerald-400">52 / 100점</strong>
+                <span class="text-[10px] text-slate-400 block mt-0.5">10문항 합계 × 2</span>
+              </div>
+              <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">
+                <span class="text-slate-400 block text-[11px]">외골수 편차(Spiky) 감지</span>
+                <strong id="dbg-spiky-flag" class="text-base font-black text-indigo-300">정상 범위</strong>
+                <span class="text-[10px] text-slate-400 block mt-0.5">평균≥3.2 & 최저≤1.5 시 발동</span>
+              </div>
+            </div>
+
+            <!-- 판별 의사결정 트리 로그 -->
+            <div class="bg-slate-950 rounded-xl p-3.5 border border-slate-800 font-mono text-xs space-y-1.5" id="dbg-decision-log">
+            </div>
+          </div>
+
+          <!-- 도메인 규칙 명세 요약 카드 -->
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-2.5 text-xs">
+            <h4 class="text-sm font-extrabold text-slate-900 flex items-center gap-1.5">
+              <i class="fa-solid fa-book-medical text-indigo-600"></i>
+              <span>『학습역량설계v2.pdf』 기반 코어 판별 알고리즘 명세</span>
+            </h4>
+            <ul class="space-y-1.5 text-slate-600 leading-relaxed">
+              <li>• <strong>Rule 1 (Red Zone 우선 필터링):</strong> Part 1(1~5번) 중 4~5점 문항이 2개 이상이거나 총점 18점 이상일 때 1차 트랙을 <strong class="text-rose-600">Red Zone(심리 리스크)</strong>으로 판정하되, Part 2의 기저 전략 취약 유형(고군분투형/전략부재형)을 보조 배지로 동시 보존합니다.</li>
+              <li>• <strong>Rule 2 (Yellow Zone 세분화):</strong> Part 2의 6·7·10번(시간관리·환경통제·집중력) 평균이 2.5점 이하이면 <strong class="text-amber-700">전략 부재형(물리적 통제 우선)</strong>, 6·8·11·12번(시간관리·메타인지·조직화·총체적사고) 평균이 2.75점 이하이면 <strong class="text-amber-700">고군분투형(백지 인출·오답 코멘트 우선)</strong>으로 분류합니다.</li>
+              <li>• <strong>Rule 3 (외골수 편차형 & 반항심 단독 경보):</strong> 전체 전략 평균이 3.2점 이상이어도 특정 핵심 역량이 1.5점 이하로 무너진 경우 <strong class="text-indigo-700">핀셋 취약(외골수형) 경보</strong>를 띄우며, 5번(외적 통제 거부)이 4~5점이면 강압적 관리 금지 경고를 자동 삽입합니다.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // =========================================================================
+    // 1. 진단 문항 데이터 및 2022 개정 교육과정 과목 매핑 마스터 DB (학습역량설계v2.pdf 완벽 반영)
+    // =========================================================================
+
+    const STYLE_QUESTIONS = [
+      {
+        id: 'ebsi_thought',
+        badge: '성향 2 (사고유형)',
+        title: '새로운 단원이나 개념을 공부할 때 나의 머릿속 처리 방식은?',
+        leftLabel: '1점: 분석적 (나무·세부 공식과 디테일부터 파악)',
+        rightLabel: '5점: 총체적 (숲·단원 목차와 전체 흐름부터 파악)'
+      },
+      {
+        id: 'ebsi_motive',
+        badge: '성향 3 (학습성격)',
+        title: '내가 공부를 지속하게 만드는 더 큰 원동력은 무엇인가요?',
+        leftLabel: '1점: 자기지향 (내 스스로의 흥미와 목표 달성)',
+        rightLabel: '5점: 사회지향 (선생님·부모님 인정과 유대감)'
+      },
+      {
+        id: 'ebsi_action',
+        badge: '성향 4 (행동조절)',
+        title: '학습 계획을 세우고 실천할 때 나의 행동 스타일은?',
+        leftLabel: '1점: 감성적 (그날의 기분·컨디션·분위기에 좌우)',
+        rightLabel: '5점: 이성적 (감정을 배제하고 정해진 계획대로 실행)'
+      }
+    ];
+
+    const PART1_QUESTIONS = [
+      { num: 1, key: 'r1', domain: '동기 부족', text: '공부를 왜 해야 하는지 뚜렷한 목표나 이유를 모르겠다.' },
+      { num: 2, key: 'r2', domain: '시험 불안/완벽주의', text: '시험을 볼 때 아는 문제도 틀릴까 봐 심하게 불안하거나 긴장한다.' },
+      { num: 3, key: 'r3', domain: '무기력/회피', text: '계획을 세워도 어차피 다 못 지킬 것 같아 시작조차 하기 싫을 때가 많다.' },
+      { num: 4, key: 'r4', domain: '낮은 효능감', text: '공부하다 모르는 게 나오면 내 능력이 부족해서라고 자책하며 금방 우울해진다.' },
+      { num: 5, key: 'r5', domain: '외적 통제 거부', text: '부모님이나 선생님의 간섭이 심하게 느껴져 반항심에 더 공부하기가 싫다.' }
+    ];
+
+    const PART2_QUESTIONS = [
+      { num: 6, key: 's6', scaleKey: 'time', domain: '시간관리', text: '책상에 앉기 전에 오늘 무슨 과목을, 언제까지 할지 구체적인 계획을 먼저 세운다.' },
+      { num: 7, key: 's7', scaleKey: 'env', domain: '환경통제', text: '공부할 때 스마트폰이나 게임 등 방해 요소를 내 스스로 통제하고 차단할 수 있다.' },
+      { num: 8, key: 's8', scaleKey: 'meta', domain: '메타인지(구분)', text: "인강을 듣거나 해설지를 보고 '이해한 것'과 내가 직접 '풀 수 있는 것'을 명확히 구분한다." },
+      { num: 9, key: 's9', scaleKey: 'meta', domain: '메타인지(오답)', text: "틀린 문제가 나오면 정답만 확인하지 않고, 내가 '왜' 틀렸는지 원인을 반드시 분석한다." },
+      { num: 10, key: 's10', scaleKey: 'focus', domain: '집중력', text: '공부를 시작하면 최소 40~50분 이상은 딴짓 없이 집중 상태를 유지한다.' },
+      { num: 11, key: 's11', scaleKey: 'org', domain: '조직화(필기)', text: '수업(인강)을 들을 때 무작정 다 적지 않고, 핵심 내용과 부연 설명을 구분하여 필기한다.' },
+      { num: 12, key: 's12', scaleKey: 'whole', domain: '총체적사고', text: '새로운 단원을 공부할 때 세부 내용부터 보지 않고, 목차나 전체적인 흐름부터 파악한다.' },
+      { num: 13, key: 's13', scaleKey: 'mem', domain: '조직화/기억', text: '암기해야 할 내용이 많을 때, 나만의 표나 마인드맵 등으로 묶어서 정리해 본다.' },
+      { num: 14, key: 's14', scaleKey: 'persist', domain: '과제집착력', text: '모르는 문제가 생기면 바로 해설지를 보지 않고, 최소 10분 이상 스스로 고민해 본다.' },
+      { num: 15, key: 's15', scaleKey: 'res', domain: '자원활용', text: '끝까지 고민해도 모르는 내용은 선생님, 친구 등을 적극적으로 활용해 반드시 알아낸다.' }
+    ];
+
+    // 9대 학습 전략 역량 축 정의
+    const SKILL_DIMENSIONS = [
+      { key: 'time', label: '시간관리 (6번)', short: '시간관리', qNums: [6] },
+      { key: 'env', label: '환경통제 (7번)', short: '환경통제', qNums: [7] },
+      { key: 'meta', label: '메타인지 (8·9번)', short: '메타인지', qNums: [8, 9] },
+      { key: 'focus', label: '집중력 (10번)', short: '집중력', qNums: [10] },
+      { key: 'org', label: '조직화·필기 (11번)', short: '조직화(필기)', qNums: [11] },
+      { key: 'whole', label: '총체적사고 (12번)', short: '총체적사고', qNums: [12] },
+      { key: 'mem', label: '구조화·기억 (13번)', short: '구조화/기억', qNums: [13] },
+      { key: 'persist', label: '과제집착력 (14번)', short: '과제집착력', qNums: [14] },
+      { key: 'res', label: '자원활용 (15번)', short: '자원활용', qNums: [15] }
+    ];
+
+    // 2022 개정 교육과정 기준 학년별·6대 교과군별 세부 학습 방향성 DB (전 학년·진로선택까지 빈틈없이 완비)
+    const CURRICULUM_GUIDE_DB = [
+      // ==================== 수학 교과군 ====================
+      {
+        id: 'math-m3',
+        gradeTab: 'm3',
+        gradeLabel: '중3 (기반·습관 형성)',
+        targetGrades: ['중3'],
+        subjTab: 'math',
+        subjName: '수학',
+        courseTitle: '중3 수학 (대수 / 기하 기초)',
+        coreScales: ['org', 'persist', 'focus'],
+        coreKeywords: '[조직화] 식 세우기 · [과제집착력] 15분 사고 확보',
+        symptom: '눈으로만 문제를 풀거나 암산에 의존하며, 해설지를 보면 이해하지만 혼자 풀면 잔실수와 부호 실수가 반복됨.',
+        coaching: '중학 수학의 완성형이자 고등 수학의 뼈대입니다. 눈으로 푸는 습관을 버리고 반드시 노트에 풀이 과정을 줄 맞춰 전개하는 조직화(시각화) 훈련을 강제해야 합니다. 해설지를 바로 보지 않고 최소 15분 이상 스스로 고민하는 과제집착력 훈련이 필수입니다.',
+        actionTip: '노트 좌측 여백에 풀이 줄 맞춰 쓰기 & 해설지 없이 15분 버티기 타이머 훈련'
+      },
+      {
+        id: 'math-h1',
+        gradeTab: 'h1',
+        gradeLabel: '고1 (2022 공통과목)',
+        targetGrades: ['고1'],
+        subjTab: 'math',
+        courseTitle: '고1 공통수학 1, 2 (행렬 부활·다항식·방정식)',
+        subjName: '수학',
+        coreScales: ['meta', 'persist', 'org'],
+        coreKeywords: '[메타인지] 개념 백지 인출 · [분석적사고] 조건 정교화',
+        symptom: '중등 수학과 달리 급증한 기호와 추상성에 당황하며, 왜 이 공식을 써야 하는지 모른 채 문제 양치기에만 매달림.',
+        coaching: "2022 개정 교육과정에서 새롭게 추가된 '행렬'과 다항식 연산 등에서 잔실수를 막기 위해, 문제 풀이 전 필요한 공식을 백지에 먼저 적고 시작하는 인출 훈련을 시킵니다. 오답노트 작성 시 '어느 개념/계산 단계에서 막혔는지(부호 틀림, 조건 누락 등)' 한 줄 코멘트를 반드시 명시하게 합니다.",
+        actionTip: '단원 시작 전 핵심 공식 백지 인출 & 오답노트 막힌 원인 한 줄 진단 기록'
+      },
+      {
+        id: 'math-h23-gen',
+        gradeTab: 'h23_gen',
+        gradeLabel: '고2·3 (일반선택·수능코어)',
+        targetGrades: ['고2', '고3'],
+        subjTab: 'math',
+        subjName: '수학',
+        courseTitle: '대수 · 미적분 I · 확률과 통계 (구 수I·수II)',
+        coreScales: ['persist', 'meta', 'focus'],
+        coreKeywords: '[분석적사고] 함수적 추론 · [메타인지] 조건 파악 · [과제집착력]',
+        symptom: '지수로그, 삼각함수, 미적분 기초 등 추상적 개념에서 해설지 의존도가 극도로 높아지고 4점 문항 앞에서 바로 포기함.',
+        coaching: '수능 수학의 핵심 코어입니다. 그래프 그리기와 해석이 80%를 좌우합니다. 해설지 의존도가 가장 높은 시기이므로 해설지를 뺏고 "주어진 조건 3가지를 어떻게 조합할 것인가?"를 한 문제를 두고 다각도로 접근해보는 과제집착력과 메타인지 자가 진단이 성적을 가릅니다.',
+        actionTip: '문항 내 주어진 조건 ①, ②, ③ 번호 매기기 & 그래프 개형 직접 그려서 추론하기'
+      },
+      {
+        id: 'math-h23-car',
+        gradeTab: 'h23_car',
+        gradeLabel: '고2·3 (진로선택·심화)',
+        targetGrades: ['고2', '고3'],
+        subjTab: 'math',
+        subjName: '수학',
+        courseTitle: '미적분 II · 기하 (극상위권 심화 추론)',
+        coreScales: ['whole', 'meta', 'persist'],
+        coreKeywords: '[총체/공간적사고] 도식화 능력 · [정교화] 극상위권 추론',
+        symptom: '3차원 공간 도형이나 복잡한 초월함수 미적분에서 식에만 매몰되어 전체 기하학적 구조를 보지 못함.',
+        coaching: '2차원 평면을 넘어선 3차원 공간 지각력과 극한적 사고가 필요합니다. 무작정 계산식을 전개하기보다 특정 공간이나 도형의 단면을 2차원으로 단순화하여 그려내는 도식화(시각적 조직화) 능력 점검이 코칭의 핵심입니다.',
+        actionTip: '입체 도형/복잡한 함수를 단순 단면도로 먼저 도식화한 뒤 식 세우기'
+      },
+
+      // ==================== 국어 교과군 ====================
+      {
+        id: 'kor-m3',
+        gradeTab: 'm3',
+        gradeLabel: '중3 (기반·습관 형성)',
+        targetGrades: ['중3'],
+        subjTab: 'korean',
+        subjName: '국어',
+        courseTitle: '중3 국어 (비문학 구조 독해 & 어휘력)',
+        coreScales: ['org', 'meta', 'whole'],
+        coreKeywords: '[분석적사고] 한자어 개념어 향상 · [조직화] 구조 독해',
+        symptom: '중학교식 자습서 본문 암기 습관에 머물러 있어 처음 보는 비문학 지문을 읽으면 무슨 말인지 모르고 감으로 문제를 품.',
+        coaching: "중학교식 '본문 통암기' 습관을 가장 먼저 버리게 해야 합니다. 한자어 기반의 추상적 개념어가 약하면 고등 국어에서 무너지므로 지문 내 모르는 어휘를 유의어/반의어와 함께 정리하고, 문단별 중심 문장을 찾아 요약하는 조직화 훈련이 1순위입니다.",
+        actionTip: '비문학 지문 문단별 중심 문장 밑줄 긋기 & 선지 정답 근거를 지문에서 화살표로 연결하기'
+      },
+      {
+        id: 'kor-h1',
+        gradeTab: 'h1',
+        gradeLabel: '고1 (2022 공통과목)',
+        targetGrades: ['고1'],
+        subjTab: 'korean',
+        subjName: '국어',
+        courseTitle: '고1 공통국어 1, 2 (문학·비문학·문법 통합)',
+        coreScales: ['whole', 'org', 'meta'],
+        coreKeywords: '[총체적사고] 갈래별 특징 파악 · [조직화] 논리적 연결망',
+        symptom: '문학, 독서(비문학), 문법이 혼재되어 출제될 때 읽는 기준 없이 똑같은 방식으로 읽다가 시간이 부족함.',
+        coaching: "현대시, 고전소설, 설명문 등 각 갈래별로 '읽는 방법론(예: 소설은 인물 간 갈등과 심리 추이 위주, 비문학은 인과·대조 구조 위주)'을 달리 적용하는 메타인지 독해 훈련을 시킵니다. 감으로 푸는 것을 막기 위해 모든 선지의 정오답 근거를 지문에서 찾는 훈련을 강제합니다.",
+        actionTip: '갈래별(소설/시/비문학) 독해 체크리스트 적용 & 문단 간 관계(인과·대조) 기호 표시'
+      },
+      {
+        id: 'kor-h23-gen',
+        gradeTab: 'h23_gen',
+        gradeLabel: '고2·3 (일반선택·수능코어)',
+        targetGrades: ['고2', '고3'],
+        subjTab: 'korean',
+        subjName: '국어',
+        courseTitle: '화법과 언어 · 독서와 작문 · 문학 (매체 포함)',
+        coreScales: ['org', 'meta', 'focus'],
+        coreKeywords: '[조직화] 구조도(Tree) 작성 · [논리적추론] 객관적 <보기> 분석',
+        symptom: '독서(비문학) 정보량이 폭발할 때 앞내용을 잊어버리고, 문학에서 주관적 감상으로 해석하다가 매력적인 오답에 빠짐.',
+        coaching: '독서(비문학)는 정보량이 방대하므로 지문을 읽으며 동시에 문단별 중심 내용을 트리(Tree) 형태로 요약하는 최고 수준의 구조화 훈련이 필수입니다. 문학은 자의적 해석을 철저히 배제하고 <보기>라는 객관적 준거 틀에 맞춰 작품을 분석하는 훈련을 점검해야 합니다.',
+        actionTip: '고난도 독서 지문 읽으며 좌측 여백에 미니 구조도(Tree) 그리기 & 문학 <보기> 조건 번호 매칭'
+      },
+      {
+        id: 'kor-h23-car',
+        gradeTab: 'h23_car',
+        gradeLabel: '고2·3 (진로선택·심화)',
+        targetGrades: ['고2', '고3'],
+        subjTab: 'korean',
+        subjName: '국어',
+        courseTitle: '주제 탐구 독서 · 문학과 영상 · 직무 의사소통',
+        coreScales: ['whole', 'org', 'res'],
+        coreKeywords: '[조직화] 다매체 비평 및 주제 통합 독해 · [자원활용] 세특 심화 보고서',
+        symptom: '전공 연계 비문학 주제 탐구 및 복합 지문(매체+평론) 요약·비평 과제에서 핵심 논점 도출을 어려워함.',
+        coaching: '2022 개정 진로선택 국어는 진로 전공과 연계된 심화 독서 및 비평 역량을 평가합니다. 서로 다른 관점의 글 2~3편을 읽고 쟁점별 비교표를 작성하는 조직화 훈련과 수능 고난도 주제통합 지문 독해를 병행 코칭합니다.',
+        actionTip: '진로 연계 도서/학술지 아티클 읽고 [주장-근거-한계점] 3단 비평 요약표 작성'
+      },
+
+      // ==================== 영어 교과군 ====================
+      {
+        id: 'eng-m3',
+        gradeTab: 'm3',
+        gradeLabel: '중3 (기반·습관 형성)',
+        targetGrades: ['중3'],
+        subjTab: 'english',
+        subjName: '영어',
+        courseTitle: '중3 영어 (문법 체계화 & 누적 어휘)',
+        coreScales: ['org', 'mem', 'time'],
+        coreKeywords: '[조직화] 문법 큰 틀 체계화 · [기억전략] 누적 복습',
+        symptom: '단어를 외워도 며칠 뒤면 휘발되고, 조각난 문법 지식이 실제 문장 독해와 연결되지 않음.',
+        coaching: '산발적으로 배운 중학 문법을 하나의 큰 틀(품사, 문장 5형식 성분, 절과 구)로 묶어내는 조직화가 필요합니다. 단어장 단순 암기를 넘어 에빙하우스 망각곡선 기반의 누적 복습 플래너를 센터에서 통제하고 예문 속에서 단어의 쓰임을 파악하게 합니다.',
+        actionTip: '에빙하우스 주기(1일·3일·7일) 누적 단어 테스트 & 예문 단위 다중 감각(손·입) 암기'
+      },
+      {
+        id: 'eng-h1',
+        gradeTab: 'h1',
+        gradeLabel: '고1 (2022 공통과목)',
+        targetGrades: ['고1'],
+        subjTab: 'english',
+        subjName: '영어',
+        courseTitle: '고1 공통영어 1, 2 (장문 구문 분석 & Chunking)',
+        coreScales: ['meta', 'org', 'mem'],
+        coreKeywords: '[메타인지] 구문 분석(Chunking) 백지 테스트 · [기억전략]',
+        symptom: '문장 길이가 길어지고 수식어구가 복잡해지면서 아는 단어만 조합해 소설을 쓰듯 감으로 해석함.',
+        coaching: '문장 길이가 급격히 길어지고 구조가 복잡해집니다. 문장을 감으로 해석하지 않도록 주어(S)/동사(V)를 찾고 수식어구를 괄호 치는(Chunking) 정확한 구문 분석 능력을 매니저가 백지 테스트로 직접 확인해야 합니다.',
+        actionTip: '한 문장 3줄 이상 장문 독해 시 S/V 표시 및 수식어구 괄호 묶기(Chunking) 일일 5문장 점검'
+      },
+      {
+        id: 'eng-h23-gen',
+        gradeTab: 'h23_gen',
+        gradeLabel: '고2·3 (일반선택·수능코어)',
+        targetGrades: ['고2', '고3'],
+        subjTab: 'english',
+        subjName: '영어',
+        courseTitle: '영어 I · 영어 II · 영어 독해와 작문',
+        coreScales: ['whole', 'meta', 'org'],
+        coreKeywords: '[논리적추론] 문장 간 맥락 파악 · [메타인지] 오답 매력도 분석',
+        symptom: '지문 소재가 철학, 심리, 경제로 추상화되면서 한글 번역본을 읽어도 무슨 뜻인지 이해하지 못함.',
+        coaching: "지문의 난이도가 국어 비문학 수준으로 상승합니다. 단순 '번역(해석)'이 아닌 '논리적 이해'를 해야 하므로, 문장 간의 연결 고리(순접, 역접, 예시, 환언)를 찾아 글의 메인 아이디어(주제문)를 도출하는 훈련에 집중합니다. 빈칸 추론은 오답 선지의 매력도를 스스로 분석하게 합니다.",
+        actionTip: '영어 지문 내 역접(However)·인과(Therefore) 연결어 마킹 & 한 문장 한국어 핵심 요약 쓰기'
+      },
+      {
+        id: 'eng-h23-car',
+        gradeTab: 'h23_car',
+        gradeLabel: '고2·3 (진로선택·심화)',
+        targetGrades: ['고2', '고3'],
+        subjTab: 'english',
+        subjName: '영어',
+        courseTitle: '심화 영어 · 심화 영어 독해와 작문 · 미디어 영어',
+        coreScales: ['whole', 'meta', 'persist'],
+        coreKeywords: '[총체적사고] 학술 아티클 논리 구조 · [메타인지] 순서·삽입·빈칸 킬러 정복',
+        symptom: '수능 1등급을 가르는 빈칸·순서·문장삽입 고난도 추상 지문에서 지시어와 논리적 단절(Gap)을 놓침.',
+        coaching: '학술적 원서 지문과 수능 킬러 유형을 동시에 잡아야 합니다. 문단 내 대명사/지시어(this, such, these)의 지시 대상을 정확히 화살표로 연결하는 정교화 훈련과 패러프레이징(Paraphrasing) 동치 구조 찾기 코칭을 집중 진행합니다.',
+        actionTip: '빈칸·순서·삽입 문항에서 지시어·연결어 근거 화살표 표시 및 핵심 문장 패러프레이징 노트 작성'
+      },
+
+      // ==================== 과학 교과군 ====================
+      {
+        id: 'sci-m3',
+        gradeTab: 'm3',
+        gradeLabel: '중3 (기반·습관 형성)',
+        targetGrades: ['중3'],
+        subjTab: 'science',
+        subjName: '과학',
+        courseTitle: '중3 과학 (역학적 에너지·유전·화학반응 기초)',
+        coreScales: ['meta', 'whole', 'org'],
+        coreKeywords: '[메타인지] 현상-원리 인과 연결 · [구술 시연]',
+        symptom: '역학적 에너지나 유전 등 고등 과학 킬러 파트의 기초가 등장하는데 원리 이해 없이 공식과 결과만 외우려다 응용문제에서 막힘.',
+        coaching: '고등 과학의 뼈대가 되는 단원들입니다. 결과나 공식을 무작정 외우지 않고 "왜 이런 현상이 일어나는지" 스스로 원리를 백지에 그려 설명(시연)하게 하는 메타인지 점검이 필수입니다.',
+        actionTip: '오늘 배운 과학 실험/원리를 백지에 그림과 화살표로 직접 그려서 설명하기'
+      },
+      {
+        id: 'sci-h1',
+        gradeTab: 'h1',
+        gradeLabel: '고1 (2022 공통과목)',
+        targetGrades: ['고1'],
+        subjTab: 'science',
+        subjName: '과학',
+        courseTitle: '고1 통합과학 1, 2 (물·화·생·지 융합 및 자료 해석)',
+        coreScales: ['whole', 'meta', 'org'],
+        coreKeywords: '[총체적사고] 융합적 마인드맵 · [분석적사고] 표·그래프 해석',
+        symptom: '물리·화학·생명·지구과학이 융합된 단원(우주 진화, 기후 변화 등)에서 단원 간 연결고리를 놓치고 그래프 해석에서 실수함.',
+        coaching: '2022 개정 통합과학은 일상생활 현상과 과학 원리를 연결하는 정교화 및 디지털·자료 탐구를 강조합니다. 단원 간 연관성을 파악하는 마인드맵 작성과 함께, 공식을 외우기 전 표와 그래프의 가로축·세로축이 의미하는 바를 스스로 말로 설명해보게 합니다.',
+        actionTip: '대단원별 물·화·생·지 융합 마인드맵 작성 & 그래프 축/변인 의미 말로 설명하기'
+      },
+      {
+        id: 'sci-h23-gen',
+        gradeTab: 'h23_gen',
+        gradeLabel: '고2·3 (일반선택·수능코어)',
+        targetGrades: ['고2', '고3'],
+        subjTab: 'science',
+        subjName: '과학',
+        courseTitle: '물리학 · 화학 · 생명과학 · 지구과학 (일반선택)',
+        coreScales: ['org', 'meta', 'persist'],
+        coreKeywords: '[조직화] 개념-조건 1:1 매칭 · [분석적사고] 실험 데이터 변인 추론',
+        symptom: '개념 인강을 들을 때는 다 아는 것 같으나 실제 모의고사·내신 킬러 문항의 낯선 조건에 개념을 대입하지 못함.',
+        coaching: '수능형 킬러 문항에 대비하는 시기입니다. 물리/화학은 개념 공부와 문제 풀이의 괴리가 가장 크므로 배운 원리를 실전 문제의 조건에 어떻게 1:1 매칭할지 훈련을 강도 높게 진행하고, 생명/지구과학은 그래프·표·실험 데이터에 숨겨진 의미(변인)와 유전 추론 퍼즐 접근법을 코칭합니다.',
+        actionTip: '문제 조건 밑줄 긋고 적용할 공식/원리 1:1 매칭 메모 & 실험 자료 조작/종속변인 체크'
+      },
+      {
+        id: 'sci-h23-car',
+        gradeTab: 'h23_car',
+        gradeLabel: '고2·3 (진로선택·심화)',
+        targetGrades: ['고2', '고3'],
+        subjTab: 'science',
+        subjName: '과학',
+        courseTitle: '역학과 에너지 · 세포와 물질대사 · 물질과 에너지 등',
+        coreScales: ['persist', 'org', 'res'],
+        coreKeywords: '[과제집착력] 심화 원리 탐구 · [조직화] 탐구 보고서 논리 구성',
+        symptom: '구 과학II 성격의 세분화된 진로선택 과목에서 심화 개념 정리와 학생부 세특 탐구 보고서 논리 전개를 어려워함.',
+        coaching: '전공 적합성을 보여주는 심화 과목으로 쪼개졌습니다. 단순 문제 풀이보다 특정 원리를 깊이 파고드는 과제집착력과 함께, 실험적·탐구적 보고서 작성 시 가설-변인통제-결론 도출의 논리적 구성력을 코칭합니다.',
+        actionTip: '교과 심화 원리 백지 증명 & 세특 연계 심화 탐구 보고서(가설-원리-분석) 개요 설계'
+      },
+
+      // ==================== 사회 및 역사 교과군 ====================
+      {
+        id: 'soc-m3',
+        gradeTab: 'm3',
+        gradeLabel: '중3 (기반·습관 형성)',
+        targetGrades: ['중3'],
+        subjTab: 'social',
+        subjName: '사회·역사',
+        courseTitle: '중3 역사 / 사회 (하향식 구조화 암기)',
+        coreScales: ['mem', 'whole', 'org'],
+        coreKeywords: '[기억전략] 하향식(Top-down) 암기 · [조직화] 비교표 작성',
+        symptom: '암기량이 많아지면 지엽적인 내용에 매몰되어 시대와 개념이 뒤섞이고 통째로 암기를 포기함.',
+        coaching: "지엽적인 암기에 빠지지 않도록 '대단원 제목 → 중단원 제목 → 세부 핵심 키워드' 순으로 뼈대부터 살을 붙이는 하향식(Top-down) 암기 전략을 체화시킵니다. 헷갈리는 A개념과 B개념은 스스로 비교표를 만들어 정리하게 합니다.",
+        actionTip: '교과서 소단원 목차 트리(뼈대) 먼저 외운 뒤 세부 키워드 채워 넣기'
+      },
+      {
+        id: 'soc-h1',
+        gradeTab: 'h1',
+        gradeLabel: '고1 (2022 공통과목)',
+        targetGrades: ['고1'],
+        subjTab: 'social',
+        subjName: '사회·역사',
+        courseTitle: '고1 통합사회 1, 2 (다각적 관점 통합 & 정교화)',
+        coreScales: ['whole', 'org', 'mem'],
+        coreKeywords: '[총체적사고] 거시적 흐름 파악 · [정교화] 윤리·지리·역사·사회 통합',
+        symptom: '범위가 넓고 다양한 영역이 섞여 있어 세부 암기에만 매달리다 응용 사례 제시형 문제에서 오답을 고름.',
+        coaching: '고1 통합사회는 하나의 사회 현상을 윤리적, 지리적, 역사적, 사회적(법·경제) 관점에서 통합적으로 바라보는 시각이 핵심입니다. 목차 중심의 마인드맵을 그리며 전체 흐름을 파악하고, 추상적 개념을 실생활 사례에 적용하는 정교화 훈련을 진행합니다.',
+        actionTip: '통합사회 단원별 4대 관점(시간·공간·사회·윤리) 비교 마인드맵 작성하기'
+      },
+      {
+        id: 'soc-h23-gen',
+        gradeTab: 'h23_gen',
+        gradeLabel: '고2·3 (일반선택·수능코어)',
+        targetGrades: ['고2', '고3'],
+        subjTab: 'social',
+        subjName: '사회·역사',
+        courseTitle: '세계시민과 지리 · 세계사 · 경제 · 정치 · 사회문화',
+        coreScales: ['org', 'mem', 'meta'],
+        coreKeywords: '[분석적사고] 통계·도표 수리 분석 · [조직화] 시대×국가 매트릭스',
+        symptom: '경제·정치·사문의 도표/통계 문제에서 시간 부족을 겪거나, 세계사·지리에서 지역별·시대별 특징을 혼동함.',
+        coaching: "일반사회(경제, 정치, 사문)는 개념 암기보다 그래프, 표, 통계 자료를 해석하고 수리적으로 도출하는 분석적 사고 훈련에 시간을 쏟게 해야 합니다. 지리/역사는 백지도 위치 매칭 및 가로(시대)와 세로(국가/지역)가 교차하는 '비교/대조 매트릭스 표'를 스스로 만들어 메타인지를 점검하도록 코칭합니다.",
+        actionTip: '일반사회 도표/통계 문항 풀이 루틴 훈련 & 역사/지리 시대×지역 교차 비교표 직접 제작'
+      },
+      {
+        id: 'soc-h23-car',
+        gradeTab: 'h23_car',
+        gradeLabel: '고2·3 (진로선택·심화)',
+        targetGrades: ['고2', '고3'],
+        subjTab: 'social',
+        subjName: '사회·역사',
+        courseTitle: '사회문제 탐구 · 금융과 경제생활 · 윤리문제 탐구',
+        coreScales: ['whole', 'org', 'res'],
+        coreKeywords: '[총체적사고] 사회 현상 다면 분석 · [조직화] 통계 기반 탐구 보고서',
+        symptom: '실제 사회·경제 데이터를 바탕으로 원인과 대안을 도출하는 수행평가 및 심화 서술형에서 논리적 근거가 빈약함.',
+        coaching: '인문·상경계열 전공 적합성을 입증하는 핵심 진로선택 과목입니다. 교과 개념을 최신 통계 자료나 판례·시사 이슈에 연결하여 [현상 정의 → 원인 분석 → 대안 제시] 구조로 조직화하는 훈련을 지도합니다.',
+        actionTip: '사회·경제 이슈 1건을 선정해 공식 통계 지표와 교과 개념을 결합한 1페이지 분석표 작성'
+      },
+
+      // ==================== 한국사 교과군 ====================
+      {
+        id: 'his-all',
+        gradeTab: 'h1',
+        gradeLabel: '중3 ~ 고1 공통 (한국사)',
+        targetGrades: ['중3', '고1'],
+        subjTab: 'history',
+        subjName: '한국사',
+        courseTitle: '2022 개정 한국사 1, 2 (근현대사 비중 강화 & 타임라인)',
+        coreScales: ['whole', 'mem', 'org'],
+        coreKeywords: '[총체적사고] 시대별 타임라인 뼈대 · [기억전략] 인과 스토리텔링',
+        symptom: '무작정 사건 연도와 단체 이름만 외우다가 전근대사와 근현대사의 흐름이 섞이고 지엽적 사료에 흔들림.',
+        coaching: "2022 개정 한국사는 전근대사 비중이 줄고 근현대사 비중이 크게 강화되었습니다. 무작정 암기를 금지하고 반드시 시대별 흐름(왕조/세기별 특징/정부의 주요 정책)을 하나의 선(타임라인) 위에 먼저 그리는 하향식 코칭 후, 사건의 원인과 결과를 스토리텔링으로 백지 인출하게 합니다.",
+        actionTip: '시대별 핵심 사건 뼈대 타임라인 백지 그리기 & 사건 원인→전개→결과 3단 스토리텔링 점검'
+      },
+      {
+        id: 'his-h23',
+        gradeTab: 'h23_gen',
+        gradeLabel: '고2·3 (수능 필수 한국사)',
+        targetGrades: ['고2', '고3'],
+        subjTab: 'history',
+        subjName: '한국사',
+        courseTitle: '수능 필수 한국사 (사료 핵심 키워드 & 최소 시간 1등급 전략)',
+        coreScales: ['time', 'mem', 'whole'],
+        coreKeywords: '[시간관리] 최소 투입 고효율 복습 · [기억전략] 사료 키워드 매칭',
+        symptom: '평소 한국사를 방치하다가 시험 직전에 벼락치기로 외우느라 주요 과목 공부 시간을 빼앗김.',
+        coaching: '고2·3 한국사는 최소한의 시간 투입으로 안정적 1등급을 확보하는 시간관리 전략이 핵심입니다. 매주 자습 시간 30분만 고정 할당하여 기출 사료의 핵심 키워드와 시대 타임라인을 1:1로 매칭하는 압축 인출 훈련을 진행합니다.',
+        actionTip: '주 1회 30분 근현대사 핵심 사료 키워드 20선 타임라인 매칭 점검'
+      },
+      {
+        id: 'his-h23-car',
+        gradeTab: 'h23_car',
+        gradeLabel: '고2·3 (진로·역사 심화)',
+        targetGrades: ['고2', '고3'],
+        subjTab: 'history',
+        subjName: '한국사',
+        courseTitle: '역사로 탐구하는 현대 세계 · 동아시아 역사 기행 (연계 심화)',
+        coreScales: ['whole', 'org', 'mem'],
+        coreKeywords: '[총체적사고] 한국사-세계사 동시대 교차 분석 · [조직화] 사료 비평',
+        symptom: '한국사 사건과 동시대 동아시아·세계사 사건의 상호 영향을 연결하지 못하고 단편적으로만 기억함.',
+        coaching: '한국사의 주요 전환점(개항기, 냉전 체제, 민주화 등)을 동아시아 및 세계사의 흐름과 가로×세로 매트릭스로 연결하는 거시적 통찰력을 훈련합니다.',
+        actionTip: '근현대 주요 사건의 [국내 배경 × 국제 정세] 2차원 교차 타임라인 작성'
+      }
+    ];
+
+    // 추천 행동 목표(Action Plan) 프리셋 라이브러리
+    const RECOMMENDED_ACTIONS_POOL = [
+      { tag: '메타인지·수학', scale: 'meta', text: "[수학] 오답노트 작성 시 해설지 베끼기 금지, '어느 개념/계산에서 왜 막혔는지' 원인 1줄 코멘트 필수 작성" },
+      { tag: '조직화·국어', scale: 'org', text: "[국어] 비문학 독해 시 문단별 중심 문장 밑줄 긋기 및 지문 옆 여백에 핵심 구조도(인과/대조) 그리기" },
+      { tag: '총체적사고·사과탐', scale: 'whole', text: "[탐구/한국사] 세부 내용 암기 전, 단원 목차와 시대별 뼈대(타임라인/마인드맵) 백지에 먼저 그리기" },
+      { tag: '환경통제·생활', scale: 'env', text: "[환경통제] 센터 등원 즉시 스마트폰 제출 및 자습 시간 중 불필요한 디지털 기기 완벽 차단" },
+      { tag: '시간관리·플래너', scale: 'time', text: "[시간관리] 매일 첫 자습 시작 전 '과목별 분량·완료 시각' 플래너 작성 후 퇴원 전 매니저 대면 검사" },
+      { tag: '과제집착력·문제풀이', scale: 'persist', text: "[과제집착력] 모르는 문제 발생 시 즉시 해설지 열람 금지, 최소 15분간 주어진 조건 번호 매기며 스스로 고민하기" },
+      { tag: '기억전략·영어', scale: 'mem', text: "[영어] 에빙하우스 망각곡선 주기(1일·3일·7일) 누적 단어 테스트 및 장문 S/V/수식어구 끊어 읽기(Chunking)" },
+      { tag: '심리케어·성취감', scale: 'risk', text: "[멘탈케어] 무리한 계획표 지양, 매일 100% 달성 가능한 작은 목표(스몰 스텝) 완료 체크로 자기효능감 회복" }
+    ];
+
+    // 6대 경계값(Edge Case) 시나리오 프리셋 (Stage 06 코어 엔진 디버거용)
+    const EDGE_CASE_SCENARIOS = {
+      red_complex: {
+        label: '복합 위기형 (Red Zone + 기저 고군분투형)',
+        answers: { r1: 3, r2: 5, r3: 4, r4: 3, r5: 2, s6: 2, s7: 4, s8: 1, s9: 2, s10: 3, s11: 2, s12: 1, s13: 2, s14: 2, s15: 2 }
+      },
+      yellow_a_boundary: {
+        label: '고군분투형 경계값 (PDF p.10 6·8·11·12번 집중 취약)',
+        answers: { r1: 1, r2: 2, r3: 2, r4: 2, r5: 1, s6: 2, s7: 4, s8: 2, s9: 2, s10: 4, s11: 2, s12: 2, s13: 3, s14: 3, s15: 3 }
+      },
+      yellow_b_boundary: {
+        label: '전략 부재형 경계값 (PDF p.10 6·7·10번 행동통제 취약)',
+        answers: { r1: 2, r2: 1, r3: 3, r4: 2, r5: 2, s6: 1, s7: 1, s8: 4, s9: 3, s10: 2, s11: 3, s12: 3, s13: 3, s14: 2, s15: 3 }
+      },
+      spiky_outlier: {
+        label: '외골수 편차형 (평균 3.6점이나 메타인지 8·9번만 1점)',
+        answers: { r1: 1, r2: 2, r3: 1, r4: 1, r5: 1, s6: 4, s7: 5, s8: 1, s9: 1, s10: 4, s11: 4, s12: 4, s13: 4, s14: 4, s15: 5 }
+      },
+      single_rebel: {
+        label: '단일 반항심 극단값 (5번 외적 통제 거부만 5점)',
+        answers: { r1: 2, r2: 1, r3: 2, r4: 1, r5: 5, s6: 2, s7: 2, s8: 3, s9: 3, s10: 2, s11: 3, s12: 3, s13: 2, s14: 2, s15: 2 }
+      },
+      green_top: {
+        label: '자기주도 최상위형 (Green Zone · 14번 과제집착력 핀셋 보완)',
+        answers: { r1: 1, r2: 2, r3: 1, r4: 1, r5: 1, s6: 5, s7: 5, s8: 4, s9: 4, s10: 5, s11: 4, s12: 4, s13: 4, s14: 3, s15: 5 }
+      }
+    };
+
+    // 초기 샘플 학생 4명 데이터 (4대 핵심 코칭 트랙 대표 사례)
+    const INITIAL_STUDENTS = [
+      {
+        id: 'stu-1',
+        name: '김민준',
+        grade: '고1',
+        school: '다올고등학교',
+        goal: '공통수학1·통합과학 내신 1등급 도약 및 국어 비문학 시간 단축',
+        date: '2026-11-18',
+        counselor: '정영주 입시컨설턴트',
+        uiType: '탐구형',
+        ebsi_thought: 4,
+        ebsi_motive: 2,
+        ebsi_action: 3,
+        answers: {
+          r1: 2, r2: 3, r3: 2, r4: 2, r5: 2,
+          s6: 3, s7: 4, s8: 2, s9: 2, s10: 4, s11: 2, s12: 2, s13: 2, s14: 2, s15: 3
+        },
+        actionPlans: [
+          "[수학] 오답노트 작성 시 해설지 베끼기 금지, '어느 개념/계산에서 왜 막혔는지' 원인 1줄 코멘트 필수 작성",
+          "[국어] 비문학 독해 시 문단별 중심 문장 밑줄 긋기 및 지문 옆 여백에 핵심 구조도(인과/대조) 그리기",
+          "[탐구/한국사] 세부 내용 암기 전, 단원 목차와 시대별 뼈대(타임라인/마인드맵) 백지에 먼저 그리기"
+        ],
+        comment: "민준 학생은 공부하려는 의지와 착석 유지력(집중력·환경통제 4점)이 매우 훌륭한 '전형적인 고군분투형(Yellow Zone)'입니다. 다만 인강이나 해설지를 보고 이해한 것을 본인의 실력으로 착각하는 경향(메타인지 2점)이 있고, 배운 내용을 구조화하여 정리하는 기술(조직화 2점)이 부족해 노력 대비 성적이 덜 나오는 상태입니다. 이번 달은 양치기식 문제 풀이를 멈추고, 수학 오답 원인 1줄 진단과 국어/통합과학 백지 구조화 인출 훈련에 집중하면 가장 드라마틱한 성적 상승이 기대됩니다."
+      },
+      {
+        id: 'stu-2',
+        name: '이서연',
+        grade: '고2',
+        school: '안성여자고등학교',
+        goal: '수능 국어·수학(대수/미적분I) 불안감 극복 및 실전 멘탈 관리',
+        date: '2026-11-18',
+        counselor: '정영주 입시컨설턴트',
+        uiType: '규범형',
+        ebsi_thought: 2,
+        ebsi_motive: 4,
+        ebsi_action: 2,
+        answers: {
+          r1: 2, r2: 5, r3: 4, r4: 4, r5: 2,
+          s6: 4, s7: 4, s8: 3, s9: 3, s10: 3, s11: 4, s12: 2, s13: 3, s14: 2, s15: 2
+        },
+        actionPlans: [
+          "[멘탈케어] 무리한 계획표 지양, 매일 100% 달성 가능한 작은 목표(스몰 스텝) 완료 체크로 자기효능감 회복",
+          "[수학/탐구] 모르는 문제에서 자책하지 않고 10분 고민 후 질문 포스트잇 부착해 매니저와 즉시 해결하기"
+        ],
+        comment: "서연 학생은 노트 필기와 계획 수립 등 기본적인 학습 태도는 우수하나, 현재 시험 불안/완벽주의(5점)와 실패에 대한 두려움으로 인한 회피·낮은 효능감(4점)이 겹쳐 있는 '심리 리스크 그룹(Red Zone)'입니다. 지금 상태에서 무리한 학습량이나 강압적인 진도 압박을 주면 번아웃이 올 수 있습니다. 초기 4주간은 달성률 100%를 채울 수 있는 적정 분량의 스몰 스텝 과제를 부여해 성취감을 회복시키고, 모르는 문제를 자책 대신 질문(자원활용)으로 전환하는 정서적 지지 코칭을 최우선으로 진행합니다."
+      },
+      {
+        id: 'stu-3',
+        name: '박지훈',
+        grade: '중3',
+        school: '명륜중학교',
+        goal: '고등 진학 전 스마트폰 통제 및 자기주도 학습 루틴 확립',
+        date: '2026-11-18',
+        counselor: '정영주 입시컨설턴트',
+        uiType: '행동형',
+        ebsi_thought: 3,
+        ebsi_motive: 4,
+        ebsi_action: 1,
+        answers: {
+          r1: 3, r2: 2, r3: 3, r4: 2, r5: 3,
+          s6: 1, s7: 1, s8: 3, s9: 2, s10: 2, s11: 2, s12: 3, s13: 2, s14: 2, s15: 3
+        },
+        actionPlans: [
+          "[환경통제] 센터 등원 즉시 스마트폰 제출 및 자습 시간 중 불필요한 디지털 기기 완벽 차단",
+          "[시간관리] 매일 첫 자습 시작 전 '과목별 분량·완료 시각' 플래너 작성 후 퇴원 전 매니저 대면 검사",
+          "[영어] 에빙하우스 망각곡선 주기(1일·3일·7일) 누적 단어 테스트 및 장문 S/V/수식어구 끊어 읽기(Chunking)"
+        ],
+        comment: "지훈 학생은 두뇌 회전이 빠르고 활동적인 '행동형' 성향이나, 현재 시간관리(1점), 환경통제(1점), 집중력(2점)이 취약한 '전략 부재 그룹(Yellow Zone - 행동통제 시급형)'입니다. 고등학교 진학 전 공부 그릇(습관)을 만드는 결정적 시기이므로, 고차원적인 스킬 코칭에 앞서 센터의 강력한 물리적 환경 통제(스마트폰 반납, 45분 단위 끊어 공부하기, 퇴원 전 플래너 일일 검사)를 통해 학습 지구력을 길러주겠습니다."
+      },
+      {
+        id: 'stu-4',
+        name: '최유진',
+        grade: '고2',
+        school: '창조고등학교',
+        goal: '메디컬/최상위권 진학을 위한 미적분II·생명과학·화학 킬러 문항 정복',
+        date: '2026-11-18',
+        counselor: '정영주 입시컨설턴트',
+        uiType: '탐구형',
+        ebsi_thought: 4,
+        ebsi_motive: 1,
+        ebsi_action: 5,
+        answers: {
+          r1: 1, r2: 2, r3: 1, r4: 2, r5: 1,
+          s6: 4, s7: 5, s8: 4, s9: 4, s10: 5, s11: 4, s12: 4, s13: 4, s14: 3, s15: 4
+        },
+        actionPlans: [
+          "[과제집착력] 수학·과학 킬러 문항 풀이 시 해설지 없이 20분 이상 다각도 조건 추론 및 단면 도식화 훈련",
+          "[국어/영어] 고난도 추상 지문 구조도(Tree) 요약 및 선지 매력적 오답 함정 분석 노트 작성"
+        ],
+        comment: "유진 학생은 심리적 안정감과 기본 학습 전략이 모두 완성 단계에 있는 '자기주도형 그룹(Green Zone)'입니다. 최상위권(1등급 굳히기) 도약을 위해 필요한 마지막 퍼즐은 낯선 고난도 킬러 문항을 마주했을 때 끝까지 물고 늘어지는 과제집착력(14번: 3점)과 과목 간 정교화 추론입니다. 센터에서는 단순 진도 관리 대신 고난도 킬러 문항 사고 과정 피드백과 심화 탐구(세특 연계) 멘토링을 집중 지원합니다."
+      }
+    ];
+
+    // =========================================================================
+    // 2. 앱 상태 관리 (State) 및 초기화
+    // =========================================================================
+
+    const STORAGE_KEY = 'daol_learning_competency_db_v2';
+    let appState = {
+      students: [],
+      selectedStudentId: null,
+      editingStudentId: null,   // null이면 신규 설문, 값이 있으면 기존 학생 응답 수정/재진단 모드
+      searchQuery: '',
+      darkMode: false,
+      activeMainView: 'report', // 'report' | 'survey' | 'sync' | 'engine'
+      activeGradeTab: 'all',    // 'all' | 'm3' | 'h1' | 'h23_gen' | 'h23_car'
+      activeSubjTab: 'all',     // 'all' | 'math' | 'korean' | 'english' | 'science' | 'social' | 'history'
+      surveyDraft: {
+        uiType: '',
+        ebsi_thought: null,
+        ebsi_motive: null,
+        ebsi_action: null,
+        answers: {}
+      },
+      engineDebugAnswers: {
+        r1: 2, r2: 3, r3: 2, r4: 2, r5: 2,
+        s6: 3, s7: 4, s8: 2, s9: 2, s10: 4, s11: 2, s12: 2, s13: 2, s14: 2, s15: 3
+      }
+    };
+
+    let riskBarChartInstance = null;
+    let skillRadarChartInstance = null;
+
+    function loadStateFromStorage() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            appState.students = parsed;
+            appState.selectedStudentId = parsed[0].id;
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('Storage read fallback:', e);
+      }
+      appState.students = JSON.parse(JSON.stringify(INITIAL_STUDENTS));
+      appState.selectedStudentId = appState.students[0].id;
+      saveStateToStorage();
+    }
+
+    // ================= GitHub 자동 동기화 (표준 패턴) =================
+    // 대상: jeong-918.github.io/desktop 저장소의 json/studyjindan-backup.json
+    // 기존 기능(JSON 파일 백업·복원, 구글폼·구글시트 연동)은 그대로 유지되며, 자동 백업 동기화가 추가됨
+    const GITHUB_SYNC = { owner: 'jeong-918', repo: 'desktop', branch: 'main', path: 'json/studyjindan-backup.json' };
+    const SERVER_JSON_URL = 'https://jeong-918.github.io/desktop/json/studyjindan-backup.json';
+    const SYNC_KEY_TOKEN = 'sync_github_token';                // 토큰 (공용, 기기별 브라우저에 저장)
+    const SYNC_KEY_AUTO = 'sync_jindan_auto';                  // 자동 백업 사용 여부 (이 앱 전용)
+    const SYNC_KEY_LAST = 'sync_jindan_last_upload';           // 마지막 업로드 시각 (이 앱 전용)
+    const SYNC_KEY_LOCAL = 'sync_jindan_local_updated';        // 로컬 마지막 수정 시각 (이 앱 전용)
+
+    function getSyncToken() { return localStorage.getItem(SYNC_KEY_TOKEN) || ''; }
+    function isAutoUpload() { return localStorage.getItem(SYNC_KEY_AUTO) === 'true'; }
+
+    // UTF-8 안전 Base64 인코딩 (대용량 대비 청크 처리)
+    function utf8ToBase64(str) {
+      const bytes = new TextEncoder().encode(str);
+      let binary = '';
+      for (let i = 0; i < bytes.length; i += 0x8000) binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+      return btoa(binary);
+    }
+
+    // [GitHub 업로드] 현재 학생 DB를 json/studyjindan-backup.json으로 커밋
+    async function pushToGitHub(silent) {
+      const token = getSyncToken();
+      if (!token) { if (!silent) showToast('먼저 GitHub 토큰을 입력하고 설정을 저장해 주세요.', 'error'); return; }
+      const apiUrl = `https://api.github.com/repos/${GITHUB_SYNC.owner}/${GITHUB_SYNC.repo}/contents/${GITHUB_SYNC.path}`;
+      const headers = { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' };
+      try {
+        if (!silent) showToast('GitHub에 업로드 중...', 'info');
+        let sha = undefined;
+        try {
+          const checkRes = await fetch(`${apiUrl}?ref=${GITHUB_SYNC.branch}`, { headers });
+          if (checkRes.ok) sha = (await checkRes.json()).sha;
+        } catch (_) {}
+
+        const putRes = await fetch(apiUrl, {
+          method: 'PUT',
+          headers,
+          body: JSON.stringify({
+            message: `학습역량 진단 자동 동기화 - ${new Date().toLocaleString('ko-KR')}`,
+            content: utf8ToBase64(JSON.stringify({ app: 'jindan', exportedAt: new Date().toISOString(), students: appState.students }, null, 2)),
+            branch: GITHUB_SYNC.branch,
+            ...(sha ? { sha } : {})
+          })
+        });
+
+        if (putRes.ok) {
+          localStorage.setItem(SYNC_KEY_LAST, String(Date.now()));
+          updateSyncStatusText();
+          if (!silent) showToast('GitHub 저장소에 백업을 완료했습니다.', 'success');
+        } else if (putRes.status === 401 || putRes.status === 403) {
+          if (!silent) showToast('토큰 오류: 권한이 없거나 만료되었습니다.', 'error');
+        } else if (putRes.status === 409) {
+          if (!silent) showToast('충돌: 서버 파일이 변경되었습니다. 서버 동기화 후 다시 시도하세요.', 'error');
+        } else {
+          if (!silent) showToast(`GitHub 저장 오류 (${putRes.status})`, 'error');
+        }
+      } catch (e) {
+        console.error('업로드 오류:', e);
+        if (!silent) showToast('업로드 실패: 인터넷 연결을 확인하세요.', 'error');
+      }
+    }
+
+    // [자동 업로드 예약] 데이터가 바뀐 뒤 5초간 추가 변경이 없을 때 업로드 실행
+    let autoPushTimer = null;
+    let suppressAutoPush = false; // 서버 데이터 적용 시 재업로드 방지
+    function scheduleAutoPush() {
+      if (suppressAutoPush) return;
+      if (!isAutoUpload()) return;
+      if (autoPushTimer) clearTimeout(autoPushTimer);
+      autoPushTimer = setTimeout(() => pushToGitHub(true), 5000);
+    }
+
+    // [서버에서 가져오기] 퍼블릭 백업 URL로 이 기기 데이터 교체 (토큰 불필요)
+    async function pullFromServer(silent) {
+      try {
+        const res = await fetch(`${SERVER_JSON_URL}?t=${Date.now()}`); // 캐시 우회
+        if (!res.ok) { if (!silent) showToast('백업 파일을 찾을 수 없습니다. json 폴더의 studyjindan-backup.json을 확인하세요.', 'error'); return; }
+        const parsed = await res.json();
+        if (!parsed || !Array.isArray(parsed.students)) {
+          if (!silent) showToast('백업 파일 형식이 올바르지 않습니다.', 'error'); return;
+        }
+        const when = parsed.exportedAt ? new Date(parsed.exportedAt).toLocaleString('ko-KR') : '시점 미상';
+        if (silent || confirm(`서버 백업(${when})으로 이 기기의 데이터를 교체할까요?`)) {
+          suppressAutoPush = true;
+          try {
+            appState.students = parsed.students;
+            appState.selectedStudentId = parsed.students.length > 0 ? parsed.students[0].id : null;
+            saveStateToStorage();
+            localStorage.setItem(SYNC_KEY_LOCAL, String(parsed.exportedAt ? new Date(parsed.exportedAt).getTime() : Date.now()));
+            renderAllReportViews();
+          } finally {
+            suppressAutoPush = false;
+          }
+          if (!silent) showToast('서버 데이터 동기화를 완료했습니다.', 'success');
+        }
+      } catch (e) {
+        console.error('서버 동기화 오류:', e);
+        if (!silent) showToast('동기화 실패: 인터넷 연결을 확인하세요.', 'error');
+      }
+    }
+
+    // [시작 시 자동 동기화] 페이지를 열 때 서버/로컬 중 더 최신 데이터를 자동 반영
+    async function autoSyncOnStart() {
+      if (!getSyncToken()) return; // 토큰이 없으면 수동 모드 유지
+      try {
+        const res = await fetch(`${SERVER_JSON_URL}?t=${Date.now()}`);
+        if (!res.ok) return;
+        const parsed = await res.json();
+        if (!parsed || !Array.isArray(parsed.students)) return;
+        const serverTime = parsed.exportedAt ? new Date(parsed.exportedAt).getTime() : 0;
+        const localTime = Number(localStorage.getItem(SYNC_KEY_LOCAL) || 0);
+        if (serverTime > localTime) {
+          if (confirm('서버에 더 최신 진단 데이터가 있습니다. 이 기기로 가져올까요?')) {
+            await pullFromServer(true);
+          }
+        } else if (localTime > serverTime && isAutoUpload()) {
+          pushToGitHub(true);
+        }
+      } catch (err) {
+        console.error('시작 동기화 오류:', err);
+      }
+    }
+
+    // ---------- 동기화 설정 저장 및 상태 갱신 ----------
+    function saveSyncSettings() {
+      localStorage.setItem(SYNC_KEY_TOKEN, document.getElementById('gh-token').value.trim());
+      localStorage.setItem(SYNC_KEY_AUTO, String(document.getElementById('gh-auto-sync').checked));
+      updateSyncStatusText();
+      showToast('GitHub 동기화 설정을 저장했습니다.', 'success');
+      if (getSyncToken() && isAutoUpload()) pushToGitHub(false);
+    }
+
+    function updateSyncStatusText() {
+      const el = document.getElementById('gh-last-sync-text');
+      if (el) {
+        const last = Number(localStorage.getItem(SYNC_KEY_LAST) || 0);
+        el.textContent = last ? `마지막 업로드: ${new Date(last).toLocaleString('ko-KR')}` : '마지막 업로드: 기록 없음';
+      }
+    }
+
+    function saveStateToStorage() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appState.students));
+        localStorage.setItem(SYNC_KEY_LOCAL, String(Date.now()));
+        scheduleAutoPush();
+      } catch (e) {
+        console.warn('Storage write skipped:', e);
+      }
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const colors = {
+        info: 'bg-slate-900 text-white border-slate-700',
+        success: 'bg-emerald-700 text-white border-emerald-500',
+        warn: 'bg-amber-600 text-white border-amber-400',
+        error: 'bg-rose-700 text-white border-rose-500'
+      };
+      const icons = {
+        info: 'fa-circle-info',
+        success: 'fa-circle-check',
+        warn: 'fa-triangle-exclamation',
+        error: 'fa-circle-exclamation'
+      };
+      const el = document.createElement('div');
+      el.className = `pointer-events-auto px-4 py-3 rounded-xl border shadow-xl text-xs font-bold flex items-center gap-2.5 transition-all duration-300 ${colors[type] || colors.info}`;
+      el.innerHTML = `<i class="fa-solid ${icons[type] || icons.info} text-sm shrink-0"></i><span>${message}</span>`;
+      container.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(8px)';
+        setTimeout(() => el.remove(), 300);
+      }, 3200);
+    }
+
+    function copyTextToClipboard(text, successMsg) {
+      const temp = document.createElement('textarea');
+      temp.value = text;
+      document.body.appendChild(temp);
+      temp.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMsg, 'success');
+      } catch (err) {
+        showToast('클립보드 복사에 실패했습니다.', 'error');
+      }
+      temp.remove();
+    }
+
+    // =========================================================================
+    // 3. 핵심 진단 분석 엔진 (Webapp Architect Pipeline Stage 03 & 06 정밀 검증)
+    // =========================================================================
+
+    function analyzeStudent(stu) {
+      const ans = stu.answers || {};
+      // Part 1. 심리 리스크 (r1 ~ r5)
+      const rScores = [ans.r1 || 1, ans.r2 || 1, ans.r3 || 1, ans.r4 || 1, ans.r5 || 1];
+      const riskTotal = rScores.reduce((a, b) => a + b, 0);
+      const highRiskItems = PART1_QUESTIONS.filter(q => (ans[q.key] || 1) >= 4);
+      const isRebelAlert = (ans.r5 || 1) >= 4; // 5번 외적 통제 거부 고위험 여부
+
+      // Part 2. 9대 학습 전략 점수 계산
+      const dimScores = {};
+      SKILL_DIMENSIONS.forEach(dim => {
+        const vals = dim.qNums.map(n => ans['s' + n] || 3);
+        const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+        dimScores[dim.key] = Number(avg.toFixed(1));
+      });
+
+      const sScores = PART2_QUESTIONS.map(q => ans[q.key] || 3);
+      const skillRawTotal = sScores.reduce((a, b) => a + b, 0); // 10 ~ 50
+      const skillConverted100 = Math.round((skillRawTotal / 50) * 100);
+      const skillAvg = Number((skillRawTotal / 10).toFixed(1));
+
+      // PDF p.10 원문 기준 핵심 지수 정밀 분리 계산
+      // - 고군분투형 핵심 문항: Part 2의 6번(시간관리), 8번(메타인지), 11번(조직화), 12번(총체적사고)
+      const coreStrugglingAvg = Number((((ans.s6 || 3) + (ans.s8 || 3) + (ans.s11 || 3) + (ans.s12 || 3)) / 4).toFixed(2));
+      // - 인지·구조화 확장 지수 (8, 9, 11, 12, 13번 평균)
+      const cogStructAvg = Number((((ans.s8 || 3) + (ans.s9 || 3) + (ans.s11 || 3) + (ans.s12 || 3) + (ans.s13 || 3)) / 5).toFixed(2));
+      // - 전략 부재형 핵심 문항: Part 2의 6번(시간관리), 7번(환경통제), 10번(집중력)
+      const coreUnstrategicAvg = Number((((ans.s6 || 3) + (ans.s7 || 3) + (ans.s10 || 3)) / 3).toFixed(2));
+
+      // 취약 전략 역량 정렬 (점수 낮은 순)
+      const sortedWeakSkills = [...SKILL_DIMENSIONS]
+        .map(d => ({ ...d, score: dimScores[d.key] }))
+        .sort((a, b) => a.score - b.score);
+
+      // 외골수 편차형(Spiky Profile, PDF p.2 반영) 감지: 전체 평균은 3.2 이상이나 최하위 역량이 1.5 이하인 경우
+      const minSkillScore = sortedWeakSkills[0].score;
+      const isSpikyOutlier = skillAvg >= 3.2 && minSkillScore <= 1.5;
+
+      // 기저 학습 전략 트랙 판별 (Part 2 기준)
+      let underlyingSkillTrack = ' 자기주도 안정형';
+      const isUnstrategicLow = coreUnstrategicAvg <= 2.5;
+      const isStrugglingLow = coreStrugglingAvg <= 2.75 || cogStructAvg <= 2.6;
+
+      if (isUnstrategicLow && (!isStrugglingLow || coreUnstrategicAvg <= coreStrugglingAvg)) {
+        underlyingSkillTrack = '기저 전략부재형(6·7·10번 행동통제 취약)';
+      } else if (isStrugglingLow) {
+        underlyingSkillTrack = '기저 고군분투형(6·8·11·12번 인지·구조화 취약)';
+      } else if (isSpikyOutlier) {
+        underlyingSkillTrack = `외골수 편차형(${sortedWeakSkills[0].short} 핀셋 붕괴)`;
+      }
+
+      // 1차 Triage 그룹 판정 알고리즘 (첨부파일 p.7, p.10 기준 + 복합 리스크 보존)
+      const isRedZone = highRiskItems.length >= 2 || riskTotal >= 18;
+
+      let zoneType = 'GREEN';
+      let zoneTitle = 'Green Zone (자기주도형 그룹)';
+      let zoneSub = '심리·전략 모두 안정적 · 최상위권 도약 심화 코칭 트랙';
+      let secondaryBadgeText = '';
+      let zoneCardClass = 'bg-emerald-500/20 border-emerald-400/50 text-white';
+      let zoneIconClass = 'bg-emerald-500 text-white';
+      let zoneIconHtml = '<i class="fa-solid fa-award"></i>';
+
+      if (isRedZone) {
+        zoneType = 'RED';
+        zoneTitle = 'Red Zone (심리 리스크 그룹)';
+        zoneSub = '심리적 브레이크 작동 중 · 멘탈 케어 및 작은 성공 경험 최우선';
+        if (isUnstrategicLow || isStrugglingLow) {
+          secondaryBadgeText = `복합 판정: ${underlyingSkillTrack}`;
+        }
+        zoneCardClass = 'bg-rose-500/25 border-rose-400/60 text-white';
+        zoneIconClass = 'bg-rose-500 text-white';
+        zoneIconHtml = '<i class="fa-solid fa-heart-pulse"></i>';
+      } else if (isUnstrategicLow && (!isStrugglingLow || coreUnstrategicAvg <= coreStrugglingAvg)) {
+        zoneType = 'YELLOW_B';
+        zoneTitle = 'Yellow Zone (전략 부재·행동통제 시급형)';
+        zoneSub = '시간관리·스마트폰 통제·집중력 부족 · 센터 물리적 통제 최우선';
+        if (isStrugglingLow) {
+          secondaryBadgeText = '복합 취약: 메타인지·구조화 보완 병행 필요';
+        }
+        zoneCardClass = 'bg-amber-500/25 border-amber-400/60 text-white';
+        zoneIconClass = 'bg-amber-500 text-slate-950';
+        zoneIconHtml = '<i class="fa-solid fa-stopwatch"></i>';
+      } else if (isStrugglingLow || skillAvg <= 3.0 || isSpikyOutlier) {
+        zoneType = 'YELLOW_A';
+        zoneTitle = isSpikyOutlier ? 'Yellow Zone (고군분투·특정역량 급락형)' : 'Yellow Zone (고군분투형 그룹)';
+        zoneSub = isSpikyOutlier
+          ? `평균(${skillAvg}점)은 양호하나 [${sortedWeakSkills[0].short} ${minSkillScore}점] 핀셋 교정 시급`
+          : '공부 의지는 있으나 메타인지·구조화 기술 부재 · 성적 급상승 기대군';
+        if (isRebelAlert) {
+          secondaryBadgeText = '주의: 외적 통제 거부(5번) 높음 · 자율 선택권 부여 권장';
+        }
+        zoneCardClass = 'bg-amber-500/25 border-amber-400/60 text-white';
+        zoneIconClass = 'bg-amber-400 text-slate-950';
+        zoneIconHtml = '<i class="fa-solid fa-compass-drafting"></i>';
+      } else if (isRebelAlert) {
+        secondaryBadgeText = '주의: 반항/간섭 거부(5번) 경계 · 강압적 지시 지양';
+      }
+
+      // 타고난 학습 성향 해석 (U&I + EBSi)
+      const uiType = stu.uiType || '탐구형';
+      const thoughtScore = stu.ebsi_thought || 3;
+      const motiveScore = stu.ebsi_motive || 3;
+      const actionScore = stu.ebsi_action || 3;
+
+      const thoughtLabel = thoughtScore >= 4 ? '숲(전체 맥락) 선호' : (thoughtScore <= 2 ? '나무(세부 분석) 선호' : '숲·나무 균형형');
+      const motiveLabel = motiveScore >= 4 ? '사회지향(인정·유대감)' : (motiveScore <= 2 ? '자기지향(내적 흥미)' : '내·외적 동기 균형');
+      const actionLabel = actionScore >= 4 ? '이성적(계획 실행형)' : (actionScore <= 2 ? '감성적(분위기 영향형)' : '상황 유연형');
+
+      const uiDescriptions = {
+        '규범형': '규칙과 계획표를 중시하며 체계적인 강의와 명확한 학습 가이드가 주어질 때 안정감을 느끼는 유형입니다.',
+        '탐구형': '지적 호기심이 강하고 공식이나 개념의 원리를 끝까지 이해해야 직성이 풀리는 유형입니다.',
+        '행동형': '활동적이고 성취 욕구가 강하며, 지루한 반복보다 단기 미션과 시각적 피드백이 있을 때 몰입하는 유형입니다.',
+        '이상형': '공부의 의미와 가치를 중시하며, 담당 선생님과의 신뢰 관계와 따뜻한 격려가 성적에 직결되는 유형입니다.'
+      };
+
+      return {
+        rScores,
+        riskTotal,
+        highRiskItems,
+        isRebelAlert,
+        dimScores,
+        skillRawTotal,
+        skillConverted100,
+        skillAvg,
+        coreStrugglingAvg,
+        cogStructAvg,
+        coreUnstrategicAvg,
+        isSpikyOutlier,
+        underlyingSkillTrack,
+        zoneType,
+        zoneTitle,
+        zoneSub,
+        secondaryBadgeText,
+        zoneCardClass,
+        zoneIconClass,
+        zoneIconHtml,
+        sortedWeakSkills,
+        uiType,
+        thoughtLabel,
+        motiveLabel,
+        actionLabel,
+        uiDesc: uiDescriptions[uiType] || uiDescriptions['탐구형']
+      };
+    }
+
+    // =========================================================================
+    // 4. 리포트 화면 렌더링 및 Chart.js 업데이트
+    // =========================================================================
+
+    function getSelectedStudent() {
+      return appState.students.find(s => s.id === appState.selectedStudentId) || appState.students[0];
+    }
+
+    function renderStudentSelectors() {
+      const selectEl = document.getElementById('student-select');
+      const pillsEl = document.getElementById('student-quick-pills');
+      const countBadge = document.getElementById('student-count-badge');
+
+      const q = (appState.searchQuery || '').trim().toLowerCase();
+      const filtered = appState.students.filter(s => {
+        if (!q) return true;
+        return s.name.toLowerCase().includes(q) || s.grade.toLowerCase().includes(q) || (s.school || '').toLowerCase().includes(q);
+      });
+
+      countBadge.textContent = `${appState.students.length}명`;
+
+      selectEl.innerHTML = '';
+      const listToUse = filtered.length > 0 ? filtered : appState.students;
+      listToUse.forEach(s => {
+        const diag = analyzeStudent(s);
+        const opt = document.createElement('option');
+        opt.value = s.id;
+        opt.textContent = `[${s.grade}] ${s.name} (${s.school || '학교미입력'}) — ${diag.zoneTitle.split('(')[0].trim()} · 전략 ${diag.skillConverted100}점`;
+        if (s.id === appState.selectedStudentId) opt.selected = true;
+        selectEl.appendChild(opt);
+      });
+
+      pillsEl.innerHTML = '<span class="text-[11px] font-bold text-slate-400 mr-1">빠른 전환:</span>';
+      listToUse.forEach(s => {
+        const diag = analyzeStudent(s);
+        const isActive = s.id === appState.selectedStudentId;
+        const dotColor = diag.zoneType === 'RED' ? 'bg-rose-500' : (diag.zoneType === 'GREEN' ? 'bg-emerald-500' : 'bg-amber-500');
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `px-3 py-1 rounded-full text-xs font-bold transition flex items-center gap-1.5 border ${
+          isActive
+            ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
+            : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+        }`;
+        btn.innerHTML = `<span class="w-2 h-2 rounded-full ${dotColor}"></span><span>${s.name} (${s.grade})</span>`;
+        btn.addEventListener('click', () => {
+          appState.selectedStudentId = s.id;
+          renderAllReportViews();
+        });
+        pillsEl.appendChild(btn);
+      });
+    }
+
+    function renderReportHeaderAndMetrics(stu, diag) {
+      document.getElementById('rep-date').textContent = `진단일: ${stu.date || '2026-11-18'}`;
+      document.getElementById('rep-name').textContent = stu.name;
+      document.getElementById('rep-grade-badge').textContent = stu.grade;
+      document.getElementById('rep-school').textContent = stu.school || '';
+      document.getElementById('rep-goal').textContent = `목표 및 중점 관리 과목: ${stu.goal || '전 과목 학습 습관 및 전략 최적화'}`;
+
+      const secBadge = document.getElementById('rep-secondary-badge');
+      if (diag.secondaryBadgeText) {
+        secBadge.textContent = diag.secondaryBadgeText;
+        secBadge.classList.remove('hidden');
+      } else {
+        secBadge.classList.add('hidden');
+      }
+
+      const zoneCard = document.getElementById('rep-zone-card');
+      zoneCard.className = `px-5 py-3.5 rounded-2xl border flex items-center gap-3.5 min-w-[260px] ${diag.zoneCardClass}`;
+      const zoneIcon = document.getElementById('rep-zone-icon');
+      zoneIcon.className = `w-12 h-12 rounded-xl flex items-center justify-center text-2xl font-black shrink-0 ${diag.zoneIconClass}`;
+      zoneIcon.innerHTML = diag.zoneIconHtml;
+      document.getElementById('rep-zone-title').textContent = diag.zoneTitle;
+      document.getElementById('rep-zone-sub').textContent = diag.zoneSub;
+
+      // 지표 1: 타고난 성향 캐릭터
+      document.getElementById('rep-style-title').textContent = `${diag.uiType} · ${diag.thoughtLabel}`;
+      document.getElementById('rep-style-desc').textContent = diag.uiDesc;
+      const styleTagsEl = document.getElementById('rep-style-tags');
+      styleTagsEl.innerHTML = `
+        <span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 text-[11px] font-bold border border-indigo-200">${diag.uiType}</span>
+        <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-[11px] font-semibold">${diag.motiveLabel}</span>
+        <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-[11px] font-semibold">${diag.actionLabel}</span>
+      `;
+
+      // 지표 2: 심리 리스크
+      document.getElementById('rep-risk-score').textContent = diag.riskTotal;
+      document.getElementById('rep-risk-high-cnt').textContent = diag.highRiskItems.length;
+      const riskPill = document.getElementById('rep-risk-status-pill');
+      const riskSum = document.getElementById('rep-risk-summary');
+      if (diag.highRiskItems.length >= 2 || diag.riskTotal >= 18) {
+        riskPill.className = 'px-2 py-0.5 rounded text-[11px] font-bold bg-rose-100 text-rose-700 border border-rose-200';
+        riskPill.textContent = '심리 케어 시급';
+        riskSum.textContent = `${diag.highRiskItems.map(i => i.domain).join(', ')} 요인이 높게 나타나 정서적 안정과 스몰 스텝 처방이 우선되어야 합니다.`;
+      } else if (diag.highRiskItems.length === 1 || diag.riskTotal >= 13) {
+        riskPill.className = 'px-2 py-0.5 rounded text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200';
+        riskPill.textContent = '경계 / 관찰';
+        riskSum.textContent = diag.highRiskItems.length === 1
+          ? `[${diag.highRiskItems[0].domain}] 문항이 높게 체크되어 해당 심리 요인에 대한 세심한 배려가 필요합니다.`
+          : '전반적인 학습 수용 태도는 양호하나 일부 심리적 부담 요인을 병행 점검해야 합니다.';
+      } else {
+        riskPill.className = 'px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-100 text-emerald-700 border border-emerald-200';
+        riskPill.textContent = '안정 / 양호';
+        riskSum.textContent = `심리적 저항이나 불안 장벽이 낮아 즉각적이고 강도 높은 학습 전략 코칭 투입이 가능합니다.`;
+      }
+
+      // 지표 3: 학습 전략 수행력
+      document.getElementById('rep-skill-score').textContent = diag.skillConverted100;
+      document.getElementById('rep-skill-avg').textContent = diag.skillAvg;
+      const skillPill = document.getElementById('rep-skill-status-pill');
+      const skillSum = document.getElementById('rep-skill-summary');
+      if (diag.isSpikyOutlier) {
+        skillPill.className = 'px-2 py-0.5 rounded text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200';
+        skillPill.textContent = '외골수 편차 주의';
+        skillSum.textContent = `전체 평균은 양호하나 [${diag.sortedWeakSkills[0].short}] 역량만 급격히 낮아 해당 구간의 핀셋 교정이 시급합니다.`;
+      } else if (diag.skillConverted100 >= 75) {
+        skillPill.className = 'px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-100 text-emerald-700 border border-emerald-200';
+        skillPill.textContent = '우수 (상위권)';
+        skillSum.textContent = '핵심 학습 기술과 자기조절 루틴이 탄탄하게 자리 잡혀 있어 고난도 추론 훈련에 적합합니다.';
+      } else if (diag.skillConverted100 >= 55) {
+        skillPill.className = 'px-2 py-0.5 rounded text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200';
+        skillPill.textContent = '전략 보완 필요';
+        skillSum.textContent = `고군분투 지수(${diag.coreStrugglingAvg}점) · 행동통제 지수(${diag.coreUnstrategicAvg}점) 중 취약 구간 핀셋 교정이 필요합니다.`;
+      } else {
+        skillPill.className = 'px-2 py-0.5 rounded text-[11px] font-bold bg-rose-100 text-rose-700 border border-rose-200';
+        skillPill.textContent = '집중 교정 시급';
+        skillSum.textContent = '공부 방법과 환경 통제 기술이 전반적으로 부족하여 센터의 밀착 행동 관리가 성적 향상의 핵심입니다.';
+      }
+
+      // 지표 4: 최우선 교정 타겟
+      const weakest3 = diag.sortedWeakSkills.slice(0, 3);
+      const weakListEl = document.getElementById('rep-weakest-list');
+      weakListEl.innerHTML = weakest3.map(w => {
+        const badgeColor = w.score <= 2.0 ? 'bg-rose-100 text-rose-800 border-rose-200' : 'bg-amber-100 text-amber-800 border-amber-200';
+        return `<span class="px-2 py-0.5 rounded text-xs font-extrabold border ${badgeColor}">${w.short} (${w.score}점)</span>`;
+      }).join('');
+      document.getElementById('rep-weakest-guide').textContent =
+        `${stu.name} 학생은 [${weakest3.map(w => w.short).join(' · ')}] 영역의 점수가 가장 낮아, 아래 과목별 코칭에서 해당 역량을 우선 훈련합니다.`;
+
+      // 현재 학년 동기화 버튼 텍스트 업데이트
+      const syncBtnLabel = document.getElementById('sync-grade-label');
+      if (syncBtnLabel) {
+        syncBtnLabel.textContent = `현재 학생 학년(${stu.grade}) 맞춤 보기`;
+      }
+    }
+
+    function renderChartsAndTables(stu, diag) {
+      const labelColor = appState.darkMode ? '#e2e8f0' : '#334155';
+      const gridColor = appState.darkMode ? '#334155' : '#f1f5f9';
+
+      // 1. Part 1 심리 리스크 바 차트
+      const riskCtx = document.getElementById('chart-risk-bar').getContext('2d');
+      const riskLabels = PART1_QUESTIONS.map(q => `${q.num}번 ${q.domain}`);
+      const riskColors = diag.rScores.map(v => v >= 4 ? 'rgba(225, 29, 72, 0.85)' : (v === 3 ? 'rgba(245, 158, 11, 0.85)' : 'rgba(16, 185, 129, 0.8)'));
+
+      if (riskBarChartInstance) riskBarChartInstance.destroy();
+      riskBarChartInstance = new Chart(riskCtx, {
+        type: 'bar',
+        data: {
+          labels: riskLabels,
+          datasets: [{
+            label: '심리 리스크 점수 (5점 만점)',
+            data: diag.rScores,
+            backgroundColor: riskColors,
+            borderRadius: 6,
+            barThickness: 20
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            x: {
+              min: 0,
+              max: 5,
+              ticks: { stepSize: 1, font: { size: 11 }, color: labelColor },
+              grid: { color: gridColor }
+            },
+            y: {
+              ticks: { font: { size: 11, weight: 'bold' }, color: labelColor },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+
+      // Part 1 하단 요약 리스트
+      const riskDetailEl = document.getElementById('risk-detail-badges');
+      riskDetailEl.innerHTML = PART1_QUESTIONS.map(q => {
+        const val = stu.answers[q.key] || 1;
+        const st = val >= 4
+          ? '<span class="px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 font-bold">위험(4~5점)</span>'
+          : (val === 3 ? '<span class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-semibold">주의(3점)</span>' : '<span class="px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700">안전(1~2점)</span>');
+        return `<div class="flex items-center justify-between py-1 px-2 rounded bg-slate-50">
+          <span class="text-slate-700 font-medium">${q.num}. ${q.domain}</span>
+          <div class="flex items-center gap-2"><strong class="text-slate-900">${val}점</strong>${st}</div>
+        </div>`;
+      }).join('');
+
+      // 2. Part 2 9대 학습 전략 레이더 차트
+      const radarCtx = document.getElementById('chart-skill-radar').getContext('2d');
+      const radarLabels = SKILL_DIMENSIONS.map(d => d.short);
+      const radarValues = SKILL_DIMENSIONS.map(d => diag.dimScores[d.key]);
+      const benchmarkValues = SKILL_DIMENSIONS.map(() => 3.8);
+
+      if (skillRadarChartInstance) skillRadarChartInstance.destroy();
+      skillRadarChartInstance = new Chart(radarCtx, {
+        type: 'radar',
+        data: {
+          labels: radarLabels,
+          datasets: [
+            {
+              label: `${stu.name} 학생 역량`,
+              data: radarValues,
+              backgroundColor: 'rgba(37, 99, 235, 0.22)',
+              borderColor: 'rgba(37, 99, 235, 1)',
+              pointBackgroundColor: 'rgba(37, 99, 235, 1)',
+              borderWidth: 2.5
+            },
+            {
+              label: '센터 상위권 권장 기준 (3.8)',
+              data: benchmarkValues,
+              backgroundColor: 'rgba(148, 163, 184, 0.08)',
+              borderColor: 'rgba(100, 116, 139, 0.6)',
+              borderDash: [4, 4],
+              pointRadius: 0,
+              borderWidth: 1.5
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              min: 0,
+              max: 5,
+              grid: { color: gridColor },
+              angleLines: { color: gridColor },
+              ticks: { stepSize: 1, backdropColor: 'transparent', font: { size: 10 }, color: labelColor },
+              pointLabels: { font: { size: 11, weight: 'bold' }, color: labelColor }
+            }
+          },
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { font: { size: 11, weight: 'bold' }, color: labelColor }
+            }
+          }
+        }
+      });
+
+      // 우측 9대 학습 전략 점수 테이블
+      const skillTableEl = document.getElementById('skill-score-table');
+      skillTableEl.innerHTML = SKILL_DIMENSIONS.map(d => {
+        const val = diag.dimScores[d.key];
+        const barWidth = Math.round((val / 5) * 100);
+        const colorClass = val <= 2.0 ? 'bg-rose-500 text-rose-700' : (val <= 3.0 ? 'bg-amber-500 text-amber-700' : 'bg-blue-600 text-blue-700');
+        const badgeText = val <= 2.5 ? '코칭 시급' : (val <= 3.4 ? '보통' : '우수');
+        const badgeBg = val <= 2.5 ? 'bg-rose-100 text-rose-700' : (val <= 3.4 ? 'bg-slate-100 text-slate-600' : 'bg-blue-50 text-blue-700');
+        return `
+          <div class="p-2 rounded-lg bg-slate-50 border border-slate-100">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-bold text-slate-800">${d.label}</span>
+              <div class="flex items-center gap-1.5">
+                <span class="font-extrabold text-slate-900">${val}점</span>
+                <span class="px-1.5 py-0.2 rounded text-[10px] font-bold ${badgeBg}">${badgeText}</span>
+              </div>
+            </div>
+            <div class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
+              <div class="h-full ${colorClass.split(' ')[0]}" style="width: ${barWidth}%"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderConsultationScripts(stu, diag) {
+      const statusEl = document.getElementById('script-status-analysis');
+      const talkEl = document.getElementById('script-student-talk');
+      const parentEl = document.getElementById('script-parent-brief');
+
+      const w1 = diag.sortedWeakSkills[0];
+      const w2 = diag.sortedWeakSkills[1];
+      const rebelNote = diag.isRebelAlert
+        ? `<br/><span class="text-rose-600 font-bold">※ 주의: 5번(외적 통제 거부)이 높으므로 일방적 지시 대신 학생에게 목표 선택권을 부여하는 대화법이 필수입니다.</span>`
+        : '';
+
+      if (diag.zoneType === 'RED') {
+        const highNames = diag.highRiskItems.map(i => i.domain).join(', ');
+        statusEl.innerHTML = `<strong>[심리 리스크 그룹 - Red Zone]</strong><br/>현재 ${stu.name} 학생은 Part 1 심리 진단에서 <strong>${highNames}</strong> 문항이 고위험군으로 나타났으며, 기저 학습 패턴은 <strong>${diag.underlyingSkillTrack}</strong>에 해당합니다. 학습 전략(Part 2) 코칭에 앞서 심리적 브레이크 해제가 선행되어야 합니다.${rebelNote}`;
+        talkEl.innerHTML = `"${stu.name}아, 지금 성적이 생각만큼 안 나오는 건 네 능력이 부족해서가 아니야. 검사 결과를 보면 잘하고 싶은 마음(완벽주의/불안)이 너무 커서 오히려 시작하기가 두려운 상태거든. 이번 달엔 무리한 계획표 대신 네가 100% 해낼 수 있는 가벼운 목표부터 하나씩 같이 성공해 보자."`;
+        parentEl.innerHTML = `현재 강압적인 학습량 부과나 성적 압박은 역효과를 낼 수 있습니다. 센터에서는 초기 4주간 <strong>달성률 100%를 채울 수 있는 스몰 스텝(Small-Step) 과제</strong>부터 부여하여 자기효능감을 회복시킨 뒤, <strong>[${w1.short} · ${w2.short}]</strong> 전략 코칭으로 단계적 전환합니다.`;
+      } else if (diag.zoneType === 'YELLOW_B') {
+        statusEl.innerHTML = `<strong>[전략 부재 그룹 - 행동·환경 통제 시급형]</strong><br/>현재 ${stu.name} 학생은 Part 2의 <strong>시간관리(${diag.dimScores.time}점), 환경통제(${diag.dimScores.env}점), 집중력(${diag.dimScores.focus}점)</strong> 평균이 ${diag.coreUnstrategicAvg}점으로 유독 낮게 측정되었습니다. 구체적인 학습 계획을 세우는 법을 모르고 스마트폰 등 방해 요소에 쉽게 흔들리는 상태입니다.${rebelNote}`;
+        talkEl.innerHTML = `"${stu.name}아, 너는 머리가 나쁜 게 아니라 책상 앞에서 버티는 '환경 통제 시스템'이 없었던 거야. 혼자 집에서 공부하면 스마트폰 때문에 20분도 집중하기 힘들지? 센터에 오면 스마트폰 반납하고 딱 45분씩만 끊어서 오늘 할 분량 끝내는 훈련부터 시작할 거야."`;
+        parentEl.innerHTML = `고차원적인 노트필기나 메타인지 코칭 이전에 <strong>센터의 강력한 물리적 행동 통제 시스템</strong>이 가장 큰 효과를 발휘하는 타겟입니다. 등원 시 스마트폰 수거, 일일 학습 플래너 작성 및 퇴원 전 매니저 대면 검사를 통해 공부 그릇(생활 루틴)부터 바로잡겠습니다.`;
+      } else if (diag.zoneType === 'YELLOW_A') {
+        statusEl.innerHTML = `<strong>[고군분투형 그룹 - 인지·구조화 기술 시급형]</strong><br/>현재 ${stu.name} 학생은 심리 상태(Part 1)와 착석 태도는 양호하나, 고군분투 핵심 지수(6·8·11·12번 평균 ${diag.coreStrugglingAvg}점) 및 <strong>${w1.short}(${w1.score}점)·${w2.short}(${w2.score}점)</strong> 능력이 부족하여 '눈으로만 열심히 읽으며 공부하는' 케이스입니다. 코칭 투입 시 성적 상승폭이 가장 큽니다.${rebelNote}`;
+        talkEl.innerHTML = `"${stu.name}아, 너는 책상에 앉아 있는 시간도 길고 성실한데 왜 점수가 안 나올까? 머리에 집어넣기만 하고 정리를 안 해서 그래. 데이터에서 보듯 '${w1.short}' 기술이 ${w1.score * 20}점대라서 그런 거니까, 이번 달부터 수학은 오답 원인 1줄 코멘트 달기, 국어·탐구는 단원 목차 백지에 써보기 훈련만 제대로 따라오면 성적 무조건 오른다!"`;
+        parentEl.innerHTML = `성실함과 의지는 충분하지만 '인강/해설지를 보고 이해한 것'을 '내가 풀 수 있는 것'으로 착각하는 전형적인 고군분투형입니다. 센터에서는 눈으로만 푸는 습관을 교정하기 위해 <strong>백지 인출 테스트와 오답 원인 한 줄 분석 노트</strong>를 매주 점검하여 실전 점수로 연결시키겠습니다.`;
+      } else {
+        statusEl.innerHTML = `<strong>[자기주도형 그룹 - Green Zone]</strong><br/>현재 ${stu.name} 학생은 심리적 안정감과 기본 학습 전략(평균 ${diag.skillAvg}점)이 모두 탄탄하게 잡혀 있습니다. 다만 최상위권(1등급) 안착을 위해 상대적으로 낮은 <strong>${w1.short}(${w1.score}점) · ${w2.short}(${w2.score}점)</strong> 영역의 고도화가 필요한 시점입니다.${rebelNote}`;
+        talkEl.innerHTML = `"${stu.name}아, 너는 시간 관리나 기본 공부 습관은 이미 상위권 궤도에 올라와 있어. 여기서 최상위권으로 치고 올라가려면 킬러 문제를 만났을 때 해설지 없이 최소 15~20분 이상 조건들을 다각도로 조합해 보는 '${w1.short}' 훈련과 고난도 추론 정교화만 더해주면 돼."`;
+        parentEl.innerHTML = `기본적인 자습 관리와 루틴은 매우 안정적입니다. 센터에서는 단순 출결·진도 관리를 넘어 <strong>메타인지 중심의 고난도 킬러 문항 사고 과정 피드백</strong> 및 2022 개정 교육과정 진로선택 과목 심화 탐구 코칭을 집중 지원합니다.`;
+      }
+    }
+
+    function renderSubjectGuideGrid(stu, diag) {
+      const gridEl = document.getElementById('subject-guide-grid');
+      if (!gridEl) return;
+
+      // 학생의 취약 척도 키 목록 (점수 2.5점 이하 또는 최하위 2개 척도)
+      const weakKeys = new Set(
+        diag.sortedWeakSkills.filter((d, idx) => d.score <= 2.5 || idx < 2).map(d => d.key)
+      );
+
+      // 탭 필터링
+      const filteredCards = CURRICULUM_GUIDE_DB.filter(item => {
+        const gradeMatch = appState.activeGradeTab === 'all' || item.gradeTab === appState.activeGradeTab;
+        const subjMatch = appState.activeSubjTab === 'all' || item.subjTab === appState.activeSubjTab;
+        return gradeMatch && subjMatch;
+      });
+
+      if (filteredCards.length === 0) {
+        gridEl.innerHTML = `
+          <div class="col-span-2 p-8 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center space-y-2">
+            <div class="text-sm font-extrabold text-slate-700">선택하신 학년·교과 필터 조합에 해당하는 과목 카드가 없습니다.</div>
+            <p class="text-xs text-slate-500">우측 상단의 [전체 학년·과목 펼치기] 버튼을 클릭하면 모든 과목 가이드를 확인하실 수 있습니다.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const subjColors = {
+        math: { bg: 'bg-blue-50', border: 'border-blue-200', badge: 'bg-blue-600 text-white', text: 'text-blue-900' },
+        korean: { bg: 'bg-emerald-50', border: 'border-emerald-200', badge: 'bg-emerald-600 text-white', text: 'text-emerald-900' },
+        english: { bg: 'bg-purple-50', border: 'border-purple-200', badge: 'bg-purple-600 text-white', text: 'text-purple-900' },
+        science: { bg: 'bg-cyan-50', border: 'border-cyan-200', badge: 'bg-cyan-600 text-white', text: 'text-cyan-900' },
+        social: { bg: 'bg-amber-50', border: 'border-amber-200', badge: 'bg-amber-600 text-white', text: 'text-amber-900' },
+        history: { bg: 'bg-rose-50', border: 'border-rose-200', badge: 'bg-rose-600 text-white', text: 'text-rose-900' }
+      };
+
+      gridEl.innerHTML = filteredCards.map(card => {
+        const theme = subjColors[card.subjTab] || subjColors.math;
+        const isStudentGrade = card.targetGrades.includes(stu.grade);
+        const matchedWeakDims = card.coreScales
+          .filter(k => weakKeys.has(k))
+          .map(k => {
+            const dimObj = SKILL_DIMENSIONS.find(d => d.key === k);
+            return dimObj ? `${dimObj.short}(${diag.dimScores[k]}점)` : k;
+          });
+        const isUrgentTarget = isStudentGrade && matchedWeakDims.length > 0;
+
+        return `
+          <div class="rounded-2xl p-5 border transition print-break-inside-avoid flex flex-col justify-between ${
+            isUrgentTarget
+              ? 'bg-rose-50/40 border-rose-400 ring-2 ring-rose-500/20 shadow-sm'
+              : 'bg-white border-slate-200 hover:border-slate-300'
+          }">
+            <div>
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2.5 py-0.5 rounded-md text-xs font-extrabold ${theme.badge}">${card.subjName}</span>
+                  <span class="px-2 py-0.5 rounded-md text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">${card.gradeLabel}</span>
+                </div>
+                ${
+                  isUrgentTarget
+                    ? `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-rose-600 text-white shadow-sm flex items-center gap-1">
+                         <i class="fa-solid fa-fire"></i>
+                         <span>${stu.name} 집중 처방 (${matchedWeakDims.join('·')} 취약)</span>
+                       </span>`
+                    : (isStudentGrade
+                        ? `<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">현재 학년(${stu.grade}) 해당 과목</span>`
+                        : '')
+                }
+              </div>
+
+              <h4 class="text-base font-extrabold text-slate-900 mb-1">${card.courseTitle}</h4>
+              <div class="text-xs font-bold text-indigo-700 mb-3 flex items-center gap-1.5">
+                <i class="fa-solid fa-key text-[11px]"></i>
+                <span>요구 핵심 역량: ${card.coreKeywords}</span>
+              </div>
+
+              <div class="space-y-2.5 text-xs">
+                <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80 text-slate-700">
+                  <strong class="text-rose-700 font-extrabold block mb-0.5">[주요 취약 증상]</strong>
+                  ${card.symptom}
+                </div>
+                <div class="p-3 rounded-xl ${theme.bg} border ${theme.border} ${theme.text} leading-relaxed">
+                  <strong class="font-extrabold block mb-0.5">[과목 특성 기반 학습 방향성 & 코칭 지침]</strong>
+                  ${card.coaching}
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-3 pt-2.5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+              <div class="text-[11px] font-bold text-slate-600">
+                <i class="fa-solid fa-check-double text-emerald-600 mr-1"></i>실전 액션: <span class="text-slate-900">${card.actionTip}</span>
+              </div>
+              <button type="button" data-add-card-action="[${card.subjName}] ${card.actionTip}" class="no-print px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-900 text-white hover:bg-indigo-600 transition shrink-0">
+                + 행동목표에 담기
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      gridEl.querySelectorAll('[data-add-card-action]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const text = btn.getAttribute('data-add-card-action');
+          addActionPlanToStudent(text);
+        });
+      });
+    }
+
+    function renderActionPlansAndComments(stu, diag) {
+      const listEl = document.getElementById('action-plan-list');
+      const chipsEl = document.getElementById('recommended-action-chips');
+      const commentArea = document.getElementById('counselor-comment-textarea');
+      const counselorInput = document.getElementById('counselor-name-input');
+      const footerDate = document.getElementById('rep-footer-date');
+      const nextDate = document.getElementById('rep-next-date');
+
+      if (!Array.isArray(stu.actionPlans)) stu.actionPlans = [];
+
+      if (stu.actionPlans.length === 0) {
+        listEl.innerHTML = `<li class="p-3 rounded-xl bg-slate-50 border border-dashed border-slate-300 text-xs text-slate-400 text-center">등록된 행동 목표가 없습니다. 아래 추천 태그를 클릭하거나 직접 입력해 주세요.</li>`;
+      } else {
+        listEl.innerHTML = stu.actionPlans.map((plan, idx) => `
+          <li class="flex items-start justify-between gap-2 p-3 rounded-xl bg-indigo-50/50 border border-indigo-200 text-xs">
+            <div class="flex items-start gap-2">
+              <span class="w-5 h-5 rounded-full bg-indigo-600 text-white font-bold text-[11px] flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
+              <span class="font-bold text-slate-800 leading-relaxed">${plan}</span>
+            </div>
+            <button type="button" data-remove-action="${idx}" class="no-print text-slate-400 hover:text-rose-600 px-1.5 py-0.5 transition" title="삭제">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </li>
+        `).join('');
+      }
+
+      listEl.querySelectorAll('[data-remove-action]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = Number(btn.getAttribute('data-remove-action'));
+          stu.actionPlans.splice(idx, 1);
+          saveStateToStorage();
+          renderActionPlansAndComments(stu, diag);
+        });
+      });
+
+      chipsEl.innerHTML = RECOMMENDED_ACTIONS_POOL.map((item, idx) => `
+        <button type="button" data-chip-idx="${idx}" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-100 text-slate-700 hover:bg-indigo-100 hover:text-indigo-800 border border-slate-200 transition">
+          + ${item.tag}
+        </button>
+      `).join('');
+
+      chipsEl.querySelectorAll('[data-chip-idx]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = RECOMMENDED_ACTIONS_POOL[Number(btn.getAttribute('data-chip-idx'))];
+          if (item) addActionPlanToStudent(item.text);
+        });
+      });
+
+      commentArea.value = stu.comment || '';
+      counselorInput.value = stu.counselor || '정영주 입시컨설턴트';
+      footerDate.textContent = stu.date || '2026-11-18';
+
+      try {
+        const d = new Date(stu.date || '2026-11-18');
+        if (!isNaN(d.getTime())) {
+          d.setDate(d.getDate() + 84);
+          const yyyy = d.getFullYear();
+          const mm = String(d.getMonth() + 1).padStart(2, '0');
+          const dd = String(d.getDate()).padStart(2, '0');
+          nextDate.textContent = `${yyyy}-${mm}-${dd} (12주 후)`;
+        }
+      } catch (e) {
+        nextDate.textContent = '3개월 후 재진단';
+      }
+    }
+
+    function addActionPlanToStudent(text) {
+      const stu = getSelectedStudent();
+      if (!stu) return;
+      if (!Array.isArray(stu.actionPlans)) stu.actionPlans = [];
+      if (stu.actionPlans.includes(text)) {
+        showToast('이미 행동 목표 목록에 포함되어 있습니다.', 'warn');
+        return;
+      }
+      stu.actionPlans.push(text);
+      saveStateToStorage();
+      const diag = analyzeStudent(stu);
+      renderActionPlansAndComments(stu, diag);
+      showToast('이번 달 집중 행동 목표에 추가되었습니다.', 'success');
+    }
+
+    function autoGeneratePrescriptionForStudent(stu) {
+      const diag = analyzeStudent(stu);
+      const w1 = diag.sortedWeakSkills[0];
+      const w2 = diag.sortedWeakSkills[1];
+
+      const newPlans = [];
+      if (diag.zoneType === 'RED') {
+        newPlans.push(RECOMMENDED_ACTIONS_POOL.find(p => p.scale === 'risk').text);
+      }
+      const match1 = RECOMMENDED_ACTIONS_POOL.find(p => p.scale === w1.key);
+      const match2 = RECOMMENDED_ACTIONS_POOL.find(p => p.scale === w2.key);
+      if (match1 && !newPlans.includes(match1.text)) newPlans.push(match1.text);
+      if (match2 && !newPlans.includes(match2.text)) newPlans.push(match2.text);
+      if (newPlans.length < 2) {
+        newPlans.push(RECOMMENDED_ACTIONS_POOL[0].text);
+      }
+      stu.actionPlans = newPlans.slice(0, 3);
+
+      stu.comment = `${stu.name} (${stu.grade}) 학생은 타고난 학습 성향이 '${diag.uiType}(${diag.thoughtLabel})'이며, 현재 진단 결과 '${diag.zoneTitle}'으로 분류되었습니다. 학습 전략 수행력은 100점 만점 기준 ${diag.skillConverted100}점으로, 특히 [${w1.short}(${w1.score}점) · ${w2.short}(${w2.score}점)] 역량에 대한 핀셋 코칭이 가장 시급합니다. 센터에서는 이번 달 위 3가지 핵심 행동 목표를 매일 자습 시간에 밀착 점검하고 12주 후 2차 재진단을 통해 전략 점수 상승 추이를 확인하겠습니다.`;
+
+      saveStateToStorage();
+      renderActionPlansAndComments(stu, diag);
+      showToast('학생 데이터 기반 맞춤 처방과 상담 총평이 자동 생성되었습니다.', 'success');
+    }
+
+    function renderAllReportViews() {
+      const stu = getSelectedStudent();
+      if (!stu) return;
+      const diag = analyzeStudent(stu);
+      renderStudentSelectors();
+      renderReportHeaderAndMetrics(stu, diag);
+      renderChartsAndTables(stu, diag);
+      renderConsultationScripts(stu, diag);
+      renderSubjectGuideGrid(stu, diag);
+      renderActionPlansAndComments(stu, diag);
+    }
+
+    // =========================================================================
+    // 5. 현장 직접 검사 (설문 폼 - 모바일 375px 대응 및 기존 학생 응답 수정 호환)
+    // =========================================================================
+
+    function renderDirectSurveyQuestions() {
+      // Part 0 EBSi 양극단 선호도 3문항
+      const styleContainer = document.getElementById('survey-style-questions');
+      styleContainer.innerHTML = STYLE_QUESTIONS.map(q => `
+        <div id="sv-card-${q.id}" class="bg-indigo-50/40 p-4 rounded-xl border border-indigo-100 transition">
+          <div class="text-sm font-bold text-slate-900 mb-2">
+            <span class="inline-block px-2 py-0.5 rounded bg-indigo-600 text-white text-xs mr-1.5">${q.badge}</span>
+            ${q.title} <span class="text-rose-500">*</span>
+          </div>
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-2.5 mt-2">
+            <span class="text-xs font-semibold text-indigo-900 md:w-1/3">${q.leftLabel}</span>
+            <div class="flex items-center gap-1.5 sm:gap-2 justify-center">
+              ${[1, 2, 3, 4, 5].map(val => `
+                <button type="button" data-style-q="${q.id}" data-val="${val}" class="likert-btn w-10 h-10 rounded-xl border border-slate-300 bg-white text-sm font-bold text-slate-700 hover:border-indigo-500">
+                  ${val}
+                </button>
+              `).join('')}
+            </div>
+            <span class="text-xs font-semibold text-indigo-900 md:w-1/3 md:text-right">${q.rightLabel}</span>
+          </div>
+        </div>
+      `).join('');
+
+      // Part 1 심리 리스크 5문항 (모바일 375px에서 가로 넘침이 없도록 상하 라벨 분리)
+      const p1Container = document.getElementById('survey-part1-questions');
+      p1Container.innerHTML = PART1_QUESTIONS.map(q => `
+        <div id="sv-card-${q.key}" class="bg-white p-4 rounded-xl border border-slate-200 hover:border-rose-300 transition flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div class="text-sm font-bold text-slate-800">
+            <span class="inline-block w-6 h-6 rounded-lg bg-rose-100 text-rose-700 text-xs font-extrabold text-center leading-6 mr-1.5">${q.num}</span>
+            <span>${q.text}</span>
+            <span class="text-xs font-semibold text-rose-600 ml-1">(${q.domain})</span>
+          </div>
+          <div class="flex flex-col items-end shrink-0 self-end md:self-center">
+            <div class="flex items-center gap-1.5">
+              ${[1, 2, 3, 4, 5].map(val => `
+                <button type="button" data-ans-key="${q.key}" data-part="risk" data-val="${val}" class="likert-btn w-9 h-9 sm:w-10 sm:h-10 rounded-xl border border-slate-300 bg-slate-50 text-xs font-bold text-slate-700 hover:border-rose-400">
+                  ${val}
+                </button>
+              `).join('')}
+            </div>
+            <div class="w-full flex justify-between text-[10px] text-slate-400 mt-1 px-0.5">
+              <span>1: 전혀 아니다</span>
+              <span>5: 매우 그렇다</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // Part 2 학습 전략 10문항
+      const p2Container = document.getElementById('survey-part2-questions');
+      p2Container.innerHTML = PART2_QUESTIONS.map(q => `
+        <div id="sv-card-${q.key}" class="bg-white p-4 rounded-xl border border-slate-200 hover:border-blue-300 transition flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div class="text-sm font-bold text-slate-800">
+            <span class="inline-block w-6 h-6 rounded-lg bg-blue-100 text-blue-700 text-xs font-extrabold text-center leading-6 mr-1.5">${q.num}</span>
+            <span>${q.text}</span>
+            <span class="text-xs font-semibold text-blue-600 ml-1">[${q.domain}]</span>
+          </div>
+          <div class="flex flex-col items-end shrink-0 self-end md:self-center">
+            <div class="flex items-center gap-1.5">
+              ${[1, 2, 3, 4, 5].map(val => `
+                <button type="button" data-ans-key="${q.key}" data-part="skill" data-val="${val}" class="likert-btn w-9 h-9 sm:w-10 sm:h-10 rounded-xl border border-slate-300 bg-slate-50 text-xs font-bold text-slate-700 hover:border-blue-400">
+                  ${val}
+                </button>
+              `).join('')}
+            </div>
+            <div class="w-full flex justify-between text-[10px] text-slate-400 mt-1 px-0.5">
+              <span>1: 전혀 아니다</span>
+              <span>5: 매우 그렇다</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // 이벤트 바인딩: U&I 라디오 버튼
+      document.querySelectorAll('input[name="sv_ui_type"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+          appState.surveyDraft.uiType = radio.value;
+          document.getElementById('sv-card-ui-type').classList.remove('unanswered-highlight');
+          updateSurveyProgressBar();
+        });
+      });
+
+      // 이벤트 바인딩: 성향 2~4 리커트 버튼
+      styleContainer.querySelectorAll('[data-style-q]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const qId = btn.getAttribute('data-style-q');
+          const val = Number(btn.getAttribute('data-val'));
+          appState.surveyDraft[qId] = val;
+          styleContainer.querySelectorAll(`[data-style-q="${qId}"]`).forEach(b => b.classList.remove('selected-style'));
+          btn.classList.add('selected-style');
+          const cardEl = document.getElementById('sv-card-' + qId);
+          if (cardEl) cardEl.classList.remove('unanswered-highlight');
+          updateSurveyProgressBar();
+        });
+      });
+
+      // 이벤트 바인딩: Part 1 & Part 2 리커트 버튼
+      document.querySelectorAll('[data-ans-key]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const key = btn.getAttribute('data-ans-key');
+          const part = btn.getAttribute('data-part');
+          const val = Number(btn.getAttribute('data-val'));
+          appState.surveyDraft.answers[key] = val;
+          const activeClass = part === 'risk' ? 'selected-risk' : 'selected-skill';
+          document.querySelectorAll(`[data-ans-key="${key}"]`).forEach(b => b.classList.remove('selected-risk', 'selected-skill'));
+          btn.classList.add(activeClass);
+          const cardEl = document.getElementById('sv-card-' + key);
+          if (cardEl) cardEl.classList.remove('unanswered-highlight');
+          updateSurveyProgressBar();
+        });
+      });
+    }
+
+    function updateSurveyProgressBar() {
+      let count = 0;
+      if (appState.surveyDraft.uiType) count++;
+      if (appState.surveyDraft.ebsi_thought) count++;
+      if (appState.surveyDraft.ebsi_motive) count++;
+      if (appState.surveyDraft.ebsi_action) count++;
+      count += Object.keys(appState.surveyDraft.answers).length;
+
+      const pct = Math.round((count / 19) * 100);
+      document.getElementById('survey-progress-text').textContent = `${count} / 19 문항`;
+      document.getElementById('survey-progress-bar').style.width = `${pct}%`;
+    }
+
+    function resetSurveyForm() {
+      appState.editingStudentId = null;
+      document.getElementById('survey-mode-badge').textContent = '센터 자체 진단평가지 (소요 시간 5~7분)';
+      document.getElementById('survey-header-title').textContent = '학생 학습 역량 및 공부 체질 진단 검사';
+      document.getElementById('btn-submit-survey-label').textContent = '진단 제출 및 분석 리포트 생성';
+
+      document.getElementById('direct-survey-form').reset();
+      appState.surveyDraft = {
+        uiType: '',
+        ebsi_thought: null,
+        ebsi_motive: null,
+        ebsi_action: null,
+        answers: {}
+      };
+      document.querySelectorAll('.likert-btn').forEach(b => b.classList.remove('selected-risk', 'selected-skill', 'selected-style'));
+      document.querySelectorAll('.unanswered-highlight').forEach(el => el.classList.remove('unanswered-highlight'));
+      updateSurveyProgressBar();
+    }
+
+    function loadExistingStudentIntoSurvey(stu) {
+      resetSurveyForm();
+      appState.editingStudentId = stu.id;
+      document.getElementById('survey-mode-badge').textContent = `기존 학생 응답 수정 / 2차 추적 재진단 모드 (${stu.name})`;
+      document.getElementById('survey-header-title').textContent = `${stu.name} (${stu.grade}) 학생 진단 응답 수정 및 재진단`;
+      document.getElementById('btn-submit-survey-label').textContent = `${stu.name} 학생 수정 결과 반영 및 리포트 갱신`;
+
+      document.getElementById('sv-name').value = stu.name;
+      document.getElementById('sv-grade').value = stu.grade;
+      document.getElementById('sv-school').value = stu.school || '';
+      document.getElementById('sv-goal').value = stu.goal || '';
+
+      const radio = document.querySelector(`input[name="sv_ui_type"][value="${stu.uiType || '탐구형'}"]`);
+      if (radio) {
+        radio.checked = true;
+        appState.surveyDraft.uiType = stu.uiType || '탐구형';
+      }
+
+      STYLE_QUESTIONS.forEach(q => {
+        const val = stu[q.id] || 3;
+        const btn = document.querySelector(`[data-style-q="${q.id}"][data-val="${val}"]`);
+        if (btn) btn.click();
+      });
+
+      PART1_QUESTIONS.forEach(q => {
+        const val = (stu.answers && stu.answers[q.key]) || 2;
+        const btn = document.querySelector(`[data-ans-key="${q.key}"][data-val="${val}"]`);
+        if (btn) btn.click();
+      });
+
+      PART2_QUESTIONS.forEach(q => {
+        const val = (stu.answers && stu.answers[q.key]) || 3;
+        const btn = document.querySelector(`[data-ans-key="${q.key}"][data-val="${val}"]`);
+        if (btn) btn.click();
+      });
+
+      switchMainView('survey');
+      showToast(`${stu.name} 학생의 기존 응답을 불러왔습니다. 점수를 수정한 뒤 하단 저장 버튼을 눌러주세요.`, 'info');
+    }
+
+    // =========================================================================
+    // 6. 코어 엔진 디버거 & 엣지케이스 QA 보드 (Stage 03 & Stage 06)
+    // =========================================================================
+
+    function renderEngineDebuggerSliders() {
+      const container = document.getElementById('engine-sliders-container');
+      if (!container) return;
+
+      const allQs = [
+        ...PART1_QUESTIONS.map(q => ({ ...q, partLabel: 'Part 1 심리', isRisk: true })),
+        ...PART2_QUESTIONS.map(q => ({ ...q, partLabel: 'Part 2 전략', isRisk: false }))
+      ];
+
+      container.innerHTML = allQs.map(q => {
+        const val = appState.engineDebugAnswers[q.key] || 3;
+        const badgeColor = q.isRisk ? 'bg-rose-100 text-rose-700' : 'bg-blue-100 text-blue-700';
+        return `
+          <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
+            <div class="text-xs flex-1">
+              <span class="px-1.5 py-0.5 rounded font-bold text-[10px] ${badgeColor} mr-1">${q.num}번 · ${q.domain}</span>
+              <span class="text-slate-700 font-medium">${q.text}</span>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <input type="range" min="1" max="5" step="1" value="${val}" data-dbg-slider="${q.key}" class="w-24 accent-indigo-600 cursor-pointer" />
+              <span id="dbg-val-${q.key}" class="w-7 text-center font-extrabold text-xs text-slate-900 bg-white px-1.5 py-0.5 rounded border border-slate-300">${val}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      container.querySelectorAll('[data-dbg-slider]').forEach(slider => {
+        slider.addEventListener('input', (e) => {
+          const key = slider.getAttribute('data-dbg-slider');
+          const v = Number(e.target.value);
+          appState.engineDebugAnswers[key] = v;
+          const valSpan = document.getElementById('dbg-val-' + key);
+          if (valSpan) valSpan.textContent = v;
+          updateEngineDebuggerMonitor();
+        });
+      });
+
+      updateEngineDebuggerMonitor();
+    }
+
+    function updateEngineDebuggerMonitor() {
+      const mockStu = {
+        name: 'QA시뮬레이션',
+        grade: '고1',
+        uiType: '탐구형',
+        ebsi_thought: 4,
+        ebsi_motive: 2,
+        ebsi_action: 3,
+        answers: { ...appState.engineDebugAnswers }
+      };
+      const diag = analyzeStudent(mockStu);
+
+      document.getElementById('dbg-high-risk-cnt').textContent = `${diag.highRiskItems.length}개`;
+      document.getElementById('dbg-struggle-idx').textContent = `${diag.coreStrugglingAvg}점`;
+      document.getElementById('dbg-unstrat-idx').textContent = `${diag.coreUnstrategicAvg}점`;
+      document.getElementById('dbg-risk-total').textContent = `${diag.riskTotal} / 25점`;
+      document.getElementById('dbg-skill-100').textContent = `${diag.skillConverted100} / 100점`;
+      document.getElementById('dbg-spiky-flag').textContent = diag.isSpikyOutlier
+        ? `발동 (${diag.sortedWeakSkills[0].short} ${diag.sortedWeakSkills[0].score}점)`
+        : '정상 범위';
+
+      const finalBadge = document.getElementById('dbg-final-badge');
+      finalBadge.textContent = diag.zoneTitle;
+      finalBadge.className = diag.zoneType === 'RED'
+        ? 'px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-rose-500 text-white'
+        : (diag.zoneType === 'GREEN'
+            ? 'px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-emerald-400 text-slate-950'
+            : 'px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-amber-400 text-slate-950');
+
+      const logEl = document.getElementById('dbg-decision-log');
+      logEl.innerHTML = `
+        <div class="text-slate-400">// [Step 1] Part 1 심리 리스크 필터링 (U&I 행동척도)</div>
+        <div>• 4~5점 고위험 문항: <span class="text-rose-400 font-bold">${diag.highRiskItems.map(i => i.num + '번(' + i.domain + ')').join(', ') || '없음'}</span> (총점 ${diag.riskTotal}점)</div>
+        <div>• Red Zone 판정 조건 (고위험 ≥ 2개 OR 총점 ≥ 18): <span class="font-bold ${diag.zoneType === 'RED' ? 'text-rose-400' : 'text-emerald-400'}">${diag.zoneType === 'RED' ? 'TRUE -> Red Zone 진입' : 'FALSE -> Step 2 이동'}</span></div>
+        <div class="text-slate-400 pt-1">// [Step 2] Part 2 전략 지수 교차 검증 (MLST-II · SLT)</div>
+        <div>• 고군분투 지수 (6·8·11·12번 평균): <span class="text-amber-300 font-bold">${diag.coreStrugglingAvg}점</span> | 행동통제 지수 (6·7·10번 평균): <span class="text-cyan-300 font-bold">${diag.coreUnstrategicAvg}점</span></div>
+        <div>• 기저 전략 트랙: <span class="text-indigo-300 font-bold">${diag.underlyingSkillTrack}</span></div>
+        <div>• 보조 경보 배지: <span class="text-amber-200 font-bold">${diag.secondaryBadgeText || '없음'}</span></div>
+        <div class="text-slate-400 pt-1">// [Step 3] 최우선 교정 타겟 TOP 3 추출</div>
+        <div class="text-emerald-300 font-bold">=> ${diag.sortedWeakSkills.slice(0, 3).map((w, i) => `${i + 1}순위: ${w.short}(${w.score}점)`).join(' / ')}</div>
+      `;
+    }
+
+    // =========================================================================
+    // 7. 구글시트 / RFC-4180 CSV / JSON 파싱 및 학부모 카톡 요약 복사 엔진
+    // =========================================================================
+
+    // 쌍따옴표("대수, 미적분I") 내부의 쉼표를 정확히 보존하는 RFC-4180 호환 파서
+    function parseDelimitedText(text) {
+      const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+      return lines.map(line => {
+        if (line.includes('\t')) {
+          return line.split('\t').map(c => c.replace(/^"|"$/g, '').trim());
+        }
+        const result = [];
+        let cur = '';
+        let inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+          const ch = line[i];
+          if (ch === '"') {
+            if (inQuotes && line[i + 1] === '"') {
+              cur += '"';
+              i++;
+            } else {
+              inQuotes = !inQuotes;
+            }
+          } else if (ch === ',' && !inQuotes) {
+            result.push(cur.trim());
+            cur = '';
+          } else {
+            cur += ch;
+          }
+        }
+        result.push(cur.trim());
+        return result;
+      });
+    }
+
+    function parseSubmittedRowsToStudents(rows) {
+      let addedCount = 0;
+      rows.forEach((cols, rowIdx) => {
+        if (!Array.isArray(cols) || cols.length < 15) return;
+        const cleanCols = cols.map(c => String(c || '').trim());
+        if (cleanCols[0].includes('타임스탬프') || cleanCols[1].includes('학생 이름') || cleanCols[1] === '이름') return;
+
+        const name = cleanCols[1] || `신규학생_${Date.now().toString().slice(-3)}`;
+        const rawGrade = cleanCols[2] || '고1';
+        const grade = ['중3', '고1', '고2', '고3'].find(g => rawGrade.includes(g)) || '고1';
+        const school = cleanCols[3] || '';
+        const goal = cleanCols[4] || '';
+
+        let uiType = '탐구형';
+        let ebsi_thought = 3, ebsi_motive = 3, ebsi_action = 3;
+        let qStartIndex = 5;
+
+        if (['규범형', '탐구형', '행동형', '이상형'].some(t => (cleanCols[5] || '').includes(t))) {
+          uiType = ['규범형', '탐구형', '행동형', '이상형'].find(t => cleanCols[5].includes(t)) || '탐구형';
+          ebsi_thought = clampScore(cleanCols[6], 3);
+          ebsi_motive = clampScore(cleanCols[7], 3);
+          ebsi_action = clampScore(cleanCols[8], 3);
+          qStartIndex = 9;
+        }
+
+        const answers = {};
+        for (let i = 1; i <= 5; i++) {
+          answers['r' + i] = clampScore(cleanCols[qStartIndex + i - 1], 2);
+        }
+        for (let i = 6; i <= 15; i++) {
+          answers['s' + i] = clampScore(cleanCols[qStartIndex + i - 1], 3);
+        }
+
+        const newStu = {
+          id: 'stu-' + Date.now() + '-' + rowIdx + '-' + Math.floor(Math.random() * 1000),
+          name,
+          grade,
+          school,
+          goal,
+          date: (cleanCols[0] || '').slice(0, 10) || new Date().toISOString().slice(0, 10),
+          counselor: '정영주 입시컨설턴트',
+          uiType,
+          ebsi_thought,
+          ebsi_motive,
+          ebsi_action,
+          answers,
+          actionPlans: [],
+          comment: ''
+        };
+        autoGeneratePrescriptionForStudent(newStu);
+        appState.students.unshift(newStu);
+        appState.selectedStudentId = newStu.id;
+        addedCount++;
+      });
+      if (addedCount > 0) {
+        saveStateToStorage();
+        renderAllReportViews();
+      }
+      return addedCount;
+    }
+
+    function clampScore(val, fallback) {
+      const n = parseInt(String(val).replace(/[^0-9]/g, ''), 10);
+      if (isNaN(n) || n < 1 || n > 5) return fallback;
+      return n;
+    }
+
+    function buildKakaoSummaryText(stu, diag) {
+      const w1 = diag.sortedWeakSkills[0];
+      const w2 = diag.sortedWeakSkills[1];
+      const w3 = diag.sortedWeakSkills[2];
+      const plans = (stu.actionPlans && stu.actionPlans.length > 0)
+        ? stu.actionPlans.map((p, i) => `  ${i + 1}. ${p}`).join('\n')
+        : '  1. 맞춤형 오답노트 및 플래너 점검';
+
+      return `[학습관리센터 학습 역량 정밀 진단 리포트]
+■ 학생명: ${stu.name} (${stu.grade} · ${stu.school || '재학'})
+■ 진단일: ${stu.date || '2026-11-18'} (담당: ${stu.counselor || '정영주 입시컨설턴트'})
+
+1. 종합 코칭 트랙 판정
+• 판정 결과: ${diag.zoneTitle}
+• 타고난 성향: ${diag.uiType} (${diag.thoughtLabel} · ${diag.actionLabel})
+• 학습 전략 수행력: ${diag.skillConverted100}점 / 100점 만점 (평균 ${diag.skillAvg}/5.0)
+• 최우선 보완 역량: ${w1.short}(${w1.score}점), ${w2.short}(${w2.score}점), ${w3.short}(${w3.score}점)
+
+2. 이번 달 센터 집중 행동 교정 목표 (Action Plan)
+${plans}
+
+3. 컨설턴트 종합 상담 소견
+${stu.comment || '학생의 취약 전략을 보완하여 실질적인 성적 향상으로 연결하겠습니다.'}`;
+    }
+
+    // =========================================================================
+    // 8. 메인 네비게이션 및 이벤트 바인딩 초기화
+    // =========================================================================
+
+    function switchMainView(viewName) {
+      appState.activeMainView = viewName;
+      const views = {
+        report: document.getElementById('view-report'),
+        survey: document.getElementById('view-survey'),
+        sync: document.getElementById('view-sync'),
+        engine: document.getElementById('view-engine')
+      };
+      const tabs = {
+        report: document.getElementById('nav-tab-report'),
+        survey: document.getElementById('nav-tab-survey'),
+        sync: document.getElementById('nav-tab-sync'),
+        engine: document.getElementById('nav-tab-engine')
+      };
+
+      Object.keys(views).forEach(k => {
+        if (k === viewName) {
+          views[k].classList.remove('hidden');
+          tabs[k].className = 'nav-tab-btn px-3 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-indigo-600 text-white shadow';
+        } else {
+          views[k].classList.add('hidden');
+          tabs[k].className = 'nav-tab-btn px-3 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-slate-300 hover:text-white hover:bg-slate-700/60';
+        }
+      });
+
+      if (viewName === 'report') {
+        renderAllReportViews();
+      } else if (viewName === 'engine') {
+        renderEngineDebuggerSliders();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadStateFromStorage();
+      renderDirectSurveyQuestions();
+      renderEngineDebuggerSliders();
+      renderAllReportViews();
+      autoSyncOnStart(); // 페이지 열 때 서버/로컬 데이터 비교 후 자동 동기화
+      updateSyncStatusText();
+
+      // 메인 탭 전환
+      document.getElementById('nav-tab-report').addEventListener('click', () => switchMainView('report'));
+      document.getElementById('nav-tab-survey').addEventListener('click', () => {
+        resetSurveyForm();
+        switchMainView('survey');
+      });
+      document.getElementById('nav-tab-sync').addEventListener('click', () => switchMainView('sync'));
+
+      // GitHub 자동 동기화 버튼 이벤트 연결
+      document.getElementById('btn-gh-save-cfg').addEventListener('click', saveSyncSettings);
+      document.getElementById('btn-gh-pull').addEventListener('click', () => pullFromServer(false));
+      document.getElementById('btn-gh-push').addEventListener('click', () => pushToGitHub(false));
+      document.getElementById('nav-tab-engine').addEventListener('click', () => switchMainView('engine'));
+
+      document.getElementById('btn-go-new-survey').addEventListener('click', () => {
+        resetSurveyForm();
+        switchMainView('survey');
+      });
+
+      // 현재 학생 응답 수정 / 재진단 버튼
+      document.getElementById('btn-edit-current-student').addEventListener('click', () => {
+        const stu = getSelectedStudent();
+        if (stu) loadExistingStudentIntoSurvey(stu);
+      });
+
+      // 학부모 카톡 요약 복사 버튼
+      document.getElementById('btn-copy-kakao-summary').addEventListener('click', () => {
+        const stu = getSelectedStudent();
+        if (!stu) return;
+        const diag = analyzeStudent(stu);
+        const summaryText = buildKakaoSummaryText(stu, diag);
+        copyTextToClipboard(summaryText, `${stu.name} 학생 학부모 카톡 발송용 상담 요약본이 복사되었습니다!`);
+      });
+
+      // 다크/라이트 테마 전환
+      document.getElementById('btn-toggle-theme').addEventListener('click', () => {
+        appState.darkMode = !appState.darkMode;
+        document.body.classList.toggle('dark-theme', appState.darkMode);
+        const icon = document.getElementById('theme-icon');
+        const label = document.getElementById('theme-label');
+        if (appState.darkMode) {
+          icon.className = 'fa-solid fa-sun text-amber-400';
+          label.textContent = '라이트 모드';
+        } else {
+          icon.className = 'fa-solid fa-moon text-amber-300';
+          label.textContent = '다크 모드';
+        }
+        renderAllReportViews();
+      });
+
+      // 학생 드롭다운 변경
+      document.getElementById('student-select').addEventListener('change', (e) => {
+        appState.selectedStudentId = e.target.value;
+        renderAllReportViews();
+      });
+
+      // 학생 검색 필터
+      document.getElementById('student-search-input').addEventListener('input', (e) => {
+        appState.searchQuery = e.target.value;
+        renderStudentSelectors();
+      });
+
+      // 현재 학생 기록 삭제
+      document.getElementById('btn-delete-student').addEventListener('click', () => {
+        if (appState.students.length <= 1) {
+          showToast('최소 1명의 학생 데이터는 유지되어야 합니다.', 'warn');
+          return;
+        }
+        const curr = getSelectedStudent();
+        appState.students = appState.students.filter(s => s.id !== curr.id);
+        appState.selectedStudentId = appState.students[0].id;
+        saveStateToStorage();
+        renderAllReportViews();
+        showToast(`${curr.name} 학생 기록이 삭제되었습니다.`, 'info');
+      });
+
+      // 인쇄 / PDF 출력
+      document.getElementById('btn-print-report').addEventListener('click', () => {
+        window.print();
+      });
+
+      // 학년 탭 클릭
+      document.querySelectorAll('.grade-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.activeGradeTab = btn.getAttribute('data-grade-tab');
+          document.querySelectorAll('.grade-tab-btn').forEach(b => {
+            b.className = 'grade-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:bg-white';
+          });
+          btn.className = 'grade-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold transition bg-slate-900 text-white shadow-sm';
+          const stu = getSelectedStudent();
+          renderSubjectGuideGrid(stu, analyzeStudent(stu));
+        });
+      });
+
+      // 교과 탭 클릭
+      document.querySelectorAll('.subj-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.activeSubjTab = btn.getAttribute('data-subj-tab');
+          document.querySelectorAll('.subj-tab-btn').forEach(b => {
+            b.className = 'subj-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-slate-600 hover:bg-white';
+          });
+          btn.className = 'subj-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold transition bg-indigo-600 text-white shadow-sm';
+          const stu = getSelectedStudent();
+          renderSubjectGuideGrid(stu, analyzeStudent(stu));
+        });
+      });
+
+      // 현재 학생 학년 맞춤 보기 버튼
+      document.getElementById('btn-sync-student-grade').addEventListener('click', () => {
+        const stu = getSelectedStudent();
+        const mapGradeToTab = { '중3': 'm3', '고1': 'h1', '고2': 'h23_gen', '고3': 'h23_gen' };
+        const targetTab = mapGradeToTab[stu.grade] || 'all';
+        const btn = document.querySelector(`.grade-tab-btn[data-grade-tab="${targetTab}"]`);
+        if (btn) btn.click();
+        showToast(`${stu.name} 학생의 학년(${stu.grade}) 과정 탭으로 필터링되었습니다.`, 'info');
+      });
+
+      // 전체 학년·과목 펼치기 버튼
+      document.getElementById('btn-show-all-subjects').addEventListener('click', () => {
+        const gBtn = document.querySelector('.grade-tab-btn[data-grade-tab="all"]');
+        const sBtn = document.querySelector('.subj-tab-btn[data-subj-tab="all"]');
+        if (gBtn) gBtn.click();
+        if (sBtn) sBtn.click();
+        showToast('중3~고3 전체 학년 및 6대 교과군 가이드를 모두 표시합니다.', 'info');
+      });
+
+      // 직접 액션 플랜 추가
+      document.getElementById('btn-add-action').addEventListener('click', () => {
+        const input = document.getElementById('custom-action-input');
+        const val = input.value.trim();
+        if (!val) {
+          showToast('추가할 행동 목표 내용을 입력해 주세요.', 'warn');
+          return;
+        }
+        addActionPlanToStudent(val);
+        input.value = '';
+      });
+
+      // 학생 데이터 기반 추천 처방 자동 생성 버튼
+      document.getElementById('btn-reset-prescription').addEventListener('click', () => {
+        const stu = getSelectedStudent();
+        if (stu) autoGeneratePrescriptionForStudent(stu);
+      });
+
+      // 상담 코멘트 및 담당자명 실시간 저장
+      document.getElementById('counselor-comment-textarea').addEventListener('input', (e) => {
+        const stu = getSelectedStudent();
+        if (!stu) return;
+        stu.comment = e.target.value;
+        saveStateToStorage();
+        const ind = document.getElementById('comment-save-indicator');
+        ind.textContent = '저장 완료 ✓';
+      });
+
+      document.getElementById('counselor-name-input').addEventListener('input', (e) => {
+        const stu = getSelectedStudent();
+        if (!stu) return;
+        stu.counselor = e.target.value;
+        saveStateToStorage();
+      });
+
+      // 현장 설문 테스트용 자동 채우기
+      document.getElementById('btn-fill-sample-survey').addEventListener('click', () => {
+        if (!document.getElementById('sv-name').value.trim()) {
+          document.getElementById('sv-name').value = '정우성';
+          document.getElementById('sv-grade').value = '고2';
+          document.getElementById('sv-school').value = '안성고등학교';
+          document.getElementById('sv-goal').value = '대수·물리학 개념 적용 및 내신 1등급 목표';
+        }
+
+        const radios = document.querySelectorAll('input[name="sv_ui_type"]');
+        if (radios[1]) {
+          radios[1].checked = true;
+          appState.surveyDraft.uiType = radios[1].value;
+          document.getElementById('sv-card-ui-type').classList.remove('unanswered-highlight');
+        }
+
+        STYLE_QUESTIONS.forEach(q => {
+          const randVal = Math.floor(Math.random() * 3) + 2;
+          const btn = document.querySelector(`[data-style-q="${q.id}"][data-val="${randVal}"]`);
+          if (btn) btn.click();
+        });
+
+        PART1_QUESTIONS.forEach(q => {
+          const randVal = Math.floor(Math.random() * 3) + 1;
+          const btn = document.querySelector(`[data-ans-key="${q.key}"][data-val="${randVal}"]`);
+          if (btn) btn.click();
+        });
+
+        PART2_QUESTIONS.forEach(q => {
+          const randVal = Math.floor(Math.random() * 3) + 2;
+          const btn = document.querySelector(`[data-ans-key="${q.key}"][data-val="${randVal}"]`);
+          if (btn) btn.click();
+        });
+
+        showToast('테스트용 응답이 자동으로 체크되었습니다. 하단 제출 버튼을 눌러보세요!', 'info');
+      });
+
+      // 설문 초기화
+      document.getElementById('btn-reset-survey').addEventListener('click', () => {
+        resetSurveyForm();
+        showToast('설문 응답이 초기화되었습니다.', 'info');
+      });
+
+      // 현장 설문 제출 처리 (19문항 전수 검증 & 미응답 문항 자동 스크롤/하이라이트)
+      document.getElementById('direct-survey-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nameInput = document.getElementById('sv-name');
+        const name = nameInput.value.trim();
+        const grade = document.getElementById('sv-grade').value;
+        const school = document.getElementById('sv-school').value.trim();
+        const goal = document.getElementById('sv-goal').value.trim();
+
+        if (!name) {
+          showToast('학생 이름을 입력해 주세요.', 'warn');
+          nameInput.focus();
+          return;
+        }
+
+        // Part 0 미응답 검증
+        if (!appState.surveyDraft.uiType) {
+          const el = document.getElementById('sv-card-ui-type');
+          el.classList.add('unanswered-highlight');
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          showToast('Part 0의 [성향 1] 공부 스타일을 선택해 주세요.', 'warn');
+          return;
+        }
+        for (const sq of STYLE_QUESTIONS) {
+          if (!appState.surveyDraft[sq.id]) {
+            const el = document.getElementById('sv-card-' + sq.id);
+            if (el) {
+              el.classList.add('unanswered-highlight');
+              el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            showToast(`Part 0의 [${sq.badge}] 문항을 선택해 주세요.`, 'warn');
+            return;
+          }
+        }
+
+        // Part 1 & Part 2 15문항 미응답 정밀 검증
+        const allDiagnosticQs = [...PART1_QUESTIONS, ...PART2_QUESTIONS];
+        for (const dq of allDiagnosticQs) {
+          if (!appState.surveyDraft.answers[dq.key]) {
+            const el = document.getElementById('sv-card-' + dq.key);
+            if (el) {
+              el.classList.add('unanswered-highlight');
+              el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            showToast(`${dq.num}번 [${dq.domain}] 문항이 선택되지 않았습니다.`, 'warn');
+            return;
+          }
+        }
+
+        if (appState.editingStudentId) {
+          // 기존 학생 수정 / 재진단 반영
+          const targetStu = appState.students.find(s => s.id === appState.editingStudentId);
+          if (targetStu) {
+            targetStu.name = name;
+            targetStu.grade = grade;
+            targetStu.school = school || '학교미입력';
+            targetStu.goal = goal || '맞춤형 학습 전략 수립 및 성적 향상';
+            targetStu.date = new Date().toISOString().slice(0, 10);
+            targetStu.uiType = appState.surveyDraft.uiType;
+            targetStu.ebsi_thought = appState.surveyDraft.ebsi_thought;
+            targetStu.ebsi_motive = appState.surveyDraft.ebsi_motive;
+            targetStu.ebsi_action = appState.surveyDraft.ebsi_action;
+            targetStu.answers = { ...appState.surveyDraft.answers };
+            autoGeneratePrescriptionForStudent(targetStu);
+            appState.selectedStudentId = targetStu.id;
+            saveStateToStorage();
+            resetSurveyForm();
+            switchMainView('report');
+            showToast(`${name} 학생의 재진단/수정 결과가 리포트에 반영되었습니다!`, 'success');
+            return;
+          }
+        }
+
+        const newStu = {
+          id: 'stu-' + Date.now(),
+          name,
+          grade,
+          school: school || '학교미입력',
+          goal: goal || '맞춤형 학습 전략 수립 및 성적 향상',
+          date: new Date().toISOString().slice(0, 10),
+          counselor: '정영주 입시컨설턴트',
+          uiType: appState.surveyDraft.uiType || '탐구형',
+          ebsi_thought: appState.surveyDraft.ebsi_thought || 3,
+          ebsi_motive: appState.surveyDraft.ebsi_motive || 3,
+          ebsi_action: appState.surveyDraft.ebsi_action || 3,
+          answers: { ...appState.surveyDraft.answers },
+          actionPlans: [],
+          comment: ''
+        };
+
+        autoGeneratePrescriptionForStudent(newStu);
+        appState.students.unshift(newStu);
+        appState.selectedStudentId = newStu.id;
+        saveStateToStorage();
+        resetSurveyForm();
+        switchMainView('report');
+        showToast(`${name} 학생의 진단 분석 리포트가 생성되었습니다!`, 'success');
+      });
+
+      // 코어 엔진 디버거: 6대 경계값 시나리오 버튼
+      document.querySelectorAll('[data-edge-case]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const key = btn.getAttribute('data-edge-case');
+          const scenario = EDGE_CASE_SCENARIOS[key];
+          if (!scenario) return;
+          appState.engineDebugAnswers = { ...scenario.answers };
+          renderEngineDebuggerSliders();
+          showToast(`[QA 시나리오] ${scenario.label} 파라미터가 로드되었습니다.`, 'info');
+        });
+      });
+
+      // 코어 엔진 디버거 시뮬레이션 값을 실제 학생 리포트로 등록
+      document.getElementById('btn-apply-debug-to-student').addEventListener('click', () => {
+        const newStu = {
+          id: 'stu-qa-' + Date.now(),
+          name: 'QA검증_' + new Date().toTimeString().slice(0, 5),
+          grade: '고1',
+          school: '코어엔진검증고',
+          goal: '경계값(Edge Case) 시뮬레이션 리포트 검증',
+          date: new Date().toISOString().slice(0, 10),
+          counselor: '정영주 입시컨설턴트',
+          uiType: '탐구형',
+          ebsi_thought: 4,
+          ebsi_motive: 2,
+          ebsi_action: 3,
+          answers: { ...appState.engineDebugAnswers },
+          actionPlans: [],
+          comment: ''
+        };
+        autoGeneratePrescriptionForStudent(newStu);
+        appState.students.unshift(newStu);
+        appState.selectedStudentId = newStu.id;
+        saveStateToStorage();
+        switchMainView('report');
+        showToast('시뮬레이션 데이터가 학생 목록에 등록되어 리포트로 전환되었습니다!', 'success');
+      });
+
+      // 구글 앱스크립트 코드 복사
+      document.getElementById('btn-copy-gas-code').addEventListener('click', () => {
+        const codeText = document.getElementById('gas-script-code').innerText;
+        copyTextToClipboard(codeText, '구글 앱스크립트 코드가 클립보드에 복사되었습니다!');
+      });
+
+      // 구글시트 / GAS URL 실시간 Fetch
+      document.getElementById('btn-fetch-google-sheet').addEventListener('click', async () => {
+        const urlInput = document.getElementById('gas-webapp-url').value.trim();
+        const statusEl = document.getElementById('sync-status-msg');
+        if (!urlInput || !urlInput.startsWith('https://')) {
+          showToast('유효한 https:// 구글 앱스크립트 배포 URL 또는 시트 CSV 게시 링크를 입력해 주세요.', 'warn');
+          return;
+        }
+        statusEl.textContent = '구글 드라이브 시트 데이터를 불러오는 중입니다...';
+        try {
+          const res = await fetch(urlInput);
+          const text = await res.text();
+          let rows = [];
+          try {
+            const json = JSON.parse(text);
+            if (json && Array.isArray(json.rows)) rows = json.rows;
+          } catch (_) {
+            rows = parseDelimitedText(text);
+          }
+          const added = parseSubmittedRowsToStudents(rows);
+          if (added > 0) {
+            statusEl.textContent = `성공적으로 ${added}명의 설문 응답을 불러와 분석했습니다.`;
+            showToast(`${added}명의 구글폼 응답 데이터를 불러왔습니다!`, 'success');
+            switchMainView('report');
+          } else {
+            statusEl.textContent = '불러온 데이터에서 유효한 설문 응답 행(15문항 이상)을 찾지 못했습니다.';
+            showToast('유효한 응답 행이 없습니다. 시트 컬럼 구조를 확인해 주세요.', 'warn');
+          }
+        } catch (err) {
+          statusEl.textContent = '네트워크 보안 또는 권한 설정으로 인해 직접 연결할 수 없습니다. 아래 복사/붙여넣기 또는 CSV 업로드를 이용해 주세요.';
+          showToast('URL 연결에 실패했습니다. 웹에 게시 권한 또는 아래 붙여넣기 기능을 이용해 주세요.', 'error');
+        }
+      });
+
+      // 샘플 시트 데이터 넣기
+      document.getElementById('btn-insert-sample-csv').addEventListener('click', () => {
+        document.getElementById('csv-paste-area').value =
+          '2026-11-18,장원영,고1,한울고등학교,"공통국어, 공통영어 1등급 목표",이상형,4,4,2,2,4,3,2,1,3,3,2,2,3,2,2,2,2,4\n' +
+          '2026-11-18,안유진,고2,다올고등학교,"대수, 화학, 생명과학 정시/내신 병행",규범형,2,2,4,1,2,2,1,1,4,4,3,4,4,4,2,3,2,4';
+        showToast('쉼표 포함 쌍따옴표("...")가 들어간 샘플 시트 응답 2건이 입력란에 채워졌습니다.', 'info');
+      });
+
+      // 붙여넣은 CSV/TSV 데이터 파싱
+      document.getElementById('btn-parse-csv').addEventListener('click', () => {
+        const raw = document.getElementById('csv-paste-area').value.trim();
+        if (!raw) {
+          showToast('붙여넣은 시트 데이터가 없습니다.', 'warn');
+          return;
+        }
+        const rows = parseDelimitedText(raw);
+        const added = parseSubmittedRowsToStudents(rows);
+        if (added > 0) {
+          document.getElementById('csv-paste-area').value = '';
+          showToast(`총 ${added}명의 학생 설문 데이터가 등록되어 리포트가 생성되었습니다!`, 'success');
+          switchMainView('report');
+        } else {
+          showToast('데이터 형식을 인식하지 못했습니다. 최소 15개 문항 점수가 포함되어야 합니다.', 'error');
+        }
+      });
+
+      // CSV 파일 업로드
+      document.getElementById('input-import-csv').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const rows = parseDelimitedText(String(ev.target.result || ''));
+          const added = parseSubmittedRowsToStudents(rows);
+          if (added > 0) {
+            showToast(`CSV 파일에서 ${added}명의 학생 데이터를 불러왔습니다!`, 'success');
+            switchMainView('report');
+          } else {
+            showToast('CSV 파일에서 유효한 설문 데이터를 찾지 못했습니다.', 'warn');
+          }
+        };
+        reader.readAsText(file, 'UTF-8');
+        e.target.value = '';
+      });
+
+      // 전체 JSON 백업 다운로드
+      document.getElementById('btn-export-json').addEventListener('click', () => {
+        const dataStr = JSON.stringify(appState.students, null, 2);
+        const blob = new Blob([dataStr], { type: 'application/json;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `학습역량진단_학생DB_${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        showToast('전체 학생 진단 DB가 JSON 파일로 다운로드되었습니다.', 'success');
+      });
+
+      // JSON 백업 복원
+      document.getElementById('input-import-json').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          try {
+            const parsed = JSON.parse(String(ev.target.result || '[]'));
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              appState.students = parsed;
+              appState.selectedStudentId = parsed[0].id;
+              saveStateToStorage();
+              renderAllReportViews();
+              switchMainView('report');
+              showToast(`JSON 백업 파일(${parsed.length}명)이 성공적으로 복원되었습니다!`, 'success');
+            } else {
+              showToast('유효한 학생 배열 JSON 형식이 아닙니다.', 'error');
+            }
+          } catch (err) {
+            showToast('JSON 파일 읽기에 실패했습니다.', 'error');
+          }
+        };
+        reader.readAsText(file, 'UTF-8');
+        e.target.value = '';
+      });
+    });
+  </script>
+</body>
+</html>
