@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-19T05:46:21.307Z",
-  "updatedAt": 1795067181307,
+  "exportedAt": "2026-11-19T07:39:56.774Z",
+  "updatedAt": 1795073996774,
   "daily": {
     "categories": [
       {
@@ -597,7 +597,7 @@
         "title": "이다현 학부모 인터뷰",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-19",
-        "status": "TODO",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1795013080731
