@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-19T06:20:31.108Z",
+  "exportedAt": "2026-11-19T07:43:44.978Z",
   "version": 3,
   "data": {
     "students": [
@@ -115,6 +115,13 @@
         "school": "미사고등학교",
         "grade": "2",
         "seat": 11
+      },
+      {
+        "id": "stu_mwn8ubzjfd2o",
+        "name": "이다현",
+        "school": "미강고등학교",
+        "grade": "1",
+        "seat": null
       }
     ],
     "schedules": {
