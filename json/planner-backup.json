@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-20T08:40:13.806Z",
-  "updatedAt": 1795164013806,
+  "exportedAt": "2026-11-20T08:57:11.934Z",
+  "updatedAt": 1795165031934,
   "daily": {
     "categories": [
       {
@@ -564,10 +564,10 @@
       },
       {
         "id": "todo_1795006583854_r2vjw",
-        "title": "주원/정원 학부모 최종 일정 픽스 (토요일 경우 6시 이후)",
+        "title": "주원/정원 학부모 최종 일정 픽스 (토요일 2시)",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-20",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1795006583854
