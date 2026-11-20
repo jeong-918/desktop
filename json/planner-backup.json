@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-20T08:38:25.504Z",
-  "updatedAt": 1795163905504,
+  "exportedAt": "2026-11-20T08:40:13.806Z",
+  "updatedAt": 1795164013806,
   "daily": {
     "categories": [
       {
@@ -567,7 +567,7 @@
         "title": "주원/정원 학부모 최종 일정 픽스 (토요일 경우 6시 이후)",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-20",
-        "status": "TODO",
+        "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
         "createdAt": 1795006583854
@@ -597,10 +597,20 @@
         "title": "인아 법과 사회 수행평가 확인 및 검토 진행",
         "categoryId": "cat_1792046758202",
         "date": "2026-11-20",
-        "status": "TODO",
+        "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
         "createdAt": 1795163905504
+      },
+      {
+        "id": "todo_1795163913351_sn88r",
+        "title": "인아 진로 활동 보고서 진행",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-11-21",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1795163913351
       }
     ]
   },
