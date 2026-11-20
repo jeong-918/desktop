@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-20T06:21:24.739Z",
+  "exportedAt": "2026-11-20T11:37:43.666Z",
   "version": 3,
   "data": {
     "students": [
@@ -1611,6 +1611,10 @@
         },
         "2026-11-19": {
           "status": "중도입실",
+          "time": ""
+        },
+        "2026-11-20": {
+          "status": "입실",
           "time": ""
         }
       },
@@ -8536,6 +8540,30 @@
         "start": "14:00",
         "end": "15:00",
         "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwolcreo61hr",
+        "studentId": "stu_mvx9zro0kvqx",
+        "date": "2026-11-19",
+        "subject": "물리",
+        "type": "인강+문풀",
+        "eval": "미완료",
+        "start": "15:00",
+        "end": "17:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mwold3yo277n",
+        "studentId": "stu_mvx9zro0kvqx",
+        "date": "2026-11-19",
+        "subject": "국어",
+        "type": "과제",
+        "eval": "보완필요",
+        "start": "20:30",
+        "end": "22:00",
+        "minutes": 90,
         "note": ""
       }
     ],
