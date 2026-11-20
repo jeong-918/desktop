@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-20T08:22:47.099Z",
-  "updatedAt": 1795162967099,
+  "exportedAt": "2026-11-20T08:38:25.504Z",
+  "updatedAt": 1795163905504,
   "daily": {
     "categories": [
       {
@@ -591,6 +591,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1795067181307
+      },
+      {
+        "id": "todo_1795163905504_9mesv",
+        "title": "인아 법과 사회 수행평가 확인 및 검토 진행",
+        "categoryId": "cat_1792046758202",
+        "date": "2026-11-20",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1795163905504
       }
     ]
   },
