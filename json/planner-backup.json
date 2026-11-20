@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-20T08:22:14.036Z",
-  "updatedAt": 1795162934036,
+  "exportedAt": "2026-11-20T08:22:47.099Z",
+  "updatedAt": 1795162967099,
   "daily": {
     "categories": [
       {
@@ -443,16 +443,6 @@
         "createdAt": 1794557067693
       },
       {
-        "id": "todo_1794557083046_txio4",
-        "title": "민서 시립대 발표일",
-        "categoryId": "cat_1792046758202",
-        "date": "2026-11-20",
-        "status": "IN_PROGRESS",
-        "memo": "",
-        "time": "",
-        "createdAt": 1794557083046
-      },
-      {
         "id": "todo_1794557089430_iqrs9",
         "title": "민서 중앙대 발표일",
         "categoryId": "cat_1792046758202",
@@ -591,16 +581,6 @@
         "memo": "",
         "time": "",
         "createdAt": 1795013080731
-      },
-      {
-        "id": "todo_1795026586978_pdoka",
-        "title": "민서 수업 진행",
-        "categoryId": "cat_1792046758202",
-        "date": "2026-11-21",
-        "status": "TODO",
-        "memo": "",
-        "time": "",
-        "createdAt": 1795026586978
       },
       {
         "id": "todo_1795067181307_dteux",
