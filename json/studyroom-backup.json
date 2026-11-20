@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-20T06:17:18.739Z",
+  "exportedAt": "2026-11-20T06:18:39.499Z",
   "version": 3,
   "data": {
     "students": [
@@ -8392,6 +8392,54 @@
         "start": "14:40",
         "end": "15:10",
         "minutes": 30,
+        "note": ""
+      },
+      {
+        "id": "log_mwol7nmxam9q",
+        "studentId": "stu_mvxa16hosf8g",
+        "date": "2026-11-19",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "보완필요",
+        "start": "15:10",
+        "end": "16:10",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwol7wyo2esg",
+        "studentId": "stu_mvxa16hosf8g",
+        "date": "2026-11-19",
+        "subject": "국어",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "16:10",
+        "end": "17:00",
+        "minutes": 50,
+        "note": ""
+      },
+      {
+        "id": "log_mwol87g9vz1s",
+        "studentId": "stu_mvxa16hosf8g",
+        "date": "2026-11-19",
+        "subject": "국어",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "20:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mwol8rldxvri",
+        "studentId": "stu_mvxa16hosf8g",
+        "date": "2026-11-19",
+        "subject": "사회",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "20:00",
+        "end": "21:00",
+        "minutes": 60,
         "note": ""
       }
     ],
