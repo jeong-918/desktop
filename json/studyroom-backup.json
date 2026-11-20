@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-20T06:18:39.499Z",
+  "exportedAt": "2026-11-20T06:20:07.359Z",
   "version": 3,
   "data": {
     "students": [
@@ -8440,6 +8440,54 @@
         "start": "20:00",
         "end": "21:00",
         "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwol8ykpwg0y",
+        "studentId": "stu_mvxa16hosf8g",
+        "date": "2026-11-19",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "보완필요",
+        "start": "21:00",
+        "end": "22:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwol9o2969qw",
+        "studentId": "stu_mvxa04ymfwd2",
+        "date": "2026-11-19",
+        "subject": "사회",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "14:00",
+        "end": "17:00",
+        "minutes": 180,
+        "note": ""
+      },
+      {
+        "id": "log_mwol9z9lrqpx",
+        "studentId": "stu_mvxa04ymfwd2",
+        "date": "2026-11-19",
+        "subject": "영어",
+        "type": "복습",
+        "eval": "보완필요",
+        "start": "20:30",
+        "end": "22:00",
+        "minutes": 90,
+        "note": ""
+      },
+      {
+        "id": "log_mwolamyopkm5",
+        "studentId": "stu_mwn4ll3s1xvk",
+        "date": "2026-11-19",
+        "subject": "생명",
+        "type": "수행평가",
+        "eval": "학습완료",
+        "start": "14:40",
+        "end": "16:00",
+        "minutes": 80,
         "note": ""
       }
     ],
