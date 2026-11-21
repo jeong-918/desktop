@@ -1,6 +1,6 @@
 {
   "app": "fineman2-1",
-  "exportedAt": "2026-11-21T16:44:16.203Z",
+  "exportedAt": "2026-11-21T17:04:55.023Z",
   "version": 5,
   "data": {
     "students": [
@@ -87,7 +87,7 @@
         "followUp": {
           "task": "미적분1 수행평가_미적분학적 사유의 확장 콘텐츠 전달",
           "date": "2026-11-22",
-          "done": false
+          "done": true
         },
         "createdAt": "2026-11-21T14:55:16.422Z"
       },
@@ -102,7 +102,7 @@
         "followUp": {
           "task": "진로활동보고서",
           "date": "2026-11-25",
-          "done": false
+          "done": true
         },
         "createdAt": "2026-11-19T18:20:20.301Z"
       },
@@ -117,7 +117,7 @@
         "followUp": {
           "task": "법과사회 : 환경문제 해결을 위한 입법제안서",
           "date": "2026-11-22",
-          "done": false
+          "done": true
         },
         "createdAt": "2026-11-19T18:19:38.025Z"
       },
