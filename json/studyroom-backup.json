@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-21T05:01:54.856Z",
+  "exportedAt": "2026-11-21T05:02:54.721Z",
   "version": 3,
   "data": {
     "students": [
@@ -8827,6 +8827,42 @@
         "eval": "학습완료",
         "start": "14:00",
         "end": "15:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwpxy5ypu5ac",
+        "studentId": "stu_mvxa0qh4w0xv",
+        "date": "2026-11-20",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "보완필요",
+        "start": "15:00",
+        "end": "17:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mwpxyo9uu02y",
+        "studentId": "stu_mvx9zro0kvqx",
+        "date": "2026-11-20",
+        "subject": "국어",
+        "type": "과제",
+        "eval": "보완필요",
+        "start": "14:00",
+        "end": "15:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwpxz7j6fhyh",
+        "studentId": "stu_mvx9zro0kvqx",
+        "date": "2026-11-20",
+        "subject": "화학",
+        "type": "복습+문풀",
+        "eval": "학습완료",
+        "start": "15:00",
+        "end": "16:00",
         "minutes": 60,
         "note": ""
       }
