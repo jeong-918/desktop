@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-21T04:58:24.252Z",
+  "exportedAt": "2026-11-21T04:59:38.562Z",
   "version": 3,
   "data": {
     "students": [
@@ -8684,6 +8684,54 @@
         "start": "14:00",
         "end": "16:00",
         "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mwpxtvkanpvx",
+        "studentId": "stu_mvxa1j4qx0kd",
+        "date": "2026-11-20",
+        "subject": "지학",
+        "type": "복습+문풀",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "22:00",
+        "minutes": 240,
+        "note": ""
+      },
+      {
+        "id": "log_mwpxub2h7ldf",
+        "studentId": "stu_mvx9zk6negj6",
+        "date": "2026-11-20",
+        "subject": "한국사",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "20:00",
+        "end": "21:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwpxuguq8wbg",
+        "studentId": "stu_mvx9zk6negj6",
+        "date": "2026-11-20",
+        "subject": "한국사",
+        "type": "복습",
+        "eval": "보완필요",
+        "start": "21:00",
+        "end": "22:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwpxuzr67a4u",
+        "studentId": "stu_mvxa0b80pl0k",
+        "date": "2026-11-20",
+        "subject": "화학",
+        "type": "복습+문풀",
+        "eval": "학습완료",
+        "start": "14:00",
+        "end": "16:40",
+        "minutes": 160,
         "note": ""
       }
     ],
