@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-21T05:04:01.411Z",
+  "exportedAt": "2026-11-21T15:28:51.355Z",
   "version": 3,
   "data": {
     "students": [
@@ -9,14 +9,14 @@
         "name": "최주원",
         "school": "미사강변중학교",
         "grade": "3",
-        "seat": 16
+        "seat": 5
       },
       {
         "id": "stu_18",
         "name": "최정원",
         "school": "미사강변중학교",
         "grade": "3",
-        "seat": 18
+        "seat": 3
       },
       {
         "id": "stu_muuvk470gwfd",
