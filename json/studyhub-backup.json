@@ -1,10 +1,11 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-22T13:25:36.342Z",
+  "exportedAt": "2026-11-22T18:32:07.182Z",
   "state": {
-    "trackingMode": "A",
-    "currentWeek": "2026-W45",
-    "adminPass": "1234",
+    "schemaVersion": 2,
+    "activeStudentId": "test",
+    "currentDateKey": "2026-11-23",
+    "currentMonthKey": "2026-11",
     "subjects": [
       {
         "id": "kor",
@@ -43,8 +44,9 @@
       {
         "id": "test",
         "name": "정영주(테스트)",
-        "pw": "0000",
-        "grade": "고3 문과"
+        "grade": "고3 문과",
+        "defaultMode": "timetable",
+        "note": ""
       }
     ],
     "schedules": {
@@ -147,195 +149,9 @@
         }
       },
       "T1": {},
-      "test": {
-        "1-9": {
-          "subject": "영어",
-          "type": "오답정리",
-          "goal": "",
-          "color": "#fef3c7"
-        },
-        "1-10": {
-          "subject": "영어",
-          "type": "오답정리",
-          "goal": "",
-          "color": "#fef3c7"
-        },
-        "1-11": {
-          "subject": "영어",
-          "type": "오답정리",
-          "goal": "",
-          "color": "#fef3c7"
-        },
-        "1-12": {
-          "subject": "영어",
-          "type": "오답정리",
-          "goal": "",
-          "color": "#fef3c7"
-        },
-        "1-13": {
-          "subject": "영어",
-          "type": "오답정리",
-          "goal": "",
-          "color": "#fef3c7"
-        },
-        "1-14": {
-          "subject": "영어",
-          "type": "오답정리",
-          "goal": "",
-          "color": "#fef3c7"
-        },
-        "1-15": {
-          "subject": "영어",
-          "type": "오답정리",
-          "goal": "",
-          "color": "#fef3c7"
-        },
-        "2-12": {
-          "subject": "탐구",
-          "type": "오답정리",
-          "goal": "",
-          "color": "#dcfce7"
-        },
-        "2-13": {
-          "subject": "탐구",
-          "type": "오답정리",
-          "goal": "",
-          "color": "#dcfce7"
-        },
-        "2-14": {
-          "subject": "탐구",
-          "type": "오답정리",
-          "goal": "",
-          "color": "#dcfce7"
-        },
-        "2-15": {
-          "subject": "탐구",
-          "type": "오답정리",
-          "goal": "",
-          "color": "#dcfce7"
-        },
-        "3-12": {
-          "subject": "국어",
-          "type": "오답정리",
-          "goal": "",
-          "color": "#fee2e2"
-        },
-        "3-13": {
-          "subject": "국어",
-          "type": "오답정리",
-          "goal": "",
-          "color": "#fee2e2"
-        },
-        "3-14": {
-          "subject": "국어",
-          "type": "오답정리",
-          "goal": "",
-          "color": "#fee2e2"
-        },
-        "3-15": {
-          "subject": "국어",
-          "type": "오답정리",
-          "goal": "",
-          "color": "#fee2e2"
-        },
-        "3-17": {
-          "subject": "수학",
-          "type": "인강",
-          "goal": "",
-          "color": "#dbeafe"
-        },
-        "3-18": {
-          "subject": "수학",
-          "type": "인강",
-          "goal": "",
-          "color": "#dbeafe"
-        }
-      }
+      "test": {}
     },
-    "checks": {
-      "std1": {
-        "2026-W45": {
-          "1-15": {
-            "status": "D"
-          },
-          "3-14": {
-            "status": "X"
-          },
-          "5-14": {
-            "status": "D"
-          },
-          "1-9": {
-            "status": "X"
-          }
-        },
-        "SINGLE_BOARD": {
-          "1-15": {
-            "status": "D"
-          },
-          "3-14": {
-            "status": "X"
-          },
-          "5-14": {
-            "status": "D"
-          },
-          "1-9": {
-            "status": "X"
-          }
-        }
-      },
-      "test": {
-        "SINGLE_BOARD": {}
-      }
-    },
-    "historyLogs": [
-      {
-        "id": "log1",
-        "studentId": "std1",
-        "week": "2026-W45",
-        "dayIdx": 1,
-        "hour": 9,
-        "subject": "국어",
-        "type": "인강",
-        "status": "O",
-        "memo": "완강 및 필기 완료",
-        "timestamp": "2026-11-02 10:05"
-      },
-      {
-        "id": "log2",
-        "studentId": "std1",
-        "week": "2026-W45",
-        "dayIdx": 1,
-        "hour": 15,
-        "subject": "수학",
-        "type": "자습/문제풀이",
-        "status": "D",
-        "memo": "60문제 중 35문제만 풂 (25문제 미완)",
-        "timestamp": "2026-11-02 16:10"
-      },
-      {
-        "id": "log3",
-        "studentId": "std1",
-        "week": "2026-W45",
-        "dayIdx": 3,
-        "hour": 14,
-        "subject": "탐구",
-        "type": "인강",
-        "status": "X",
-        "memo": "학교 행사 피로로 졸아서 못 들음",
-        "timestamp": "2026-11-04 15:10"
-      },
-      {
-        "id": "log4",
-        "studentId": "std1",
-        "week": "2026-W45",
-        "dayIdx": 5,
-        "hour": 14,
-        "subject": "탐구",
-        "type": "자습/문제풀이",
-        "status": "D",
-        "memo": "양적관계 킬러 6문제 못 풀고 막힘",
-        "timestamp": "2026-11-06 15:20"
-      }
-    ]
+    "weeklyTodos": {},
+    "monthlyTodos": {}
   }
 }
