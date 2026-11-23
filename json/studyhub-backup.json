@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:31:39.355Z",
+  "exportedAt": "2026-11-23T11:32:41.799Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795432270100",
@@ -480,9 +480,27 @@
           "color": "#e6cef3"
         },
         "1-20": {
+          "subject": "수학",
+          "type": "과제",
+          "goal": "미완료시 집에서 꼭 완료하기",
+          "color": "#dbeafe"
+        },
+        "1-21": {
           "subject": "영단어",
           "type": "영단어",
           "goal": "",
+          "color": "#e0c19e"
+        },
+        "2-18": {
+          "subject": "한국사",
+          "type": "개념서학습(예비고선행)",
+          "goal": "",
+          "color": "#b1edbb"
+        },
+        "2-19": {
+          "subject": "영단어",
+          "type": "영단어",
+          "goal": "월요일 진행된 영단어도 꼭 같이 체크 후 진행",
           "color": "#e0c19e"
         }
       }
