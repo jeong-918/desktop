@@ -1,9 +1,9 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:25:59.265Z",
+  "exportedAt": "2026-11-23T11:30:30.024Z",
   "state": {
     "schemaVersion": 2,
-    "activeStudentId": "std_1795431796548",
+    "activeStudentId": "std_1795432270100",
     "currentDateKey": "2026-11-23",
     "currentMonthKey": "2026-11",
     "subjects": [
