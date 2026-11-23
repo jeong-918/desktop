@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:15:51.420Z",
+  "exportedAt": "2026-11-23T11:17:13.466Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795431796548",
@@ -227,7 +227,7 @@
         "2-21": {
           "subject": "영어",
           "type": "학원수업",
-          "goal": "",
+          "goal": "숙제는 집에서 12시까지 하기 / 못하면 학교에서",
           "color": "#fef3c7"
         },
         "4-20": {
@@ -295,6 +295,12 @@
           "type": "복습",
           "goal": "6:30~8시까지",
           "color": "#e6cef3"
+        },
+        "3-21": {
+          "subject": "통합사회",
+          "type": "복습",
+          "goal": "개념서 중심 학습 진행",
+          "color": "#d4f2d4"
         }
       },
       "std_1795432270100": {
