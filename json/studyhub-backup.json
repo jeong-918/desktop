@@ -1,9 +1,9 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-22T18:32:07.182Z",
+  "exportedAt": "2026-11-23T11:03:22.166Z",
   "state": {
     "schemaVersion": 2,
-    "activeStudentId": "test",
+    "activeStudentId": "std_1795431796548",
     "currentDateKey": "2026-11-23",
     "currentMonthKey": "2026-11",
     "subjects": [
@@ -47,6 +47,13 @@
         "grade": "고3 문과",
         "defaultMode": "timetable",
         "note": ""
+      },
+      {
+        "id": "std_1795431796548",
+        "name": "최주원",
+        "grade": "중3/약학",
+        "defaultMode": "timetable",
+        "note": "약대를 지금부터 준비를 차근차근 시작해보려합니다."
       }
     ],
     "schedules": {
