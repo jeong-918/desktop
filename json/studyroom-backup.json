@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-23T06:26:52.660Z",
+  "exportedAt": "2026-11-23T06:27:59.837Z",
   "version": 3,
   "data": {
     "students": [
@@ -9060,6 +9060,54 @@
         "start": "16:00",
         "end": "17:00",
         "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwsvvaso5hp0",
+        "studentId": "stu_mwn4ll3s1xvk",
+        "date": "2026-11-21",
+        "subject": "화학",
+        "type": "복습+문풀",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "20:30",
+        "minutes": 150,
+        "note": ""
+      },
+      {
+        "id": "log_mwsvvjw13zmp",
+        "studentId": "stu_mwn4ll3s1xvk",
+        "date": "2026-11-21",
+        "subject": "국어",
+        "type": "수행평가",
+        "eval": "보완필요",
+        "start": "20:30",
+        "end": "22:00",
+        "minutes": 90,
+        "note": ""
+      },
+      {
+        "id": "log_mwsvw1wgnlu6",
+        "studentId": "stu_mvxa0yyv2w6o",
+        "date": "2026-11-21",
+        "subject": "사회",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "15:00",
+        "end": "17:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mwsvwc0wdyyd",
+        "studentId": "stu_mvxa0yyv2w6o",
+        "date": "2026-11-21",
+        "subject": "사회",
+        "type": "복습+문풀",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "20:00",
+        "minutes": 120,
         "note": ""
       }
     ],
