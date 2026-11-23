@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:32:41.799Z",
+  "exportedAt": "2026-11-23T11:33:49.375Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795432270100",
@@ -501,6 +501,36 @@
           "subject": "영단어",
           "type": "영단어",
           "goal": "월요일 진행된 영단어도 꼭 같이 체크 후 진행",
+          "color": "#e0c19e"
+        },
+        "3-17": {
+          "subject": "통합사회",
+          "type": "개념서학습(예비고선행)",
+          "goal": "",
+          "color": "#d4f2d4"
+        },
+        "3-20": {
+          "subject": "수학",
+          "type": "과제",
+          "goal": "미완료시 집에서 꼭 완료하기",
+          "color": "#dbeafe"
+        },
+        "5-20": {
+          "subject": "수학",
+          "type": "과제",
+          "goal": "미완료시 집에서 꼭 완료하기",
+          "color": "#dbeafe"
+        },
+        "3-21": {
+          "subject": "영단어",
+          "type": "영단어",
+          "goal": "월/화 진행된 영단어 한번 체크 후 진행",
+          "color": "#e0c19e"
+        },
+        "5-21": {
+          "subject": "영단어",
+          "type": "영단어",
+          "goal": "",
           "color": "#e0c19e"
         }
       }
