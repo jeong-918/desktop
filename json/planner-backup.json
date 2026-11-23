@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-23T03:26:57.853Z",
-  "updatedAt": 1795404417853,
+  "exportedAt": "2026-11-23T03:28:38.466Z",
+  "updatedAt": 1795404518466,
   "daily": {
     "categories": [
       {
@@ -509,7 +509,7 @@
         "date": "2026-11-26",
         "status": "TODO",
         "memo": "",
-        "time": "",
+        "time": "09:00",
         "createdAt": 1794720086978
       },
       {
@@ -701,6 +701,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1795404371214
+      },
+      {
+        "id": "todo_1795404518466_xyni1",
+        "title": "미사고,미강고, 미강중 방학 일정 체크해서 원장 보고",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-11-23",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1795404518466
       }
     ]
   },
