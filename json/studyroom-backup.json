@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-23T06:41:15.962Z",
+  "exportedAt": "2026-11-23T06:42:18.393Z",
   "version": 3,
   "data": {
     "students": [
@@ -9248,10 +9248,34 @@
         "date": "2026-11-21",
         "subject": "영어",
         "type": "기타학습",
-        "eval": "학습완료",
+        "eval": "보완필요",
         "start": "09:00",
         "end": "12:00",
         "minutes": 180,
+        "note": ""
+      },
+      {
+        "id": "log_mwswe6tdxx1y",
+        "studentId": "stu_mvx9zro0kvqx",
+        "date": "2026-11-21",
+        "subject": "물리",
+        "type": "복습+문풀",
+        "eval": "보완필요",
+        "start": "13:30",
+        "end": "15:00",
+        "minutes": 90,
+        "note": ""
+      },
+      {
+        "id": "log_mwsweqiwcmtg",
+        "studentId": "stu_mvx9zro0kvqx",
+        "date": "2026-11-21",
+        "subject": "화학",
+        "type": "기타학습",
+        "eval": "보완필요",
+        "start": "15:00",
+        "end": "16:00",
+        "minutes": 60,
         "note": ""
       }
     ],
