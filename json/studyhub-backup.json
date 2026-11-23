@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:13:13.215Z",
+  "exportedAt": "2026-11-23T11:14:13.998Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795431796548",
@@ -33,9 +33,19 @@
         "color": "#f3e8ff"
       },
       {
-        "id": "subj_1795432387908",
+        "id": "subj_1795432402260",
         "name": "통합사회",
-        "color": "#1b72e4"
+        "color": "#d4f2d4"
+      },
+      {
+        "id": "subj_1795432409484",
+        "name": "통합과학",
+        "color": "#e6cef3"
+      },
+      {
+        "id": "subj_1795432422596",
+        "name": "한국사",
+        "color": "#b1edbb"
       }
     ],
     "studyTypes": [
@@ -255,6 +265,12 @@
           "type": "학원수업",
           "goal": "",
           "color": "#fee2e2"
+        },
+        "1-21": {
+          "subject": "한국사",
+          "type": "복습",
+          "goal": "개념서 중심",
+          "color": "#b1edbb"
         }
       },
       "std_1795432270100": {
