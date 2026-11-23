@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:20:06.419Z",
+  "exportedAt": "2026-11-23T11:21:07.128Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795431796548",
@@ -297,16 +297,16 @@
           "color": "#e6cef3"
         },
         "3-21": {
-          "subject": "한국사",
+          "subject": "통합사회",
           "type": "인강",
           "goal": "개념서 중심 학습 진행",
-          "color": "#b1edbb"
+          "color": "#d4f2d4"
         },
         "5-21": {
-          "subject": "한국사",
+          "subject": "통합사회",
           "type": "인강",
           "goal": "개념서 중심 학습 진행",
-          "color": "#b1edbb"
+          "color": "#d4f2d4"
         },
         "3-20": {
           "subject": "수학",
@@ -343,6 +343,18 @@
           "type": "영단어",
           "goal": "영단어 학습 진행 (수/금은 월/수것 같이 해보기)",
           "color": "#fef3c7"
+        },
+        "6-18": {
+          "subject": "한국사",
+          "type": "복습",
+          "goal": "",
+          "color": "#b1edbb"
+        },
+        "6-19": {
+          "subject": "한국사",
+          "type": "복습",
+          "goal": "",
+          "color": "#b1edbb"
         }
       },
       "std_1795432270100": {
