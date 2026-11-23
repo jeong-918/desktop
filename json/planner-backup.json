@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-23T03:24:10.801Z",
-  "updatedAt": 1795404250801,
+  "exportedAt": "2026-11-23T03:25:12.974Z",
+  "updatedAt": 1795404312974,
   "daily": {
     "categories": [
       {
@@ -651,6 +651,36 @@
         "memo": "",
         "time": "",
         "createdAt": 1795401330007
+      },
+      {
+        "id": "todo_1795404272462_uvnmg",
+        "title": "최정원, 최주원 자리 이동 및 개인 학습 계획 요청",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-11-23",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1795404272462
+      },
+      {
+        "id": "todo_1795404300590_gy5yj",
+        "title": "주간플래너 최종 작성 및 pdf추출",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-11-23",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1795404300590
+      },
+      {
+        "id": "todo_1795404312974_yrz08",
+        "title": "이현준, 장지후 자리 이동 후 청소시킬 것",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-11-23",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1795404312974
       }
     ]
   },
