@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:24:54.304Z",
+  "exportedAt": "2026-11-23T11:25:59.265Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795431796548",
@@ -280,10 +280,10 @@
           "color": "#c2dcff"
         },
         "1-17": {
-          "subject": "영어",
+          "subject": "영단어",
           "type": "영단어",
-          "goal": "영단어 학습 진행 (수/금은 월/수것 같이 해보기)",
-          "color": "#fef3c7"
+          "goal": "영단어 학습 진행",
+          "color": "#e0c19e"
         },
         "2-18": {
           "subject": "영어",
@@ -334,16 +334,16 @@
           "color": "#e6cef3"
         },
         "3-17": {
-          "subject": "영어",
+          "subject": "영단어",
           "type": "영단어",
-          "goal": "영단어 학습 진행 (수/금은 월/수것 같이 해보기)",
-          "color": "#fef3c7"
+          "goal": "영단어 학습 진행 (월요일 것도 같이 보기)",
+          "color": "#e0c19e"
         },
         "5-17": {
-          "subject": "영어",
+          "subject": "영단어",
           "type": "영단어",
-          "goal": "영단어 학습 진행 (수/금은 월/수것 같이 해보기)",
-          "color": "#fef3c7"
+          "goal": "영단어 학습 진행 (월/수요일 것 같이 보기)",
+          "color": "#e0c19e"
         },
         "6-18": {
           "subject": "한국사",
@@ -370,10 +370,10 @@
           "color": "#fee2e2"
         },
         "6-10": {
-          "subject": "영어",
+          "subject": "영단어",
           "type": "영단어",
           "goal": "월수금 내용 한번 정리하고 진행",
-          "color": "#fef3c7"
+          "color": "#e0c19e"
         },
         "6-20": {
           "subject": "영어",
