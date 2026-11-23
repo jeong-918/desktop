@@ -1,9 +1,9 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:38:38.911Z",
+  "exportedAt": "2026-11-23T11:44:37.515Z",
   "state": {
     "schemaVersion": 2,
-    "activeStudentId": "std_1795432270100",
+    "activeStudentId": "std_1795431796548",
     "currentDateKey": "2026-11-23",
     "currentMonthKey": "2026-11",
     "subjects": [
@@ -46,6 +46,11 @@
         "id": "subj_1795433088836",
         "name": "영단어",
         "color": "#e0c19e"
+      },
+      {
+        "id": "subj_1795433935827",
+        "name": "통사/통과",
+        "color": "#d5d1cd"
       }
     ],
     "studyTypes": [
@@ -582,10 +587,10 @@
           "color": "#d4f2d4"
         },
         "6-20": {
-          "subject": "통합과학",
+          "subject": "통사/통과",
           "type": "개념서학습(예비고선행)",
-          "goal": "",
-          "color": "#e6cef3"
+          "goal": "8:30분까지 통사 / 8:30분부터 통과",
+          "color": "#d5d1cd"
         },
         "6-21": {
           "subject": "통합과학",
