@@ -1,9 +1,9 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:11:45.058Z",
+  "exportedAt": "2026-11-23T11:13:13.215Z",
   "state": {
     "schemaVersion": 2,
-    "activeStudentId": "std_1795432270100",
+    "activeStudentId": "std_1795431796548",
     "currentDateKey": "2026-11-23",
     "currentMonthKey": "2026-11",
     "subjects": [
@@ -31,6 +31,11 @@
         "id": "clinic",
         "name": "일요보충",
         "color": "#f3e8ff"
+      },
+      {
+        "id": "subj_1795432387908",
+        "name": "통합사회",
+        "color": "#1b72e4"
       }
     ],
     "studyTypes": [
@@ -238,6 +243,18 @@
           "type": "학원수업",
           "goal": "",
           "color": "#fef3c7"
+        },
+        "6-11": {
+          "subject": "국어",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#fee2e2"
+        },
+        "6-12": {
+          "subject": "국어",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#fee2e2"
         }
       },
       "std_1795432270100": {
@@ -300,6 +317,30 @@
           "type": "학원수업",
           "goal": "",
           "color": "#fef3c7"
+        },
+        "6-16": {
+          "subject": "영어",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#fef3c7"
+        },
+        "6-17": {
+          "subject": "영어",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#fef3c7"
+        },
+        "6-11": {
+          "subject": "국어",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#fee2e2"
+        },
+        "6-12": {
+          "subject": "국어",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#fee2e2"
         }
       }
     },
