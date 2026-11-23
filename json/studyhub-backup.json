@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:03:22.166Z",
+  "exportedAt": "2026-11-23T11:08:02.586Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795431796548",
@@ -156,7 +156,15 @@
         }
       },
       "T1": {},
-      "test": {}
+      "test": {},
+      "std_1795431796548": {
+        "1-17": {
+          "subject": "수학",
+          "type": "자습/문제풀이",
+          "goal": "과제해결 (못하면 집에서라도)",
+          "color": "#dbeafe"
+        }
+      }
     },
     "weeklyTodos": {},
     "monthlyTodos": {}
