@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:44:37.515Z",
+  "exportedAt": "2026-11-23T11:45:38.900Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795431796548",
@@ -291,10 +291,10 @@
           "color": "#e0c19e"
         },
         "2-18": {
-          "subject": "영어",
+          "subject": "영단어",
           "type": "영단어",
-          "goal": "6:30분까지",
-          "color": "#f7ebba"
+          "goal": "6:30분까지 (월요일 복습)",
+          "color": "#e0c19e"
         },
         "2-19": {
           "subject": "통합과학",
@@ -327,10 +327,10 @@
           "color": "#c1dafb"
         },
         "4-18": {
-          "subject": "영어",
+          "subject": "영단어",
           "type": "영단어",
-          "goal": "6시 30분까지",
-          "color": "#fef3c7"
+          "goal": "6:30분까지 (월-수 복습)",
+          "color": "#e0c19e"
         },
         "4-19": {
           "subject": "통합과학",
