@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-23T06:18:31.401Z",
-  "updatedAt": 1795414711401,
+  "exportedAt": "2026-11-23T09:28:45.726Z",
+  "updatedAt": 1795426125726,
   "daily": {
     "categories": [
       {
@@ -617,7 +617,7 @@
         "title": "고속성장 구입",
         "categoryId": "cat_1792046741546",
         "date": "2026-11-24",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1795401277223
@@ -657,7 +657,7 @@
         "title": "최정원, 최주원 자리 이동 및 개인 학습 계획 요청",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-23",
-        "status": "TODO",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1795404272462
@@ -667,7 +667,7 @@
         "title": "주간플래너 최종 작성 및 pdf추출",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-23",
-        "status": "TODO",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1795404300590
@@ -707,7 +707,7 @@
         "title": "미사고,미강고, 미강중 방학 일정 체크해서 원장 보고",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-23",
-        "status": "TODO",
+        "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
         "createdAt": 1795404518466
