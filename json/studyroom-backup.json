@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-23T06:23:37.292Z",
+  "exportedAt": "2026-11-23T06:24:47.116Z",
   "version": 3,
   "data": {
     "students": [
@@ -65,7 +65,7 @@
         "name": "이효준",
         "school": "미강고등학교",
         "grade": "2",
-        "seat": 7
+        "seat": 16
       },
       {
         "id": "stu_mvxa0h8n6ert",
@@ -8988,6 +8988,30 @@
         "start": "18:30",
         "end": "21:00",
         "minutes": 150,
+        "note": ""
+      },
+      {
+        "id": "log_mwsvqys9xfix",
+        "studentId": "stu_mvxa0qh4w0xv",
+        "date": "2026-11-21",
+        "subject": "한국사",
+        "type": "기타학습",
+        "eval": "학습완료",
+        "start": "21:00",
+        "end": "22:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwsvs7cg70kk",
+        "studentId": "stu_mvxa0b80pl0k",
+        "date": "2026-11-21",
+        "subject": "영어",
+        "type": "복습+문풀",
+        "eval": "학습완료",
+        "start": "10:00",
+        "end": "12:00",
+        "minutes": 120,
         "note": ""
       }
     ],
