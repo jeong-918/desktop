@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:09:09.659Z",
+  "exportedAt": "2026-11-23T11:10:22.956Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795431796548",
@@ -159,7 +159,68 @@
       },
       "T1": {},
       "test": {},
-      "std_1795431796548": {}
+      "std_1795431796548": {
+        "1-18": {
+          "subject": "수학",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#dbeafe"
+        },
+        "1-19": {
+          "subject": "수학",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#dbeafe"
+        },
+        "3-18": {
+          "subject": "수학",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#dbeafe"
+        },
+        "3-19": {
+          "subject": "수학",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#dbeafe"
+        },
+        "5-18": {
+          "subject": "수학",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#dbeafe"
+        },
+        "5-19": {
+          "subject": "수학",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#dbeafe"
+        },
+        "2-20": {
+          "subject": "영어",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#fef3c7"
+        },
+        "2-21": {
+          "subject": "영어",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#fef3c7"
+        },
+        "4-20": {
+          "subject": "영어",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#fef3c7"
+        },
+        "4-21": {
+          "subject": "영어",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#fef3c7"
+        }
+      }
     },
     "weeklyTodos": {},
     "monthlyTodos": {}
