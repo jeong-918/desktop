@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-23T06:44:46.117Z",
+  "exportedAt": "2026-11-23T06:46:29.369Z",
   "version": 3,
   "data": {
     "students": [
@@ -9358,8 +9358,32 @@
         "type": "문제풀이",
         "eval": "학습완료",
         "start": "18:00",
-        "end": "21:00",
-        "minutes": 180,
+        "end": "20:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mwswi84ozubw",
+        "studentId": "stu_mvxa04ymfwd2",
+        "date": "2026-11-21",
+        "subject": "사회",
+        "type": "복습",
+        "eval": "보완필요",
+        "start": "20:00",
+        "end": "22:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mwswk45sctls",
+        "studentId": "stu_mvx9zcrv16m5",
+        "date": "2026-11-21",
+        "subject": "영어",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "10:00",
+        "end": "11:00",
+        "minutes": 60,
         "note": ""
       }
     ],
