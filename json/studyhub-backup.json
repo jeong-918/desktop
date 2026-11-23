@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:17:13.466Z",
+  "exportedAt": "2026-11-23T11:18:14.462Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795431796548",
@@ -268,15 +268,15 @@
         },
         "1-21": {
           "subject": "한국사",
-          "type": "복습",
-          "goal": "개념서 중심",
+          "type": "인강",
+          "goal": "개념서 중심 학습 진행",
           "color": "#b1edbb"
         },
         "1-20": {
           "subject": "수학",
           "type": "과제",
-          "goal": "못끝내면 꼭 집에서 (당일 완료)",
-          "color": "#bcd7fb"
+          "goal": "못끝내면 집에서 (당일 완료 목표)",
+          "color": "#dbeafe"
         },
         "1-17": {
           "subject": "영어",
@@ -297,10 +297,28 @@
           "color": "#e6cef3"
         },
         "3-21": {
-          "subject": "통합사회",
-          "type": "복습",
+          "subject": "한국사",
+          "type": "인강",
           "goal": "개념서 중심 학습 진행",
-          "color": "#d4f2d4"
+          "color": "#b1edbb"
+        },
+        "5-21": {
+          "subject": "한국사",
+          "type": "인강",
+          "goal": "개념서 중심 학습 진행",
+          "color": "#b1edbb"
+        },
+        "3-20": {
+          "subject": "수학",
+          "type": "과제",
+          "goal": "못끝내면 집에서 (당일 완료 목표)",
+          "color": "#dbeafe"
+        },
+        "5-20": {
+          "subject": "수학",
+          "type": "과제",
+          "goal": "못끝내면 집에서 (당일 완료 목표)",
+          "color": "#dbeafe"
         }
       },
       "std_1795432270100": {
