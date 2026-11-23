@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:37:29.991Z",
+  "exportedAt": "2026-11-23T11:38:38.911Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795432270100",
@@ -560,7 +560,7 @@
         "6-14": {
           "subject": "국어",
           "type": "과제",
-          "goal": "",
+          "goal": "수업 과제 당일 해결!",
           "color": "#fee2e2"
         },
         "6-15": {
@@ -570,16 +570,28 @@
           "color": "#e0c19e"
         },
         "6-18": {
-          "subject": "통합사회",
-          "type": "개념서학습(예비고선행)",
-          "goal": "",
-          "color": "#d4f2d4"
+          "subject": "영어",
+          "type": "과제",
+          "goal": "수업과제 해결하기 (못할경우 주말에 꼭!)",
+          "color": "#fef3c7"
         },
         "6-19": {
           "subject": "통합사회",
           "type": "개념서학습(예비고선행)",
           "goal": "",
           "color": "#d4f2d4"
+        },
+        "6-20": {
+          "subject": "통합과학",
+          "type": "개념서학습(예비고선행)",
+          "goal": "",
+          "color": "#e6cef3"
+        },
+        "6-21": {
+          "subject": "통합과학",
+          "type": "개념서학습(예비고선행)",
+          "goal": "",
+          "color": "#e6cef3"
         }
       }
     },
