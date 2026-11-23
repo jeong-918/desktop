@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-23T02:34:39.492Z",
-  "updatedAt": 1795401279492,
+  "exportedAt": "2026-11-23T03:24:10.801Z",
+  "updatedAt": 1795404250801,
   "daily": {
     "categories": [
       {
@@ -621,6 +621,36 @@
         "memo": "",
         "time": "",
         "createdAt": 1795401277223
+      },
+      {
+        "id": "todo_1795401293111_6ct3v",
+        "title": "폰케이스집 다녀오기 (같은것으로)",
+        "categoryId": "cat_1792046741546",
+        "date": "2026-11-29",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1795401293111
+      },
+      {
+        "id": "todo_1795401312247_hlqo8",
+        "title": "몰입의 방 구입 고민",
+        "categoryId": "cat_1792046741546",
+        "date": "2026-11-29",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1795401312247
+      },
+      {
+        "id": "todo_1795401330007_8nikm",
+        "title": "정시컨설팅 가이드 픽스",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-11-23",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1795401330007
       }
     ]
   },
