@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:23:49.134Z",
+  "exportedAt": "2026-11-23T11:24:54.304Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795431796548",
@@ -41,6 +41,11 @@
         "id": "subj_1795432422596",
         "name": "한국사",
         "color": "#b1edbb"
+      },
+      {
+        "id": "subj_1795433088836",
+        "name": "영단어",
+        "color": "#e0c19e"
       }
     ],
     "studyTypes": [
@@ -288,7 +293,7 @@
         },
         "2-19": {
           "subject": "통합과학",
-          "type": "복습",
+          "type": "개념서학습(예비고선행)",
           "goal": "6:30~8시까지",
           "color": "#e6cef3"
         },
@@ -324,7 +329,7 @@
         },
         "4-19": {
           "subject": "통합과학",
-          "type": "복습",
+          "type": "개념서학습(예비고선행)",
           "goal": "6:30-8시까지",
           "color": "#e6cef3"
         },
