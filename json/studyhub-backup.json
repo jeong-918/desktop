@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:35:03.903Z",
+  "exportedAt": "2026-11-23T11:36:22.980Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795432270100",
@@ -550,6 +550,18 @@
           "type": "개념서학습(예비고선행)",
           "goal": "",
           "color": "#e6cef3"
+        },
+        "6-10": {
+          "subject": "한국사",
+          "type": "개념서학습(예비고선행)",
+          "goal": "",
+          "color": "#b1edbb"
+        },
+        "6-14": {
+          "subject": "국어",
+          "type": "과제",
+          "goal": "",
+          "color": "#fee2e2"
         }
       }
     },
