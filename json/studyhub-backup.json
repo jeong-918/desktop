@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:33:49.375Z",
+  "exportedAt": "2026-11-23T11:35:03.903Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795432270100",
@@ -530,8 +530,26 @@
         "5-21": {
           "subject": "영단어",
           "type": "영단어",
-          "goal": "",
+          "goal": "월화수목에 진행된 영단어 한번 체크 후 진행",
           "color": "#e0c19e"
+        },
+        "4-19": {
+          "subject": "영단어",
+          "type": "영단어",
+          "goal": "월화수 진행된 영단어 한번 체크 후 진행",
+          "color": "#e0c19e"
+        },
+        "4-18": {
+          "subject": "한국사",
+          "type": "개념서학습(예비고선행)",
+          "goal": "",
+          "color": "#b1edbb"
+        },
+        "5-17": {
+          "subject": "통합과학",
+          "type": "개념서학습(예비고선행)",
+          "goal": "",
+          "color": "#e6cef3"
         }
       }
     },
