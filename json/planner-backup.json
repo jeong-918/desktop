@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-23T03:28:38.466Z",
-  "updatedAt": 1795404518466,
+  "exportedAt": "2026-11-23T06:18:31.401Z",
+  "updatedAt": 1795414711401,
   "daily": {
     "categories": [
       {
@@ -647,7 +647,7 @@
         "title": "정시컨설팅 가이드 픽스",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-23",
-        "status": "TODO",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1795401330007
