@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-23T03:25:12.974Z",
-  "updatedAt": 1795404312974,
+  "exportedAt": "2026-11-23T03:26:57.853Z",
+  "updatedAt": 1795404417853,
   "daily": {
     "categories": [
       {
@@ -429,7 +429,7 @@
         "date": "2026-11-25",
         "status": "TODO",
         "memo": "",
-        "time": "",
+        "time": "18:30",
         "createdAt": 1794557047757
       },
       {
@@ -681,6 +681,26 @@
         "memo": "",
         "time": "",
         "createdAt": 1795404312974
+      },
+      {
+        "id": "todo_1795404364124_8w5mz",
+        "title": "장우정, 이효린 순차적으로 2자습관 입실 의향 체크",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-11-23",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1795404364124
+      },
+      {
+        "id": "todo_1795404371214_9kqoa",
+        "title": "이다현 첫 등원 및 가이드",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-11-24",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1795404371214
       }
     ]
   },
