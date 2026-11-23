@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-23T07:34:25.662Z",
+  "exportedAt": "2026-11-23T07:35:30.557Z",
   "version": 3,
   "data": {
     "students": [
@@ -10106,6 +10106,41 @@
         "studentId": "stu_mvxa1ckuj8o0",
         "date": "2026-11-21",
         "content": "기말고사가 이제 2주 남짓 다가온 만큼 현재까지 공부했던 과목들의 개념부족/문제풀이 부족 여부를 반드시 짚은 후 이번주부터 부족한 과목과 학습유형을 보완해나가면 좋겠습니다.",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwsy9zbr3u1r",
+        "studentId": "stu_mvxa1j4qx0kd",
+        "date": "2026-11-21",
+        "content": "기말고사가 이제 2주 남짓 다가온 만큼 현재까지 공부했던 과목들의 개념부족/문제풀이 부족 여부를 반드시 짚은 후 이번주부터 부족한 과목과 학습유형을 보완해나가면 좋겠습니다.",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwsyatuvd3lc",
+        "studentId": "stu_mvxa1ckuj8o0",
+        "date": "2026-11-22",
+        "content": "일요일 시험기간 대비 등원 및 참여 (시간/과목 활용은 리포트 반영하지 않음)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwsyayencwsf",
+        "studentId": "stu_mvxa16hosf8g",
+        "date": "2026-11-21",
+        "content": "일요일 시험기간 대비 등원 및 참여 (시간/과목 활용은 리포트 반영하지 않음)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwsyb2lzngd9",
+        "studentId": "stu_mvxa0yyv2w6o",
+        "date": "2026-11-21",
+        "content": "일요일 시험기간 대비 등원 및 참여 (시간/과목 활용은 리포트 반영하지 않음)",
+        "scope": "week"
+      },
+      {
+        "id": "cn_mwsyb5ivk5p4",
+        "studentId": "stu_mvxa0h8n6ert",
+        "date": "2026-11-21",
+        "content": "일요일 시험기간 대비 등원 및 참여 (시간/과목 활용은 리포트 반영하지 않음)",
         "scope": "week"
       }
     ],
