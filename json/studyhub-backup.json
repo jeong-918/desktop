@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:14:13.998Z",
+  "exportedAt": "2026-11-23T11:15:51.420Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795431796548",
@@ -271,6 +271,30 @@
           "type": "복습",
           "goal": "개념서 중심",
           "color": "#b1edbb"
+        },
+        "1-20": {
+          "subject": "수학",
+          "type": "과제",
+          "goal": "못끝내면 꼭 집에서 (당일 완료)",
+          "color": "#bcd7fb"
+        },
+        "1-17": {
+          "subject": "영어",
+          "type": "영단어",
+          "goal": "",
+          "color": "#f3e5af"
+        },
+        "2-18": {
+          "subject": "영어",
+          "type": "영단어",
+          "goal": "6:30분까지",
+          "color": "#f7ebba"
+        },
+        "2-19": {
+          "subject": "통합과학",
+          "type": "복습",
+          "goal": "6:30~8시까지",
+          "color": "#e6cef3"
         }
       },
       "std_1795432270100": {
