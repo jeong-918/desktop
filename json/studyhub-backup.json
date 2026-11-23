@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:21:07.128Z",
+  "exportedAt": "2026-11-23T11:22:33.636Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795431796548",
@@ -355,6 +355,30 @@
           "type": "복습",
           "goal": "",
           "color": "#b1edbb"
+        },
+        "6-14": {
+          "subject": "국어",
+          "type": "과제",
+          "goal": "그날 배운 과제 끝내기",
+          "color": "#fee2e2"
+        },
+        "6-15": {
+          "subject": "국어",
+          "type": "과제",
+          "goal": "그날 배운 과제 끝내기",
+          "color": "#fee2e2"
+        },
+        "6-10": {
+          "subject": "영어",
+          "type": "영단어",
+          "goal": "월수금 내용 한번 정리하고 진행",
+          "color": "#fef3c7"
+        },
+        "6-20": {
+          "subject": "영어",
+          "type": "복습",
+          "goal": "문법 중심 이해 못한 부분 복습",
+          "color": "#fef3c7"
         }
       },
       "std_1795432270100": {
