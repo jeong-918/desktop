@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:18:14.462Z",
+  "exportedAt": "2026-11-23T11:20:06.419Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795431796548",
@@ -276,13 +276,13 @@
           "subject": "수학",
           "type": "과제",
           "goal": "못끝내면 집에서 (당일 완료 목표)",
-          "color": "#dbeafe"
+          "color": "#c2dcff"
         },
         "1-17": {
           "subject": "영어",
           "type": "영단어",
-          "goal": "",
-          "color": "#f3e5af"
+          "goal": "영단어 학습 진행 (수/금은 월/수것 같이 해보기)",
+          "color": "#fef3c7"
         },
         "2-18": {
           "subject": "영어",
@@ -312,13 +312,37 @@
           "subject": "수학",
           "type": "과제",
           "goal": "못끝내면 집에서 (당일 완료 목표)",
-          "color": "#dbeafe"
+          "color": "#b9d4f9"
         },
         "5-20": {
           "subject": "수학",
           "type": "과제",
           "goal": "못끝내면 집에서 (당일 완료 목표)",
-          "color": "#dbeafe"
+          "color": "#c1dafb"
+        },
+        "4-18": {
+          "subject": "영어",
+          "type": "영단어",
+          "goal": "6시 30분까지",
+          "color": "#fef3c7"
+        },
+        "4-19": {
+          "subject": "통합과학",
+          "type": "복습",
+          "goal": "6:30-8시까지",
+          "color": "#e6cef3"
+        },
+        "3-17": {
+          "subject": "영어",
+          "type": "영단어",
+          "goal": "영단어 학습 진행 (수/금은 월/수것 같이 해보기)",
+          "color": "#fef3c7"
+        },
+        "5-17": {
+          "subject": "영어",
+          "type": "영단어",
+          "goal": "영단어 학습 진행 (수/금은 월/수것 같이 해보기)",
+          "color": "#fef3c7"
         }
       },
       "std_1795432270100": {
