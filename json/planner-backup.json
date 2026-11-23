@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-21T22:49:19.397Z",
-  "updatedAt": 1795301359397,
+  "exportedAt": "2026-11-23T02:34:39.492Z",
+  "updatedAt": 1795401279492,
   "daily": {
     "categories": [
       {
@@ -611,6 +611,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1795163913351
+      },
+      {
+        "id": "todo_1795401277223_yitfm",
+        "title": "고속성장 구입",
+        "categoryId": "cat_1792046741546",
+        "date": "2026-11-24",
+        "status": "IN_PROGRESS",
+        "memo": "",
+        "time": "",
+        "createdAt": 1795401277223
       }
     ]
   },
