@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-23T07:12:56.705Z",
+  "exportedAt": "2026-11-23T07:14:00.462Z",
   "version": 3,
   "data": {
     "students": [
@@ -9552,6 +9552,54 @@
         "start": "10:00",
         "end": "11:00",
         "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwsxigu0oy0q",
+        "studentId": "stu_mvx9zk6negj6",
+        "date": "2026-11-21",
+        "subject": "과학",
+        "type": "복습",
+        "eval": "보완필요",
+        "start": "11:00",
+        "end": "12:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwsxisd4d11h",
+        "studentId": "stu_mvx9zk6negj6",
+        "date": "2026-11-21",
+        "subject": "한국사",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "13:00",
+        "end": "14:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwsxj5m8b6sz",
+        "studentId": "stu_mvx9zk6negj6",
+        "date": "2026-11-21",
+        "subject": "한국사",
+        "type": "복습",
+        "eval": "미완료",
+        "start": "14:00",
+        "end": "15:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwsxjhxcr8l0",
+        "studentId": "stu_mvx9zk6negj6",
+        "date": "2026-11-21",
+        "subject": "한국사",
+        "type": "복습+문풀",
+        "eval": "미완료",
+        "start": "15:00",
+        "end": "17:00",
+        "minutes": 120,
         "note": ""
       }
     ],
