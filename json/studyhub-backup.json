@@ -1,9 +1,9 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:10:22.956Z",
+  "exportedAt": "2026-11-23T11:11:45.058Z",
   "state": {
     "schemaVersion": 2,
-    "activeStudentId": "std_1795431796548",
+    "activeStudentId": "std_1795432270100",
     "currentDateKey": "2026-11-23",
     "currentMonthKey": "2026-11",
     "subjects": [
@@ -56,6 +56,13 @@
         "grade": "중3/약학",
         "defaultMode": "timetable",
         "note": "약대를 지금부터 준비를 차근차근 시작해보려합니다."
+      },
+      {
+        "id": "std_1795432270100",
+        "name": "최정원",
+        "grade": "중3/수의학",
+        "defaultMode": "timetable",
+        "note": "지금부터 수의사가 되기 위한 3년의 시간 :)"
       }
     ],
     "schedules": {
@@ -160,6 +167,80 @@
       "T1": {},
       "test": {},
       "std_1795431796548": {
+        "1-18": {
+          "subject": "수학",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#dbeafe"
+        },
+        "1-19": {
+          "subject": "수학",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#dbeafe"
+        },
+        "3-18": {
+          "subject": "수학",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#dbeafe"
+        },
+        "3-19": {
+          "subject": "수학",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#dbeafe"
+        },
+        "5-18": {
+          "subject": "수학",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#dbeafe"
+        },
+        "5-19": {
+          "subject": "수학",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#dbeafe"
+        },
+        "2-20": {
+          "subject": "영어",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#fef3c7"
+        },
+        "2-21": {
+          "subject": "영어",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#fef3c7"
+        },
+        "4-20": {
+          "subject": "영어",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#fef3c7"
+        },
+        "4-21": {
+          "subject": "영어",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#fef3c7"
+        },
+        "6-16": {
+          "subject": "영어",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#fef3c7"
+        },
+        "6-17": {
+          "subject": "영어",
+          "type": "학원수업",
+          "goal": "",
+          "color": "#fef3c7"
+        }
+      },
+      "std_1795432270100": {
         "1-18": {
           "subject": "수학",
           "type": "학원수업",
