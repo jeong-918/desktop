@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-23T09:28:45.726Z",
-  "updatedAt": 1795426125726,
+  "exportedAt": "2026-11-23T10:33:20.295Z",
+  "updatedAt": 1795430000295,
   "daily": {
     "categories": [
       {
@@ -687,7 +687,7 @@
         "title": "장우정, 이효린 순차적으로 2자습관 입실 의향 체크",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-23",
-        "status": "TODO",
+        "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
         "createdAt": 1795404364124
