@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:36:22.980Z",
+  "exportedAt": "2026-11-23T11:37:29.991Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795432270100",
@@ -562,6 +562,24 @@
           "type": "과제",
           "goal": "",
           "color": "#fee2e2"
+        },
+        "6-15": {
+          "subject": "영단어",
+          "type": "영단어",
+          "goal": "한주 전체 단어 한번 체크 후 진행 (1주 통복습도 좋음)",
+          "color": "#e0c19e"
+        },
+        "6-18": {
+          "subject": "통합사회",
+          "type": "개념서학습(예비고선행)",
+          "goal": "",
+          "color": "#d4f2d4"
+        },
+        "6-19": {
+          "subject": "통합사회",
+          "type": "개념서학습(예비고선행)",
+          "goal": "",
+          "color": "#d4f2d4"
         }
       }
     },
