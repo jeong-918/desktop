@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-23T10:33:20.295Z",
-  "updatedAt": 1795430000295,
+  "exportedAt": "2026-11-23T17:46:05.292Z",
+  "updatedAt": 1795455965292,
   "daily": {
     "categories": [
       {
@@ -676,7 +676,7 @@
         "id": "todo_1795404312974_yrz08",
         "title": "이현준, 장지후 자리 이동 후 청소시킬 것",
         "categoryId": "cat_1792046767402",
-        "date": "2026-11-23",
+        "date": "2026-11-24",
         "status": "TODO",
         "memo": "",
         "time": "",
@@ -686,7 +686,7 @@
         "id": "todo_1795404364124_8w5mz",
         "title": "장우정, 이효린 순차적으로 2자습관 입실 의향 체크",
         "categoryId": "cat_1792046767402",
-        "date": "2026-11-23",
+        "date": "2026-11-24",
         "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
@@ -706,7 +706,7 @@
         "id": "todo_1795404518466_xyni1",
         "title": "미사고,미강고, 미강중 방학 일정 체크해서 원장 보고",
         "categoryId": "cat_1792046767402",
-        "date": "2026-11-23",
+        "date": "2026-11-24",
         "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
