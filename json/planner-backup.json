@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-23T17:46:05.292Z",
-  "updatedAt": 1795455965292,
+  "exportedAt": "2026-11-24T09:23:29.373Z",
+  "updatedAt": 1795512209373,
   "daily": {
     "categories": [
       {
@@ -684,7 +684,7 @@
       },
       {
         "id": "todo_1795404364124_8w5mz",
-        "title": "장우정, 이효린 순차적으로 2자습관 입실 의향 체크",
+        "title": "이효린 2자습관 전환 건에 대한 확인",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-24",
         "status": "IN_PROGRESS",
@@ -697,7 +697,7 @@
         "title": "이다현 첫 등원 및 가이드",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-24",
-        "status": "TODO",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1795404371214
