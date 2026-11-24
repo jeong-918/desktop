@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-24T07:52:43.703Z",
+  "exportedAt": "2026-11-24T08:05:11.473Z",
   "version": 3,
   "data": {
     "students": [
@@ -122,6 +122,13 @@
         "school": "미강고등학교",
         "grade": "1",
         "seat": null
+      },
+      {
+        "id": "stu_mwuet65bj030",
+        "name": "이다현",
+        "school": "미강고등학교",
+        "grade": "1",
+        "seat": 9
       }
     ],
     "schedules": {
@@ -904,7 +911,8 @@
           "16": "",
           "17": ""
         }
-      }
+      },
+      "stu_mwuet65bj030": {}
     },
     "attendance": {
       "stu_15": {
