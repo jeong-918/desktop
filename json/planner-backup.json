@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-24T12:53:05.434Z",
-  "updatedAt": 1795524785434,
+  "exportedAt": "2026-11-24T15:46:22.090Z",
+  "updatedAt": 1795535182090,
   "daily": {
     "categories": [
       {
@@ -686,7 +686,7 @@
         "id": "todo_1795404364124_8w5mz",
         "title": "이효린 2자습관 전환 건에 대한 확인",
         "categoryId": "cat_1792046767402",
-        "date": "2026-11-24",
+        "date": "2026-11-25",
         "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
@@ -706,7 +706,7 @@
         "id": "todo_1795404518466_xyni1",
         "title": "미사고,미강고, 미강중 방학 일정 체크해서 원장 보고",
         "categoryId": "cat_1792046767402",
-        "date": "2026-11-24",
+        "date": "2026-11-25",
         "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
