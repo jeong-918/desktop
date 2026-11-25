@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-25T17:12:58.740Z",
-  "updatedAt": 1795626778740,
+  "exportedAt": "2026-11-25T23:48:40.305Z",
+  "updatedAt": 1795650520305,
   "daily": {
     "categories": [
       {
@@ -447,7 +447,7 @@
         "title": "민서 중앙대 발표일",
         "categoryId": "cat_1792046758202",
         "date": "2026-11-26",
-        "status": "TODO",
+        "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
         "createdAt": 1794557089430
@@ -507,7 +507,7 @@
         "title": "엔진오일 교환일",
         "categoryId": "cat_1792046741546",
         "date": "2026-11-26",
-        "status": "TODO",
+        "status": "IN_PROGRESS",
         "memo": "",
         "time": "09:00",
         "createdAt": 1794720086978
@@ -717,7 +717,7 @@
         "title": "주말 근무자 관련 진행사항 최종 픽스 받을 것",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-26",
-        "status": "TODO",
+        "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
         "createdAt": 1795535209722
@@ -727,7 +727,7 @@
         "title": "미강중3 이수민 문의건 대응",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-26",
-        "status": "TODO",
+        "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
         "createdAt": 1795613115805
@@ -737,7 +737,7 @@
         "title": "전아영, 이효인 입실준비 요청",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-26",
-        "status": "TODO",
+        "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
         "createdAt": 1795613183605
@@ -747,7 +747,7 @@
         "title": "이윤서, 장지후, 양민경 학습 유형 데이터 추출",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-26",
-        "status": "TODO",
+        "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
         "createdAt": 1795626778739
