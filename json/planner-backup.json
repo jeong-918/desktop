@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-25T13:26:23.605Z",
-  "updatedAt": 1795613183605,
+  "exportedAt": "2026-11-25T17:12:58.740Z",
+  "updatedAt": 1795626778740,
   "daily": {
     "categories": [
       {
@@ -741,6 +741,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1795613183605
+      },
+      {
+        "id": "todo_1795626778739_e8ylb",
+        "title": "이윤서, 장지후, 양민경 학습 유형 데이터 추출",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-11-26",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1795626778739
       }
     ]
   },
