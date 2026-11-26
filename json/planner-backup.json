@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-26T07:43:08.927Z",
-  "updatedAt": 1795678988927,
+  "exportedAt": "2026-11-26T10:08:45.736Z",
+  "updatedAt": 1795687725736,
   "daily": {
     "categories": [
       {
@@ -687,7 +687,7 @@
         "title": "이효린 2자습관 전환 건에 대한 확인",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-26",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1795404364124
@@ -747,7 +747,7 @@
         "title": "이윤서, 장지후, 양민경 학습 유형 데이터 추출",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-26",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1795626778739
