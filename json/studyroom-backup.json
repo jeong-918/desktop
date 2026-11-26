@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-26T05:56:23.632Z",
+  "exportedAt": "2026-11-26T05:57:45.629Z",
   "version": 3,
   "data": {
     "students": [
@@ -2101,7 +2101,7 @@
           "time": ""
         },
         "2026-11-24": {
-          "status": "미입실(학원)",
+          "status": "중도입실",
           "time": ""
         },
         "2026-11-23": {
@@ -10133,6 +10133,42 @@
         "start": "19:25",
         "end": "19:40",
         "minutes": 15,
+        "note": ""
+      },
+      {
+        "id": "log_mwx546w4gvj4",
+        "studentId": "stu_mwuet65bj030",
+        "date": "2026-11-24",
+        "subject": "영어",
+        "type": "기타학습",
+        "eval": "학습완료",
+        "start": "16:50",
+        "end": "18:00",
+        "minutes": 70,
+        "note": ""
+      },
+      {
+        "id": "log_mwx54igcnrb7",
+        "studentId": "stu_mwuet65bj030",
+        "date": "2026-11-24",
+        "subject": "영어",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "18:40",
+        "minutes": 40,
+        "note": ""
+      },
+      {
+        "id": "log_mwx55064xu9m",
+        "studentId": "stu_mwuet65bj030",
+        "date": "2026-11-24",
+        "subject": "국어",
+        "type": "과제",
+        "eval": "보완필요",
+        "start": "18:35",
+        "end": "18:45",
+        "minutes": 10,
         "note": ""
       }
     ],
