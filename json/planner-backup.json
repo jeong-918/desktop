@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-25T23:48:40.305Z",
-  "updatedAt": 1795650520305,
+  "exportedAt": "2026-11-26T01:58:16.352Z",
+  "updatedAt": 1795658296352,
   "daily": {
     "categories": [
       {
@@ -507,7 +507,7 @@
         "title": "엔진오일 교환일",
         "categoryId": "cat_1792046741546",
         "date": "2026-11-26",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "09:00",
         "createdAt": 1794720086978
