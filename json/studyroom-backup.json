@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-26T06:06:02.502Z",
+  "exportedAt": "2026-11-26T06:07:37.857Z",
   "version": 3,
   "data": {
     "students": [
@@ -10273,6 +10273,42 @@
         "start": "20:30",
         "end": "21:00",
         "minutes": 30,
+        "note": ""
+      },
+      {
+        "id": "log_mwx5g1cctao2",
+        "studentId": "stu_mvxa0h8n6ert",
+        "date": "2026-11-25",
+        "subject": "사회",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "21:00",
+        "end": "22:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwx5gp1w84s1",
+        "studentId": "stu_mwn4ll3s1xvk",
+        "date": "2026-11-25",
+        "subject": "생명",
+        "type": "문제풀이",
+        "eval": "보완필요",
+        "start": "21:10",
+        "end": "22:00",
+        "minutes": 50,
+        "note": ""
+      },
+      {
+        "id": "log_mwx5hp3g8aif",
+        "studentId": "stu_mvxa0yyv2w6o",
+        "date": "2026-11-25",
+        "subject": "사회",
+        "type": "문제풀이",
+        "eval": "보완필요",
+        "start": "21:10",
+        "end": "21:50",
+        "minutes": 40,
         "note": ""
       }
     ],
