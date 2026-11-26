@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-26T01:58:16.352Z",
-  "updatedAt": 1795658296352,
+  "exportedAt": "2026-11-26T03:26:53.814Z",
+  "updatedAt": 1795663613814,
   "daily": {
     "categories": [
       {
@@ -708,7 +708,7 @@
         "categoryId": "cat_1792046767402",
         "date": "2026-11-26",
         "status": "IN_PROGRESS",
-        "memo": "",
+        "memo": "미사고 1/4월~1/30토+2/5금부터 봄방학 // 미강고 1/7부터 2말까지 방학 // 미강중은 1/7 졸업식",
         "time": "",
         "createdAt": 1795404518466
       },
