@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-26T06:10:04.619Z",
-  "updatedAt": 1795673404619,
+  "exportedAt": "2026-11-26T07:05:33.499Z",
+  "updatedAt": 1795676733499,
   "daily": {
     "categories": [
       {
@@ -707,7 +707,7 @@
         "title": "미사고,미강고, 미강중 방학 일정 체크해서 원장 보고",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-26",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "미사고 1/4월~1/30토+2/5금부터 봄방학 // 미강고 1/7부터 2말까지 방학 // 미강중은 1/7 졸업식",
         "time": "",
         "createdAt": 1795404518466
@@ -717,7 +717,7 @@
         "title": "주말 근무자 관련 진행사항 최종 픽스 받을 것",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-26",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1795535209722
