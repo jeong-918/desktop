@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-26T03:26:53.814Z",
-  "updatedAt": 1795663613814,
+  "exportedAt": "2026-11-26T06:10:04.619Z",
+  "updatedAt": 1795673404619,
   "daily": {
     "categories": [
       {
@@ -447,7 +447,7 @@
         "title": "민서 중앙대 발표일",
         "categoryId": "cat_1792046758202",
         "date": "2026-11-26",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1794557089430
@@ -727,7 +727,7 @@
         "title": "미강중3 이수민 문의건 대응",
         "categoryId": "cat_1792046767402",
         "date": "2026-11-26",
-        "status": "IN_PROGRESS",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1795613115805
