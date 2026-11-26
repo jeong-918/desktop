@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T08:22:18.935Z",
+  "updatedAt": "2026-11-26T18:27:09.848Z",
   "apps": [
     {
       "id": "m_daol",
@@ -266,13 +266,13 @@
       "yPct": 59
     },
     {
-      "id": "m_1795681331386",
-      "name": "모교",
-      "url": "https://mogyo.kr/",
+      "id": "m_1795717619732",
+      "name": "학생부 디벨롭 스튜디오",
+      "url": "https://jeong-918.github.io/stdocu-full/",
       "icon": "🚀",
-      "desc": "사용자 설정 메뉴",
-      "catId": "cat_ext2",
-      "badge": "학사일정탐색",
+      "desc": "학생부 기록-관리-서사",
+      "catId": "cat_ipsi",
+      "badge": "통합ver",
       "openMode": "newtab",
       "xPct": 64,
       "yPct": 59
@@ -281,7 +281,7 @@
   "eduosConfigV4": {
     "boardLayout": "sections",
     "activeCategoryId": "ALL",
-    "briefingOpen": true,
+    "briefingOpen": false,
     "sidebarOpen": false,
     "uiTexts": {
       "sidebarToggleBtn": "실무 툴박스",
@@ -557,13 +557,13 @@
         "desc": "학습 유형 및 태도 진단 + 과목별 학습 방향성 설계"
       },
       {
-        "id": "m_1795681331386",
-        "catId": "cat_ext2",
-        "name": "모교",
+        "id": "m_1795717619732",
+        "catId": "cat_ipsi",
+        "name": "학생부 디벨롭 스튜디오",
         "icon": "🚀",
-        "badge": "학사일정탐색",
-        "url": "https://mogyo.kr/",
-        "desc": "사용자 설정 메뉴"
+        "badge": "통합ver",
+        "url": "https://jeong-918.github.io/stdocu-full/",
+        "desc": "학생부 기록-관리-서사"
       }
     ]
   }
