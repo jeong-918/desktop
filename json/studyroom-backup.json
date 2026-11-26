@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-26T10:09:37.214Z",
+  "exportedAt": "2026-11-26T10:15:05.926Z",
   "version": 3,
   "data": {
     "students": [
@@ -114,14 +114,14 @@
         "name": "이효린",
         "school": "미사고등학교",
         "grade": "2",
-        "seat": 11
+        "seat": 18
       },
       {
         "id": "stu_mwn8ubzjfd2o",
         "name": "이다현",
         "school": "미강고등학교",
         "grade": "1",
-        "seat": null
+        "seat": 11
       },
       {
         "id": "stu_mwuet65bj030",
