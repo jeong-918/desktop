@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-26T05:16:23.292Z",
+  "exportedAt": "2026-11-26T05:18:02.487Z",
   "version": 3,
   "data": {
     "students": [
@@ -51,14 +51,14 @@
         "name": "장지후",
         "school": "미강고등학교",
         "grade": "2",
-        "seat": 4
+        "seat": 6
       },
       {
         "id": "stu_mvxa04ymfwd2",
         "name": "이현준",
         "school": "미강고등학교",
         "grade": "2",
-        "seat": 6
+        "seat": 7
       },
       {
         "id": "stu_mvxa0b80pl0k",
@@ -9989,6 +9989,30 @@
         "start": "21:40",
         "end": "22:00",
         "minutes": 20,
+        "note": ""
+      },
+      {
+        "id": "log_mwx3oh6si6dv",
+        "studentId": "stu_mvx9zz365o7j",
+        "date": "2026-11-24",
+        "subject": "수학",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "21:40",
+        "end": "22:00",
+        "minutes": 20,
+        "note": ""
+      },
+      {
+        "id": "log_mwx3pxbotr8d",
+        "studentId": "stu_mvx9zro0kvqx",
+        "date": "2026-11-24",
+        "subject": "수학",
+        "type": "과제",
+        "eval": "미완료",
+        "start": "21:00",
+        "end": "22:00",
+        "minutes": 60,
         "note": ""
       }
     ],
