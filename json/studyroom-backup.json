@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-26T13:17:50.656Z",
+  "exportedAt": "2026-11-27T06:13:35.297Z",
   "version": 3,
   "data": {
     "students": [
@@ -10431,6 +10431,42 @@
         "start": "17:30",
         "end": "18:00",
         "minutes": 30,
+        "note": ""
+      },
+      {
+        "id": "log_mwyl47npyuh4",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-11-26",
+        "subject": "수학",
+        "type": "기타학습",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "19:30",
+        "minutes": 90,
+        "note": ""
+      },
+      {
+        "id": "log_mwyl4g9ohe0o",
+        "studentId": "stu_muuvk470gwfd",
+        "date": "2026-11-26",
+        "subject": "한국사",
+        "type": "기타학습",
+        "eval": "학습완료",
+        "start": "19:30",
+        "end": "20:00",
+        "minutes": 30,
+        "note": ""
+      },
+      {
+        "id": "log_mwyl57bwispt",
+        "studentId": "stu_mwuet65bj030",
+        "date": "2026-11-26",
+        "subject": "영어",
+        "type": "기타학습",
+        "eval": "보완필요",
+        "start": "16:30",
+        "end": "18:00",
+        "minutes": 90,
         "note": ""
       }
     ],
