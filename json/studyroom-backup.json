@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-27T06:14:50.271Z",
+  "exportedAt": "2026-11-27T06:15:54.433Z",
   "version": 3,
   "data": {
     "students": [
@@ -10503,6 +10503,42 @@
         "start": "19:00",
         "end": "20:00",
         "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwyl76oswsci",
+        "studentId": "stu_mvxa04ymfwd2",
+        "date": "2026-11-26",
+        "subject": "사회",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "20:00",
+        "end": "21:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwyl7mwkkavd",
+        "studentId": "stu_mvxa04ymfwd2",
+        "date": "2026-11-26",
+        "subject": "사회",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "21:00",
+        "end": "22:00",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwyl86ucy9x1",
+        "studentId": "stu_mvx9zz365o7j",
+        "date": "2026-11-26",
+        "subject": "물리",
+        "type": "복습",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "20:00",
+        "minutes": 120,
         "note": ""
       }
     ],
