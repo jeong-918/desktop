@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-27T06:16:57.752Z",
+  "exportedAt": "2026-11-27T06:18:16.993Z",
   "version": 3,
   "data": {
     "students": [
@@ -10563,6 +10563,54 @@
         "start": "18:00",
         "end": "20:00",
         "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mwyl9vc4nm53",
+        "studentId": "stu_mvx9zro0kvqx",
+        "date": "2026-11-26",
+        "subject": "화학",
+        "type": "기타학습",
+        "eval": "보완필요",
+        "start": "20:00",
+        "end": "22:00",
+        "minutes": 120,
+        "note": ""
+      },
+      {
+        "id": "log_mwylaby4y2e3",
+        "studentId": "stu_mvxa0b80pl0k",
+        "date": "2026-11-26",
+        "subject": "생명",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "18:00",
+        "end": "18:30",
+        "minutes": 30,
+        "note": ""
+      },
+      {
+        "id": "log_mwylau0kub02",
+        "studentId": "stu_mvxa0b80pl0k",
+        "date": "2026-11-26",
+        "subject": "생명",
+        "type": "인강+문풀",
+        "eval": "학습완료",
+        "start": "18:30",
+        "end": "19:30",
+        "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwylb90crcqc",
+        "studentId": "stu_mvxa0b80pl0k",
+        "date": "2026-11-26",
+        "subject": "생명",
+        "type": "문제풀이",
+        "eval": "학습완료",
+        "start": "19:30",
+        "end": "20:30",
+        "minutes": 60,
         "note": ""
       }
     ],
