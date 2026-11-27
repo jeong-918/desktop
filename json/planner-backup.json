@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-27T17:03:42.459Z",
-  "updatedAt": 1795799022459,
+  "exportedAt": "2026-11-27T17:04:56.723Z",
+  "updatedAt": 1795799096723,
   "daily": {
     "categories": [
       {
@@ -761,6 +761,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1795769080602
+      },
+      {
+        "id": "todo_1795799093611_o5zp0",
+        "title": "윤승기 입반 여부 최종 확정(미응답시 이수민으로 픽스 후 월요일 연락돌리기로 -> 화요일 입반으로)",
+        "categoryId": "cat_1792046767402",
+        "date": "2026-11-28",
+        "status": "IN_PROGRESS",
+        "memo": "",
+        "time": "",
+        "createdAt": 1795799093611
       }
     ]
   },
