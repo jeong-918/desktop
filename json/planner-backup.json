@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-27T07:47:25.010Z",
-  "updatedAt": 1795765645010,
+  "exportedAt": "2026-11-27T08:44:26.004Z",
+  "updatedAt": 1795769066004,
   "daily": {
     "categories": [
       {
@@ -751,6 +751,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1795626778739
+      },
+      {
+        "id": "todo_1795769066004_f7wyc",
+        "title": "서울대 지역균형 면접 수업 준비 (최종 픽스 내일까지)",
+        "categoryId": "cat_1792046741546",
+        "date": "2026-11-27",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1795769066004
       }
     ]
   },
