@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-27T08:46:06.337Z",
-  "updatedAt": 1795769166337,
+  "exportedAt": "2026-11-27T17:03:42.459Z",
+  "updatedAt": 1795799022459,
   "daily": {
     "categories": [
       {
@@ -753,44 +753,14 @@
         "createdAt": 1795626778739
       },
       {
-        "id": "todo_1795769066004_f7wyc",
-        "title": "서울대 지역균형 면접 수업 준비 (최종 픽스 내일까지)",
-        "categoryId": "cat_1792046741546",
-        "date": "2026-11-27",
-        "status": "IN_PROGRESS",
-        "memo": "",
-        "time": "",
-        "createdAt": 1795769066004
-      },
-      {
         "id": "todo_1795769080602_6uzq7",
         "title": "제주대 약학과 약대 면접 수업 준비 (최종 픽스 내일까지)",
         "categoryId": "cat_1792046741546",
-        "date": "2026-11-27",
+        "date": "2026-11-28",
         "status": "IN_PROGRESS",
         "memo": "",
         "time": "",
         "createdAt": 1795769080602
-      },
-      {
-        "id": "todo_1795769094801_tgwq7",
-        "title": "연세대 하스 면접 데이터 모두 추출 (최종픽스 오늘)",
-        "categoryId": "cat_1792046741546",
-        "date": "2026-11-27",
-        "status": "IN_PROGRESS",
-        "memo": "",
-        "time": "",
-        "createdAt": 1795769094801
-      },
-      {
-        "id": "todo_1795769163874_h5epn",
-        "title": "보건계열 합격자 합격 과정 정리 (완료단계)",
-        "categoryId": "cat_1792046741546",
-        "date": "2026-11-27",
-        "status": "IN_PROGRESS",
-        "memo": "",
-        "time": "",
-        "createdAt": 1795769163874
       }
     ]
   },
