@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-27T06:18:16.993Z",
+  "exportedAt": "2026-11-27T06:59:18.734Z",
   "version": 3,
   "data": {
     "students": [
@@ -10611,6 +10611,30 @@
         "start": "19:30",
         "end": "20:30",
         "minutes": 60,
+        "note": ""
+      },
+      {
+        "id": "log_mwylbg1w5agp",
+        "studentId": "stu_mvxa0b80pl0k",
+        "date": "2026-11-26",
+        "subject": "국어",
+        "type": "과제",
+        "eval": "학습완료",
+        "start": "20:30",
+        "end": "22:00",
+        "minutes": 90,
+        "note": ""
+      },
+      {
+        "id": "log_mwyms0bv8ddy",
+        "studentId": "stu_mwn4ll3s1xvk",
+        "date": "2026-11-26",
+        "subject": "생명",
+        "type": "문제풀이",
+        "eval": "보완필요",
+        "start": "18:00",
+        "end": "20:00",
+        "minutes": 120,
         "note": ""
       }
     ],
