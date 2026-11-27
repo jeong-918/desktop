@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-26T10:08:45.736Z",
-  "updatedAt": 1795687725736,
+  "exportedAt": "2026-11-27T07:47:25.010Z",
+  "updatedAt": 1795765645010,
   "daily": {
     "categories": [
       {
@@ -557,7 +557,7 @@
         "title": "이효인(중3), 전아영(고2) 복귀 안내 -12/1일자 관련 (아영이는 그냥 복귀, 효인이는 부모님 대동고려)",
         "categoryId": "cat_1792046741546",
         "date": "2026-11-28",
-        "status": "TODO",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1795002349942
@@ -627,7 +627,7 @@
         "title": "폰케이스집 다녀오기 (같은것으로)",
         "categoryId": "cat_1792046741546",
         "date": "2026-11-29",
-        "status": "TODO",
+        "status": "DONE",
         "memo": "",
         "time": "",
         "createdAt": 1795401293111
