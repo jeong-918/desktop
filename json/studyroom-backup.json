@@ -1,6 +1,6 @@
 {
   "app": "studyroom",
-  "exportedAt": "2026-11-28T09:33:07.001Z",
+  "exportedAt": "2026-11-28T10:11:18.195Z",
   "version": 3,
   "data": {
     "students": [
@@ -2431,7 +2431,7 @@
           "time": ""
         },
         "2026-11-28": {
-          "status": "",
+          "status": "중도입실",
           "time": ""
         },
         "2026-11-27": {
