@@ -1,6 +1,6 @@
 {
   "app": "studyhub",
-  "exportedAt": "2026-11-23T11:45:38.900Z",
+  "exportedAt": "2026-11-28T09:27:30.717Z",
   "state": {
     "schemaVersion": 2,
     "activeStudentId": "std_1795431796548",
@@ -377,7 +377,7 @@
         "6-10": {
           "subject": "영단어",
           "type": "영단어",
-          "goal": "월수금 내용 한번 정리하고 진행",
+          "goal": "월화수목금 영단어 전체 복습",
           "color": "#e0c19e"
         },
         "6-20": {
