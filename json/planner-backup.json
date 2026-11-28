@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "appName": "통합 일정 관리",
-  "exportedAt": "2026-11-27T17:04:56.723Z",
-  "updatedAt": 1795799096723,
+  "exportedAt": "2026-11-28T11:09:30.460Z",
+  "updatedAt": 1795864170460,
   "daily": {
     "categories": [
       {
@@ -771,6 +771,16 @@
         "memo": "",
         "time": "",
         "createdAt": 1795799093611
+      },
+      {
+        "id": "todo_1795864170459_k3rz8",
+        "title": "선우쌤 학원 가천대 면접 구글양식 재정리",
+        "categoryId": "cat_1792046741546",
+        "date": "2026-11-29",
+        "status": "TODO",
+        "memo": "",
+        "time": "",
+        "createdAt": 1795864170459
       }
     ]
   },
